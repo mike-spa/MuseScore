@@ -3666,11 +3666,10 @@ qreal Measure::basicWidth() const
 
 //---------------------------------------------------------
 //   stretchWeight
-//   Used for distributing the space remaining at the end of
-//   a system. Returns a weight parameter proportional to the
+//   Returns a weight parameter proportional to the
 //   current with of the measure.
 //---------------------------------------------------------
-qreal Measure::stretchWeight() 
+qreal Measure::stretchWeight()
 {
     if (isMMRest()) {
         return width();
@@ -4156,7 +4155,7 @@ static bool hasAccidental(Segment* s)
 //      returns the shortest note/rest in the system
 //---------------------------------------------------------
 
-Fraction Measure::minSysTicks() 
+Fraction Measure::minSysTicks()
 {
     Fraction minTicks = ticks();
     //System* sys = system();
@@ -4171,8 +4170,7 @@ Fraction Measure::minSysTicks()
     }
     if (minTicks > Fraction(1, 8)) {
         return Fraction(1, 8);
-    }
-    else {
+    } else {
         return minTicks;
     }
 }
@@ -4183,7 +4181,7 @@ Fraction Measure::minSysTicks()
 //      on its duration with respect to the shortest one.
 //      Three different options proposed (see documentation).
 //---------------------------------------------------------
-qreal Measure::stretchFormula(Fraction curTicks, Fraction minTicks) 
+qreal Measure::stretchFormula(Fraction curTicks, Fraction minTicks)
 {
     qreal uStretch = userStretch();
     qreal genLayoutStretch = score()->styleD(Sid::measureSpacing);

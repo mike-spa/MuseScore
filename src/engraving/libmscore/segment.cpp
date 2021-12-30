@@ -2559,8 +2559,22 @@ qreal Segment::minHorizontalDistance(Segment* ns, bool systemHeaderGap) const
             if (isGap) {
                 return 0.0;
             }
-            // minimum distance between notes is one note head width
-            w = qMax(w, score()->noteHeadWidth()) + score()->styleMM(Sid::minNoteDistance);
+
+            bool hasAdjacent = false;
+            for (int i = 0; i < score()->nstaves() * VOICES && !hasAdjacent; i++) {
+                if (element(i) && ns && ns->element(i)) {
+                    hasAdjacent = true;
+                } else {
+                    continue;
+                }
+            }
+            if (hasAdjacent){
+                // minimum distance between notes is one note head width
+                w = qMax(w, score()->noteHeadWidth()) + score()->styleMM(Sid::minNoteDistance);
+            } else {
+                w = score()->styleMM(Sid::minNoteDistance);
+            }
+
         }
     } else if (nst == SegmentType::ChordRest) {
         // <non ChordRest> - <ChordRest>

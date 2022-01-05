@@ -59,13 +59,6 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
         return nullptr;
     }
 
-    std::vector<int> visibleParts;
-    for (int partIdx = 0; partIdx < score->parts().size(); partIdx++) {
-        if (score->parts().at(partIdx)->show()) {
-            visibleParts.push_back(partIdx);
-        }
-    }
-
     const MeasureBase* measure  = score->systems().empty() ? 0 : score->systems().back()->measures().back();
     if (measure) {
         measure = measure->findPotentialSectionBreak();

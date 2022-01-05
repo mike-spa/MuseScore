@@ -4083,6 +4083,13 @@ static bool hasAccidental(Segment* s)
 
 Fraction Measure::minSysTicks()
 {
+    std::vector<int> visibleParts;
+    for (int partIdx = 0; partIdx < score()->parts().size(); partIdx++) {
+        if (score()->parts().at(partIdx)->show()) {
+            visibleParts.push_back(partIdx);
+        }
+    }
+
     Fraction minTicks = Fraction(10, 1);
     for (MeasureBase* mb : system()->measures()) {
         if (mb->isMeasure()) {

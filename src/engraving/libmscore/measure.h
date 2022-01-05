@@ -341,6 +341,7 @@ public:
     int layoutWeight(int maxMMRestLength = 0) const;
     qreal stretchWeight();
     qreal stretchFormula(Fraction curTicks, Fraction minTicks, qreal stretchCoeff);
+    Fraction shortestChordRest(const std::vector<int>& visibleParts);
     Fraction minSysTicks();
     void computeWidth(Fraction minTicks, qreal stretchCoeff);
     void checkHeader();

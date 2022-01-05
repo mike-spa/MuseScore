@@ -4083,11 +4083,19 @@ static bool hasAccidental(Segment* s)
 
 Fraction Measure::minSysTicks()
 {
+    std::vector<int> visibleParts;
+    for (int partIdx = 0; partIdx < score()->parts().size(); partIdx++) {
+        if (score()->parts().at(partIdx)->show()) {
+            visibleParts.push_back(partIdx);
+        }
+    }
+
     Fraction minTicks = Fraction(10, 1);
     for (MeasureBase* mb : system()->measures()) {
         if (mb->isMeasure()) {
             Measure* m = toMeasure(mb);
-            Fraction curMinTicks = m->computeTicks();
+            //Fraction curMinTicks = m->computeTicks();
+            Fraction curMinTicks = m->shortestChordRest(visibleParts);
             if (curMinTicks < minTicks) {
                 minTicks = curMinTicks;
             }
@@ -4095,6 +4103,31 @@ Fraction Measure::minSysTicks()
     }
     return minTicks;
 }
+
+//---------------------------------------------------------
+//      shortestChordRest
+//      returns the shortest chordRest of the measure
+//---------------------------------------------------------
+
+Fraction Measure::shortestChordRest(const std::vector<int>& visibleParts)
+{
+    Fraction minTicks = timesig();
+    Fraction curMinTicks = timesig();
+    Segment* seg = firstEnabled();
+    ChordRest* cr;
+    while (seg) {
+        if (seg->isChordRestType()) {
+            cr = Segment::ChordRestWithMinDuration(seg, visibleParts);
+            curMinTicks = cr ? cr->actualTicks() : curMinTicks;
+            if (curMinTicks < minTicks) {
+                minTicks = curMinTicks;
+            }
+        }
+        seg = seg->nextEnabled();
+    }
+    return minTicks;
+}
+
 
 //---------------------------------------------------------
 //      Stretch formula
@@ -4127,9 +4160,9 @@ qreal Measure::stretchFormula(Fraction curTicks, Fraction minTicks, qreal stretc
     // Quadratic spacing (Gould)
     qreal str = 1 - 0.647 * slope + 0.647 * slope * sqrt(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
 
-    if (minTicks > Fraction(1, 16)) {
+    if (minTicks > Fraction(1, 32)) {
         // Avoids long notes being too narrow in the absense of shorter notes.
-        str = str * (1 - 0.5 + 0.5 * sqrt(qreal(minTicks.ticks()) / qreal(Fraction(1, 16).ticks())));
+        str = str * (1 - 0.5 + 0.5 * sqrt(qreal(minTicks.ticks()) / qreal(Fraction(1, 32).ticks())));
     }
 
     str *= stretchCoeff;
@@ -4158,6 +4191,7 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
 
     qreal minNoteSpace = score()->noteHeadWidth() * 1.05;
     qreal stretch = qMax(userStretch() * score()->styleD(Sid::measureSpacing), qreal(1));
+    qreal str = 1;
 
     while (s) {
         s->rxpos() = x;
@@ -4193,7 +4227,11 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
                 // the note with respect to the shortest note *of the system*.
                 if (s->isChordRestType()) {
                     Fraction t = s->ticks();
-                    qreal str = stretchFormula(t, minTicks, stretchCoeff);
+                    if (t >= minTicks) {
+                        str = stretchFormula(t, minTicks, stretchCoeff);
+                    } else {
+                        str = stretchFormula(minTicks, minTicks, stretchCoeff) * qreal(t.ticks())/qreal(minTicks.ticks());
+                    }
                     qreal minStretchedWidth = minNoteSpace * str * stretch;
                     w = qMax(w, minStretchedWidth);
                 }

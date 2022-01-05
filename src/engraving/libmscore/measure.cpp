@@ -4150,9 +4150,9 @@ qreal Measure::stretchFormula(Fraction curTicks, Fraction minTicks, qreal stretc
     // Quadratic spacing (Gould)
     qreal str = 1 - 0.647 * slope + 0.647 * slope * sqrt(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
 
-    if (minTicks > Fraction(1, 32)) {
+    if (minTicks > Fraction(1, 16)) {
         // Avoids long notes being too narrow in the absense of shorter notes.
-        str = str * (1 - 0.5 + 0.5 * sqrt(qreal(minTicks.ticks()) / qreal(Fraction(1, 32).ticks())));
+        str = str * (1 - 0.5 + 0.5 * sqrt(qreal(minTicks.ticks()) / qreal(Fraction(1, 16).ticks())));
     }
 
     str *= stretchCoeff;

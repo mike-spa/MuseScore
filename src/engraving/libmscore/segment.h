@@ -67,6 +67,7 @@ class Segment final : public EngravingItem
     Fraction _ticks;   // { Fraction(0, 1) };
     Spatium _extraLeadingSpace;
     qreal _stretch;
+    bool _hasAdjacent = true;
 
     Segment* _next = nullptr;                       // linked list of segments inside a measure
     Segment* _prev = nullptr;
@@ -204,6 +205,9 @@ public:
     bool hasElements(int minTrack, int maxTrack) const;
     bool allElementsInvisible() const;
 
+    bool hasAdjacent() const { return _hasAdjacent; }
+    void setAdjacent (const bool b) { _hasAdjacent = b; }
+
     qreal dotPosX(int staffIdx) const { return _dotPosX[staffIdx]; }
     void setDotPosX(int staffIdx, qreal val) { _dotPosX[staffIdx] = val; }
 
@@ -251,7 +255,7 @@ public:
     qreal minRight() const;
     qreal minLeft(const Shape&) const;
     qreal minLeft() const;
-    qreal minHorizontalDistance(Segment*, bool isSystemGap) const;
+    qreal minHorizontalDistance(Segment*, bool isSystemGap);
     qreal minHorizontalCollidingDistance(Segment* ns) const;
 
     qreal elementsTopOffsetFromSkyline(int staffIndex) const;
@@ -260,12 +264,13 @@ public:
     /*! \brief callulate width of segment and additional spacing of segment depends on duration of segment
      *  \return pair of {spacing, width}
      */
-    std::pair<qreal, qreal> computeCellWidth(const std::vector<int>& visibleParts) const;
+    std::pair<qreal, qreal> computeCellWidth(const std::vector<int>& visibleParts);
 
     /*! \brief get among all ChordRests of segment the ChordRest with minimun ticks,
     * take into account visibleParts
     */
     static ChordRest* ChordRestWithMinDuration(const Segment* seg, const std::vector<int>& visibleParts);
+    Fraction shortestChordRest() const;
 
     //! spacing is additional width of segment, for example accidental needs this spacing to avoid overlapping
     void setSpacing(qreal);

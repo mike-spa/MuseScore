@@ -59,6 +59,13 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
         return nullptr;
     }
 
+    std::vector<int> visibleParts;
+    for (int partIdx = 0; partIdx < score->parts().size(); partIdx++) {
+        if (score->parts().at(partIdx)->show()) {
+            visibleParts.push_back(partIdx);
+        }
+    }
+
     const MeasureBase* measure  = score->systems().empty() ? 0 : score->systems().back()->measures().back();
     if (measure) {
         measure = measure->findPotentialSectionBreak();
@@ -86,8 +93,8 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
     bool curTrailer = ctx.curMeasure->trailer();
     MeasureBase* breakMeasure = nullptr;
 
-    Fraction minTicks = Fraction(4, 1); // Inizialize variable which stores the shortest note of the system
-    Fraction prevMinTicks = Fraction(4, 1);
+    Fraction minTicks = Fraction(10, 1); // Inizialize variable which stores the shortest note of the system
+    Fraction prevMinTicks = Fraction(10, 1);
     bool changeMinSysTicks = false;
     qreal oldStretch = 1;
 
@@ -101,9 +108,12 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
         // we need to recompute the layout of the previous measures. When updating the width of these
         // measures, curSysWidth must be updated accordingly.
         if (ctx.curMeasure->isMeasure()) {
-            if (toMeasure(ctx.curMeasure)->computeTicks() < minTicks) {
+            Measure* m = toMeasure(ctx.curMeasure);
+            Fraction curMinTicks = m->shortestChordRest();
+            //qDebug() << "shortest = " << curMinTicks.numerator() << "/" << curMinTicks.denominator();
+            if (curMinTicks < minTicks) {
                 prevMinTicks = minTicks; // We save the previous value in case we need to restore it (see later)
-                minTicks = toMeasure(ctx.curMeasure)->computeTicks();
+                minTicks = curMinTicks;
                 changeMinSysTicks = true;
                 for (MeasureBase* mb : system->measures()) {
                     if (mb == ctx.curMeasure) {

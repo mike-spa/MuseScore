@@ -4087,7 +4087,7 @@ Fraction Measure::minSysTicks()
     for (MeasureBase* mb : system()->measures()) {
         if (mb->isMeasure()) {
             Measure* m = toMeasure(mb);
-            Fraction curMinTicks = m->computeTicks();
+            Fraction curMinTicks = m->shortestChordRest();
             if (curMinTicks < minTicks) {
                 minTicks = curMinTicks;
             }
@@ -4095,6 +4095,29 @@ Fraction Measure::minSysTicks()
     }
     return minTicks;
 }
+
+//---------------------------------------------------------
+//      shortestChordRest
+//      returns the shortest chordRest of the measure
+//---------------------------------------------------------
+
+Fraction Measure::shortestChordRest() const
+{
+    Fraction minTicks = timesig();
+    Fraction curMinTicks = timesig();
+    Segment* seg = first();
+    while (seg) {
+        if (seg->isChordRestType()) {
+            curMinTicks = seg->shortestChordRest();
+            if (curMinTicks < minTicks) {
+                minTicks = curMinTicks;
+            }
+        }
+        seg = seg->next();
+    }
+    return minTicks;
+}
+
 
 //---------------------------------------------------------
 //      Stretch formula
@@ -4127,9 +4150,9 @@ qreal Measure::stretchFormula(Fraction curTicks, Fraction minTicks, qreal stretc
     // Quadratic spacing (Gould)
     qreal str = 1 - 0.647 * slope + 0.647 * slope * sqrt(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
 
-    if (minTicks > Fraction(1, 16)) {
+    if (minTicks > Fraction(1, 32)) {
         // Avoids long notes being too narrow in the absense of shorter notes.
-        str = str * (1 - 0.5 + 0.5 * sqrt(qreal(minTicks.ticks()) / qreal(Fraction(1, 16).ticks())));
+        str = str * (1 - 0.5 + 0.5 * sqrt(qreal(minTicks.ticks()) / qreal(Fraction(1, 32).ticks())));
     }
 
     str *= stretchCoeff;
@@ -4150,6 +4173,8 @@ qreal Measure::stretchFormula(Fraction curTicks, Fraction minTicks, qreal stretc
 void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction minTicks, qreal stretchCoeff)
 {
     Segment* fs = firstEnabled();
+    Segment* ps = nullptr;
+    Fraction pt;
     if (!fs->visible()) {           // first enabled could be a clef change on invisible staff
         fs = fs->nextActive();
     }
@@ -4158,6 +4183,7 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
 
     qreal minNoteSpace = score()->noteHeadWidth() * 1.05;
     qreal stretch = qMax(userStretch() * score()->styleD(Sid::measureSpacing), qreal(1));
+    qreal str = 1;
 
     while (s) {
         s->rxpos() = x;
@@ -4192,8 +4218,17 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
                 // New spacing algorithm: we apply an additional spacing which depends on the duration of
                 // the note with respect to the shortest note *of the system*.
                 if (s->isChordRestType()) {
-                    Fraction t = s->ticks();
-                    qreal str = stretchFormula(t, minTicks, stretchCoeff);
+                    Fraction t = s->shortestChordRest();
+                    if (s->hasAdjacent()) {
+                        str = stretchFormula(t, minTicks, stretchCoeff);
+                    } else {
+                        pt = ps ? ps->shortestChordRest() : Fraction(0, 1);
+                        if (pt <= t && pt > Fraction(0, 1)) {
+                            str = stretchFormula(pt, minTicks, stretchCoeff) * qreal(s->ticks().ticks()) / qreal(pt.ticks());
+                        } else if (pt > t && pt > Fraction(0, 1)) {
+                            str = stretchFormula(t, minTicks, stretchCoeff) * qreal(s->ticks().ticks()) / qreal(t.ticks());
+                        }
+                    }
                     qreal minStretchedWidth = minNoteSpace * str * stretch;
                     w = qMax(w, minStretchedWidth);
                 }
@@ -4253,6 +4288,7 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
         }
         s->setWidth(w);
         x += w;
+        ps = s;
         s = s->next();
     }
 

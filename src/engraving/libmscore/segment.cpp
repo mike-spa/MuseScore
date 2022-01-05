@@ -2314,7 +2314,7 @@ qreal Segment::minLeft() const
     return distance;
 }
 
-std::pair<qreal, qreal> Segment::computeCellWidth(const std::vector<int>& visibleParts) const
+std::pair<qreal, qreal> Segment::computeCellWidth(const std::vector<int>& visibleParts)
 {
     if (!this->enabled()) {
         return { 0, 0 };
@@ -2420,6 +2420,36 @@ ChordRest* Segment::ChordRestWithMinDuration(const Segment* seg, const std::vect
     return chordRestWithMinDuration;
 }
 
+Fraction Segment::shortestChordRest() const
+{
+    Fraction shortest = Fraction(10, 1);
+    Fraction cur;
+    for (int staffIdx = 0; staffIdx < score()->staves().size(); staffIdx++) {
+        Staff* stf = score()->staves().at(staffIdx);
+        if (!stf->show()) {
+            continue;
+        } else {
+            for (int trackIdx = staffIdx * 4; trackIdx < staffIdx * 4 + 4; trackIdx++) {
+                EngravingItem* el = elist().at(trackIdx);
+                if (!el) {
+                    continue;
+                }
+                if (!el->isChordRest()) {
+                    continue;
+                }
+                if (el->isChordRest()) {
+                    cur = toChordRest(el)->actualTicks();
+                    if (cur < shortest) {
+                        shortest = cur;
+                    }
+                }
+            }
+
+        }
+    }
+    return shortest;
+}
+
 void Segment::setSpacing(qreal val)
 {
     m_spacing = val;
@@ -2516,7 +2546,7 @@ qreal Segment::elementsBottomOffsetFromSkyline(int staffIndex) const
 //    calculate the minimum layout distance to Segment ns
 //---------------------------------------------------------
 
-qreal Segment::minHorizontalDistance(Segment* ns, bool systemHeaderGap) const
+qreal Segment::minHorizontalDistance(Segment* ns, bool systemHeaderGap)
 {
     qreal ww = -1000000.0;          // can remain negative
     for (unsigned staffIdx = 0; staffIdx < _shapes.size(); ++staffIdx) {
@@ -2560,15 +2590,15 @@ qreal Segment::minHorizontalDistance(Segment* ns, bool systemHeaderGap) const
                 return 0.0;
             }
 
-            bool hasAdjacent = false;
-            for (int i = 0; i < score()->nstaves() * VOICES && !hasAdjacent; i++) {
+            setAdjacent(false);
+            for (int i = 0; i < score()->nstaves() * VOICES && !hasAdjacent(); i++) {
                 if (element(i) && ns && ns->element(i)) {
-                    hasAdjacent = true;
+                    setAdjacent(true);
                 } else {
                     continue;
                 }
             }
-            if (hasAdjacent){
+            if (hasAdjacent()){
                 // minimum distance between notes is one note head width
                 w = qMax(w, score()->noteHeadWidth()) + score()->styleMM(Sid::minNoteDistance);
             } else {

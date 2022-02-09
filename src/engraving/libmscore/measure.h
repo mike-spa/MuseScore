@@ -342,7 +342,7 @@ public:
     void computeWidth(Fraction minTicks, qreal stretchCoeff);
     void checkHeader();
     void checkTrailer();
-    void setStretchedWidth(qreal);
+    double checkMinWidth(double w);
     void layoutStaffLines();
 
     //! puts segments on the positions according to their length

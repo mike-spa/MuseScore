@@ -3968,16 +3968,40 @@ void Measure::checkTrailer()
 }
 
 //---------------------------------------------------------
-//   setStretchedWidth
+//   checkMinWidth
+//    checks that the measure width is larger than the
+//    minimum settings and increases if needed
 //---------------------------------------------------------
 
-void Measure::setStretchedWidth(qreal w)
+double Measure::checkMinWidth(double w)
 {
-    qreal minWidth = isMMRest() ? score()->styleMM(Sid::minMMRestWidth) : score()->styleMM(Sid::minMeasureWidth);
-    if (w < minWidth) {
-        w = minWidth;
+    const double minWidth = isMMRest() ? score()->styleMM(Sid::minMMRestWidth) : score()->styleMM(Sid::minMeasureWidth);
+
+    Segment* s = nullptr;
+    double newSegWidth = 0.0;
+    double diff = 0.0;
+    int iter = 0;
+    double x = 0.0;
+    double multiplier = 1.1; // Empirical factor for fast convergence of the following loop
+
+    while (w < minWidth && iter < 200) { // Just for safety. In practice, it rarely takes more than 2 iter
+        diff = minWidth - w;
+        s = firstEnabled();
+        x = s->rxpos(); // The starting position is the position of the first segment
+        while (s) {
+            s->rxpos() = x; // Redundant for the first segment but correct for all the subsequent ones
+            if (s->visible() && s->enabled() && !s->allElementsInvisible() && s->isChordRestType()) {
+                newSegWidth = s->width() * (1 + multiplier * diff / w);
+                w += newSegWidth - s->width();
+                s->setWidth(newSegWidth);
+            }
+            x += s->width();
+            s = s->next();
+        }
+        ++iter;
     }
-    setWidth(w);
+
+    return w;
 }
 
 //---------------------------------------------------------
@@ -4180,15 +4204,10 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
         x += w;
         s = s->next();
     }
-    if (isMMRest() && x < score()->styleMM(Sid::minMMRestWidth)) {
-        x = score()->styleMM(Sid::minMMRestWidth);
-    }
-    if (!isMMRest() && x < score()->styleMM(Sid::minMeasureWidth)) {
-        x = score()->styleMM(Sid::minMeasureWidth);
-    }
 
     setLayoutStretch(stretchCoeff);
-    setStretchedWidth(x);
+    x = checkMinWidth(x);
+    setWidth(x);
 }
 
 void Measure::computeWidth(Fraction minTicks, qreal stretchCoeff)

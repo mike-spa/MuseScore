@@ -343,6 +343,11 @@ public:
     void checkHeader();
     void checkTrailer();
     double checkMinWidth(double w);
+    bool isWidthLocked() const { return widthLocked; }
+    // A measure is width-locked if its width was determined by minMeasureWidth (or minMmRestWidth)
+    // A width-locked measure cannot get any narrower than it currently is. This is information is
+    // used for system justification (see layoutSystem.cpp)
+    void setWidthLocked(bool b) { widthLocked = b; }
     void layoutStaffLines();
 
     //! puts segments on the positions according to their length
@@ -397,6 +402,7 @@ private:
     Fraction m_quantumOfSegmentCell = { 1, 16 };
 
     double m_layoutStretch = 1.0;
+    bool widthLocked = false;
 };
 }     // namespace Ms
 #endif

@@ -3977,6 +3977,12 @@ double Measure::checkMinWidth(double w)
 {
     const double minWidth = isMMRest() ? score()->styleMM(Sid::minMMRestWidth) : score()->styleMM(Sid::minMeasureWidth);
 
+    if (w > minWidth) {
+        setWidthLocked(false);
+        return w;
+    }
+
+    setWidthLocked(true);
     Segment* s = nullptr;
     double newSegWidth = 0.0;
     double diff = 0.0;

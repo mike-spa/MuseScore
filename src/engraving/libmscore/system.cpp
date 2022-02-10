@@ -1844,4 +1844,28 @@ Fraction System::minSysTicks() const
     }
     return minTicks;
 }
+
+//---------------------------------------------------------
+//      isWidthLocked
+//      Checks how many of the measures are widthLocked and
+//      returns true if less than 2 measures are not widthLocked
+//---------------------------------------------------------
+
+bool System::isWidthLocked() const
+{
+    int nonLockedMeasures = 0;
+    for (MeasureBase* mb : measures()) {
+        if (mb->isMeasure() && !toMeasure(mb)->isWidthLocked()) {
+            ++nonLockedMeasures;
+        }
+        if (nonLockedMeasures >= 2) {
+            return false;
+        }
+    }
+    if (measures().size() <= 2 and nonLockedMeasures > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
 }

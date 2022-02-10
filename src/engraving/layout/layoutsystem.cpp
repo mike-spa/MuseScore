@@ -169,9 +169,10 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
         // check if lc.curMeasure fits, remove if not
         // collect at least one measure and the break
 
-        static constexpr double acceptanceRange = 1.025; // We allow the initial width of the system to be slightly
-        // larger than the target system width. This avoids having to put a measure in the next system just because
-        // it overshoots the width by a tiny amount.
+        static constexpr double acceptanceRange = 1; // With a value slightly larger than 1 we could allow systems
+        // to be initially slightly larger than the target width and be justified by tightening rather than stretching.
+        // However, this breaks in some edge cases (e.g. if all measures are locked by minMeasureWidth) so I'm
+        // rolling this back. Deserves more investigation in future. (MS)
         bool doBreak = (system->measures().size() > 1) && ((curSysWidth + ww) > systemWidth * acceptanceRange);
         if (doBreak) {
             breakMeasure = ctx.curMeasure;

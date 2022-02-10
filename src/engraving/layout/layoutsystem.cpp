@@ -392,12 +392,12 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
     qreal stretchCoeff = 1;
     qreal prevWidth = 0;
     int iter = 0;
-    static double epsilon = score->spatium() * 0.08; // For reference: this is approximately as small as the width of a note stem
-    static constexpr int maxIter = 200; // Limits the number of iterations, just for safety. In reality, most systems require less then 10 iterations.
-    static constexpr float multiplier = 1.5; // Empirically optimized value which allows the fastest convergence of the following algorithm.
+    static double epsilon = score->spatium() * 0.05; // For reference: this is smaller than the width of a note stem
+    static constexpr int maxIter = 400; // Limits the number of iterations, just for safety. In reality, less than 3 iterations are required on average.
+    static constexpr float multiplier = 1.4; // Empirically optimized value which allows the fastest convergence of the following algorithm.
 
     while (abs(newRest) > epsilon && iter < maxIter) {
-        stretchCoeff += multiplier * newRest / curSysWidth;
+        stretchCoeff *= (1 + multiplier * newRest / curSysWidth);
         for (MeasureBase* mb : system->measures()) {
             if (mb->isMeasure()) {
                 Measure* m = toMeasure(mb);

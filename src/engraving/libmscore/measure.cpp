@@ -4023,9 +4023,8 @@ static bool hasAccidental(Segment* s)
 //---------------------------------------------------------
 float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
 {
-    qreal userSlope = userStretch() * score()->styleD(Sid::measureSpacing);
-    static constexpr qreal baseSlope = 0.647;
-    qreal slope = userSlope * baseSlope;
+    static constexpr qreal baseSlope = 1.2;
+    qreal slope = baseSlope * score()->styleD(Sid::measureSpacing);
     // The slope of the spacing formula is determined by the multiplication of user-defined settings and baseSlope.
     // The value of baseSlope is chosen such that the curve matches the "ideal" one when user settings are at default.
     // See documentation PDF for more detail.
@@ -4044,7 +4043,7 @@ float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
     if (minTicks < shortNoteThreshold) {
         // Reduces the slope of the spacing curve in case very short notes are present.
         // Avoids having the longer notes too wide.
-        qreal reduction = qMax((1 - 0.2 * log2(qreal(shortNoteThreshold.ticks()) / qreal(minTicks.ticks()))), 0.3);
+        qreal reduction = qMax((1 - 0.15 * log2(qreal(shortNoteThreshold.ticks()) / qreal(minTicks.ticks()))), 0.3);
         // The numbers (and the formula itself) are purely empirical.
         slope = slope * reduction;
     }
@@ -4056,6 +4055,8 @@ float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
     //qreal str = 1.0 + 0.721 * slope * log(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
     // Quadratic spacing
     qreal str = 1 - slope + slope * sqrt(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
+    // Custom Spacing
+    //qreal str = pow(slope, log2(qreal(curTicks.ticks()) / qreal(minTicks.ticks())));
 
     if (minTicks > longNoteThreshold) {
         // Avoids long notes being too narrow in the absense of shorter notes.
@@ -4085,11 +4086,8 @@ void Measure::computeWidth(Segment* s, qreal x, bool isSystemHeader, Fraction mi
     bool first  = isFirstInSystem();
     const Shape ls(first ? RectF(0.0, -1000000.0, 0.0, 2000000.0) : RectF(0.0, 0.0, 0.0, spatium() * 4));
 
-    qreal minNoteSpace = score()->noteHeadWidth() * 1.05; // This used to be minNoteSpace = noteHeadWidth() + minNoteDistance().
-    // I have removed minNoteDistance() because it was causing an unintuitive behaviour in the spacing,
-    // and I've substituted it with a purely empirical factor (*1.05) which obtains a similar default distance.
-    qreal usrStretch = userStretch() * score()->styleD(Sid::measureSpacing); // This is 1.2 by program default settings
-    usrStretch = std::max(usrStretch, qreal(0.1)); // Avoids stretch going to zero
+    qreal minNoteSpace = score()->noteHeadWidth() + score()->styleMM(Sid::minNoteDistance);
+    qreal usrStretch = std::max(userStretch(), qreal(0.1));
     usrStretch = std::min(usrStretch, qreal(10)); // Higher values may cause the spacing to break (10 is already ridiculously high and no user should even use that)
 
     while (s) {

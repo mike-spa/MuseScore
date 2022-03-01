@@ -4023,8 +4023,8 @@ static bool hasAccidental(Segment* s)
 //---------------------------------------------------------
 float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
 {
-    static constexpr qreal baseSlope = 1.2;
-    qreal slope = baseSlope * score()->styleD(Sid::measureSpacing);
+    //static constexpr qreal baseSlope = 1.5;
+    qreal slope = score()->styleD(Sid::measureSpacing);
     // The slope of the spacing formula is determined by the multiplication of user-defined settings and baseSlope.
     // The value of baseSlope is chosen such that the curve matches the "ideal" one when user settings are at default.
     // See documentation PDF for more detail.
@@ -4040,12 +4040,15 @@ float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
         }
     }
 
-    if (minTicks < shortNoteThreshold) {
-        // Reduces the slope of the spacing curve in case very short notes are present.
-        // Avoids having the longer notes too wide.
-        qreal reduction = qMax((1 - 0.15 * log2(qreal(shortNoteThreshold.ticks()) / qreal(minTicks.ticks()))), 0.3);
-        // The numbers (and the formula itself) are purely empirical.
-        slope = slope * reduction;
+    static constexpr double maxRatio = 32.0;
+    double minSysTicks = double(minTicks.ticks());
+    double maxSysTicks = double(system()->maxSysTicks().ticks());
+    double maxSysRatio = maxSysTicks / minSysTicks;
+    double ratio = double(curTicks.ticks()) / minSysTicks;
+    if (maxSysRatio > maxRatio) {
+        double A = minSysTicks * (maxRatio - 1) / (maxSysTicks - minSysTicks);
+        double B = (maxSysTicks - maxRatio * minSysTicks) / (maxSysTicks - minSysTicks);
+        ratio = A * ratio + B;
     }
 
     //TODO: choose formula in style settings
@@ -4054,9 +4057,9 @@ float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
     // Logarithmic spacing (MS 3.6)
     //qreal str = 1.0 + 0.721 * slope * log(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
     // Quadratic spacing
-    qreal str = 1 - slope + slope * sqrt(qreal(curTicks.ticks()) / qreal(minTicks.ticks()));
+    //qreal str = 1 - slope + slope * sqrt(ratio);
     // Custom Spacing
-    //qreal str = pow(slope, log2(qreal(curTicks.ticks()) / qreal(minTicks.ticks())));
+    qreal str = pow(slope, log2(ratio));
 
     if (minTicks > longNoteThreshold) {
         // Avoids long notes being too narrow in the absense of shorter notes.
@@ -4510,5 +4513,18 @@ void Measure::stretchMeasureInPracticeMode(qreal targetWidth)
             }
         }
     }
+}
+
+Fraction Measure::maxTicks() const
+{
+    Segment* s = first();
+    Fraction maxticks = Fraction(0, 1);
+    while (s) {
+        if (s->enabled()) {
+            maxticks = std::max(maxticks, s->ticks());
+        }
+        s = s->next();
+    }
+    return maxticks;
 }
 }

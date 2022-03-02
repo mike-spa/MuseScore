@@ -4554,6 +4554,7 @@ Fraction Measure::maxTicks() const
     }
     return maxticks;
 }
+}
 
 Fraction Measure::shortestChordRest() const
 {

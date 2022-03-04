@@ -4554,6 +4554,23 @@ Fraction Measure::maxTicks() const
     }
     return maxticks;
 }
+
+Fraction Measure::shortestChordRest() const
+{
+    Fraction shortest = Fraction::max(); // Initializing at arbitrary high value
+    Fraction cur = Fraction::max();
+    Segment* s = first();
+    while (s) {
+        if (s->isChordRestType() && !s->allElementsInvisible()) {
+            cur = s->shortestChordRest();
+            if (cur < shortest) {
+                shortest = cur;
+            }
+        }
+        s = s->next();
+    }
+    return shortest;
+}
 }
 
 Fraction Measure::shortestChordRest() const

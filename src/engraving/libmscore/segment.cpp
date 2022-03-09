@@ -2602,7 +2602,7 @@ qreal Segment::minHorizontalDistance(Segment* ns, bool systemHeaderGap) const
                 return 0.0;
             }
             // minimum distance between notes is one note head width
-            w = qMax(w, score()->noteHeadWidth()) + score()->styleMM(Sid::minNoteDistance);
+            //w = qMax(w, score()->noteHeadWidth()) + score()->styleMM(Sid::minNoteDistance);
         }
     } else if (nst == SegmentType::ChordRest) {
         // <non ChordRest> - <ChordRest>

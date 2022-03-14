@@ -22,6 +22,7 @@
 
 #include "shape.h"
 #include "segment.h"
+#include "style/style.h"
 
 using namespace mu;
 
@@ -97,19 +98,24 @@ Shape Shape::translated(const PointF& pt) const
 //    so they don’t touch.
 //-------------------------------------------------------------------
 
-qreal Shape::minHorizontalDistance(const Shape& a) const
+qreal Shape::minHorizontalDistance(const Shape& a, PaddingTable& paddingTable) const
 {
     qreal dist = -1000000.0;        // min real
-    for (const RectF& r2 : a) {
+    double padding = 0;
+    for (const ShapeElement& r2 : a) {
         qreal by1 = r2.top();
         qreal by2 = r2.bottom();
-        for (const RectF& r1 : *this) {
+        for (const ShapeElement& r1 : *this) {
             qreal ay1 = r1.top();
             qreal ay2 = r1.bottom();
             if (Ms::intersects(ay1, ay2, by1, by2)
                 || ((r1.height() == 0.0) && (r2.height() == 0.0) && (ay1 == by1))
                 || ((r1.width() == 0.0) || (r2.width() == 0.0))) {
-                dist = qMax(dist, r1.right() - r2.left());
+                if (r1.text && r2.text) {
+                    //qDebug() << r1.text << " - " << r2.text;
+                    padding = paddingTable[r1.text][r2.text];
+                }
+                dist = qMax(dist, r1.right() - r2.left() + padding);
             }
         }
     }

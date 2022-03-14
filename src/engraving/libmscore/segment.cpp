@@ -2322,7 +2322,7 @@ qreal Segment::minLeft(const Shape& sl) const
 {
     qreal distance = 0.0;
     for (const Shape& sh : shapes()) {
-        qreal d = sl.minHorizontalDistance(sh);
+        qreal d = sl.minHorizontalDistance(sh, score()->paddingTable());
         if (d > distance) {
             distance = d;
         }
@@ -2467,7 +2467,7 @@ qreal Segment::minHorizontalCollidingDistance(Segment* ns) const
 {
     qreal w = 0.0;
     for (unsigned staffIdx = 0; staffIdx < _shapes.size(); ++staffIdx) {
-        qreal d = staffShape(staffIdx).minHorizontalDistance(ns->staffShape(staffIdx));
+        qreal d = staffShape(staffIdx).minHorizontalDistance(ns->staffShape(staffIdx), score()->paddingTable());
         w       = qMax(w, d);
     }
     return w;
@@ -2561,7 +2561,7 @@ qreal Segment::minHorizontalDistance(Segment* ns, bool systemHeaderGap) const
         if (!isMMRestSegment() && !ns->isMMRestSegment()) {
             // MM rest segments must be treated separately because
             // the associated shapes have variable width
-            d = ns ? staffShape(staffIdx).minHorizontalDistance(ns->staffShape(staffIdx)) : 0.0;
+            d = ns ? staffShape(staffIdx).minHorizontalDistance(ns->staffShape(staffIdx), score()->paddingTable()) : 0.0;
         }
         // first chordrest of a staff should clear the widest header for any staff
         // so make sure segment is as wide as it needs to be

@@ -24,6 +24,7 @@
 #define __SHAPE_H__
 
 #include "infrastructure/draw/geometry.h"
+#include "style/style.h"
 
 namespace Ms {
 #ifndef NDEBUG
@@ -84,7 +85,7 @@ public:
     void translateY(qreal);
     Shape translated(const mu::PointF&) const;
 
-    qreal minHorizontalDistance(const Shape&) const;
+    qreal minHorizontalDistance(const Shape&, PaddingTable &paddingTable) const;
     qreal minVerticalDistance(const Shape&) const;
     qreal topDistance(const mu::PointF&) const;
     qreal bottomDistance(const mu::PointF&) const;

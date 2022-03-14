@@ -26,6 +26,7 @@
 #include <functional>
 
 #include <array>
+#include <map>
 #include <QIODevice>
 #include <QSet>
 
@@ -36,6 +37,8 @@
 #include "infrastructure/draw/geometry.h"
 
 #include "styledef.h"
+
+typedef std::map<std::string, std::map<std::string, double>> PaddingTable;
 
 namespace mu::engraving::compat {
 class ReadChordListHook;

@@ -26,7 +26,6 @@
 */
 
 #include "score.h"
-
 #include <cmath>
 
 #include "style/style.h"
@@ -327,6 +326,8 @@ Score::Score()
 
     m_rootItem = new mu::engraving::RootItem(this);
     m_rootItem->init();
+
+    createPaddingTable();
 }
 
 Score::Score(MasterScore* parent, bool forcePartStyle /* = true */)
@@ -369,6 +370,7 @@ Score::Score(MasterScore* parent, bool forcePartStyle /* = true */)
     _style.precomputeValues();
     _synthesizerState = parent->_synthesizerState;
     _mscVersion = parent->_mscVersion;
+    createPaddingTable();
 }
 
 Score::Score(MasterScore* parent, const MStyle& s)
@@ -376,6 +378,7 @@ Score::Score(MasterScore* parent, const MStyle& s)
 {
     Score::validScores.insert(this);
     _style  = s;
+    createPaddingTable();
 }
 
 //---------------------------------------------------------
@@ -1440,6 +1443,7 @@ void Score::styleChanged()
             footerText(i)->styleChanged();
         }
     }
+    createPaddingTable();
     setLayoutAll();
 }
 
@@ -5370,6 +5374,147 @@ void Score::doLayoutRange(const Fraction& st, const Fraction& et)
     if (_resetDefaults) {
         _resetDefaults = false;
         resetDefaults();
+    }
+}
+
+void Score::createPaddingTable()
+{
+    std::vector<std::string> elementsList = {
+        "Note",
+        "LedgerLine",
+        "NoteDot",
+        "Hook",
+        "Stem",
+        "Accidental",
+        "Clef",
+        "KeySig",
+        "TimeSig",
+        "Articulation",
+        "BarLine",
+        "Arpeggio",
+    };
+    for (auto el1 : elementsList) {
+        for (auto el2 : elementsList) {
+            _paddingTable[el1][el2] = 0;
+        }
+    }
+    // ----------------------------------------------------------------
+    // Let us collect here all the needed values and possible calculations
+    // before filling in the table.
+    // Some values are hardcoded, but in future may be exposed in style.
+    // ----------------------------------------------------------------
+    double sp = spatium();
+    double basicPaddingUnit = styleMM(Sid::stemWidth);
+    double noteToNote = 0.1 * sp;
+    double noteToLedgerLine = 0.2 * sp;
+    double noteToStem = 0.2 * sp;
+    double ledgerLinetoLedgerLine = 0.1 * sp;
+    double hookToNote = 0.1 * sp;
+    double hookToLedgerLine = 0.2 * sp;
+    double hookToStem = 0.2 * sp;
+    double ledgerLineToNote = 0.1 * sp;
+    double ledgerLineToStem = 0.2 * sp;
+    double stemToNote = 0.2 * sp;
+    double stemToLedgerLine = 0.2;
+    double accidentalToNote = styleMM(Sid::accidentalNoteDistance);
+    double cleftLeftMargin = styleMM(Sid::clefLeftMargin);
+    double clefRightMargin = styleMM(Sid::clefKeyRightMargin);
+    double keySigLeftMargin = styleMM(Sid::keysigLeftMargin);
+    double keySigRightMargin = styleMM(Sid::systemHeaderDistance);
+    double keySigToTimeSig = styleMM(Sid::keyTimesigDistance);
+    double keySigToBarLine = styleMM(Sid::keyBarlineDistance);
+    double timeSigLeftMargin = styleMM(Sid::timesigLeftMargin);
+    double timeSigRightMargin = styleMM(Sid::systemHeaderTimeSigDistance);
+    double noteToBarline = styleMM(Sid::noteBarDistance);
+    double arpeggioToNote = styleMM(Sid::ArpeggioNoteDistance);
+    double noteToDot = styleMM(Sid::dotNoteDistance);
+    double dotToAccidental = std::max(accidentalToNote, noteToDot);
+    double clefToKeySig = styleMM(Sid::clefKeyDistance);
+    double clefToTimeSig = styleMM(Sid::clefTimesigDistance);
+    double clefToBarLine = styleMM(Sid::clefBarlineDistance);
+    double barLineToNote = styleMM(Sid::barNoteDistance);
+    double barLineToLedgerLine = std::max(barLineToNote - styleMM(Sid::ledgerLineLength), 0.2);
+    double barLineToAccidental = styleMM(Sid::barAccidentalDistance);
+    // ---------------------------------------------------------------------
+    // When filling the table, always use std::max to compare to the
+    // existing value. This makes sure that if the same table entry is
+    // filled twice, it it takes the larger of the two.
+    // ---------------------------------------------------------------------
+    _paddingTable["Note"]["Note"] = noteToNote;
+    _paddingTable["Note"]["LedgerLine"] = noteToLedgerLine;
+    _paddingTable["Note"]["Stem"] = noteToStem;
+    _paddingTable["Note"]["BarLine"] = noteToBarline;
+    _paddingTable["LedgerLine"]["LedgerLine"] = ledgerLinetoLedgerLine;
+    _paddingTable["Hook"]["Note"] = hookToNote;
+    _paddingTable["Hook"]["LedgerLine"] = hookToLedgerLine;
+    _paddingTable["Hook"]["Stem"] = hookToStem;
+    _paddingTable["LedgerLine"]["Note"] = ledgerLineToNote;
+    _paddingTable["LedgerLine"]["Stem"] = ledgerLineToStem;
+    _paddingTable["Stem"]["Note"] = stemToNote;
+    _paddingTable["Stem"]["LedgerLine"] = stemToLedgerLine;
+    _paddingTable["KeySig"]["TimeSig"] = keySigToTimeSig;
+    _paddingTable["KeySig"]["BarLine"] = keySigToBarLine;
+    _paddingTable["NoteDot"]["Accidental"] = dotToAccidental;
+    _paddingTable["Clef"]["KeySig"] = clefToKeySig;
+    _paddingTable["Clef"]["TimeSig"] = clefToTimeSig;
+    _paddingTable["Clef"]["BarLine"] = clefToBarLine;
+    _paddingTable["BarLine"]["LedgerLine"] = barLineToLedgerLine;
+    _paddingTable["BarLine"]["Accidental"] = barLineToAccidental;
+    // Arpeggio can never be closer to a preceding element than it is to its note
+    for (auto& i : _paddingTable) {
+        for (auto& j : i.second) {
+            if (j.first == "Arpeggio") {
+                j.second = std::max(j.second, arpeggioToNote);
+            }
+        }
+    }
+    // Accidental can never be closer to a preceding element than it is to its note
+    for (auto& i : _paddingTable) {
+        for (auto& j : i.second) {
+            if (j.first == "Accidental") {
+                j.second = accidentalToNote;
+            }
+        }
+    }
+    // Aumentation dot can never be closer to a following element than it is to its note
+    for (auto j : _paddingTable["Clef"]) {
+        j.second = std::max(j.second, noteToDot);
+    }
+    // Clef left margin
+    for (auto i : _paddingTable) {
+        for (auto j : i.second) {
+            if (j.first == "Clef") {
+                j.second = std::max(j.second, cleftLeftMargin);
+            }
+        }
+    }
+    // Clef right margin
+    for (auto j : _paddingTable["Clef"]) {
+        j.second = std::max(j.second, clefRightMargin);
+    }
+    // Keysig left margin
+    for (auto i : _paddingTable) {
+        for (auto j : i.second) {
+            if (j.first == "KeySig") {
+                j.second = std::max(j.second, keySigLeftMargin);
+            }
+        }
+    }
+    // Keysig right margin
+    for (auto j : _paddingTable["KeySig"]) {
+        j.second = std::max(j.second, keySigRightMargin);
+    }
+    // TimeSig left margin
+    for (auto i : _paddingTable) {
+        for (auto j : i.second) {
+            if (j.first == "TimeSig") {
+                j.second = std::max(j.second, timeSigLeftMargin);
+            }
+        }
+    }
+    // TimeSig right margin
+    for (auto j : _paddingTable["TimeSig"]) {
+        j.second = std::max(j.second, timeSigRightMargin);
     }
 }
 

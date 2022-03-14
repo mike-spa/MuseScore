@@ -3678,6 +3678,9 @@ Shape Chord::shape() const
     }
 //      if (_tremolo)
 //            shape.add(_tremolo->shape().translated(_tremolo->pos()));
+    for (auto a : _articulations) {
+        shape.add(a->shape().translated(a->pos()));
+    }
     for (Note* note : _notes) {
         shape.add(note->shape().translated(note->pos()));
         for (EngravingItem* e : note->el()) {

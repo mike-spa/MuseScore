@@ -29,7 +29,7 @@
 */
 
 #include <set>
-
+#include <map>
 #include <QQueue>
 #include <QSet>
 
@@ -56,7 +56,6 @@
 #include "style/style.h"
 
 #include "modularity/ioc.h"
-#include "infrastructure/draw/iimageprovider.h"
 
 class QMimeData;
 
@@ -509,6 +508,9 @@ private:
 
     void assignIdIfNeed(Staff& staff) const;
     void assignIdIfNeed(Part& part) const;
+
+    PaddingTable _paddingTable;
+    void createPaddingTable();
 
 protected:
     int _fileDivision;   ///< division of current loading *.msc file
@@ -1237,6 +1239,8 @@ public:
 
     void cmdAddPitch(int note, bool addFlag, bool insert);
     void forAllLyrics(std::function<void(Lyrics*)> f);
+
+    PaddingTable& paddingTable() { return _paddingTable; }
 
     friend class ChangeSynthesizerState;
     friend class Chord;

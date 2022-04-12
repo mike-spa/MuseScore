@@ -4057,6 +4057,10 @@ float Measure::durationStretch(Fraction curTicks, const Fraction minTicks) const
     double minSysTicks = double(minTicks.ticks());
     double maxSysTicks = double(system()->maxSysTicks().ticks());
     double maxSysRatio = maxSysTicks / minSysTicks;
+
+    if (maxSysTicks / minSysTicks >= 2 && minSysTicks < longNoteThreshold) {
+        minSysTicks *= 2.0; // HACK: avoids cases where short notes cause everything to be unnecessarily wide
+    }
     double ratio = double(curTicks.ticks()) / minSysTicks;
     if (maxSysRatio > maxRatio) {
         double A = (minSysTicks * (maxRatio - 1)) / (maxSysTicks - minSysTicks);

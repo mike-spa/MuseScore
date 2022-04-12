@@ -239,7 +239,7 @@ public:
     Fraction minSysTicks() const;
     Fraction maxSysTicks() const;
 
-    bool isSqueezable() const;
+    double squeezableSpace() const;
 };
 
 typedef QList<System*>::iterator iSystem;

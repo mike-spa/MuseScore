@@ -82,9 +82,9 @@ public:
     static Chord* copyChord(const Chord& src, bool link = false);
     static std::shared_ptr<Chord> makeChord(Segment* parent);
 
-    static ChordLine* createChordLine(Chord* parent, bool isAccessibleEnabled = true);
+    static ChordLine* createChordLine(Note* parent, bool isAccessibleEnabled = true);
     static ChordLine* copyChordLine(const ChordLine& src);
-    static std::shared_ptr<ChordLine> makeChordLine(Chord* parent);
+    static std::shared_ptr<ChordLine> makeChordLine(Note* parent);
 
     static Slide* createSlide(Chord* parent, bool isAccessibleEnabled = true);
     static Slide* copySlide(const Slide& src);

@@ -43,7 +43,7 @@ const char* scorelineNames[] = {
 //   ChordLine
 //---------------------------------------------------------
 
-ChordLine::ChordLine(Chord* parent, const ElementType& type)
+ChordLine::ChordLine(Note* parent, const ElementType& type)
     : EngravingItem(type, parent, ElementFlag::MOVABLE)
 {
     modified = false;
@@ -104,8 +104,11 @@ void ChordLine::layout()
     }
 
     qreal _spatium = spatium();
-    if (explicitParent()) {
-        Note* note = chord()->upNote();
+    Note* note = nullptr;
+    if (parent() && parent()->isNote()) {
+        note = toNote(parent());
+    }
+    if (note) {
         double x = note->pos().x();
         double y = note->pos().y();
         double horOffset = 0.33 * spatium(); // one third of a space away from the note

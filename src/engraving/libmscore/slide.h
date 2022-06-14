@@ -38,7 +38,7 @@ class Chord;
 
 class Slide final : public ChordLine
 {
-    Slide(Chord* parent);
+    Slide(Note *parent);
     Slide(const Slide&);
 
     bool onTheRight() const { return _chordLineType == ChordLineType::FALL || _chordLineType == ChordLineType::DOIT; }  // chordlines to the right of the note

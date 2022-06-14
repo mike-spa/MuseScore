@@ -1810,7 +1810,7 @@ bool Read206::readChordProperties206(XmlReader& e, ReadContext& ctx, Chord* ch)
         ch->setTremolo(tremolo);
     } else if (tag == "tickOffset") {     // obsolete
     } else if (tag == "ChordLine") {
-        ChordLine* cl = Factory::createChordLine(ch);
+        ChordLine* cl = Factory::createChordLine(ch->upNote());
         cl->read(e);
         PointF o = cl->offset();
         cl->setOffset(0.0, 0.0);

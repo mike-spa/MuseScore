@@ -880,38 +880,38 @@ PalettePtr PaletteCreator::newArpeggioPalette()
 
     //fall and doits
 
-    auto cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    auto cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::FALL);
     sp->appendElement(cl, scorelineNames[0]);
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::DOIT);
     sp->appendElement(cl, scorelineNames[1]);
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::PLOP);
     sp->appendElement(cl, scorelineNames[2]);
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::SCOOP);
     sp->appendElement(cl, scorelineNames[3]);
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::FALL);
     cl->setStraight(true);
     sp->appendElement(cl, QT_TRANSLATE_NOOP("Ms", "Slide out down"));
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::DOIT);
     cl->setStraight(true);
     sp->appendElement(cl, QT_TRANSLATE_NOOP("Ms", "Slide out up"));
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::PLOP);
     cl->setStraight(true);
     sp->appendElement(cl, QT_TRANSLATE_NOOP("Ms", "Slide in above"));
 
-    cl = Factory::makeChordLine(gpaletteScore->dummy()->chord());
+    cl = Factory::makeChordLine(gpaletteScore->dummy()->note());
     cl->setChordLineType(ChordLineType::SCOOP);
     cl->setStraight(true);
     sp->appendElement(cl, QT_TRANSLATE_NOOP("Ms", "Slide in below"));

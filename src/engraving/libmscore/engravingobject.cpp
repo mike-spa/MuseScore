@@ -215,6 +215,10 @@ void EngravingObject::setParent(EngravingObject* p)
         return;
     }
 
+    if (isChordLine()) {
+        qDebug() << "hey";
+    }
+
     if (!p) {
         moveToDummy();
         return;

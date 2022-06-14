@@ -271,8 +271,8 @@ EngravingItem* Factory::doCreateItem(ElementType type, EngravingItem* parent)
     case ElementType::BRACKET:           return new Bracket(parent);
     case ElementType::ARTICULATION:      return new Articulation(parent->isChordRest() ? toChordRest(parent) : dummy->chord());
     case ElementType::FERMATA:           return new Fermata(parent);
-    case ElementType::CHORDLINE:         return new ChordLine(parent->isChord() ? toChord(parent) : dummy->chord());
-    case ElementType::SLIDE:             return new Slide(parent->isChord() ? toChord(parent) : dummy->chord());
+    case ElementType::CHORDLINE:         return new ChordLine(parent->isNote() ? toNote(parent) : dummy->note());
+    case ElementType::SLIDE:             return new Slide(parent->isNote() ? toNote(parent) : dummy->note());
     case ElementType::ACCIDENTAL:        return new Accidental(parent);
     case ElementType::DYNAMIC:           return new Dynamic(parent->isSegment() ? toSegment(parent) : dummy->segment());
     case ElementType::TEXT:              return new Text(parent);
@@ -497,9 +497,9 @@ Chord* Factory::copyChord(const Chord& src, bool link)
 }
 MAKE_ITEM_IMPL(Chord, Segment)
 
-CREATE_ITEM_IMPL(ChordLine, ElementType::CHORDLINE, Chord, isAccessibleEnabled)
+CREATE_ITEM_IMPL(ChordLine, ElementType::CHORDLINE, Note, isAccessibleEnabled)
 COPY_ITEM_IMPL(ChordLine)
-MAKE_ITEM_IMPL(ChordLine, Chord)
+MAKE_ITEM_IMPL(ChordLine, Note)
 
 CREATE_ITEM_IMPL(Clef, ElementType::CLEF, Segment, isAccessibleEnabled)
 COPY_ITEM_IMPL(Clef)

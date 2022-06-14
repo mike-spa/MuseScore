@@ -1866,6 +1866,12 @@ EngravingItem* Note::drop(EditData& data)
         }
         return 0;
 
+    case ElementType::CHORDLINE:
+        e->setParent(this);
+        e->setTrack(track());
+        score()->undoAddElement(e);
+        return e;
+
     case ElementType::LYRICS:
         e->setParent(ch);
         e->setTrack(track());

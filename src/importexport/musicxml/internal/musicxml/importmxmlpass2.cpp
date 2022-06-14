@@ -6107,7 +6107,7 @@ static void addChordLine(const Notation& notation, Note* note,
     const QString& chordLineType = notation.subType();
     if (chordLineType != "") {
         if (note) {
-            const auto chordline = Factory::createChordLine(note->chord());
+            const auto chordline = Factory::createChordLine(note);
             if (chordLineType == "falloff") {
                 chordline->setChordLineType(ChordLineType::FALL);
             }

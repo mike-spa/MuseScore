@@ -1285,7 +1285,7 @@ bool Chord::readProperties(XmlReader& e)
         _tremolo->setDurationType(durationType());
     } else if (tag == "tickOffset") {     // obsolete
     } else if (tag == "ChordLine") {
-        ChordLine* cl = Factory::createChordLine(this);
+        ChordLine* cl = Factory::createChordLine(this->upNote());
         cl->read(e);
         add(cl);
     } else {
@@ -2810,11 +2810,11 @@ EngravingItem* Chord::drop(EditData& data)
         return atr;
     }
 
-    case ElementType::CHORDLINE:
+    /*case ElementType::CHORDLINE:
         e->setParent(this);
         e->setTrack(track());
         score()->undoAddElement(e);
-        break;
+        break;*/
 
     case ElementType::TREMOLO:
     {

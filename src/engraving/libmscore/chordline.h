@@ -53,7 +53,7 @@ protected:
 
     friend class Factory;
 
-    ChordLine(Chord* parent, const ElementType& type = ElementType::CHORDLINE);
+    ChordLine(Note* parent, const ElementType& type = ElementType::CHORDLINE);
     ChordLine(const ChordLine&);
 
     bool sameVoiceKerningLimited() const override { return true; }
@@ -65,6 +65,7 @@ public:
     void setChordLineType(ChordLineType);
     ChordLineType chordLineType() const { return _chordLineType; }
     Chord* chord() const { return (Chord*)(explicitParent()); }
+    Note* note() const { return (Note*)(explicitParent()); }
     bool isStraight() const { return _straight; }
     void setStraight(bool straight) { _straight =  straight; }
     void setLengthX(qreal length) { _lengthX = length; }

@@ -33,7 +33,7 @@ namespace mu::engraving {
 //   Slide
 //---------------------------------------------------------
 
-Slide::Slide(Chord* parent)
+Slide::Slide(Note* parent)
     : ChordLine(parent, ElementType::SLIDE)
 {
 }

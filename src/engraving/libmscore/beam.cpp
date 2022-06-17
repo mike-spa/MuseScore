@@ -554,7 +554,7 @@ int Beam::getMiddleStaffLine(ChordRest* startChord, ChordRest* endChord, int sta
 
 int Beam::computeDesiredSlant(int startNote, int endNote, int middleLine, int dictator, int pointer) const
 {
-    if (score()->styleB(Sid::beamNoSlope)) {
+    if (score()->styleB(Sid::beamNoSlope) || noSlope()) {
         return 0;
     }
     if (dictator == middleLine && pointer == middleLine) {
@@ -1040,7 +1040,8 @@ void Beam::offsetBeamToRemoveCollisions(const std::vector<ChordRest*> chordRests
         Chord* chord = toChord(chordRest);
         PointF anchor = chordBeamAnchor(chord) - pagePos();
         if (endX != startX) {
-            // avoid division by zero for zero-length beams (why do these exist?)
+            // avoid division by zero for zero-length beams (can exist as a pre-layout state used
+            // for horizontal spacing computations)
             qreal proportionAlongX = (anchor.x() - startX) / (endX - startX);
             while (true) {
                 qreal desiredY = proportionAlongX * (endY - startY) + startY;
@@ -1351,58 +1352,60 @@ void Beam::layout2(const std::vector<ChordRest*>& chordRests, SpannerSegmentType
             _startAnchor.ry() = (maxY + minY) / 2;
             _endAnchor.ry() = (maxY + minY) / 2;
             _slope = 0;
-            int topFirstLine = topFirst ? topFirst->downNote()->line() : 0;
-            int topLastLine = topLast ? topLast->downNote()->line() : 0;
-            int bottomFirstLine = bottomFirst ? bottomFirst->upNote()->line() : 0;
-            int bottomLastLine = bottomLast ? bottomLast->upNote()->line() : 0;
-            if (chordRests.size() == 2 && chordRests[0]->staffMove() != chordRests[1]->staffMove()) {
-                // if there are only two notes, one on each staff, special case
-                // take max slope into account
-                int desiredSlant = round((chordRests[0]->stemPos().y() - chordRests[1]->stemPos().y()) / spatium());
-                int slant = std::min(std::abs(desiredSlant), getMaxSlope());
-                slant *= (desiredSlant < 0) ? -quarterSpace : quarterSpace;
-                _startAnchor.ry() += (slant / 2);
-                _endAnchor.ry() -= (slant / 2);
-            } else if (!topLast || !bottomLast) {
-                // otherwise, if there is only one note on one of the staves, use slope from other staff
-                int startNote = 0;
-                int endNote = 0;
-                if (!topLast) {
-                    startNote = bottomFirstLine;
-                    endNote = bottomLastLine;
-                } else if (!bottomLast) {
-                    startNote = topFirstLine;
-                    endNote = topLastLine;
-                }
-                int slant = startNote - endNote;
-                slant = std::min(std::abs(slant), getMaxSlope());
-                qreal slope = slant * (startNote > endNote ? quarterSpace : -quarterSpace);
-                _startAnchor.ry() += (slope / 2);
-                _endAnchor.ry() -= (slope / 2);
-            } else {
-                // otherwise, there are at least two notes on each staff
-                // (that is, topLast and bottomLast are both set)
-
-                if (topFirstLine == topLastLine || bottomFirstLine == bottomLastLine) {
-                    // if outside notes on top or bottom staff are on the same staff line, slope = 0
-                    // no further adjustment needed, the beam is already well-placed and horizontal
+            if (!noSlope()) {
+                int topFirstLine = topFirst ? topFirst->downNote()->line() : 0;
+                int topLastLine = topLast ? topLast->downNote()->line() : 0;
+                int bottomFirstLine = bottomFirst ? bottomFirst->upNote()->line() : 0;
+                int bottomLastLine = bottomLast ? bottomLast->upNote()->line() : 0;
+                if (chordRests.size() == 2 && chordRests[0]->staffMove() != chordRests[1]->staffMove()) {
+                    // if there are only two notes, one on each staff, special case
+                    // take max slope into account
+                    int desiredSlant = round((chordRests[0]->stemPos().y() - chordRests[1]->stemPos().y()) / spatium());
+                    int slant = std::min(std::abs(desiredSlant), getMaxSlope());
+                    slant *= (desiredSlant < 0) ? -quarterSpace : quarterSpace;
+                    _startAnchor.ry() += (slant / 2);
+                    _endAnchor.ry() -= (slant / 2);
+                } else if (!topLast || !bottomLast) {
+                    // otherwise, if there is only one note on one of the staves, use slope from other staff
+                    int startNote = 0;
+                    int endNote = 0;
+                    if (!topLast) {
+                        startNote = bottomFirstLine;
+                        endNote = bottomLastLine;
+                    } else if (!bottomLast) {
+                        startNote = topFirstLine;
+                        endNote = topLastLine;
+                    }
+                    int slant = startNote - endNote;
+                    slant = std::min(std::abs(slant), getMaxSlope());
+                    qreal slope = slant * (startNote > endNote ? quarterSpace : -quarterSpace);
+                    _startAnchor.ry() += (slope / 2);
+                    _endAnchor.ry() -= (slope / 2);
                 } else {
-                    // otherwise, we have to compare the slopes from the top staff and bottom staff.
-                    int topSlant = topFirstLine - topLastLine;
-                    int bottomSlant = bottomFirstLine - bottomLastLine;
-                    if ((topSlant < 0 && bottomSlant < 0) || (topSlant > 0 && bottomSlant > 0)) {
-                        int slant = (abs(topSlant) < abs(bottomSlant)) ? topSlant : bottomSlant;
-                        slant = std::min(std::abs(slant), getMaxSlope());
-                        qreal slope = slant * ((topSlant < 0) ? -quarterSpace : quarterSpace);
-                        _startAnchor.ry() += (slope / 2);
-                        _endAnchor.ry() -= (slope / 2);
+                    // otherwise, there are at least two notes on each staff
+                    // (that is, topLast and bottomLast are both set)
+
+                    if (topFirstLine == topLastLine || bottomFirstLine == bottomLastLine) {
+                        // if outside notes on top or bottom staff are on the same staff line, slope = 0
+                        // no further adjustment needed, the beam is already well-placed and horizontal
                     } else {
-                        // if the two slopes are in opposite directions, flat!
-                        // nothing needs to be done, the beam is already horizontal and placed nicely
+                        // otherwise, we have to compare the slopes from the top staff and bottom staff.
+                        int topSlant = topFirstLine - topLastLine;
+                        int bottomSlant = bottomFirstLine - bottomLastLine;
+                        if ((topSlant < 0 && bottomSlant < 0) || (topSlant > 0 && bottomSlant > 0)) {
+                            int slant = (abs(topSlant) < abs(bottomSlant)) ? topSlant : bottomSlant;
+                            slant = std::min(std::abs(slant), getMaxSlope());
+                            qreal slope = slant * ((topSlant < 0) ? -quarterSpace : quarterSpace);
+                            _startAnchor.ry() += (slope / 2);
+                            _endAnchor.ry() -= (slope / 2);
+                        } else {
+                            // if the two slopes are in opposite directions, flat!
+                            // nothing needs to be done, the beam is already horizontal and placed nicely
+                        }
                     }
                 }
+                _slope = (_endAnchor.y() - _startAnchor.y()) / (_endAnchor.x() - _startAnchor.x());
             }
-            _slope = (_endAnchor.y() - _startAnchor.y()) / (_endAnchor.x() - _startAnchor.x());
             fragments[frag]->py1[fragmentIndex] = _startAnchor.y() - pagePos().y();
             fragments[frag]->py2[fragmentIndex] = _endAnchor.y() - pagePos().y();
             createBeamSegments(chordRests);
@@ -1880,7 +1883,7 @@ PropertyValue Beam::getProperty(Pid propertyId) const
     case Pid::GROW_RIGHT:     return growRight();
     case Pid::USER_MODIFIED:  return userModified();
     case Pid::BEAM_POS:       return PropertyValue::fromValue(beamPos());
-    case Pid::BEAM_NO_SLOPE:  return _slope == 0;
+    case Pid::BEAM_NO_SLOPE:  return noSlope();
     default:
         return EngravingItem::getProperty(propertyId);
     }
@@ -1912,6 +1915,9 @@ bool Beam::setProperty(Pid propertyId, const PropertyValue& v)
         if (userModified()) {
             setBeamPos(v.value<PairF>());
         }
+        break;
+    case Pid::BEAM_NO_SLOPE:
+        setNoSlope(v.toBool());
         break;
     default:
         if (!EngravingItem::setProperty(propertyId, v)) {

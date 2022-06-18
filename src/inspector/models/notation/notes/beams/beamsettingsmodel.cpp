@@ -133,6 +133,19 @@ PropertyItem* BeamSettingsModel::customPositioned()
     return m_customPositioned;
 }
 
+void BeamSettingsModel::resetCustomPositioned()
+{
+    m_customPositioned->resetToDefault();
+
+    loadPropertyItem(m_beamVectorX, [](const QVariant& elementPropertyValue) -> QVariant {
+        return round((elementPropertyValue.value<QPair<double, double> >().first) * 100) / 100;
+    });
+
+    loadPropertyItem(m_beamVectorY, [](const QVariant& elementPropertyValue) -> QVariant {
+        return round((elementPropertyValue.value<QPair<double, double> >().second) * 100) / 100;
+    });
+}
+
 void BeamSettingsModel::updateBeamHeight(const qreal& x, const qreal& y)
 {
     if (m_isBeamHeightLocked) {

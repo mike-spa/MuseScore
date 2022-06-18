@@ -228,7 +228,7 @@ FocusableItem {
 
                         onRequestResetToDefault: {
                             if (root.model) {                                
-                                root.model.customPositioned.resetToDefault();
+                                root.model.customPositioned = undefined
                             }
                         }
 

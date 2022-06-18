@@ -47,7 +47,7 @@ class BeamSettingsModel : public AbstractInspectorModel
 
     Q_PROPERTY(PropertyItem * forceHorizontal READ forceHorizontal CONSTANT)
 
-    Q_PROPERTY(PropertyItem * customPositioned READ customPositioned CONSTANT)
+    Q_PROPERTY(PropertyItem * customPositioned READ customPositioned WRITE setCustomPositioned RESET resetCustomPositioned)
 
 public:
     explicit BeamSettingsModel(QObject* parent, IElementRepositoryService* repository);
@@ -73,6 +73,8 @@ public slots:
     void setIsBeamHeightLocked(bool isBeamHeightLocked);
     void setFeatheringMode(BeamTypes::FeatheringMode featheringMode);
     void setBeamModesModel(BeamModesModel* beamModesModel);
+    void setCustomPositioned(PropertyItem*) {return;} // hack: not implemented
+    void resetCustomPositioned();
 
 signals:
     void isBeamHeightLockedChanged(bool isBeamHeightLocked);

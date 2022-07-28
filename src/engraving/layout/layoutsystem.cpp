@@ -387,82 +387,85 @@ System* LayoutSystem::collectSystem(const LayoutOptions& options, LayoutContext&
         }
     }
 
-    // BRING THE WIDTH OF THE SYSTEM TO THE DESIRED VALUE
-    // Gradient descent method: calls the computeWidth() function with a stretch parameter
-    // proportional to the difference between the current length and the target length.
-    // After few iterations, the length will converge to the target length.
-    double newRest = systemWidth - curSysWidth;
-    if ((ctx.curMeasure == 0 || (lm && lm->sectionBreak()))
-        && ((curSysWidth / systemWidth) <= score->styleD(Sid::lastSystemFillLimit))) {
-        // We do not stretch last system of a section (or the last of the piece) if curSysWidth is <= lastSystemFillLimit
-        newRest = 0;
-    }
-    if (MScore::noHorizontalStretch) { // Debug feature
-        newRest = 0;
-    }
-    double stretchCoeff = 1;
-    double prevWidth = 0;
-    int iter = 0;
-    double epsilon = score->spatium() * 0.05; // For reference: this is smaller than the width of a note stem
-    static constexpr float multiplier = 1.4f; // Empirically optimized value which allows the fastest convergence of the following algorithm.
-    static constexpr int maxIter = 100;
-    // Different systems need different numbers of iterations of the following loop to reach the target width.
-    // The average is less than 3 iterations, and the maximum I've ever seen (very rare) is 30-40 iterations.
-    // maxIter just serves as a safety exit to not get stuck in the loop in case a system can't be justified
-    // (which can only happen if errors are made before getting here). It's set to a very high value to make
-    // sure that the system really can't be justified, and it isn't just a "tricky" one needing more iterations.
-    while (abs(newRest) > epsilon && iter < maxIter) {
-        stretchCoeff *= (1 + multiplier * newRest / curSysWidth);
-        for (MeasureBase* mb : system->measures()) {
-            if (mb->isMeasure()) {
-                Measure* m = toMeasure(mb);
-                if (!(m->isWidthLocked() && stretchCoeff < m->layoutStretch())) { // It would be pointless to re-compute the layout of a measure
-                    prevWidth = m->width();                                       // that is already widthLocked to a larger value.
-                    m->computeWidth(minTicks, stretchCoeff);
-                    curSysWidth += m->width() - prevWidth;
+    for (int i = 0; i < 2; i++) {
+        // BRING THE WIDTH OF THE SYSTEM TO THE DESIRED VALUE
+        // Gradient descent method: calls the computeWidth() function with a stretch parameter
+        // proportional to the difference between the current length and the target length.
+        // After few iterations, the length will converge to the target length.
+        double newRest = systemWidth - curSysWidth;
+        if ((ctx.curMeasure == 0 || (lm && lm->sectionBreak()))
+            && ((curSysWidth / systemWidth) <= score->styleD(Sid::lastSystemFillLimit))) {
+            // We do not stretch last system of a section (or the last of the piece) if curSysWidth is <= lastSystemFillLimit
+            newRest = 0;
+        }
+        if (MScore::noHorizontalStretch) { // Debug feature
+            newRest = 0;
+        }
+        double stretchCoeff = 1;
+        double prevWidth = 0;
+        int iter = 0;
+        double epsilon = score->spatium() * 0.05; // For reference: this is smaller than the width of a note stem
+        static constexpr float multiplier = 1.4f; // Empirically optimized value which allows the fastest convergence of the following algorithm.
+        static constexpr int maxIter = 100;
+        // Different systems need different numbers of iterations of the following loop to reach the target width.
+        // The average is less than 3 iterations, and the maximum I've ever seen (very rare) is 30-40 iterations.
+        // maxIter just serves as a safety exit to not get stuck in the loop in case a system can't be justified
+        // (which can only happen if errors are made before getting here). It's set to a very high value to make
+        // sure that the system really can't be justified, and it isn't just a "tricky" one needing more iterations.
+        while (abs(newRest) > epsilon && iter < maxIter) {
+            stretchCoeff *= (1 + multiplier * newRest / curSysWidth);
+            for (MeasureBase* mb : system->measures()) {
+                if (mb->isMeasure()) {
+                    Measure* m = toMeasure(mb);
+                    if (!(m->isWidthLocked() && stretchCoeff < m->layoutStretch())) { // It would be pointless to re-compute the layout of a measure
+                        prevWidth = m->width();                                       // that is already widthLocked to a larger value.
+                        m->computeWidth(minTicks, stretchCoeff);
+                        curSysWidth += m->width() - prevWidth;
+                    }
                 }
             }
+            newRest = systemWidth - curSysWidth;
+            iter++;
         }
-        newRest = systemWidth - curSysWidth;
-        iter++;
+
+        // LAYOUT MEASURES
+        PointF pos;
+        firstMeasure = true;
+        bool createBrackets = false;
+        for (MeasureBase* mb : system->measures()) {
+            double ww = mb->width();
+            if (mb->isMeasure()) {
+                if (firstMeasure) {
+                    pos.rx() += system->leftMargin();
+                    firstMeasure = false;
+                }
+                mb->setPos(pos);
+                mb->setParent(system);
+                Measure* m = toMeasure(mb);
+                m->layoutMeasureElements();
+                m->layoutStaffLines();
+                if (createBrackets) {
+                    system->addBrackets(ctx, toMeasure(mb));
+                    createBrackets = false;
+                }
+            } else if (mb->isHBox()) {
+                mb->setPos(pos + PointF(toHBox(mb)->topGap(), 0.0));
+                mb->layout();
+                createBrackets = toHBox(mb)->createSystemHeader();
+            } else if (mb->isVBox()) {
+                mb->setPos(pos);
+            }
+            pos.rx() += ww;
+        }
+        system->setWidth(pos.x());
+
+        layoutSystemElements(options, ctx, score, system);
+        system->layout2(ctx);     // compute staff distances
+        for (MeasureBase* mb : system->measures()) {
+            mb->layoutCrossStaff();
+        }
     }
 
-    // LAYOUT MEASURES
-    PointF pos;
-    firstMeasure = true;
-    bool createBrackets = false;
-    for (MeasureBase* mb : system->measures()) {
-        double ww = mb->width();
-        if (mb->isMeasure()) {
-            if (firstMeasure) {
-                pos.rx() += system->leftMargin();
-                firstMeasure = false;
-            }
-            mb->setPos(pos);
-            mb->setParent(system);
-            Measure* m = toMeasure(mb);
-            m->layoutMeasureElements();
-            m->layoutStaffLines();
-            if (createBrackets) {
-                system->addBrackets(ctx, toMeasure(mb));
-                createBrackets = false;
-            }
-        } else if (mb->isHBox()) {
-            mb->setPos(pos + PointF(toHBox(mb)->topGap(), 0.0));
-            mb->layout();
-            createBrackets = toHBox(mb)->createSystemHeader();
-        } else if (mb->isVBox()) {
-            mb->setPos(pos);
-        }
-        pos.rx() += ww;
-    }
-    system->setWidth(pos.x());
-
-    layoutSystemElements(options, ctx, score, system);
-    system->layout2(ctx);     // compute staff distances
-    for (MeasureBase* mb : system->measures()) {
-        mb->layoutCrossStaff();
-    }
     // TODO: now that the code at the top of this function does this same backwards search,
     // we might be able to eliminate this block
     // but, lc might be used elsewhere so we need to be careful

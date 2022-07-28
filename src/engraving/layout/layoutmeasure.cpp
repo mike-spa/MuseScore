@@ -768,6 +768,7 @@ void LayoutMeasure::getNextMeasure(const LayoutOptions& options, LayoutContext& 
             }
         }
     }
+    measure->layoutCrossStaff();
 
     for (staff_idx_t staffIdx = 0; staffIdx < score->nstaves(); ++staffIdx) {
         for (Segment& segment : measure->segments()) {

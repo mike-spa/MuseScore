@@ -1020,8 +1020,8 @@ void Chord::computeUp()
                         firstCr->setUp(firstCr->staffMove() >= 0);
                         lastCr->setUp(lastCr->staffMove() >= 0);
                     }
-                    break;
                 }
+                break;
             }
         }
         Measure* measure = findMeasure();

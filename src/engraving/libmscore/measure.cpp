@@ -4259,22 +4259,37 @@ void Measure::computeWidth(Segment* s, double x, bool isSystemHeader, Fraction m
                 w -= std::max(ns->minHorizontalCollidingDistance(ns->next()), double(score()->styleMM(Sid::clefKeyRightMargin)));
             }
 
-            // Adjust the spacing for cross-staff beams situations
             if (s->isChordRestType() && ns->isChordRestType()) {
-                CrossStaffContent thisCS = s->crossStaffContent();
-                CrossStaffContent nextCS = ns->crossStaffContent();
-                bool thisIsDown = thisCS.movedDown;
-                bool thisIsUp = thisCS.movedUp;
-                bool nextIsDown = nextCS.movedDown;
-                bool nextIsUp = nextCS.movedUp;
-                double displacement = score()->noteHeadWidth() - score()->styleMM(Sid::stemWidth);
-                if ((thisIsDown && !nextIsDown) || (nextIsUp && !thisIsUp)) {
-                    w += displacement;
-                    _squeezableSpace -= score()->noteHeadWidth();
-                }
-                if ((thisIsUp && !nextIsUp) || (nextIsDown && !thisIsDown)) {
-                    w -= displacement;
-                    _squeezableSpace -= score()->noteHeadWidth();
+                for (EngravingItem* item1 : s->elist()) {
+                    if (!item1 || !item1->isChord() || !toChord(item1)->beam()) {
+                        continue;
+                    }
+                    Chord* chord1 = toChord(item1);
+                    Beam* beam = chord1->beam();
+                    for (EngravingItem* item2 : ns->elist()) {
+                        if (!item2 || !item2->isChord() || !toChord(item2)->beam() || toChord(item2)->beam() != beam) {
+                            continue;
+                        }
+                        Chord* chord2 = toChord(item2);
+                        bool firstIsUp = chord1->up();
+                        bool secondIsUp = chord2->up();
+                        if (!beam->cross()) {
+                            chord1->computeUp();
+                            chord2->computeUp();
+                        }
+
+                        qDebug() << "First is up = " << firstIsUp;
+                        qDebug() << "Second is up = " << secondIsUp;
+                        double displacement = score()->noteHeadWidth() - score()->styleMM(Sid::stemWidth);
+                        if (!firstIsUp && secondIsUp) {
+                            w -= displacement;
+                            _squeezableSpace -= score()->noteHeadWidth();
+                        }
+                        if (firstIsUp && !secondIsUp) {
+                            w += displacement;
+                            _squeezableSpace -= score()->noteHeadWidth();
+                        }
+                    }
                 }
             }
 

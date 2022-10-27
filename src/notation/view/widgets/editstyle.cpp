@@ -274,7 +274,7 @@ EditStyle::EditStyle(QWidget* parent)
         { StyleId::minStaffSpread,          false, minStaffSpread,          resetMinStaffSpread },
         { StyleId::maxStaffSpread,          false, maxStaffSpread,          resetMaxStaffSpread },
         { StyleId::maxAkkoladeDistance,     false, maxAkkoladeDistance,     resetMaxAkkoladeDistance },
-        { StyleId::maxPageFillSpread,       false, maxPageFillSpread,       resetMaxPageFillSpread },
+        { StyleId::lastPageFillLimit,       true,  lastPageFillLimit,       resetLastPageFillLimit },
 
         { StyleId::lyricsPlacement,         false, lyricsPlacement,         resetLyricsPlacement },
         { StyleId::lyricsPosAbove,          false, lyricsPosAbove,          resetLyricsPosAbove },

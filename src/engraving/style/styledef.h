@@ -90,6 +90,7 @@ enum class Sid {
     maxStaffSpread,
     maxAkkoladeDistance,
     maxPageFillSpread,
+    lastPageFillLimit,
 
     lyricsPlacement,
     lyricsPosAbove,

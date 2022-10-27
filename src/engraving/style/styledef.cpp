@@ -69,6 +69,7 @@ const std::array<StyleDef::StyleValue, size_t(Sid::STYLES)> StyleDef::styleValue
     { Sid::maxStaffSpread,          "maxSpreadSpread",         Spatium(20.0) },
     { Sid::maxAkkoladeDistance,     "maxAkkoladeDistance",     Spatium(6.5) },
     { Sid::maxPageFillSpread,       "maxPageFillSpread",       Spatium(6.0) },
+    { Sid::lastPageFillLimit,       "lastPageFillLimit",       PropertyValue(0.55) },
 
     { Sid::lyricsPlacement,         "lyricsPlacement",         PlacementV::BELOW },
     { Sid::lyricsPosAbove,          "lyricsPosAbove",          PointF(0.0, -2.0) },

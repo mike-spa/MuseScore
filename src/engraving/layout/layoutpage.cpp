@@ -605,6 +605,12 @@ void LayoutPage::distributeStaves(const LayoutContext& ctx, Page* page, double f
         return;
     }
 
+    MeasureBase* lastMeasInPage = page->systems().back()->measures().back();
+    bool isLastPage = lastMeasInPage == score->measures()->last() || lastMeasInPage->pageBreak();
+    double lastPageFill = yBottom / (page->height() - page->bm() - page->tm());
+    if (isLastPage && lastPageFill < score->styleD(Sid::lastPageFillLimit)) {
+        spaceRemaining = std::min(spaceRemaining, yBottom * 0.25);
+    }
     // Try to make the gaps equal, taking the spread factors and maximum spacing into account.
     static const int maxPasses { 20 };     // Saveguard to prevent endless loops.
     int pass { 0 };
@@ -652,16 +658,14 @@ void LayoutPage::distributeStaves(const LayoutContext& ctx, Page* page, double f
 
     // If there is still space left, distribute the space of the staves.
     // However, there is a limit on how much space is added per gap.
-    const double maxPageFill { score->styleMM(Sid::maxPageFillSpread) };
-    spaceRemaining = std::min(maxPageFill * static_cast<double>(vgdl.size()), spaceRemaining);
     pass = 0;
     ngaps = 1;
-    while (!RealIsNull(spaceRemaining) && !RealIsNull(maxPageFill) && (ngaps > 0) && (++pass < maxPasses)) {
+    while (!RealIsNull(spaceRemaining) && (ngaps > 0) && (++pass < maxPasses)) {
         ngaps = 0;
         double addedSpace { 0.0 };
         double step { spaceRemaining / vgdl.sumStretchFactor() };
         for (VerticalGapData* vgd : vgdl) {
-            double res { vgd->addFillSpacing(step, maxPageFill) };
+            double res { vgd->addFillSpacing(step) };
             if (!RealIsNull(res)) {
                 addedSpace += res * vgd->factor();
                 ++ngaps;

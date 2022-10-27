@@ -70,7 +70,7 @@ public:
     double addSpacing(double step);
     bool isFixedHeight() const;
     void undoLastAddSpacing();
-    double addFillSpacing(double step, double maxFill);
+    double addFillSpacing(double step);
 };
 
 //---------------------------------------------------------

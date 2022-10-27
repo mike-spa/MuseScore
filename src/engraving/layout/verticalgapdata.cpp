@@ -192,13 +192,12 @@ void VerticalGapData::undoLastAddSpacing()
 //   addFillSpacing
 //---------------------------------------------------------
 
-double VerticalGapData::addFillSpacing(double step, double maxFill)
+double VerticalGapData::addFillSpacing(double step)
 {
     if (_fixedSpacer) {
         return 0.0;
     }
-    double actStep { ((step + _fillSpacing / _factor) > maxFill) ? (maxFill - _fillSpacing / _factor) : step };
-    double res = addSpacing(actStep);
+    double res = addSpacing(step);
     _fillSpacing += res * _factor;
     return res;
 }

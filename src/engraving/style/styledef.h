@@ -459,6 +459,7 @@ enum class Sid {
     mmRestOldStyleSpacing,
     hideEmptyStaves,
     dontHideStavesInFirstSystem,
+    dontHideStavesWithInvisibleItems,
     enableIndentationOnFirstSystem,
     firstSystemIndentationValue,
     alwaysShowBracketsWhenEmptyStavesAreHidden,

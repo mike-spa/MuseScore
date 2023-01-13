@@ -3033,6 +3033,9 @@ void Score::sortStaves(std::vector<staff_idx_t>& dst)
     }
     for (auto i : _spanner.map()) {
         Spanner* sp = i.second;
+        if (sp->systemFlag() && !sp->isLinked()) {
+            continue;
+        }
         voice_idx_t voice    = sp->voice();
         staff_idx_t staffIdx = sp->staffIdx();
         staff_idx_t idx = mu::indexOf(dst, staffIdx);

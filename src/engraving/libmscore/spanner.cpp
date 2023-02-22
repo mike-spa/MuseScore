@@ -35,6 +35,7 @@
 #include "staff.h"
 #include "system.h"
 
+#include "linkedobjects.h"
 #include "translation.h"
 #include "log.h"
 
@@ -667,6 +668,9 @@ void Spanner::computeStartElement()
     case Anchor::SEGMENT: {
         if (systemFlag()) {
             _startElement = startSegment();
+            if (_startElement->tick() > tick()) {
+                adjustStartTick(_startElement->tick());
+            }
         } else {
             Segment* seg = score()->tick2segmentMM(tick(), false, SegmentType::ChordRest);
             track_idx_t strack = (track() / VOICES) * VOICES;
@@ -717,6 +721,9 @@ void Spanner::computeEndElement()
         }
         if (systemFlag()) {
             _endElement = endSegment();
+            if (_endElement->tick() < tick2()) {
+                adjustEndTick(_endElement->tick());
+            }
         } else if (isLyricsLine() && toLyricsLine(this)->isEndMelisma()) {
             // lyrics endTick should already indicate the segment we want
             // except for TEMP_MELISMA_TICKS case
@@ -775,6 +782,34 @@ void Spanner::computeEndElement()
         }
     case Anchor::CHORD:
         break;
+    }
+}
+
+void Spanner::adjustStartTick(Fraction startTick)
+{
+    setTick(startTick);
+    if (_links && _links->mainElement() == this) {
+        for (auto iter = _links->begin(); iter != _links->end(); ++iter) {
+            Spanner* linkedSpanner = toSpanner(*iter);
+            if (linkedSpanner == this) {
+                continue;
+            }
+            linkedSpanner->setTick(startTick);
+        }
+    }
+}
+
+void Spanner::adjustEndTick(Fraction endTick)
+{
+    setTick2(endTick);
+    if (_links && _links->mainElement() == this) {
+        for (auto iter = _links->begin(); iter != _links->end(); ++iter) {
+            Spanner* linkedSpanner = toSpanner(*iter);
+            if (linkedSpanner == this) {
+                continue;
+            }
+            linkedSpanner->setTick2(endTick);
+        }
     }
 }
 

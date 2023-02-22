@@ -251,6 +251,8 @@ public:
 
     void computeStartElement();
     void computeEndElement();
+    void adjustStartTick(Fraction startTick);
+    void adjustEndTick(Fraction endTick);
     static Note* endElementFromSpanner(Spanner* sp, EngravingItem* newStart);
     static Note* startElementFromSpanner(Spanner* sp, EngravingItem* newEnd);
     void setNoteSpan(Note* startNote, Note* endNote);

@@ -2884,7 +2884,7 @@ void TLayout::layout(KeySig* item, LayoutContext&)
     item->setbbox(RectF());
 
     item->_sig.keySymbols().clear();
-    if (item->staff() && !item->staff()->staffType(item->tick())->genKeysig()) {
+    if (item->staff() && !item->staff()->isPitchedStaff(item->tick())) {
         return;
     }
 

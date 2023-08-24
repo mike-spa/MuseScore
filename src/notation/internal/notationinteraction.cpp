@@ -767,6 +767,24 @@ void NotationInteraction::doSelect(const std::vector<EngravingItem*>& elements, 
     }
 
     score()->select(elements, type, staffIndex);
+    selectLinked(elements, type);
+}
+
+void NotationInteraction::selectLinked(const std::vector<EngravingItem*>& elements, SelectType type)
+{
+    for (EngravingItem* element : elements) {
+        LinkedObjects* links = element->links();
+        if (!links || links->size() < 2) {
+            continue;
+        }
+        for (EngravingObject* linkedObj : *links) {
+            if (linkedObj == element) {
+                continue;
+            }
+            Score* linkedScore = linkedObj->score();
+            linkedScore->select(toEngravingItem(linkedObj), type);
+        }
+    }
 }
 
 void NotationInteraction::selectElementsWithSameTypeOnSegment(mu::engraving::ElementType elementType, mu::engraving::Segment* segment)
@@ -851,7 +869,9 @@ void NotationInteraction::clearSelection()
         return;
     }
 
-    score()->deselectAll();
+    for (Score* s : score()->scoreList()) {
+        s->deselectAll();
+    }
 
     notifyAboutSelectionChangedIfNeed();
 

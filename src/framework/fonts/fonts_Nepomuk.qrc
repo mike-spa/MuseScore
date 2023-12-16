@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="fonts/nepomuk/Nepomuk-Bold.otf">../../../fonts/nepomuk/Nepomuk-Bold.otf</file>
+        <file alias="fonts/nepomuk/Nepomuk-BoldItalic.otf">../../../fonts/nepomuk/Nepomuk-BoldItalic.otf</file>
+        <file alias="fonts/nepomuk/Nepomuk-BoldSC.otf">../../../fonts/nepomuk/Nepomuk-BoldSC.otf</file>
+        <file alias="fonts/nepomuk/Nepomuk-Italic.otf">../../../fonts/nepomuk/Nepomuk-Italic.otf</file>
+        <file alias="fonts/nepomuk/Nepomuk-Regular.otf">../../../fonts/nepomuk/Nepomuk-Regular.otf</file>
+        <file alias="fonts/nepomuk/Nepomuk-RegularSC.otf">../../../fonts/nepomuk/Nepomuk-RegularSC.otf</file>
+            </qresource>
+</RCC>

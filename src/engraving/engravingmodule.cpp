@@ -158,6 +158,12 @@ void EngravingModule::onInit(const framework::IApplication::RunMode& mode)
             ":/fonts/petaluma/PetalumaScript.otf",
             ":/fonts/finalemaestro/FinaleMaestroText.otf",
             ":/fonts/finalebroadway/FinaleBroadwayText.otf",
+            ":/fonts/nepomuk/Nepomuk-Bold.otf",
+            ":/fonts/nepomuk/Nepomuk-BoldItalic.otf",
+            ":/fonts/nepomuk/Nepomuk-BoldSC.otf",
+            ":/fonts/nepomuk/Nepomuk-Italic.otf",
+            ":/fonts/nepomuk/Nepomuk-Regular.otf",
+            ":/fonts/nepomuk/Nepomuk-RegularSC.otf",
         };
 
         std::shared_ptr<IFontProvider> fontProvider = ioc()->resolve<IFontProvider>("fonts");

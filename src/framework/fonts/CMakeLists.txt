@@ -38,6 +38,7 @@ set(MODULE_BIG_QRC
     fonts_FinaleMaestro.qrc
     fonts_FinaleBroadway.qrc
     fonts_Tabulature.qrc
+    fonts_Nepomuk.qrc
     )
 
 set(MODULE_SRC

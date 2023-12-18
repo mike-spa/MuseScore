@@ -39,6 +39,7 @@ set(MODULE_BIG_QRC
     fonts_FinaleBroadway.qrc
     fonts_Tabulature.qrc
     fonts_Nepomuk.qrc
+    fonts_Miller.qrc
     )
 
 set(MODULE_SRC

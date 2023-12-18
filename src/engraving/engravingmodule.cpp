@@ -164,6 +164,10 @@ void EngravingModule::onInit(const framework::IApplication::RunMode& mode)
             ":/fonts/nepomuk/Nepomuk-Italic.otf",
             ":/fonts/nepomuk/Nepomuk-Regular.otf",
             ":/fonts/nepomuk/Nepomuk-RegularSC.otf",
+            ":/fonts/miller/MillerText-Roman.otf",
+            ":/fonts/miller/MillerText-Italic.otf",
+            ":/fonts/miller/MillerText-BoldItalic.otf",
+            ":/fonts/miller/MillerText-Bold.otf",
         };
 
         std::shared_ptr<IFontProvider> fontProvider = ioc()->resolve<IFontProvider>("fonts");

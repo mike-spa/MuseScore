@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="fonts/miller/MillerText-Roman.otf">../../../fonts/miller/MillerText-Roman.otf</file>
+        <file alias="fonts/miller/MillerText-Italic.otf">../../../fonts/miller/MillerText-Italic.otf</file>
+        <file alias="fonts/miller/MillerText-BoldItalic.otf">../../../fonts/miller/MillerText-BoldItalic.otf</file>
+        <file alias="fonts/miller/MillerText-Bold.otf">../../../fonts/miller/MillerText-Bold.otf</file>
+            </qresource>
+</RCC>

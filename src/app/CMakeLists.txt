@@ -453,6 +453,10 @@ elseif(OS_IS_MAC)
             ${PROJECT_SOURCE_DIR}/fonts/nepomuk/Nepomuk-Italic.otf
             ${PROJECT_SOURCE_DIR}/fonts/nepomuk/Nepomuk-Regular.otf
             ${PROJECT_SOURCE_DIR}/fonts/nepomuk/Nepomuk-RegularSC.otf
+            ${PROJECT_SOURCE_DIR}/fonts/miller/MillerText-Roman.otf
+            ${PROJECT_SOURCE_DIR}/fonts/miller/MillerText-Italic.otf
+            ${PROJECT_SOURCE_DIR}/fonts/miller/MillerText-BoldItalic.otf
+            ${PROJECT_SOURCE_DIR}/fonts/miller/MillerText-Bold.otf
             DESTINATION ${Mscore_SHARE_NAME}${Mscore_INSTALL_NAME}fonts
     )
 

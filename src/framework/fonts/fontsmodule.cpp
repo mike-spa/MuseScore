@@ -43,6 +43,7 @@ static void init_fonts_qrc()
     Q_INIT_RESOURCE(fonts_FinaleBroadway);
     Q_INIT_RESOURCE(fonts_Tabulature);
     Q_INIT_RESOURCE(fonts_Nepomuk);
+    Q_INIT_RESOURCE(fonts_Miller);
 }
 
 std::string FontsModule::moduleName() const

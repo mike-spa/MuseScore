@@ -75,6 +75,8 @@ static const Settings::Key WARN_GUITAR_BENDS(module_name, "score/note/warnGuitar
 static const Settings::Key REALTIME_DELAY(module_name, "io/midi/realtimeDelay");
 static const Settings::Key NOTE_DEFAULT_PLAY_DURATION(module_name, "score/note/defaultPlayDuration");
 
+static const Settings::Key DYNAMICS_APPLY_TO_ALL_VOICES(module_name, "score/dynamicsApplyToAllVoices");
+
 static const Settings::Key FIRST_SCORE_ORDER_LIST_KEY(module_name, "application/paths/scoreOrderList1");
 static const Settings::Key SECOND_SCORE_ORDER_LIST_KEY(module_name, "application/paths/scoreOrderList2");
 
@@ -189,6 +191,8 @@ void NotationConfiguration::init()
     settings()->setDefaultValue(WARN_GUITAR_BENDS, Val(true));
     settings()->setDefaultValue(REALTIME_DELAY, Val(750));
     settings()->setDefaultValue(NOTE_DEFAULT_PLAY_DURATION, Val(500));
+
+    settings()->setDefaultValue(DYNAMICS_APPLY_TO_ALL_VOICES, Val(true));
 
     settings()->setDefaultValue(FIRST_SCORE_ORDER_LIST_KEY,
                                 Val(globalConfiguration()->appDataPath().toStdString() + "instruments/orders.xml"));
@@ -699,6 +703,17 @@ void NotationConfiguration::setNotePlayDurationMilliseconds(int durationMs)
 {
     mu::engraving::MScore::defaultPlayDuration = durationMs;
     settings()->setSharedValue(NOTE_DEFAULT_PLAY_DURATION, Val(durationMs));
+}
+
+bool NotationConfiguration::dynamicsApplyToAllVoices() const
+{
+    return settings()->value(DYNAMICS_APPLY_TO_ALL_VOICES).toBool();
+}
+
+void NotationConfiguration::setDynamicsApplyToAllVoices(bool v)
+{
+    mu::engraving::MScore::dynamicsApplyToAllVoices = v;
+    settings()->setSharedValue(DYNAMICS_APPLY_TO_ALL_VOICES, Val(v));
 }
 
 void NotationConfiguration::setTemplateModeEnabled(std::optional<bool> enabled)

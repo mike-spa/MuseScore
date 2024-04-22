@@ -427,7 +427,6 @@ EditStyle::EditStyle(QWidget* parent)
         { StyleId::timesigBarlineDistance,  false, timesigBarlineDistance,  resetTimesigBarlineDistance },
         { StyleId::staffLineWidth,          false, staffLineWidth,          resetStaffLineWidth },
 
-        { StyleId::hairpinPlacement,        false, hairpinPlacement,        resetHairpinPlacement },
         { StyleId::hairpinPosAbove,         false, hairpinPosAbove,         resetHairpinPosAbove },
         { StyleId::hairpinPosBelow,         false, hairpinPosBelow,         resetHairpinPosBelow },
         { StyleId::hairpinLineWidth,        false, hairpinLineWidth,        resetHairpinLineWidth },
@@ -596,7 +595,6 @@ EditStyle::EditStyle(QWidget* parent)
         { StyleId::autoplaceHairpinDynamicsDistance, false, autoplaceHairpinDynamicsDistance,
           resetAutoplaceHairpinDynamicsDistance },
 
-        { StyleId::dynamicsPlacement,       false, dynamicsPlacement,          resetDynamicsPlacement },
         { StyleId::dynamicsPosAbove,        false, dynamicsPosAbove,           resetDynamicsPosAbove },
         { StyleId::dynamicsPosBelow,        false, dynamicsPosBelow,           resetDynamicsPosBelow },
         { StyleId::dynamicsMinDistance,     false, dynamicsMinDistance,        resetDynamicsMinDistance },
@@ -605,6 +603,9 @@ EditStyle::EditStyle(QWidget* parent)
         { StyleId::dynamicsSize,            true,  dynamicsSize,               resetDynamicsSize },
         { StyleId::dynamicsOverrideFont,    false, dynamicsOverrideFont,       0 },
         { StyleId::dynamicsFont,            false, dynamicsFont,               0 },
+
+        { StyleId::dynamicsHairpinVoiceBasedPlacement, false, dynamicsAndHairpinPos, resetDynamicsAndHairpinPos },
+        { StyleId::dynamicsHairpinsAutoCenterOnGrandStaff, false, dynamicsAndHairpinsCenterOnGrandStaff, 0 },
 
         { StyleId::tempoPlacement,          false, tempoTextPlacement,          resetTempoTextPlacement },
         { StyleId::tempoPosAbove,           false, tempoTextPosAbove,           resetTempoTextPosAbove },
@@ -724,11 +725,9 @@ EditStyle::EditStyle(QWidget* parent)
         lyricsPlacement,
         textLinePlacement,
         systemTextLinePlacement,
-        hairpinPlacement,
         pedalLinePlacement,
         trillLinePlacement,
         vibratoLinePlacement,
-        dynamicsPlacement,
         tempoTextPlacement,
         staffTextPlacement,
         rehearsalMarkPlacement,
@@ -1006,6 +1005,14 @@ EditStyle::EditStyle(QWidget* parent)
     textStyleFrameType->addItem(muse::qtrc("notation/editstyle", "None", "no frame for text"), int(FrameType::NO_FRAME));
     textStyleFrameType->addItem(muse::qtrc("notation/editstyle", "Rectangle"), int(FrameType::SQUARE));
     textStyleFrameType->addItem(muse::qtrc("notation/editstyle", "Circle"), int(FrameType::CIRCLE));
+
+    dynamicsAndHairpinPos->clear();
+    dynamicsAndHairpinPos->addItem(muse::qtrc("notation/editstyle", "Based on voice"), int(DirectionV::AUTO));
+    dynamicsAndHairpinPos->addItem(muse::qtrc("notation/editstyle", "Above"), int(DirectionV::UP));
+    dynamicsAndHairpinPos->addItem(muse::qtrc("notation/editstyle", "Below"), int(DirectionV::DOWN));
+    connect(dynamicsAndHairpinPos, &QComboBox::currentIndexChanged, dynamicsAndHairpinPosDescription, [=]() {
+        dynamicsAndHairpinPosDescription->setVisible(dynamicsAndHairpinPos->currentIndex() == int(DirectionV::AUTO));
+    });
 
     WidgetUtils::setWidgetIcon(resetTextStyleName, IconCode::Code::UNDO);
     connect(resetTextStyleName, &QToolButton::clicked, this, &EditStyle::resetUserStyleName);

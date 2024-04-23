@@ -292,6 +292,10 @@ class TextBase : public EngravingItem
 
     M_PROPERTY2(bool, isTextLinkedToMaster, setTextLinkedToMaster, true)
 
+    M_PROPERTY2(VoiceApplication, applyToVoice, setApplyToVoice, VoiceApplication::ALL_VOICE_IN_INSTRUMENT)
+    M_PROPERTY2(AutoOnOff, centerBetweenStaves, setCenterBetweenStaves, AutoOnOff::AUTO)
+    M_PROPERTY2(DirectionV, direction, setDirection, DirectionV::AUTO)
+
 public:
 
     ~TextBase();

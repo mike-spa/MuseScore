@@ -19,39 +19,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef MU_INSPECTOR_DIRECTIONTYPES_H
-#define MU_INSPECTOR_DIRECTIONTYPES_H
+#ifndef MU_INSPECTOR_VOICETYPES_H
+#define MU_INSPECTOR_VOICETYPES_H
 
 #include "qobjectdefs.h"
 
-namespace mu::inspector {
-class DirectionTypes
+class VoiceTypes
 {
     Q_GADGET
 
 public:
-    enum VerticalDirection {
-        VERTICAL_AUTO,
-        VERTICAL_UP,
-        VERTICAL_DOWN
+    enum class VoiceApplication {
+        VOICE_ALL_IN_INSTRUMENT = -2,
+        VOICE_ALL_IN_STAFF,
+        VOICE_ONE, // = 0
+        VOICE_TWO,
+        VOICE_THREE,
+        VOICE_FOUR
     };
 
-    enum HorizontalDirection {
-        HORIZONTAL_AUTO,
-        HORIZONTAL_LEFT,
-        HORIZONTAL_RIGHT
-    };
-
-    enum CenterBetweenStaves {
-        CENTER_STAVES_AUTO,
-        CENTER_STAVES_ON,
-        CENTER_STAVES_OFF
-    };
-
-    Q_ENUM(VerticalDirection)
-    Q_ENUM(HorizontalDirection)
-    Q_ENUM(CenterBetweenStaves)
+    Q_ENUM(VoiceApplication)
 };
-}
 
-#endif // MU_INSPECTOR_DIRECTIONTYPES_H
+#endif // MU_INSPECTOR_VOICETYPES_H

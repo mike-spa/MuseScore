@@ -126,6 +126,9 @@ class TextLineBase : public SLine
     M_PROPERTY(PointF,     endTextOffset,         setEndTextOffset)
     M_PROPERTY(bool,       textSizeSpatiumDependent, setTextSizeSpatiumDependent)
 
+    M_PROPERTY2(VoiceApplication, applyToVoice, setApplyToVoice, VoiceApplication::ALL_VOICE_IN_INSTRUMENT)
+    M_PROPERTY2(AutoOnOff, centerBetweenStaves, setCenterBetweenStaves, AutoOnOff::AUTO)
+
 public:
     TextLineBase(const ElementType& type, EngravingItem* parent, ElementFlags = ElementFlag::NOTHING);
 

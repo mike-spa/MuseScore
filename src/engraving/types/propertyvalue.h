@@ -105,6 +105,9 @@ enum class P_TYPE {
     TEMPOCHANGE_TYPE,
     SLUR_STYLE_TYPE,
 
+    VOICE_APPLICATION,
+    AUTO_ON_OFF,
+
     // Other
     GROUPS,
 };
@@ -276,6 +279,12 @@ public:
 
     PropertyValue(const OrnamentShowAccidental& v)
         : m_type(P_TYPE::ORNAMENT_SHOW_ACCIDENTAL), m_data(make_data<OrnamentShowAccidental>(v)) {}
+
+    PropertyValue(const VoiceApplication& v)
+        : m_type(P_TYPE::VOICE_APPLICATION), m_data(make_data<VoiceApplication>(v)) {}
+
+    PropertyValue(const AutoOnOff& v)
+        : m_type(P_TYPE::AUTO_ON_OFF), m_data(make_data<AutoOnOff>(v)) {}
 
     bool isValid() const;
 

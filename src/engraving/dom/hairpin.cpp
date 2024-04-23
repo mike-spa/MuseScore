@@ -227,6 +227,9 @@ EngravingItem* HairpinSegment::propertyDelegate(Pid pid)
         || pid == Pid::DYNAMIC_RANGE
         || pid == Pid::LINE_STYLE
         || pid == Pid::PLAY
+        || pid == Pid::APPLY_TO_VOICE
+        || pid == Pid::DIRECTION
+        || pid == Pid::CENTER_BETWEEN_STAVES
         ) {
         return spanner();
     }
@@ -499,6 +502,12 @@ PropertyValue Hairpin::getProperty(Pid id) const
         return m_veloChangeMethod;
     case Pid::PLAY:
         return m_playHairpin;
+    case Pid::APPLY_TO_VOICE:
+        return applyToVoice();
+    case Pid::CENTER_BETWEEN_STAVES:
+        return centerBetweenStaves();
+    case Pid::DIRECTION:
+        return direction();
     default:
         return TextLineBase::getProperty(id);
     }
@@ -537,6 +546,15 @@ bool Hairpin::setProperty(Pid id, const PropertyValue& v)
         break;
     case Pid::PLAY:
         setPlayHairpin(v.toBool());
+        break;
+    case Pid::APPLY_TO_VOICE:
+        setApplyToVoice(v.value<VoiceApplication>());
+        break;
+    case Pid::CENTER_BETWEEN_STAVES:
+        setCenterBetweenStaves(v.value<AutoOnOff>());
+        break;
+    case Pid::DIRECTION:
+        setDirection(v.value<DirectionV>());
         break;
     default:
         return TextLineBase::setProperty(id, v);
@@ -616,6 +634,15 @@ PropertyValue Hairpin::propertyDefault(Pid id) const
 
     case Pid::PLAY:
         return true;
+
+    case Pid::APPLY_TO_VOICE:
+        return VoiceApplication::ALL_VOICE_IN_INSTRUMENT;
+
+    case Pid::CENTER_BETWEEN_STAVES:
+        return AutoOnOff::AUTO;
+
+    case Pid::DIRECTION:
+        return DirectionV::AUTO;
 
     default:
         return TextLineBase::propertyDefault(id);

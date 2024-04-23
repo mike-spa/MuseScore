@@ -100,6 +100,10 @@ class Hairpin final : public TextLineBase
     OBJECT_ALLOCATOR(engraving, Hairpin)
     DECLARE_CLASSOF(ElementType::HAIRPIN)
 
+    M_PROPERTY2(VoiceApplication, applyToVoice, setApplyToVoice, VoiceApplication::ALL_VOICE_IN_INSTRUMENT)
+    M_PROPERTY2(DirectionV, direction, setDirection, DirectionV::AUTO)
+    M_PROPERTY2(AutoOnOff, centerBetweenStaves, setCenterBetweenStaves, AutoOnOff::AUTO)
+
 public:
     Hairpin(Segment* parent);
 

@@ -2739,6 +2739,12 @@ PropertyValue TextBase::getProperty(Pid propertyId) const
         return xmlText();
     case Pid::TEXT_LINKED_TO_MASTER:
         return isTextLinkedToMaster();
+    case Pid::DIRECTION:
+        return direction();
+    case Pid::CENTER_BETWEEN_STAVES:
+        return centerBetweenStaves();
+    case Pid::APPLY_TO_VOICE:
+        return applyToVoice();
     default:
         return EngravingItem::getProperty(propertyId);
     }
@@ -2807,6 +2813,15 @@ bool TextBase::setProperty(Pid pid, const PropertyValue& v)
         }
         setTextLinkedToMaster(v.toBool());
         break;
+    case Pid::DIRECTION:
+        setDirection(v.value<DirectionV>());
+        break;
+    case Pid::CENTER_BETWEEN_STAVES:
+        setCenterBetweenStaves(v.value<AutoOnOff>());
+        break;
+    case Pid::APPLY_TO_VOICE:
+        setApplyToVoice(v.value<VoiceApplication>());
+        break;
     default:
         rv = EngravingItem::setProperty(pid, v);
         break;
@@ -2848,6 +2863,12 @@ PropertyValue TextBase::propertyDefault(Pid id) const
         return static_cast<int>(VerticalAlignment::AlignNormal);
     case Pid::TEXT_LINKED_TO_MASTER:
         return true;
+    case Pid::DIRECTION:
+        return DirectionV::AUTO;
+    case Pid::CENTER_BETWEEN_STAVES:
+        return AutoOnOff::AUTO;
+    case Pid::APPLY_TO_VOICE:
+        return VoiceApplication::ALL_VOICE_IN_INSTRUMENT;
     default:
         for (const auto& p : *textStyle(TextStyleType::DEFAULT)) {
             if (p.pid == id) {

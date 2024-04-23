@@ -65,7 +65,6 @@ static const ElementStyle hairpinStyle {
     { Sid::hairpinLineWidth,                   Pid::LINE_WIDTH },
     { Sid::hairpinHeight,                      Pid::HAIRPIN_HEIGHT },
     { Sid::hairpinContHeight,                  Pid::HAIRPIN_CONT_HEIGHT },
-    { Sid::hairpinPlacement,                   Pid::PLACEMENT },
     { Sid::hairpinPosBelow,                    Pid::OFFSET },
     { Sid::hairpinLineStyle,                   Pid::LINE_STYLE },
     { Sid::hairpinLineDashLineLen,             Pid::DASH_LINE_LEN },

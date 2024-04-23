@@ -1119,6 +1119,10 @@ void TWrite::write(const Dynamic* item, XmlWriter& xml, WriteContext& ctx)
     writeProperty(item, xml, Pid::PLAY);
     writeProperty(item, xml, Pid::ANCHOR_TO_END_OF_PREVIOUS);
 
+    writeProperty(item, xml, Pid::APPLY_TO_VOICE);
+    writeProperty(item, xml, Pid::DIRECTION);
+    writeProperty(item, xml, Pid::CENTER_BETWEEN_STAVES);
+
     if (item->isVelocityChangeAvailable()) {
         writeProperty(item, xml, Pid::VELO_CHANGE);
         writeProperty(item, xml, Pid::VELO_CHANGE_SPEED);
@@ -1591,6 +1595,10 @@ void TWrite::write(const Hairpin* item, XmlWriter& xml, WriteContext& ctx)
     writeProperty(item, xml, Pid::BEGIN_TEXT_OFFSET);
     writeProperty(item, xml, Pid::CONTINUE_TEXT_OFFSET);
     writeProperty(item, xml, Pid::END_TEXT_OFFSET);
+
+    writeProperty(item, xml, Pid::APPLY_TO_VOICE);
+    writeProperty(item, xml, Pid::DIRECTION);
+    writeProperty(item, xml, Pid::CENTER_BETWEEN_STAVES);
 
     for (const StyledProperty& spp : *item->styledProperties()) {
         if (!item->isStyled(spp.pid)) {

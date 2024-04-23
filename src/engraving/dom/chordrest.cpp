@@ -241,13 +241,18 @@ EngravingItem* ChordRest::drop(EditData& data)
         }
     // fall through
     case ElementType::TEMPO_TEXT:
-    case ElementType::DYNAMIC:
     case ElementType::EXPRESSION:
     case ElementType::FRET_DIAGRAM:
     case ElementType::TREMOLOBAR:
     case ElementType::SYMBOL:
     case ElementType::IMAGE:
         e->setTrack(track());
+        e->setParent(segment());
+        score()->undoAddElement(e);
+        return e;
+
+    case ElementType::DYNAMIC:
+        e->setInitialTrackAndVoiceApplication(track());
         e->setParent(segment());
         score()->undoAddElement(e);
         return e;

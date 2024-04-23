@@ -1260,6 +1260,17 @@ void EngravingItem::manageExclusionFromParts(bool exclude)
     }
 }
 
+void EngravingItem::setInitialTrackAndVoiceApplication(track_idx_t track)
+{
+    if (MScore::dynamicsApplyToAllVoices) {
+        setTrack(trackZeroVoice(track));
+        setProperty(Pid::APPLY_TO_VOICE, VoiceApplication::ALL_VOICE_IN_INSTRUMENT);
+    } else {
+        setTrack(track);
+        setProperty(Pid::APPLY_TO_VOICE, static_cast<VoiceApplication>(track2voice(track)));
+    }
+}
+
 void EngravingItem::relinkPropertiesToMaster(PropertyGroup propGroup)
 {
     assert(!score()->isMaster());

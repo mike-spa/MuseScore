@@ -226,6 +226,8 @@ void NotationConfiguration::init()
     mu::engraving::MScore::warnGuitarBends = warnGuitarBends();
     mu::engraving::MScore::defaultPlayDuration = notePlayDurationMilliseconds();
 
+    mu::engraving::MScore::dynamicsApplyToAllVoices = dynamicsApplyToAllVoices();
+
     mu::engraving::MScore::setHRaster(DEFAULT_GRID_SIZE_SPATIUM);
     mu::engraving::MScore::setVRaster(DEFAULT_GRID_SIZE_SPATIUM);
 

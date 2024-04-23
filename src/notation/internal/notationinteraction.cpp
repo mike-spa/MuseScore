@@ -1701,7 +1701,9 @@ bool NotationInteraction::applyPaletteElement(mu::engraving::EngravingItem* elem
             } else {
                 score->cmdAddSpanner(spanner, cr1->staffIdx(), startSegment, endSegment, modifiers & Qt::ControlModifier);
             }
-            if (spanner->isVoiceSpecific()) {
+            if (spanner->hasVoiceApplicationProperties()) {
+                spanner->setInitialTrackAndVoiceApplication(cr1->track());
+            } else if (spanner->isVoiceSpecific()) {
                 spanner->setTrack(cr1->track());
             }
         } else if (element->isArticulationFamily() && sel.elements().size() == 1) {
@@ -1867,6 +1869,9 @@ bool NotationInteraction::applyPaletteElement(mu::engraving::EngravingItem* elem
                 spanner->setScore(score);
                 spanner->styleChanged();
                 score->cmdAddSpanner(spanner, i, startSegment, endSegment, modifiers & Qt::ControlModifier);
+                if (spanner->hasVoiceApplicationProperties()) {
+                    spanner->setInitialTrackAndVoiceApplication(staff2track(i));
+                }
             }
         } else if (element->isTextBase() && !element->isFingering() && !element->isSticking()) {
             mu::engraving::Segment* firstSegment = sel.startSegment();

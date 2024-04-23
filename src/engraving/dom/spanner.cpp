@@ -1337,7 +1337,6 @@ bool Spanner::isVoiceSpecific() const
 {
     static const std::unordered_set<ElementType> VOICE_SPECIFIC_SPANNERS {
         ElementType::TRILL,
-        ElementType::HAIRPIN,
         ElementType::LET_RING,
     };
 

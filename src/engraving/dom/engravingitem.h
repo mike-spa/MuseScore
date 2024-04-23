@@ -649,6 +649,8 @@ public:
 
     virtual bool allowTimeAnchor() const { return false; }
 
+    virtual bool hasVoiceApplicationProperties() const { return false; }
+
     void setOffsetChanged(bool val, bool absolute = true, const PointF& diff = PointF());
     //! ---------------------
 

@@ -73,6 +73,8 @@ public:
     Dynamic* findStartDynamic() const;
     Dynamic* findEndDynamic() const;
 
+    bool hasVoiceApplicationProperties() const override { return spanner()->hasVoiceApplicationProperties(); }
+
 private:
 
     void startEditDrag(EditData&) override;
@@ -165,6 +167,8 @@ public:
     }
 
     PointF linePos(Grip grip, System** system) const override;
+
+    bool hasVoiceApplicationProperties() const override { return true; }
 
 private:
 

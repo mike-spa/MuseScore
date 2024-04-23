@@ -629,7 +629,14 @@ Color EngravingItem::curColor(bool isVisible, Color normalColor) const
     }
 
     if (selected() || marked) {
-        return engravingConfiguration()->selectionColor(track() == muse::nidx ? 0 : voice(), isVisible, isUnlinkedFromMaster());
+        voice_idx_t voiceForColorChoice = track() == muse::nidx ? 0 : voice();
+        if (hasVoiceApplicationProperties()) {
+            VoiceApplication voiceApplication = getProperty(Pid::APPLY_TO_VOICE).value<VoiceApplication>();
+            if (voiceApplication == VoiceApplication::ALL_VOICE_IN_INSTRUMENT || voiceApplication == VoiceApplication::ALL_VOICE_IN_STAFF) {
+                voiceForColorChoice = VOICES;
+            }
+        }
+        return engravingConfiguration()->selectionColor(voiceForColorChoice, isVisible, isUnlinkedFromMaster());
     }
 
     if (!isVisible) {

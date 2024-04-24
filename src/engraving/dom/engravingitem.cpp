@@ -1409,6 +1409,9 @@ void EngravingItem::undoChangeProperty(Pid pid, const PropertyValue& val, Proper
         // placement properties to undo stack.
         undoPushProperty(Pid::PLACEMENT);
         undoPushProperty(Pid::OFFSET);
+    } else if (pid == Pid::APPLY_TO_VOICE) {
+        track_idx_t newTrack = trackZeroVoice(track()) + std::max(static_cast<int>(val.value<VoiceApplication>()), 0);
+        EngravingObject::undoChangeProperty(Pid::TRACK, newTrack);
     }
     EngravingObject::undoChangeProperty(pid, val, ps);
 }

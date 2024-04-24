@@ -48,7 +48,6 @@ namespace mu::engraving {
 
 static const ElementStyle trillStyle {
     { Sid::trillPlacement, Pid::PLACEMENT },
-    { Sid::trillPosAbove,  Pid::OFFSET },
 };
 
 TrillSegment::TrillSegment(Trill* sp, System* parent)
@@ -157,17 +156,11 @@ EngravingItem* TrillSegment::propertyDelegate(Pid pid)
 
 Sid TrillSegment::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        return spanner()->placeAbove() ? Sid::trillPosAbove : Sid::trillPosBelow;
-    }
     return LineSegment::getPropertyStyle(pid);
 }
 
 Sid Trill::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        return placeAbove() ? Sid::trillPosAbove : Sid::trillPosBelow;
-    }
     return SLine::getPropertyStyle(pid);
 }
 
@@ -248,7 +241,6 @@ void Trill::setTrillType(TrillType tt)
 //---------------------------------------------------------
 
 static const ElementStyle trillSegmentStyle {
-    { Sid::trillPosAbove, Pid::OFFSET },
     { Sid::trillMinDistance, Pid::MIN_DISTANCE },
 };
 

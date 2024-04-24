@@ -2030,10 +2030,6 @@ void TLayout::layoutFermata(const Fermata* item, Fermata::LayoutData* ldata, con
     ldata->setIsSkipDraw(false);
     ldata->setPos(PointF());
 
-    if (item->isStyled(Pid::OFFSET)) {
-        const_cast<Fermata*>(item)->setOffset(item->propertyDefault(Pid::OFFSET).value<PointF>());
-    }
-
     double x = 0.0;
     double y = 0.0;
     const Segment* s = item->segment();
@@ -2380,12 +2376,6 @@ void TLayout::layoutFingering(const Fingering* item, Fingering::LayoutData* ldat
 
         double headWidth = note->bboxRightPos();
 
-        // update offset after drag
-        double rebase = 0.0;
-        if (ldata->offsetChanged() != OffsetChange::NONE && !tight) {
-            rebase = Autoplace::rebaseOffset(item, ldata);
-        }
-
         // temporarily exclude self from chord shape
         const_cast<Fingering*>(item)->setAutoplace(false);
 
@@ -2447,12 +2437,6 @@ void TLayout::layoutFingering(const Fingering* item, Fingering::LayoutData* ldat
                     if (diff > 0.0) {
                         yd -= diff;
                     }
-                    if (ldata->offsetChanged() != OffsetChange::NONE) {
-                        // user moved element within the skyline
-                        // we may need to adjust minDistance, yd, and/or offset
-                        bool inStaff = above ? r.bottom() + rebase > 0.0 : r.top() + rebase < item->staff()->staffHeight();
-                        Autoplace::rebaseMinDistance(item, ldata, md, yd, sp, rebase, above, inStaff);
-                    }
                     ldata->moveY(yd);
                 }
             } else {
@@ -2483,12 +2467,6 @@ void TLayout::layoutFingering(const Fingering* item, Fingering::LayoutData* ldat
                     if (diff > 0.0) {
                         yd += diff;
                     }
-                    if (ldata->offsetChanged() != OffsetChange::NONE) {
-                        // user moved element within the skyline
-                        // we may need to adjust minDistance, yd, and/or offset
-                        bool inStaff = above ? r.bottom() + rebase > 0.0 : r.top() + rebase < item->staff()->staffHeight();
-                        Autoplace::rebaseMinDistance(item, ldata, md, yd, sp, rebase, above, inStaff);
-                    }
                     ldata->moveY(yd);
                 }
             }
@@ -2505,11 +2483,7 @@ void TLayout::layoutFingering(const Fingering* item, Fingering::LayoutData* ldat
 
         // restore autoplace
         const_cast<Fingering*>(item)->setAutoplace(true);
-    } else if (ldata->offsetChanged() != OffsetChange::NONE) {
-        // rebase horizontally too, as autoplace may have adjusted it
-        Autoplace::rebaseOffset(item, ldata, false);
     }
-    Autoplace::setOffsetChanged(item, ldata, false);
 }
 
 void TLayout::layoutFretDiagram(const FretDiagram* item, FretDiagram::LayoutData* ldata, const LayoutContext& ctx)
@@ -2940,10 +2914,6 @@ void TLayout::layoutGradualTempoChangeSegment(GradualTempoChangeSegment* item, L
     GradualTempoChangeSegment::LayoutData* ldata = item->mutldata();
     layoutTextLineBaseSegment(item, ctx);
 
-    if (item->isStyled(Pid::OFFSET)) {
-        item->roffset() = item->tempoChange()->propertyDefault(Pid::OFFSET).value<PointF>();
-    }
-
     Shape sh = textLineBaseSegmentShape(item);
     ldata->setShape(sh);
 
@@ -3183,16 +3153,6 @@ void TLayout::layoutHairpinSegment(HairpinSegment* item, LayoutContext& ctx)
         return;
     }
 
-    if (item->isStyled(Pid::OFFSET)) {
-        item->roffset() = item->hairpin()->propertyDefault(Pid::OFFSET).value<PointF>();
-    }
-
-    // rebase vertical offset on drag
-    double rebase = 0.0;
-    if (ldata->offsetChanged() != OffsetChange::NONE) {
-        rebase = Autoplace::rebaseOffset(item, ldata);
-    }
-
     if (item->autoplace()) {
         double ymax = item->pos().y();
         double d;
@@ -3229,13 +3189,6 @@ void TLayout::layoutHairpinSegment(HairpinSegment* item, LayoutContext& ctx)
         }
         double yd = ymax - item->pos().y();
         if (!RealIsNull(yd)) {
-            if (ldata->offsetChanged() != OffsetChange::NONE) {
-                // user moved element within the skyline
-                // we may need to adjust minDistance, yd, and/or offset
-                double adj = item->pos().y() + rebase;
-                bool inStaff = above ? sh.bottom() + adj > 0.0 : sh.top() + adj < item->staff()->staffHeight();
-                Autoplace::rebaseMinDistance(item, ldata, md, yd, sp, rebase, above, inStaff);
-            }
             ldata->moveY(yd);
         }
 
@@ -3289,7 +3242,6 @@ void TLayout::layoutHairpinSegment(HairpinSegment* item, LayoutContext& ctx)
             }
         }
     }
-    Autoplace::setOffsetChanged(item, ldata, false);
 }
 
 void TLayout::layoutHairpin(Hairpin* item, LayoutContext& ctx)
@@ -4547,9 +4499,6 @@ void TLayout::layoutPedalSegment(PedalSegment* item, LayoutContext& ctx)
     PedalSegment::LayoutData* ldata = item->mutldata();
 
     layoutTextLineBaseSegment(item, ctx);
-    if (item->isStyled(Pid::OFFSET)) {
-        item->roffset() = item->pedal()->propertyDefault(Pid::OFFSET).value<PointF>();
-    }
 
     Shape sh = textLineBaseSegmentShape(item);
     ldata->setShape(sh);
@@ -5759,9 +5708,6 @@ void TLayout::layoutTextLineSegment(TextLineSegment* item, LayoutContext& ctx)
     LAYOUT_CALL_ITEM(item);
     TextLineSegment::LayoutData* ldata = item->mutldata();
     layoutTextLineBaseSegment(item, ctx);
-    if (item->isStyled(Pid::OFFSET)) {
-        item->roffset() = item->textLine()->propertyDefault(Pid::OFFSET).value<PointF>();
-    }
 
     Shape sh = textLineBaseSegmentShape(item);
     ldata->setShape(sh);
@@ -6320,10 +6266,6 @@ void TLayout::layoutTrillSegment(TrillSegment* item, LayoutContext& ctx)
         }
     }
 
-    if (item->isStyled(Pid::OFFSET)) {
-        item->roffset() = trill->propertyDefault(Pid::OFFSET).value<PointF>();
-    }
-
     Autoplace::autoplaceSpannerSegment(item, ldata, ctx.conf().spatium());
 }
 
@@ -6414,10 +6356,6 @@ void TLayout::layoutVibratoSegment(VibratoSegment* item, LayoutContext& ctx)
     case VibratoType::VIBRATO_SAWTOOTH_WIDE:
         item->symbolLine(SymId::wiggleSawtoothWide, SymId::wiggleSawtoothWide);
         break;
-    }
-
-    if (item->isStyled(Pid::OFFSET)) {
-        item->roffset() = item->vibrato()->propertyDefault(Pid::OFFSET).value<PointF>();
     }
 
     Autoplace::autoplaceSpannerSegment(item, ldata, ctx.conf().spatium());

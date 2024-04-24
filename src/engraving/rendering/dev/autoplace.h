@@ -45,13 +45,6 @@ public:
 
     static void autoplaceSpannerSegment(const SpannerSegment* item, SpannerSegment::LayoutData* ldata, double spatium);
 
-    static double rebaseOffset(const EngravingItem* item, EngravingItem::LayoutData* ldata, bool nox = true);
-    static bool rebaseMinDistance(const EngravingItem* item, EngravingItem::LayoutData* ldata, double& md, double& yd, double sp,
-                                  double rebase, bool above, bool fix);
-
-    static void setOffsetChanged(const EngravingItem* item, EngravingItem::LayoutData* ldata, bool v, bool absolute = true,
-                                 const PointF& diff = PointF());
-
     static void doAutoplace(const Articulation* item, Articulation::LayoutData* ldata);
 };
 }

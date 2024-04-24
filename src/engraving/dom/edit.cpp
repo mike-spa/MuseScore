@@ -2345,38 +2345,6 @@ void Score::cmdFlip()
             if (!ee) {
                 ee = e;
             }
-
-            flipOnce(ee, [ee]() {
-                // getProperty() delegates call from spannerSegment to Spanner
-                PlacementV p = PlacementV(ee->getProperty(Pid::PLACEMENT).toInt());
-                p = (p == PlacementV::ABOVE) ? PlacementV::BELOW : PlacementV::ABOVE;
-                PropertyFlags pf = ee->propertyFlags(Pid::PLACEMENT);
-                if (pf == PropertyFlags::STYLED) {
-                    pf = PropertyFlags::UNSTYLED;
-                }
-                double oldDefaultY = ee->propertyDefault(Pid::OFFSET).value<PointF>().y();
-                ee->undoChangeProperty(Pid::PLACEMENT, int(p), pf);
-                // flip and rebase user offset to new default now that placement has changed
-                double newDefaultY = ee->propertyDefault(Pid::OFFSET).value<PointF>().y();
-                if (ee->isSpanner()) {
-                    Spanner* spanner = toSpanner(ee);
-                    for (SpannerSegment* ss : spanner->spannerSegments()) {
-                        if (!ss->isStyled(Pid::OFFSET)) {
-                            PointF off = ss->getProperty(Pid::OFFSET).value<PointF>();
-                            double oldY = off.y() - oldDefaultY;
-                            off.ry() = newDefaultY - oldY;
-                            ss->undoChangeProperty(Pid::OFFSET, off);
-                            ss->setOffsetChanged(false);
-                        }
-                    }
-                } else if (!ee->isStyled(Pid::OFFSET)) {
-                    PointF off = ee->getProperty(Pid::OFFSET).value<PointF>();
-                    double oldY = off.y() - oldDefaultY;
-                    off.ry() = newDefaultY - oldY;
-                    ee->undoChangeProperty(Pid::OFFSET, off);
-                    ee->setOffsetChanged(false);
-                }
-            });
         }
     }
 }

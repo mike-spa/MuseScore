@@ -331,7 +331,7 @@ PropertyValue EngravingObject::propertyDefault(Pid pid) const
     if (sid != Sid::NOSTYLE) {
         return styleValue(pid, sid);
     }
-    //      LOGD("<%s>(%d) not found in <%s>", propertyQmlName(pid), int(pid), typeName());
+
     return PropertyValue();
 }
 
@@ -461,20 +461,6 @@ void EngravingObject::undoChangeProperty(Pid id, const PropertyValue& v, Propert
     if (id == Pid::PLACEMENT || id == Pid::HAIRPIN_TYPE) {
         // first set property, then set offset for above/below if styled
         changeProperties(this, id, v, ps);
-
-        if (isStyled(Pid::OFFSET)) {
-            // TODO: maybe it just makes more sense to do this in EngravingItem::undoChangeProperty,
-            // but some of the overrides call ScoreElement explicitly
-            double sp;
-            if (isEngravingItem()) {
-                sp = toEngravingItem(this)->spatium();
-            } else {
-                sp = style().spatium();
-            }
-            setProperty(Pid::OFFSET, style().styleV(getPropertyStyle(Pid::OFFSET)).value<PointF>() * sp);
-            EngravingItem* e = toEngravingItem(this);
-            e->setOffsetChanged(false);
-        }
     } else if (id == Pid::TEXT_STYLE) {
         //
         // change a list of properties
@@ -486,14 +472,6 @@ void EngravingObject::undoChangeProperty(Pid id, const PropertyValue& v, Propert
                 break;
             }
             changeProperties(this, p.pid, style().styleV(p.sid), PropertyFlags::STYLED);
-        }
-    } else if (id == Pid::OFFSET) {
-        // TODO: do this in caller?
-        if (isEngravingItem()) {
-            EngravingItem* e = toEngravingItem(this);
-            if (e->offset() != v.value<PointF>()) {
-                e->setOffsetChanged(true, false, v.value<PointF>() - e->offset());
-            }
         }
     } else if (id == Pid::EXCLUDE_FROM_OTHER_PARTS) {
         if (isEngravingItem() && getProperty(Pid::EXCLUDE_FROM_OTHER_PARTS) != v) {

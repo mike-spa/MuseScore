@@ -545,21 +545,6 @@ void Lyrics::undoChangeProperty(Pid id, const PropertyValue& v, PropertyFlags ps
         }
         TextBase::undoChangeProperty(id, v, ps);
         return;
-    } else if (id == Pid::AUTOPLACE && v.toBool() != autoplace()) {
-        if (v.toBool()) {
-            // setting autoplace
-            // reset offset
-            undoResetProperty(Pid::OFFSET);
-        } else {
-            // unsetting autoplace
-            // rebase offset
-            PointF off = offset();
-            double y = pos().y() - propertyDefault(Pid::OFFSET).value<PointF>().y();
-            off.ry() = placeAbove() ? y : y - staff()->staffHeight();
-            undoChangeProperty(Pid::OFFSET, off, PropertyFlags::UNSTYLED);
-        }
-        TextBase::undoChangeProperty(id, v, ps);
-        return;
     }
 
     TextBase::undoChangeProperty(id, v, ps);

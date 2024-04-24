@@ -2000,19 +2000,6 @@ PropertyValue Harmony::propertyDefault(Pid id) const
 
 Sid Harmony::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        if (explicitParent() && explicitParent()->isFretDiagram()) {
-            return Sid::NOSTYLE;
-        } else if (textStyleType() == TextStyleType::HARMONY_A) {
-            return placeAbove() ? Sid::chordSymbolAPosAbove : Sid::chordSymbolAPosBelow;
-        } else if (textStyleType() == TextStyleType::HARMONY_B) {
-            return placeAbove() ? Sid::chordSymbolBPosAbove : Sid::chordSymbolBPosBelow;
-        } else if (textStyleType() == TextStyleType::HARMONY_ROMAN) {
-            return placeAbove() ? Sid::romanNumeralPosAbove : Sid::romanNumeralPosBelow;
-        } else if (textStyleType() == TextStyleType::HARMONY_NASHVILLE) {
-            return placeAbove() ? Sid::nashvilleNumberPosAbove : Sid::nashvilleNumberPosBelow;
-        }
-    }
     if (pid == Pid::PLACEMENT) {
         switch (m_harmonyType) {
         case HarmonyType::STANDARD:

@@ -1294,7 +1294,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
             for (int i = 0; i < idx; ++i) {
                 SpannerSegment* ss = voltaSegments[i];
-                if (ss->autoplace() && ss->isStyled(Pid::OFFSET)) {
+                if (ss->autoplace()) {
                     ss->mutldata()->setPosY(y);
                 }
                 if (ss->addToSkyline()) {

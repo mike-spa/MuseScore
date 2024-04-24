@@ -50,7 +50,6 @@ static const ElementStyle palmMuteStyle {
     { Sid::palmMuteTextAlign,                     Pid::END_TEXT_ALIGN },
     { Sid::palmMuteHookHeight,                    Pid::BEGIN_HOOK_HEIGHT },
     { Sid::palmMuteHookHeight,                    Pid::END_HOOK_HEIGHT },
-    { Sid::palmMutePosBelow,                      Pid::OFFSET },
     { Sid::palmMuteLineStyle,                     Pid::LINE_STYLE },
     { Sid::palmMuteDashLineLen,                   Pid::DASH_LINE_LEN },
     { Sid::palmMuteDashGapLen,                    Pid::DASH_GAP_LEN },
@@ -58,7 +57,6 @@ static const ElementStyle palmMuteStyle {
     { Sid::palmMuteEndHookType,                   Pid::END_HOOK_TYPE },
     { Sid::palmMuteLineWidth,                     Pid::LINE_WIDTH },
     { Sid::palmMutePlacement,                     Pid::PLACEMENT },
-    { Sid::palmMutePosBelow,                      Pid::OFFSET },
 };
 
 PalmMuteSegment::PalmMuteSegment(PalmMute* sp, System* parent)
@@ -72,17 +70,11 @@ PalmMuteSegment::PalmMuteSegment(PalmMute* sp, System* parent)
 
 Sid PalmMuteSegment::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        return spanner()->placeAbove() ? Sid::palmMutePosAbove : Sid::palmMutePosBelow;
-    }
     return TextLineBaseSegment::getPropertyStyle(pid);
 }
 
 Sid PalmMute::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        return placeAbove() ? Sid::palmMutePosAbove : Sid::palmMutePosBelow;
-    }
     return TextLineBase::getPropertyStyle(pid);
 }
 
@@ -136,7 +128,6 @@ void PalmMute::write(XmlWriter& xml) const
 //---------------------------------------------------------
 
 static const ElementStyle palmMuteSegmentStyle {
-    { Sid::palmMutePosBelow,                      Pid::OFFSET },
     { Sid::palmMuteMinDistance,                   Pid::MIN_DISTANCE },
 };
 

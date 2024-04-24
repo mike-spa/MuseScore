@@ -578,7 +578,6 @@ LineSegment* LineSegment::rebaseAnchor(Grip grip, Segment* newSeg)
         if (left) {
             setOffset(offset() + delta);
             m_offset2 -= delta;
-            setOffsetChanged(true);
         } else {
             m_offset2 += delta;
         }
@@ -705,10 +704,6 @@ void LineSegment::editDrag(EditData& ed)
         setOffset(offset() + deltaResize);
         m_offset2 -= deltaResize;
 
-        if (isStyled(Pid::OFFSET)) {
-            setPropertyFlags(Pid::OFFSET, PropertyFlags::UNSTYLED);
-        }
-
         rebaseAnchors(ed, ed.curGrip);
         break;
     case Grip::END:         // Resize the end of element (right grip)
@@ -719,10 +714,6 @@ void LineSegment::editDrag(EditData& ed)
         // Only for moving, no y limitation
         const PointF deltaMove(ed.evtDelta);
         setOffset(offset() + deltaMove);
-        setOffsetChanged(true);
-        if (isStyled(Pid::OFFSET)) {
-            setPropertyFlags(Pid::OFFSET, PropertyFlags::UNSTYLED);
-        }
         rebaseAnchors(ed, ed.curGrip);
     }
     break;
@@ -818,7 +809,6 @@ std::vector<LineF> LineSegment::dragAnchorLines() const
 RectF LineSegment::drag(EditData& ed)
 {
     setOffset(offset() + ed.evtDelta);
-    setOffsetChanged(true);
 
     if (isStyled(Pid::OFFSET)) {
         setPropertyFlags(Pid::OFFSET, PropertyFlags::UNSTYLED);

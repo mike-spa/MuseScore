@@ -58,7 +58,6 @@ static const ElementStyle pedalStyle {
     { Sid::pedalDashGapLen,                    Pid::DASH_GAP_LEN },
     { Sid::pedalPlacement,                     Pid::PLACEMENT },
     { Sid::pedalLineStyle,                     Pid::LINE_STYLE },
-    { Sid::pedalPosBelow,                      Pid::OFFSET },
     { Sid::pedalFontSpatiumDependent,          Pid::TEXT_SIZE_SPATIUM_DEPENDENT }
 };
 
@@ -78,17 +77,12 @@ PedalSegment::PedalSegment(Pedal* sp, System* parent)
 
 Sid PedalSegment::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        return spanner()->placeAbove() ? Sid::pedalPosAbove : Sid::pedalPosBelow;
-    }
     return TextLineBaseSegment::getPropertyStyle(pid);
 }
 
 Sid Pedal::getPropertyStyle(Pid pid) const
 {
     switch (pid) {
-    case Pid::OFFSET:
-        return placeAbove() ? Sid::pedalPosAbove : Sid::pedalPosBelow;
     case Pid::END_TEXT:
         return lineVisible() ? Sid::pedalEndText : Sid::pedalRosetteEndText;
     case Pid::BEGIN_TEXT:
@@ -126,7 +120,6 @@ Pedal::Pedal(EngravingItem* parent)
 //---------------------------------------------------------
 
 static const ElementStyle pedalSegmentStyle {
-    { Sid::pedalPosBelow, Pid::OFFSET },
     { Sid::pedalMinDistance, Pid::MIN_DISTANCE },
 };
 

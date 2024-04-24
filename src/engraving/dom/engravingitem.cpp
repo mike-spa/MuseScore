@@ -324,7 +324,6 @@ void EngravingItem::reset()
     undoResetProperty(Pid::PLACEMENT);
     undoResetProperty(Pid::MIN_DISTANCE);
     undoResetProperty(Pid::OFFSET);
-    setOffsetChanged(false);
     EngravingObject::reset();
 }
 
@@ -1389,13 +1388,8 @@ PropertyValue EngravingItem::propertyDefault(Pid pid) const
     }
     case Pid::SELECTED:
         return false;
-    case Pid::OFFSET: {
-        PropertyValue v = EngravingObject::propertyDefault(pid);
-        if (v.isValid()) {        // if it's a styled property
-            return v;
-        }
+    case Pid::OFFSET:
         return PropertyValue::fromValue(PointF());
-    }
     case Pid::MIN_DISTANCE: {
         PropertyValue v = EngravingObject::propertyDefault(pid);
         if (v.isValid()) {
@@ -2027,8 +2021,6 @@ RectF EngravingItem::drag(EditData& ed)
     }
 
     setOffset(PointF(x, y));
-    setOffsetChanged(true);
-//      setGenerated(false);
 
     if (isTextBase()) {           // TODO: check for other types
         //
@@ -2202,7 +2194,6 @@ void EngravingItem::editDrag(EditData& ed)
 {
     score()->addRefresh(canvasBoundingRect());
     setOffset(offset() + ed.delta);
-    setOffsetChanged(true);
     score()->addRefresh(canvasBoundingRect());
 }
 
@@ -2599,10 +2590,5 @@ double EngravingItem::mag() const
         return 1.0;
     }
     return ldata()->mag();
-}
-
-void EngravingItem::setOffsetChanged(bool val, bool absolute, const PointF& diff)
-{
-    rendering::dev::Autoplace::setOffsetChanged(this, mutldata(), val, absolute, diff);
 }
 }

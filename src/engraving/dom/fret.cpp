@@ -605,9 +605,6 @@ void FretDiagram::add(EngravingItem* e)
     if (e->isHarmony()) {
         m_harmony = toHarmony(e);
         m_harmony->setTrack(track());
-        if (m_harmony->propertyFlags(Pid::OFFSET) == PropertyFlags::STYLED) {
-            m_harmony->resetProperty(Pid::OFFSET);
-        }
 
         m_harmony->setProperty(Pid::ALIGN, Align(AlignH::HCENTER, AlignV::TOP));
         m_harmony->setPropertyFlags(Pid::ALIGN, PropertyFlags::UNSTYLED);

@@ -640,8 +640,6 @@ void Segment::checkElement(EngravingItem* el, track_idx_t track)
 
 void Segment::add(EngravingItem* el)
 {
-//      LOGD("%p segment %s add(%d, %d, %s)", this, subTypeName(), tick(), el->track(), el->typeName());
-
     if (el->explicitParent() != this) {
         el->setParent(this);
     }
@@ -650,10 +648,6 @@ void Segment::add(EngravingItem* el)
     assert(track != muse::nidx);
     assert(el->score() == score());
     assert(score()->nstaves() * VOICES == m_elist.size());
-    // make sure offset is correct for staff
-    if (el->isStyled(Pid::OFFSET)) {
-        el->setOffset(el->propertyDefault(Pid::OFFSET).value<PointF>());
-    }
 
     switch (el->type()) {
     case ElementType::MEASURE_REPEAT:

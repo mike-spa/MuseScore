@@ -46,7 +46,6 @@ namespace mu::engraving {
 //---------------------------------------------------------
 
 static const ElementStyle fermataStyle {
-    { Sid::fermataPosAbove, Pid::OFFSET },
     { Sid::fermataMinDistance, Pid::MIN_DISTANCE },
 };
 
@@ -251,9 +250,6 @@ void Fermata::resetProperty(Pid id)
 
 Sid Fermata::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        return placeAbove() ? Sid::fermataPosAbove : Sid::fermataPosBelow;
-    }
     return EngravingObject::getPropertyStyle(pid);
 }
 

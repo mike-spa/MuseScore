@@ -543,14 +543,12 @@ void LyricsLayout::layoutLyrics(LayoutContext& ctx, System* system)
                                 // user adjusted offset can possibly change placement
                                 if (ldata->autoplace.offsetChanged != OffsetChange::NONE) {
                                     PlacementV p = l->placement();
-                                    Autoplace::rebaseOffset(l, ldata);
                                     if (l->placement() != p) {
                                         l->undoResetProperty(Pid::AUTOPLACE);
                                         //l->undoResetProperty(Pid::OFFSET);
                                         //l->layout();
                                     }
                                 }
-                                Autoplace::setOffsetChanged(l, ldata, false);
                                 if (l->placeAbove()) {
                                     ++nA;
                                 }

@@ -1174,9 +1174,8 @@ void TWrite::write(const Fermata* item, XmlWriter& xml, WriteContext& ctx)
     writeProperty(item, xml, Pid::TIME_STRETCH);
     writeProperty(item, xml, Pid::PLAY);
     writeProperty(item, xml, Pid::MIN_DISTANCE);
-    if (!item->isStyled(Pid::OFFSET)) {
-        writeProperty(item, xml, Pid::OFFSET);
-    }
+    writeProperty(item, xml, Pid::OFFSET);
+
     writeItemProperties(item, xml, ctx);
     xml.endElement();
 }

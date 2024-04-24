@@ -35,7 +35,6 @@ namespace mu::engraving {
 //---------------------------------------------------------
 
 static const ElementStyle textLineSegmentStyle {
-    { Sid::textLinePosAbove,      Pid::OFFSET },
     { Sid::textLineMinDistance,   Pid::MIN_DISTANCE },
 };
 
@@ -44,7 +43,6 @@ static const ElementStyle textLineSegmentStyle {
 //---------------------------------------------------------
 
 static const ElementStyle systemTextLineSegmentStyle {
-    { Sid::systemTextLinePosAbove,      Pid::OFFSET },
     { Sid::systemTextLineMinDistance,   Pid::MIN_DISTANCE },
 };
 
@@ -67,7 +65,6 @@ static const ElementStyle textLineStyle {
     { Sid::textLineTextAlign,                  Pid::CONTINUE_TEXT_ALIGN },
     { Sid::textLineTextAlign,                  Pid::END_TEXT_ALIGN },
     { Sid::textLinePlacement,                  Pid::PLACEMENT },
-    { Sid::textLinePosAbove,                   Pid::OFFSET },
     { Sid::textLineFontSpatiumDependent,       Pid::TEXT_SIZE_SPATIUM_DEPENDENT },
 };
 
@@ -90,7 +87,6 @@ static const ElementStyle systemTextLineStyle {
     { Sid::systemTextLineTextAlign,            Pid::CONTINUE_TEXT_ALIGN },
     { Sid::systemTextLineTextAlign,            Pid::END_TEXT_ALIGN },
     { Sid::systemTextLinePlacement,            Pid::PLACEMENT },
-    { Sid::systemTextLinePosAbove,             Pid::OFFSET },
 };
 
 //---------------------------------------------------------
@@ -220,25 +216,11 @@ Sid TextLine::getTextLinePos(bool above) const
 
 Sid TextLineSegment::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        if (spanner()->anchor() == Spanner::Anchor::NOTE) {
-            return Sid::NOSTYLE;
-        } else {
-            return getTextLinePos(spanner()->placeAbove());
-        }
-    }
     return TextLineBaseSegment::getPropertyStyle(pid);
 }
 
 Sid TextLine::getPropertyStyle(Pid pid) const
 {
-    if (pid == Pid::OFFSET) {
-        if (anchor() == Spanner::Anchor::NOTE) {
-            return Sid::NOSTYLE;
-        } else {
-            return getTextLinePos(placeAbove());
-        }
-    }
     return TextLineBase::getPropertyStyle(pid);
 }
 

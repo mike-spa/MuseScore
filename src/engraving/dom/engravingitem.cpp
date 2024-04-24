@@ -1271,6 +1271,34 @@ void EngravingItem::setInitialTrackAndVoiceApplication(track_idx_t track)
     }
 }
 
+void EngravingItem::setPlacementBasedOnVoiceApplication(DirectionV styledDirection)
+{
+    DirectionV internalDirectionProperty = getProperty(Pid::DIRECTION).value<DirectionV>();
+    if (internalDirectionProperty != DirectionV::AUTO) {
+        setPlacement(internalDirectionProperty == DirectionV::UP ? PlacementV::ABOVE : PlacementV::BELOW);
+        return;
+    }
+
+    if (styledDirection != DirectionV::AUTO) {
+        setPlacement(styledDirection == DirectionV::UP ? PlacementV::ABOVE : PlacementV::BELOW);
+        return;
+    }
+
+    if (part()->nstaves() > 1 && getProperty(Pid::CENTER_BETWEEN_STAVES).value<AutoOnOff>() == AutoOnOff::ON) {
+        bool isOnLastStaffOfInstrument = staffIdx() == part()->staves().back()->idx();
+        setPlacement(isOnLastStaffOfInstrument ? PlacementV::ABOVE : PlacementV::BELOW);
+        return;
+    }
+
+    VoiceApplication voiceApplication = getProperty(Pid::APPLY_TO_VOICE).value<VoiceApplication>();
+    if (voiceApplication == VoiceApplication::ALL_VOICE_IN_INSTRUMENT || voiceApplication == VoiceApplication::ALL_VOICE_IN_STAFF) {
+        setPlacement(PlacementV::BELOW);
+    } else {
+        voice_idx_t voice = static_cast<voice_idx_t>(voiceApplication);
+        setPlacement(voice % 2 ? PlacementV::BELOW : PlacementV::ABOVE);
+    }
+}
+
 void EngravingItem::relinkPropertiesToMaster(PropertyGroup propGroup)
 {
     assert(!score()->isMaster());

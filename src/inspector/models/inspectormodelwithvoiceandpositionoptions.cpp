@@ -33,7 +33,10 @@ InspectorModelWithVoiceAndPositionOptions::InspectorModelWithVoiceAndPositionOpt
 
 void InspectorModelWithVoiceAndPositionOptions::createProperties()
 {
-    m_voiceBasedPosition = buildPropertyItem(Pid::DIRECTION);
+    m_voiceBasedPosition = buildPropertyItem(Pid::DIRECTION, [this](const mu::engraving::Pid pid, const QVariant& newValue) {
+        onPropertyValueChanged(pid, newValue);
+        updateIsStaveCenteringAvailable();
+    });
     m_applyToVoice = buildPropertyItem(Pid::APPLY_TO_VOICE);
     m_centerBetweenStaves = buildPropertyItem(Pid::CENTER_BETWEEN_STAVES);
     updateIsMultiStaffInstrument();
@@ -79,11 +82,12 @@ void InspectorModelWithVoiceAndPositionOptions::updateIsStaveCenteringAvailable(
     bool isStaveCenteringAvailable = true;
     for (EngravingItem* item : m_elementList) {
         staff_idx_t thisStaffIdx = item->staffIdx();
-        bool above = item->placeAbove();
+        DirectionV itemDirection = item->getProperty(Pid::DIRECTION).value<DirectionV>();
         const std::vector<Staff*>& partStaves = item->part()->staves();
         staff_idx_t firstStaffOfPart = partStaves.front()->idx();
         staff_idx_t lastStaffOfPart = partStaves.back()->idx();
-        if ((above && thisStaffIdx == firstStaffOfPart) || (!above && thisStaffIdx == lastStaffOfPart)) {
+        if ((itemDirection == DirectionV::UP && thisStaffIdx == firstStaffOfPart)
+            || (itemDirection == DirectionV::DOWN && thisStaffIdx == lastStaffOfPart)) {
             isStaveCenteringAvailable = false;
             break;
         }

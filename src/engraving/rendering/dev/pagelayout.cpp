@@ -421,6 +421,10 @@ void PageLayout::collectPage(LayoutContext& ctx)
         }
     }
 
+    for (const System* system : page->systems()) {
+        SystemLayout::centerElementsBetweenStaves(system);
+    }
+
     page->invalidateBspTree();
 }
 

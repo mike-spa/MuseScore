@@ -650,6 +650,7 @@ public:
     virtual bool allowTimeAnchor() const { return false; }
 
     virtual bool hasVoiceApplicationProperties() const { return false; }
+    bool appliesToAllVoicesInInstrument() const;
     void setInitialTrackAndVoiceApplication(track_idx_t track);
     void setPlacementBasedOnVoiceApplication(DirectionV styledDirection);
 

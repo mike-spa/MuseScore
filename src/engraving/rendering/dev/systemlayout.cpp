@@ -2718,3 +2718,97 @@ double SystemLayout::minDistance(const System* top, const System* bottom, const 
     }
     return dist;
 }
+
+void SystemLayout::centerElementsBetweenStaves(const System* system)
+{
+    for (SpannerSegment* spannerSeg : system->spannerSegments()) {
+        if (spannerSeg->isHairpinSegment() && elementNeedsCenterBetweenStaves(spannerSeg, system)) {
+            centerElementBetweenStaves(spannerSeg, system);
+        }
+    }
+
+    for (const MeasureBase* mb : system->measures()) {
+        if (!mb->isMeasure()) {
+            continue;
+        }
+        for (const Segment& seg : toMeasure(mb)->segments()) {
+            for (EngravingItem* item : seg.annotations()) {
+                if (item->isDynamic() && elementNeedsCenterBetweenStaves(item, system)) {
+                    centerElementBetweenStaves(item, system);
+                    Expression* snappedExpr = toDynamic(item)->snappedExpression();
+                    if (snappedExpr) {
+                        snappedExpr->mutldata()->setPosY(item->ldata()->pos().y());
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool SystemLayout::elementNeedsCenterBetweenStaves(const EngravingItem* element, const System* system)
+{
+    if (!element->isStyled(Pid::OFFSET)) {
+        // NOTE: because of current limitations of the offset system, we can't center an element that's been manually moved.
+        return false;
+    }
+
+    const Part* part = element->part();
+    AutoOnOff centerProperty = element->getProperty(Pid::CENTER_BETWEEN_STAVES).value<AutoOnOff>();
+    if (part->nstaves() <= 1 || centerProperty == AutoOnOff::OFF) {
+        return false;
+    }
+
+    const Staff* thisStaff = element->staff();
+    const std::vector<Staff*>& partStaves = part->staves();
+    if (thisStaff == partStaves.front() && element->placeAbove() || thisStaff == partStaves.back() && element->placeBelow()) {
+        return false;
+    }
+
+    staff_idx_t thisIdx = thisStaff->idx();
+    staff_idx_t nextIdx = element->placeAbove() ? thisIdx - 1 : thisIdx + 1;
+
+    const SysStaff* thisSystemStaff = system->staff(thisIdx);
+    const SysStaff* nextSystemStaff = system->staff(nextIdx);
+    if (!thisSystemStaff->show() || !nextSystemStaff->show()) {
+        return false;
+    }
+
+    return centerProperty == AutoOnOff::ON || element->appliesToAllVoicesInInstrument();
+}
+
+void SystemLayout::centerElementBetweenStaves(EngravingItem* element, const System* system)
+{
+    bool isAbove = element->placeAbove();
+    staff_idx_t thisIdx = element->staffIdx();
+    staff_idx_t nextIdx = isAbove ? thisIdx - 1 : thisIdx + 1;
+
+    SysStaff* thisStaff = system->staff(thisIdx);
+    SysStaff* nextStaff = system->staff(nextIdx);
+
+    double elementMinDist = element->minDistance().toMM(element->spatium());
+    const RectF& elementBbox = element->ldata()->bbox().translated(PointF(0.0, element->y()));
+
+    double edgeOfThisStaff = isAbove ? elementBbox.bottom() + elementMinDist : elementBbox.top() - elementMinDist;
+
+    SkylineLine& nextSkyline = isAbove ? nextStaff->skyline().south() : nextStaff->skyline().north();
+    double yStaffDiff = nextStaff->y() - thisStaff->y();
+    Shape elementShape = element->shape().translate(PointF(element->pageX() - system->pageX(), element->y() - yStaffDiff));
+    SkylineLine elementSkyline(isAbove);
+    elementSkyline.add(elementShape);
+    double distFromNextSkyline = isAbove ? -nextSkyline.minDistance(elementSkyline) : -elementSkyline.minDistance(nextSkyline);
+    double edgeOfNextStaff = isAbove ? elementBbox.top() - distFromNextSkyline : elementBbox.bottom() + distFromNextSkyline;
+
+    double yCenter = 0.5 * (edgeOfThisStaff + edgeOfNextStaff) + visualVerticalCenter(element);
+
+    element->mutldata()->setPosY(yCenter - element->offset().y());
+}
+
+double SystemLayout::visualVerticalCenter(const EngravingItem* element)
+{
+    switch (element->type()) {
+    case ElementType::DYNAMIC:
+        return 0.5 * element->spatium();
+    default:
+        return 0.0;
+    }
+}

@@ -6589,6 +6589,7 @@ SpannerSegment* TLayout::layoutSystemSLine(SLine* line, System* system, LayoutCo
         sst = SpannerSegmentType::END;
     }
     lineSegm->setSpannerSegmentType(sst);
+    lineSegm->setPlacement(line->placement());
 
     switch (sst) {
     case SpannerSegmentType::SINGLE: {

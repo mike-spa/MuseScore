@@ -1260,6 +1260,12 @@ void EngravingItem::manageExclusionFromParts(bool exclude)
     }
 }
 
+bool EngravingItem::appliesToAllVoicesInInstrument() const
+{
+    return hasVoiceApplicationProperties()
+           && getProperty(Pid::APPLY_TO_VOICE).value<VoiceApplication>() == VoiceApplication::ALL_VOICE_IN_INSTRUMENT;
+}
+
 void EngravingItem::setInitialTrackAndVoiceApplication(track_idx_t track)
 {
     if (MScore::dynamicsApplyToAllVoices) {

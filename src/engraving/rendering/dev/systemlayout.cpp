@@ -2753,8 +2753,9 @@ bool SystemLayout::elementNeedsCenterBetweenStaves(const EngravingItem* element,
     }
 
     const Part* part = element->part();
+    bool centerStyle = element->style().styleB(Sid::dynamicsHairpinsAutoCenterOnGrandStaff);
     AutoOnOff centerProperty = element->getProperty(Pid::CENTER_BETWEEN_STAVES).value<AutoOnOff>();
-    if (part->nstaves() <= 1 || centerProperty == AutoOnOff::OFF) {
+    if (part->nstaves() <= 1 || centerProperty == AutoOnOff::OFF || (!centerStyle && centerProperty != AutoOnOff::ON)) {
         return false;
     }
 

@@ -697,4 +697,11 @@ PointF Hairpin::linePos(Grip grip, System** system) const
 
     return PointF(x, 0.0);
 }
+
+void Hairpin::reset()
+{
+    undoResetProperty(Pid::DIRECTION);
+    undoResetProperty(Pid::CENTER_BETWEEN_STAVES);
+    TextLineBase::reset();
+}
 }

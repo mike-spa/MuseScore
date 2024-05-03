@@ -170,6 +170,8 @@ public:
 
     bool hasVoiceApplicationProperties() const override { return true; }
 
+    void reset() override;
+
 private:
 
     Sid getPropertyStyle(Pid) const override;

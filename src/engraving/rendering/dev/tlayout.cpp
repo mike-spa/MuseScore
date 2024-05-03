@@ -1885,9 +1885,9 @@ void TLayout::layoutDynamic(Dynamic* item, Dynamic::LayoutData* ldata, const Lay
     }
     ldata->setIsSkipDraw(false);
 
-    TLayout::layoutBaseTextBase(item, ldata);
-
     item->setPlacementBasedOnVoiceApplication(conf.styleV(Sid::dynamicsHairpinVoiceBasedPlacement).value<DirectionV>());
+
+    TLayout::layoutBaseTextBase(item, ldata);
 
     const Segment* s = item->segment();
     if (!s || (!item->centerOnNotehead() && item->align().horizontal == AlignH::LEFT)) {

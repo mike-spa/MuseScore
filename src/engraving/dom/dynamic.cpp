@@ -663,6 +663,8 @@ void Dynamic::endEdit(EditData& ed)
 
 void Dynamic::reset()
 {
+    undoResetProperty(Pid::DIRECTION);
+    undoResetProperty(Pid::CENTER_BETWEEN_STAVES);
     TextBase::reset();
 }
 

@@ -59,6 +59,11 @@ void InspectorModelWithVoiceAndPositionOptions::resetProperties()
     m_centerBetweenStaves->resetToDefault();
 }
 
+void InspectorModelWithVoiceAndPositionOptions::onNotationChanged(const PropertyIdSet&, const StyleIdSet&)
+{
+    loadProperties();
+}
+
 void InspectorModelWithVoiceAndPositionOptions::updateIsMultiStaffInstrument()
 {
     bool isMultiStaffInstrument = true;

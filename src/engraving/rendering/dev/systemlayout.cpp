@@ -2786,18 +2786,30 @@ void SystemLayout::centerElementBetweenStaves(EngravingItem* element, const Syst
     SysStaff* thisStaff = system->staff(thisIdx);
     SysStaff* nextStaff = system->staff(nextIdx);
 
+    double elementXinSystemCoord = element->pageX() - system->pageX();
+
+    double yDefaultOffset = element->propertyDefault(Pid::OFFSET).value<PointF>().y();
+    double yDefaultPos = isAbove ? yDefaultOffset : thisStaff->bbox().height() + yDefaultOffset;
+    double elementIsAtDefaultPos = muse::RealIsEqual(yDefaultPos, element->y());
     double elementMinDist = element->minDistance().toMM(element->spatium());
-    const RectF& elementBbox = element->ldata()->bbox().translated(PointF(0.0, element->y()));
+    const RectF& elementBbox = element->ldata()->bbox().translated(PointF(elementXinSystemCoord, element->y()));
+    // SEMI-HACK: we can't use the skyline of thisStaff because it also includes element itself.
+    // Can have a better solution when we get rid of skylines.
+    double edgeOfThisStaff = elementIsAtDefaultPos
+                             ? isAbove ? 0.0 : thisStaff->bbox().height()
+                             : isAbove ? elementBbox.bottom() + elementMinDist : elementBbox.top() - elementMinDist;
 
-    double edgeOfThisStaff = isAbove ? elementBbox.bottom() + elementMinDist : elementBbox.top() - elementMinDist;
-
-    SkylineLine& nextSkyline = isAbove ? nextStaff->skyline().south() : nextStaff->skyline().north();
+    double startX = elementBbox.left();
+    double endX = elementBbox.right();
     double yStaffDiff = nextStaff->y() - thisStaff->y();
-    Shape elementShape = element->shape().translate(PointF(element->pageX() - system->pageX(), element->y() - yStaffDiff));
-    SkylineLine elementSkyline(isAbove);
-    elementSkyline.add(elementShape);
-    double distFromNextSkyline = isAbove ? -nextSkyline.minDistance(elementSkyline) : -elementSkyline.minDistance(nextSkyline);
-    double edgeOfNextStaff = isAbove ? elementBbox.top() - distFromNextSkyline : elementBbox.bottom() + distFromNextSkyline;
+    SkylineLine& nextSkyline = isAbove ? nextStaff->skyline().south() : nextStaff->skyline().north();
+    double yMax = 0.0;
+    for (const SkylineSegment& skylineSeg : nextSkyline) {
+        if (skylineSeg.x < endX && skylineSeg.x + skylineSeg.w > startX) {
+            yMax = isAbove ? std::max(yMax, skylineSeg.y) : std::min(yMax, skylineSeg.y);
+        }
+    }
+    double edgeOfNextStaff = yMax + yStaffDiff;
 
     double yCenter = 0.5 * (edgeOfThisStaff + edgeOfNextStaff) + visualVerticalCenter(element);
 

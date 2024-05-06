@@ -20,6 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import QtQuick 2.15
+import QtQuick.Layouts
 
 import Muse.Ui 1.0
 import Muse.UiComponents 1.0
@@ -50,60 +51,101 @@ Column {
         navigationRowStart: root.navigationRowStart
         navigationRowEnd: individualVoicesSection.navigationRowEnd
 
-        FlatRadioButtonList {
-            id: allVoicesSection
-
-            navigationPanel: root.navigationPanel
-            navigationRowStart: parent.navigationRowStart
-
-            visible: root.model ? root.model.isMultiStaffInstrument : false
-
-            height: 30
+        RowLayout {
             width: parent.width
+            spacing: individualVoicesSection.spacing
 
-            currentValue: parent.propertyItem && !parent.propertyItem.isUndefined ? parent.propertyItem.value : undefined
+            FlatButton {
+                id: allVoicesButton
 
-            onToggled: function(newValue) {
-                if (parent.propertyItem) {
-                    parent.propertyItem.value = newValue
+                Layout.preferredWidth: (parent.width - 2 * parent.spacing) / 3 // One third
+
+                text: qsTrc("inspector", "All")
+                accentButton: applyToVoiceSection.propertyItem
+                              && (applyToVoiceSection.propertyItem.value === VoiceTypes.VOICE_ALL_IN_INSTRUMENT
+                                  || applyToVoiceSection.propertyItem.value === VoiceTypes.VOICE_ALL_IN_STAFF)
+                backgroundRadius: 2 // match FlatRadioButton
+
+                navigation.panel: root.navigationPanel
+                navigation.row: applyToVoiceSection.navigationRowStart + 1
+
+                onClicked: {
+                    if (!root.model) {
+                        return
+                    }
+
+                    if (root.model.isMultiStaffInstrument) {
+                        allVoicesMenu.toggleOpened(allVoicesMenu.model)
+                    } else {
+                        applyToVoiceSection.propertyItem.value = VoiceTypes.VOICE_ALL_IN_INSTRUMENT
+                    }
+                }
+
+                FlatButtonMenuIndicatorTriangle {
+                    visible: root.model && root.model.isMultiStaffInstrument
+                }
+
+                StyledMenuLoader {
+                    id: allVoicesMenu
+
+                    readonly property var model: [
+                        {
+                            id: "VOICE_ALL_IN_INSTRUMENT",
+                            title: qsTrc("inspector", "All voices on instrument"),
+                            checkable: true,
+                            checked: applyToVoiceSection.propertyItem?.value === VoiceTypes.VOICE_ALL_IN_INSTRUMENT
+                        },
+                        {
+                            id: "VOICE_ALL_IN_STAFF",
+                            title: qsTrc("inspector", "All voices on this staff only"),
+                            checkable: true,
+                            checked: applyToVoiceSection.propertyItem?.value === VoiceTypes.VOICE_ALL_IN_STAFF
+                        }
+                    ]
+
+                    onHandleMenuItem: function (itemId) {
+                        if (!applyToVoiceSection.propertyItem) {
+                            return
+                        }
+
+                        switch (itemId) {
+                        case "VOICE_ALL_IN_INSTRUMENT":
+                            applyToVoiceSection.propertyItem.value = VoiceTypes.VOICE_ALL_IN_INSTRUMENT
+                            break
+                        case "VOICE_ALL_IN_STAFF":
+                            applyToVoiceSection.propertyItem.value = VoiceTypes.VOICE_ALL_IN_STAFF
+                            break
+                        }
+                    }
                 }
             }
 
-            model: [
-                { text: qsTrc("inspector", "All in instrument"), value: VoiceTypes.VOICE_ALL_IN_INSTRUMENT },
-                { text: qsTrc("inspector", "All in this staff"), value: VoiceTypes.VOICE_ALL_IN_STAFF },
-            ]
-        }
+            FlatRadioButtonList {
+                id: individualVoicesSection
 
-        FlatRadioButtonList {
-            id: individualVoicesSection
+                navigationPanel: root.navigationPanel
+                navigationRowStart: allVoicesButton.navigation.row + 1
 
-            navigationPanel: root.navigationPanel
-            navigationRowStart: allVoicesSection.navigationRowEnd + 1
+                Layout.fillWidth: true
+                height: 30
 
-            height: 30
-            width: parent.width
+                currentValue: applyToVoiceSection.propertyItem && !applyToVoiceSection.propertyItem.isUndefined
+                              ? applyToVoiceSection.propertyItem.value
+                              : undefined
 
-            currentValue: parent.propertyItem && !parent.propertyItem.isUndefined ? parent.propertyItem.value : undefined
+                model: [
+                    { iconCode: IconCode.VOICE_1, value: VoiceTypes.VOICE_ONE },
+                    { iconCode: IconCode.VOICE_2, value: VoiceTypes.VOICE_TWO },
+                    { iconCode: IconCode.VOICE_3, value: VoiceTypes.VOICE_THREE },
+                    { iconCode: IconCode.VOICE_4, value: VoiceTypes.VOICE_FOUR }
+                ]
 
-            onToggled: function(newValue) {
-                if (parent.propertyItem) {
-                    parent.propertyItem.value = newValue
+                onToggled: function(newValue) {
+                    if (applyToVoiceSection.propertyItem) {
+                        applyToVoiceSection.propertyItem.value = newValue
+                    }
                 }
             }
-
-            model: root.model && root.model.isMultiStaffInstrument ? [
-                { iconCode: IconCode.VOICE_1, value: VoiceTypes.VOICE_ONE },
-                { iconCode: IconCode.VOICE_2, value: VoiceTypes.VOICE_TWO },
-                { iconCode: IconCode.VOICE_3, value: VoiceTypes.VOICE_THREE },
-                { iconCode: IconCode.VOICE_4, value: VoiceTypes.VOICE_FOUR }
-            ] : [
-                { text: qsTrc("inspector", "All"), value: VoiceTypes.VOICE_ALL_IN_INSTRUMENT},
-                { iconCode: IconCode.VOICE_1, value: VoiceTypes.VOICE_ONE },
-                { iconCode: IconCode.VOICE_2, value: VoiceTypes.VOICE_TWO },
-                { iconCode: IconCode.VOICE_3, value: VoiceTypes.VOICE_THREE },
-                { iconCode: IconCode.VOICE_4, value: VoiceTypes.VOICE_FOUR }
-            ]
         }
     }
 

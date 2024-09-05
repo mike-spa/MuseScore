@@ -532,6 +532,11 @@ public:
     {
         return isArticulation() || isOrnament();
     }
+
+    bool isDynamicOrExpression() const
+    {
+        return isDynamic() || isExpression();
+    }
 };
 
 //---------------------------------------------------
@@ -686,6 +691,18 @@ static inline const Articulation* toArticulation(const EngravingObject* e)
     return (const Articulation*)e;
 }
 
+static inline Dynamic* toDynamic(EngravingObject* e)
+{
+    assert(e == 0 || e->isDynamicOrExpression());
+    return (Dynamic*)e;
+}
+
+static inline const Dynamic* toDynamic(const EngravingObject* e)
+{
+    assert(e == 0 || e->isDynamicOrExpression());
+    return (const Dynamic*)e;
+}
+
 #define CONVERT(a)  \
     static inline a* to##a(EngravingObject * e) { assert(e == 0 || e->is##a()); return (a*)e; } \
     static inline const a* to##a(const EngravingObject * e) { assert(e == 0 || e->is##a()); return (const a*)e; }
@@ -756,7 +773,6 @@ CONVERT(MeasureRepeat)
 CONVERT(MMRest)
 CONVERT(Tuplet)
 CONVERT(NoteDot)
-CONVERT(Dynamic)
 CONVERT(Expression)
 CONVERT(InstrumentName)
 CONVERT(Accidental)

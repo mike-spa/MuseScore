@@ -82,7 +82,7 @@ HairpinSegment::HairpinSegment(Hairpin* sp, System* parent)
 bool HairpinSegment::acceptDrop(EditData& data) const
 {
     EngravingItem* e = data.dropElement;
-    if (e->isDynamic()) {
+    if (e->isDynamic() || e->isExpression()) {
         return true;
     }
     return false;
@@ -91,7 +91,7 @@ bool HairpinSegment::acceptDrop(EditData& data) const
 EngravingItem* HairpinSegment::drop(EditData& data)
 {
     EngravingItem* e = data.dropElement;
-    if (!e->isDynamic()) {
+    IF_ASSERT_FAILED(e->isDynamic() || e->isExpression()) {
         return nullptr;
     }
 

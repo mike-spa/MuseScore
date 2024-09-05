@@ -22,12 +22,12 @@
 #ifndef MU_ENGRAVING_EXPRESSION_H
 #define MU_ENGRAVING_EXPRESSION_H
 
-#include "textbase.h"
+#include "dynamic.h"
 
 namespace mu::engraving {
 class Dynamic;
 
-class Expression final : public TextBase
+class Expression final : public Dynamic
 {
     M_PROPERTY(bool, snapToDynamics, setSnapToDynamics)
     DECLARE_CLASSOF(ElementType::EXPRESSION)

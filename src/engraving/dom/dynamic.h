@@ -44,7 +44,7 @@ struct Dyn {
 //   @P range  enum (Dynamic.STAFF, .PART, .SYSTEM)
 //-----------------------------------------------------------------------------
 
-class Dynamic final : public TextBase
+class Dynamic : public TextBase
 {
     OBJECT_ALLOCATOR(engraving, Dynamic)
     DECLARE_CLASSOF(ElementType::DYNAMIC)
@@ -56,6 +56,7 @@ public:
     };
 
     Dynamic(Segment* parent);
+    Dynamic(ElementType et, Segment* parent, TextStyleType tst, ElementFlags flags);
     Dynamic(const Dynamic&);
     Dynamic* clone() const override { return new Dynamic(*this); }
     Segment* segment() const { return (Segment*)explicitParent(); }
@@ -77,7 +78,7 @@ public:
     bool editNonTextual(EditData&) override;
     void editDrag(EditData&) override;
     void endEdit(EditData&) override;
-    void reset() override;
+    virtual void reset() override;
     bool needStartEditingAfterSelecting() const override { return true; }
 
     bool allowTimeAnchor() const override { return true; }
@@ -96,11 +97,11 @@ public:
     void setVelChangeSpeed(DynamicSpeed val) { m_velChangeSpeed = val; }
 
     PropertyValue getProperty(Pid propertyId) const override;
-    bool setProperty(Pid propertyId, const PropertyValue&) override;
-    PropertyValue propertyDefault(Pid id) const override;
-    Sid getPropertyStyle(Pid) const override;
+    virtual bool setProperty(Pid propertyId, const PropertyValue&) override;
+    virtual PropertyValue propertyDefault(Pid id) const override;
+    virtual Sid getPropertyStyle(Pid) const override;
 
-    std::unique_ptr<ElementGroup> getDragGroup(std::function<bool(const EngravingItem*)> isDragged) override;
+    virtual std::unique_ptr<ElementGroup> getDragGroup(std::function<bool(const EngravingItem*)> isDragged) override;
 
     String accessibleInfo() const override;
     String screenReaderInfo() const override;
@@ -118,8 +119,8 @@ public:
     bool playDynamic() const { return m_playDynamic; }
     void setPlayDynamic(bool v) { m_playDynamic = v; }
 
-    bool acceptDrop(EditData& ed) const override;
-    EngravingItem* drop(EditData& ed) override;
+    virtual bool acceptDrop(EditData& ed) const override;
+    virtual EngravingItem* drop(EditData& ed) override;
 
     static int dynamicVelocity(DynamicType t);
     static const std::vector<Dyn>& dynamicList() { return DYN_LIST; }

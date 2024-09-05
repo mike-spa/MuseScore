@@ -128,6 +128,9 @@ Dynamic::Dynamic(Segment* parent)
     initElementStyle(&dynamicsStyle);
 }
 
+Dynamic::Dynamic(ElementType et, Segment* parent, TextStyleType tst, ElementFlags flags)
+    : TextBase(et, parent, tst, flags) {}
+
 Dynamic::Dynamic(const Dynamic& d)
     : TextBase(d)
 {

@@ -22,7 +22,6 @@
 #include "expression.h"
 
 #include "chord.h"
-#include "dynamic.h"
 #include "dynamichairpingroup.h"
 #include "note.h"
 #include "segment.h"
@@ -37,13 +36,13 @@ static const ElementStyle expressionStyle {
 };
 
 Expression::Expression(Segment* parent)
-    : TextBase(ElementType::EXPRESSION, parent, TextStyleType::EXPRESSION, ElementFlag::MOVABLE | ElementFlag::ON_STAFF)
+    : Dynamic(ElementType::EXPRESSION, parent, TextStyleType::EXPRESSION, ElementFlag::MOVABLE | ElementFlag::ON_STAFF)
 {
     initElementStyle(&expressionStyle);
 }
 
 Expression::Expression(const Expression& expression)
-    : TextBase(expression)
+    : Dynamic(expression)
 {
     _snapToDynamics = expression._snapToDynamics;
 }
@@ -82,7 +81,7 @@ std::unique_ptr<ElementGroup> Expression::getDragGroup(std::function<bool(const 
 
 bool Expression::acceptDrop(EditData& ed) const
 {
-    return ed.dropElement->type() == ElementType::DYNAMIC || TextBase::acceptDrop(ed);
+    return ed.dropElement->type() == ElementType::DYNAMIC || Dynamic::acceptDrop(ed);
 }
 
 EngravingItem* Expression::drop(EditData& ed)
@@ -101,7 +100,7 @@ EngravingItem* Expression::drop(EditData& ed)
         return item;
     }
 
-    return TextBase::drop(ed);
+    return Dynamic::drop(ed);
 }
 
 PropertyValue Expression::getProperty(Pid propertyId) const

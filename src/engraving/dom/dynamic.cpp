@@ -754,8 +754,6 @@ void Dynamic::editDrag(EditData& ed)
             }
             setOffset(PointF());
 
-            renderer()->layoutItem(this);
-
             PointF pos2(canvasPos());
             const PointF newOffset = pos1 - pos2;
             setOffset(newOffset);

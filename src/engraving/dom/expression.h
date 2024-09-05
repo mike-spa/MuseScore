@@ -44,6 +44,8 @@ public:
     double computeDynamicExpressionDistance(const Dynamic* snappedDyn) const;
 
     std::unique_ptr<ElementGroup> getDragGroup(std::function<bool(const EngravingItem*)> isDragged) override;
+    void editDrag(EditData&) override;
+    bool needStartEditingAfterSelecting() const override { return true; }
 
     bool acceptDrop(EditData& ed) const override;
     EngravingItem* drop(EditData& ed) override;

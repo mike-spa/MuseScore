@@ -76,7 +76,7 @@ public:
     void startEdit(EditData&) override;
     bool edit(EditData&) override;
     bool editNonTextual(EditData&) override;
-    void editDrag(EditData&) override;
+    virtual void editDrag(EditData&) override;
     void endEdit(EditData&) override;
     virtual void reset() override;
     bool needStartEditingAfterSelecting() const override { return true; }

@@ -21,6 +21,7 @@
  */
 #include "expression.h"
 
+#include "anchors.h"
 #include "chord.h"
 #include "dynamichairpingroup.h"
 #include "note.h"
@@ -77,6 +78,42 @@ std::unique_ptr<ElementGroup> Expression::getDragGroup(std::function<bool(const 
         return g;
     }
     return TextBase::getDragGroup(isDragged);
+}
+
+void Expression::editDrag(EditData& ed)
+{
+    ElementEditDataPtr eed = ed.getData(this);
+    if (!eed) {
+        return;
+    }
+
+    EditTimeTickAnchors::updateAnchors(this, track());
+
+    KeyboardModifiers km = ed.modifiers;
+    if (km != (ShiftModifier | ControlModifier)) {
+        staff_idx_t si = staffIdx();
+        Segment* seg = nullptr; // don't prefer any segment while dragging, just snap to the closest
+        static constexpr double spacingFactor = 0.5;
+        score()->dragPosition(canvasPos(), &si, &seg, spacingFactor, allowTimeAnchor());
+        if ((seg && seg != segment()) || staffIdx() != si) {
+            const PointF oldOffset = offset();
+            PointF pos1(canvasPos());
+            score()->undoChangeParent(this, seg, staffIdx());
+            Dynamic* snappedDyn = snappedDynamic();
+            if (snappedDyn) {
+                score()->undoChangeParent(snappedDyn, seg, staffIdx());
+            }
+            setOffset(PointF());
+
+            PointF pos2(canvasPos());
+            const PointF newOffset = pos1 - pos2;
+            setOffset(newOffset);
+            setOffsetChanged(true);
+            eed->initOffset += newOffset - oldOffset;
+        }
+    }
+
+    EngravingItem::editDrag(ed);
 }
 
 bool Expression::acceptDrop(EditData& ed) const

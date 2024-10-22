@@ -178,8 +178,7 @@ public:
     int index() const;
     int measureIndex() const;
 
-    void setOldWidth(double n) { m_oldWidth = n; }
-    double oldWidth() const { return m_oldWidth; }
+    bool isBefore(const MeasureBase* other) const;
 
 protected:
 

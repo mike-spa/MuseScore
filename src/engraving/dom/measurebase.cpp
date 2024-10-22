@@ -654,6 +654,26 @@ int MeasureBase::measureIndex() const
     return -1;
 }
 
+bool MeasureBase::isBefore(const MeasureBase* other) const
+{
+    DO_ASSERT(other != this);
+
+    Fraction otherTick = other->tick();
+    if (otherTick != m_tick) {
+        return m_tick < otherTick;
+    }
+
+    bool otherIsMMRest = other->isMeasure() && toMeasure(other)->isMMRest();
+    for (const MeasureBase* mb = otherIsMMRest ? nextMM() : next(); mb && mb->tick() == m_tick;
+         mb = otherIsMMRest ? mb->nextMM() : mb->next()) {
+        if (mb == other) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 //---------------------------------------------------------
 //   sectionBreakElement
 //---------------------------------------------------------

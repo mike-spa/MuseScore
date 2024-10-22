@@ -58,6 +58,7 @@
 #include "scoreorder.h"
 #include "select.h"
 #include "spannermap.h"
+#include "systemlock.h"
 #include "synthesizerstate.h"
 #include "rootitem.h"
 #include "cmd.h"
@@ -1098,6 +1099,7 @@ private:
     std::vector<Part*> m_parts;
     std::vector<Staff*> m_staves;
     std::vector<Staff*> m_systemObjectStaves;
+    SystemLocks m_systemLocks;
 
     SpannerMap m_spanner;
     std::set<Spanner*> m_unmanagedSpanner;

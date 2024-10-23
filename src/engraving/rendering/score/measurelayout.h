@@ -72,6 +72,8 @@ public:
 
     static void layoutTimeTickAnchors(Measure* m, LayoutContext& ctx);
 
+    static void layoutSystemLockIndicators(MeasureBase* mb, LayoutContext&);
+
     static MeasureStartEndPos getMeasureStartEndPos(const Measure* measure, const Segment* firstCrSeg, const staff_idx_t staffIdx,
                                                     const bool needsHeaderException, const bool modernMMRest, const LayoutContext& ctx);
 

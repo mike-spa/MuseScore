@@ -37,6 +37,8 @@ public:
     const MeasureBase* startMeasure() const { return m_startMeasure; }
     const MeasureBase* endMeasure() const { return m_endMeasure; }
 
+    bool contains(const MeasureBase* mb) const;
+
 private:
     const MeasureBase* m_startMeasure;
     const MeasureBase* m_endMeasure;
@@ -51,6 +53,8 @@ public:
     void remove(const SystemLock& lock) { remove(lock.startMeasure()); }
     void clear() { m_systemLocks.clear(); }
 
+    const SystemLock* lockClosestTo(const MeasureBase* mb) const;
+
 private:
     void sanityCheck();
 
@@ -63,6 +67,27 @@ private:
     };
 
     std::map<const MeasureBase*, SystemLock, Ordering> m_systemLocks;
+};
+
+class SystemLockIndicator : public EngravingItem
+{
+    OBJECT_ALLOCATOR(engraving, SystemLockIndicator)
+    DECLARE_CLASSOF(ElementType::SYSTEM_LOCK_INDICATOR)
+
+public:
+    enum class Type {
+        START, END
+    };
+
+    SystemLockIndicator(Type type, MeasureBase* parent = 0);
+    SystemLockIndicator(const SystemLockIndicator&);
+    SystemLockIndicator* clone() const override { return new SystemLockIndicator(*this); }
+
+    bool isStartType() const { return m_type == Type::START; }
+    bool isEndType() const { return m_type == Type::END; }
+
+private:
+    Type m_type;
 };
 } // namespace mu::engraving
 

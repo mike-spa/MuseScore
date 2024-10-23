@@ -180,6 +180,9 @@ public:
 
     bool isBefore(const MeasureBase* other) const;
 
+    bool isStartOfSystemLock() const;
+    bool isEndOfSystemLock() const;
+
 protected:
 
     MeasureBase(const ElementType& type, System* system = 0);

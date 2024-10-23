@@ -2232,6 +2232,35 @@ void MeasureLayout::layoutTimeTickAnchors(Measure* m, LayoutContext& ctx)
     }
 }
 
+void MeasureLayout::layoutSystemLockIndicators(MeasureBase* mb, LayoutContext&)
+{
+    bool isStartOfLock = mb->isStartOfSystemLock();
+    bool isEndOfLock = mb->isEndOfSystemLock();
+
+    for (EngravingItem* item : mb->el()) {
+        if (!item->isSystemLockIndicator()) {
+            continue;
+        }
+        SystemLockIndicator* sli = toSystemLockIndicator(item);
+        bool deleteLockIndicator = (sli->isStartType() && !isStartOfLock) || (sli->isEndType() && !isEndOfLock);
+        if (deleteLockIndicator) {
+            mb->el().remove(sli);
+            delete sli;
+            break;
+        }
+    }
+
+    if (!isStartOfLock && !isEndOfLock) {
+        return;
+    }
+
+    SystemLockIndicator* newSli
+        = new SystemLockIndicator(isStartOfLock ? SystemLockIndicator::Type::START : SystemLockIndicator::Type::END);
+    mb->add(newSli);
+
+    newSli->mutldata()->setPos(isStartOfLock ? PointF(0.0, -4 * mb->spatium()) : PointF(mb->width(), -4 * mb->spatium()));
+}
+
 //---------------------------------------------------------
 //   layoutPartialWidth
 ///   Layout staff lines for the specified width only, aligned

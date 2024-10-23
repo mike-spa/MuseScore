@@ -585,6 +585,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     std::vector<Segment*> sl;
     for (MeasureBase* mb : system->measures()) {
+        MeasureLayout::layoutSystemLockIndicators(mb, ctx);
         if (!mb->isMeasure()) {
             continue;
         }

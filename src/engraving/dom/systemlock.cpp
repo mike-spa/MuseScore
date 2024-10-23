@@ -21,11 +21,18 @@
  */
 
 #include "measurebase.h"
+#include "system.h"
 #include "systemlock.h"
 
 #include "log.h"
 
 namespace mu::engraving {
+bool SystemLock::contains(const MeasureBase* mb) const
+{
+    return (m_startMeasure->isBefore(mb) || m_startMeasure == mb)
+           && (mb->isBefore(m_endMeasure) || mb == m_endMeasure);
+}
+
 void SystemLocks::add(const SystemLock& lock)
 {
     m_systemLocks.emplace(lock.startMeasure(), lock);
@@ -42,6 +49,15 @@ void SystemLocks::remove(const MeasureBase* start)
 #ifndef NDEBUG
     sanityCheck();
 #endif
+}
+
+const SystemLock* SystemLocks::lockClosestTo(const MeasureBase* mb) const
+{
+    if (m_systemLocks.empty()) {
+        return nullptr;
+    }
+
+    return &((*m_systemLocks.lower_bound(mb)).second);
 }
 
 void SystemLocks::sanityCheck()
@@ -65,5 +81,14 @@ void SystemLocks::sanityCheck()
         DO_ASSERT(curMB->isBefore(nextMB));
         DO_ASSERT(curSysLock.endMeasure()->isBefore(nextSysLock.startMeasure()));
     }
+}
+
+SystemLockIndicator::SystemLockIndicator(Type type, MeasureBase* parent)
+    : m_type(type), EngravingItem(ElementType::SYSTEM_LOCK_INDICATOR, parent, ElementFlag::SYSTEM | ElementFlag::GENERATED) {}
+
+SystemLockIndicator::SystemLockIndicator(const SystemLockIndicator& sli)
+    : EngravingItem(sli)
+{
+    m_type = sli.m_type;
 }
 } // namespace mu::engraving

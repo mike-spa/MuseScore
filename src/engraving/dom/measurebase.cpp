@@ -674,6 +674,18 @@ bool MeasureBase::isBefore(const MeasureBase* other) const
     return false;
 }
 
+bool MeasureBase::isStartOfSystemLock() const
+{
+    const SystemLock* lock = score()->systemLocks().lockClosestTo(this);
+    return lock && lock->startMeasure() == this;
+}
+
+bool MeasureBase::isEndOfSystemLock() const
+{
+    const SystemLock* lock = score()->systemLocks().lockClosestTo(this);
+    return lock && lock->endMeasure() == this;
+}
+
 //---------------------------------------------------------
 //   sectionBreakElement
 //---------------------------------------------------------

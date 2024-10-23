@@ -32,7 +32,7 @@ class SystemLock
 {
 public:
     SystemLock(const MeasureBase* start, const MeasureBase* end)
-        : m_startMeasure(start), m_endMeasure(end) { assert(m_startMeasure->isBefore(m_endMeasure)); }
+        : m_startMeasure(start), m_endMeasure(end) { assert(m_startMeasure->isBefore(m_endMeasure) || m_startMeasure == m_endMeasure); }
 
     const MeasureBase* startMeasure() const { return m_startMeasure; }
     const MeasureBase* endMeasure() const { return m_endMeasure; }

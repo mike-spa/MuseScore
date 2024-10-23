@@ -631,6 +631,18 @@ const UiActionList NotationUiActions::m_actions = {
              TranslatableString("action", "Add/remove page break"),
              TranslatableString("action", "Add/remove page break")
              ),
+    UiAction("move-measure-to-prev-system",
+             mu::context::UiCtxProjectOpened,
+             mu::context::CTX_NOTATION_FOCUSED,
+             TranslatableString("action", "Move measure to previous system"),
+             TranslatableString("action", "Move measure to previous system")
+             ),
+    UiAction("move-measure-to-next-system",
+             mu::context::UiCtxProjectOpened,
+             mu::context::CTX_ANY,
+             TranslatableString("action", "Move measure to next system"),
+             TranslatableString("action", "Move measure to next system")
+             ),
     UiAction("section-break",
              mu::context::UiCtxProjectOpened,
              mu::context::CTX_NOTATION_OPENED,

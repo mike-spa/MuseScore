@@ -4693,6 +4693,16 @@ void Score::cmdToggleLayoutBreak(LayoutBreakType type)
     }
 }
 
+void Score::cmdMoveMeasureToPrevSystem()
+{
+    return;
+}
+
+void Score::cmdMoveMeasureToNextSystem()
+{
+    return;
+}
+
 void Score::cmdAddStaffTypeChange(Measure* measure, staff_idx_t staffIdx, StaffTypeChange* stc)
 {
     if (!measure) {

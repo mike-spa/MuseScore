@@ -255,6 +255,9 @@ void NotationActionController::init()
     registerAction("section-break", &Interaction::toggleLayoutBreak, LayoutBreakType::SECTION, PlayMode::NoPlay,
                    &Controller::toggleLayoutBreakAvailable);
 
+    registerAction("move-measure-to-prev-system", &Interaction::moveMeasureToPrevSystem);
+    registerAction("move-measure-to-next-system", &Interaction::moveMeasureToNextSystem);
+
     registerAction("split-measure", &Interaction::splitSelectedMeasure);
     registerAction("join-measures", &Interaction::joinSelectedMeasures);
 

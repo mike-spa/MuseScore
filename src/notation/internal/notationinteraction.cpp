@@ -4391,6 +4391,20 @@ void NotationInteraction::toggleLayoutBreak(LayoutBreakType breakType)
     apply();
 }
 
+void NotationInteraction::moveMeasureToPrevSystem()
+{
+    startEdit();
+    score()->cmdMoveMeasureToPrevSystem();
+    apply();
+}
+
+void NotationInteraction::moveMeasureToNextSystem()
+{
+    startEdit();
+    score()->cmdMoveMeasureToNextSystem();
+    apply();
+}
+
 void NotationInteraction::setBreaksSpawnInterval(BreaksSpawnIntervalType intervalType, int interval)
 {
     interval = intervalType == BreaksSpawnIntervalType::MeasuresInterval ? interval : 0;

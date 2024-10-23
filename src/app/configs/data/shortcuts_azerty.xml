@@ -820,6 +820,14 @@
     <seq>Ctrl+Enter</seq>
     </SC>
   <SC>
+    <key>move-measure-to-prev-system</key>
+    <seq>Shift+Up</seq>
+    </SC>
+  <SC>
+    <key>move-measure-to-next-system</key>
+    <seq>Shift+Down</seq>
+    </SC>
+  <SC>
     <key>edit-element</key>
     <seq>F2</seq>
     <seq>Alt+Shift+E</seq>

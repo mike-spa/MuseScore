@@ -1003,6 +1003,11 @@ public:
 
     void autoUpdateSpatium();
 
+    const SystemLocks& systemLocks() const { return m_systemLocks; }
+    void addSystemLock(const SystemLock& lock) { m_systemLocks.add(lock); }
+    void removeSystemLock(const SystemLock& lock) { m_systemLocks.remove(lock); }
+    void clearSystemLocks() { m_systemLocks.clear(); }
+
     friend class Chord;
 
 protected:

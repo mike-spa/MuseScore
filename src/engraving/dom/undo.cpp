@@ -3293,3 +3293,33 @@ void ChangeSpanArpeggio::flip(EditData*)
     m_chord->setSpanArpeggio(m_spanArpeggio);
     m_spanArpeggio = f_spanArp;
 }
+
+AddSystemLock::AddSystemLock(const SystemLock& systemLock)
+    : m_systemLock(systemLock) {}
+
+void AddSystemLock::undo(EditData*)
+{
+    Score* score = m_systemLock.startMeasure()->score();
+    score->removeSystemLock(m_systemLock);
+}
+
+void AddSystemLock::redo(EditData*)
+{
+    Score* score = m_systemLock.startMeasure()->score();
+    score->addSystemLock(m_systemLock);
+}
+
+RemoveSystemLock::RemoveSystemLock(const SystemLock& systemLock)
+    : m_systemLock(systemLock) {}
+
+void RemoveSystemLock::undo(EditData*)
+{
+    Score* score = m_systemLock.startMeasure()->score();
+    score->addSystemLock(m_systemLock);
+}
+
+void RemoveSystemLock::redo(EditData*)
+{
+    Score* score = m_systemLock.startMeasure()->score();
+    score->removeSystemLock(m_systemLock);
+}

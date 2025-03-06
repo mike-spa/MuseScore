@@ -1016,47 +1016,6 @@ public:
     UNDO_NAME("InsertMeasures")
 };
 
-class AddExcerpt : public UndoCommand
-{
-    OBJECT_ALLOCATOR(engraving, AddExcerpt)
-
-    Excerpt* excerpt = nullptr;
-    bool deleteExcerpt = false;
-
-public:
-    AddExcerpt(Excerpt* ex);
-    ~AddExcerpt() override;
-
-    void undo(EditData*) override;
-    void redo(EditData*) override;
-
-    std::vector<EngravingObject*> objectItems() const override;
-
-    UNDO_TYPE(CommandType::AddExcerpt)
-    UNDO_NAME("AddExcerpt")
-};
-
-class RemoveExcerpt : public UndoCommand
-{
-    OBJECT_ALLOCATOR(engraving, RemoveExcerpt)
-
-    Excerpt* excerpt = nullptr;
-    size_t index = muse::nidx;
-    bool deleteExcerpt = false;
-
-public:
-    RemoveExcerpt(Excerpt* ex);
-    ~RemoveExcerpt() override;
-
-    void undo(EditData*) override;
-    void redo(EditData*) override;
-
-    std::vector<EngravingObject*> objectItems() const override;
-
-    UNDO_TYPE(CommandType::RemoveExcerpt)
-    UNDO_NAME("RemoveExcerpt")
-};
-
 class SwapExcerpt : public UndoCommand
 {
     OBJECT_ALLOCATOR(engraving, SwapExcerpt)

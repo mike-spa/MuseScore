@@ -165,7 +165,7 @@ public:
     void removeExcerpt(Excerpt*);
     void deleteExcerpt(Excerpt*);
 
-    void initAndAddExcerpt(Excerpt*, bool);
+    void initAndAddExcerpt(Excerpt*);
     void initExcerpt(Excerpt*);
     void initEmptyExcerpt(Excerpt*);
 

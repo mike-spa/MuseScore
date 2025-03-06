@@ -282,13 +282,13 @@ TEST_F(Engraving_SpannersTests, DISABLED_spanners05)
     parts.push_back(score->parts().at(0));
 
     Excerpt* ex = new Excerpt(score);
-    score->initAndAddExcerpt(ex, false);
+    score->initAndAddExcerpt(ex);
     ex->setName(parts.front()->longName());
     ex->setParts(parts);
 
 //      nscore->setName(parts.front()->partName());
 
-    score->Score::undo(new AddExcerpt(ex));
+    score->addExcerpt(ex);
 
     EXPECT_TRUE(ScoreComp::saveCompareScore(score, u"glissando-cloning02.mscx", SPANNERS_DATA_DIR + u"glissando-cloning02-ref.mscx"));
     delete score;
@@ -544,14 +544,14 @@ TEST_F(Engraving_SpannersTests, DISABLED_spanners14)
     parts.push_back(score->parts().at(0));
 
     Excerpt* ex = new Excerpt(score);
-    score->initAndAddExcerpt(ex, false);
+    score->initAndAddExcerpt(ex);
 
     ex->setName(parts.front()->longName());
     ex->setParts(parts);
 
 //      nscore->setName(parts.front()->partName());
 
-    score->Score::undo(new AddExcerpt(ex));
+    score->addExcerpt(ex);
     EXPECT_TRUE(ScoreComp::saveCompareScore(score, u"glissando-cloning05.mscx", SPANNERS_DATA_DIR + u"glissando-cloning05-ref.mscx"));
     delete score;
 }

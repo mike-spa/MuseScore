@@ -544,19 +544,15 @@ void MasterScore::deleteExcerpt(Excerpt* excerpt)
             undo(new Unlink(st));
         }
     }
-    undo(new RemoveExcerpt(excerpt));
+
+    removeExcerpt(excerpt);
 }
 
-void MasterScore::initAndAddExcerpt(Excerpt* excerpt, bool fakeUndo)
+void MasterScore::initAndAddExcerpt(Excerpt* excerpt)
 {
     initExcerpt(excerpt);
 
-    auto excerptCmd = new AddExcerpt(excerpt);
-    if (fakeUndo) {
-        excerptCmd->redo(nullptr);
-    } else {
-        excerpt->excerptScore()->undo(excerptCmd);
-    }
+    addExcerpt(excerpt);
 }
 
 void MasterScore::initExcerpt(Excerpt* excerpt)

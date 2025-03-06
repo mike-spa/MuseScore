@@ -321,7 +321,7 @@ Score* Score::clone()
 
     excerpt->setTracksMapping(tracks);
 
-    masterScore()->initAndAddExcerpt(excerpt, true);
+    masterScore()->initAndAddExcerpt(excerpt);
     masterScore()->removeExcerpt(excerpt);
 
     return excerpt->excerptScore();

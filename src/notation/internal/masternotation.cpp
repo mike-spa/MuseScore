@@ -559,7 +559,7 @@ void MasterNotation::setExcerpts(const ExcerptNotationList& excerpts)
             continue;
         }
 
-        score->initAndAddExcerpt(excerptNotationImpl->excerpt(), false);
+        score->initAndAddExcerpt(excerptNotationImpl->excerpt());
         excerptNotationImpl->init();
     }
 
@@ -584,7 +584,7 @@ void MasterNotation::resetExcerpt(IExcerptNotationPtr excerptNotation)
     masterScore()->deleteExcerpt(oldExcerpt);
 
     mu::engraving::Excerpt* newExcerpt = new mu::engraving::Excerpt(*oldExcerpt, false);
-    masterScore()->initAndAddExcerpt(newExcerpt, false);
+    masterScore()->initAndAddExcerpt(newExcerpt);
 
     newExcerpt->excerptScore()->setIsOpen(oldExcerpt->excerptScore()->isOpen());
 
@@ -819,7 +819,7 @@ void MasterNotation::addExcerptsToMasterScore(const std::vector<mu::engraving::E
     TRACEFUNC;
 
     for (mu::engraving::Excerpt* excerpt : excerpts) {
-        masterScore()->initAndAddExcerpt(excerpt, false);
+        masterScore()->initAndAddExcerpt(excerpt);
     }
 
     masterScore()->setExcerptsChanged(false);

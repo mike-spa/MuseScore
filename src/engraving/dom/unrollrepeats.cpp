@@ -100,7 +100,7 @@ static void createExcerpts(MasterScore* cs, const std::list<Excerpt*>& excerpts)
         e->setExcerptScore(nscore);
         nscore->style().set(Sid::createMultiMeasureRests, true);
         cs->startCmd(TranslatableString("undoableAction", "Create parts"));
-        cs->undo(new AddExcerpt(e));
+        cs->addExcerpt(e);
         Excerpt::createExcerpt(e);
 
         // borrowed from excerptsdialog.cpp

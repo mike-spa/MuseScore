@@ -212,7 +212,7 @@ TEST_F(Engraving_LinksTests, test3LinkedParts_99796)
     ex.setParts(parts);
     Excerpt::createExcerpt(&ex);
     EXPECT_TRUE(nscore);
-    score->undo(new AddExcerpt(&ex));
+    score->addExcerpt(&ex);
     score->endCmd();
 
     // add a linked staff
@@ -236,7 +236,7 @@ TEST_F(Engraving_LinksTests, test3LinkedParts_99796)
     // delete part
     score->startCmd(TranslatableString::untranslatable("Engraving links tests"));
     score->deleteExcerpt(&ex);
-    score->undo(new RemoveExcerpt(&ex));
+    score->removeExcerpt(&ex);
 
     // we should have now 2 staves and *2* linked rests
     EXPECT_TRUE(score->staves().size() == 2);
@@ -312,7 +312,7 @@ TEST_F(Engraving_LinksTests, DISABLED_test4LinkedParts_94911)
     Excerpt::createExcerpt(&ex);
     EXPECT_TRUE(nscore);
     //nscore->setName(parts.front()->partName());
-    score->undo(new AddExcerpt(&ex));
+    score->addExcerpt(&ex);
     score->endCmd();
 
     // we should have now 2 staves and 4 linked rests
@@ -333,7 +333,7 @@ TEST_F(Engraving_LinksTests, DISABLED_test4LinkedParts_94911)
     for (Excerpt* excerpt : score->excerpts()) {
         std::vector<Staff*> sl = nscore->staves();
         if (sl.size() == 0) {
-            score->undo(new RemoveExcerpt(excerpt));
+            score->removeExcerpt(excerpt);
         }
     }
     score->endCmd();
@@ -416,7 +416,7 @@ TEST_F(Engraving_LinksTests, test5LinkedParts_94911)
     ex.setParts(parts);
     Excerpt::createExcerpt(&ex);
     EXPECT_TRUE(nscore);
-    score->undo(new AddExcerpt(&ex));
+    score->addExcerpt(&ex);
     score->endCmd();
 
     // we should have now 1 staff and 2 linked rests

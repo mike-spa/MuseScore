@@ -364,14 +364,14 @@ void NotationParts::updatePartsAndSystemObjectStaves()
         return result;
     };
 
-    const bool partsChanged = m_parts != score()->parts();
-    m_parts = score()->parts();
+    const bool stavesChanged = m_staves != score()->staves();
+    m_staves = score()->staves();
 
     std::vector<Staff*> newSystemObjectStaves = systemObjectStavesWithTopStaff();
     const bool systemObjectStavesChanged = m_systemObjectStaves != newSystemObjectStaves;
     m_systemObjectStaves = std::move(newSystemObjectStaves);
 
-    if (partsChanged) {
+    if (stavesChanged) {
         m_partChangedNotifier.changed();
     }
 

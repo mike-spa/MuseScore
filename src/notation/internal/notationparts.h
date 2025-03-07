@@ -146,7 +146,7 @@ private:
     muse::async::Notification m_partsChanged;
     muse::async::Notification m_scoreOrderChanged;
 
-    std::vector<Part*> m_parts;
+    std::vector<Staff*> m_staves;
 
     std::vector<Staff*> m_systemObjectStaves;
     muse::async::Notification m_systemObjectStavesChanged;

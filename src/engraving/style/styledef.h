@@ -229,6 +229,8 @@ enum class Sid {
     shortestStem,
     combineVoice,
     beginRepeatLeftMargin,
+
+    spacingDensity,
     minNoteDistance,
     barNoteDistance,
     barAccidentalDistance,

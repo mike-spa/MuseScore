@@ -679,13 +679,10 @@ double HorizontalSpacing::chordRestSegmentNaturalWidth(Segment* segment, Horizon
     double segTotalStretch = durationStretch * userStretch;
     segment->setStretch(segTotalStretch);
 
-    double stdNoteHeadWidth = measure->score()->noteHeadWidth();
-    double minNoteDist = measure->score()->style().styleMM(Sid::minNoteDistance);
-    double minNoteSpace = stdNoteHeadWidth + minNoteDist;
+    static constexpr double QUARTER_NOTE_DIST = 3.0; // in spaces
+    double quarterNoteDist = segment->spatium() * QUARTER_NOTE_DIST / segment->style().styleD(Sid::spacingDensity);
 
-    static constexpr double QUARTER_NOTE_SPACING = 1.5;
-
-    double naturalWidth = minNoteSpace * segTotalStretch * ctx.stretchReduction * QUARTER_NOTE_SPACING;
+    double naturalWidth = quarterNoteDist * segTotalStretch * ctx.stretchReduction;
 
     return naturalWidth;
 }

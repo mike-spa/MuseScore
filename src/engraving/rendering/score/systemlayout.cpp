@@ -744,6 +744,38 @@ void SystemLayout::layoutSticking(const ElementsToLayout& elementsToLayout, Layo
     }
 }
 
+void SystemLayout::layoutLyrics(const ElementsToLayout& elements, LayoutContext& ctx)
+{
+    System* system = elements.system;
+    Fraction stick = elements.measures.front()->tick();
+    Fraction etick = elements.measures.back()->endTick();
+
+    for (Spanner* sp : elements.partialLyricsLines) {
+        TLayout::layoutSystem(sp, system, ctx);
+    }
+
+    //-------------------------------------------------------------
+    // Lyric
+    //-------------------------------------------------------------
+    // Layout lyrics dashes and melisma
+    // NOTE: loop on a *copy* of unmanagedSpanners because in some cases
+    // the underlying operation may invalidate some of the iterators.
+    // TODO: figure out why lyrics lines are in this "unmanagedSpanners" container
+    bool dashOnFirstNoteSyllable = ctx.conf().style().styleB(Sid::lyricsShowDashIfSyllableOnFirstNote);
+    std::set<Spanner*> unmanagedSpanners = ctx.dom().unmanagedSpanners();
+    for (Spanner* sp : unmanagedSpanners) {
+        if (!sp->systemFlag() && sp->staff() && !sp->staff()->show()) {
+            continue;
+        }
+        bool dashOnFirst = dashOnFirstNoteSyllable && !toLyricsLine(sp)->isEndMelisma();
+        if (sp->tick() >= etick || sp->tick2() < stick || (sp->tick2() == stick && !dashOnFirst)) {
+            continue;
+        }
+        TLayout::layoutSystem(sp, system, ctx);
+    }
+    LyricsLayout::computeVerticalPositions(system, ctx);
+}
+
 void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 {
     TRACEFUNC;
@@ -900,29 +932,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     processLines(system, ctx, elementsToLayout.ottavas);
     processLines(system, ctx, elementsToLayout.pedal, /*align=*/ true);
 
-    for (Spanner* sp : elementsToLayout.partialLyricsLines) {
-        TLayout::layoutSystem(sp, system, ctx);
-    }
-
-    //-------------------------------------------------------------
-    // Lyric
-    //-------------------------------------------------------------
-    // Layout lyrics dashes and melisma
-    // NOTE: loop on a *copy* of unmanagedSpanners because in some cases
-    // the underlying operation may invalidate some of the iterators.
-    bool dashOnFirstNoteSyllable = ctx.conf().style().styleB(Sid::lyricsShowDashIfSyllableOnFirstNote);
-    std::set<Spanner*> unmanagedSpanners = ctx.dom().unmanagedSpanners();
-    for (Spanner* sp : unmanagedSpanners) {
-        if (!sp->systemFlag() && sp->staff() && !sp->staff()->show()) {
-            continue;
-        }
-        bool dashOnFirst = dashOnFirstNoteSyllable && !toLyricsLine(sp)->isEndMelisma();
-        if (sp->tick() >= etick || sp->tick2() < stick || (sp->tick2() == stick && !dashOnFirst)) {
-            continue;
-        }
-        TLayout::layoutSystem(sp, system, ctx);
-    }
-    LyricsLayout::computeVerticalPositions(system, ctx);
+    layoutLyrics(elementsToLayout, ctx);
 
     //-------------------------------------------------------------
     // Harp pedal diagrams

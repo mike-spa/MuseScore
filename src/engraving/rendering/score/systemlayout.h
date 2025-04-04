@@ -169,6 +169,8 @@ private:
     static void updateBigTimeSigIfNeeded(System* system, LayoutContext& ctx);
 
     static void layoutSticking(const ElementsToLayout& ElementsToLayout, LayoutContext& ctx);
+
+    static void layoutLyrics(const ElementsToLayout& elements, LayoutContext& ctx);
 };
 }
 

@@ -903,6 +903,8 @@ void BeamLayout::layoutNonCrossBeams(Segment* s, LayoutContext& ctx)
                 if (beamCR->isRest()) {
                     verticalAdjustBeamedRests(toRest(beamCR), beam, ctx);
                 }
+
+                beamCR->segment()->createShape(beamCR->staffIdx());
             }
         }
 

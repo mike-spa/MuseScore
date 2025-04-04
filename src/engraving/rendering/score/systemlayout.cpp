@@ -758,6 +758,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     if (sl.empty()) {
         return;
     }
+
     //-------------------------------------------------------------
     // layout beams
     //  Needs to be done before creating skylines as stem lengths
@@ -769,8 +770,6 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
             continue;
         }
         BeamLayout::layoutNonCrossBeams(s, ctx);
-        // Must recreate the shapes because stem lengths may have been changed!
-        s->createShapes();
     }
 
     //-------------------------------------------------------------

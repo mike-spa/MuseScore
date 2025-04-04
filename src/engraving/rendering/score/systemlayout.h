@@ -104,6 +104,7 @@ private:
         System* system;
         std::vector<Measure*> measures;
         std::vector<Segment*> segments;
+        std::vector<ChordRest*> chordRests;
         std::vector<Chord*> chords;
         std::vector<MeasureNumber*> measureNumbers;
         std::vector<MMRestRange*> mmrRanges;
@@ -129,6 +130,7 @@ private:
     static void updateCrossBeams(System* system, LayoutContext& ctx);
     static bool measureHasCrossStuffOrModifiedBeams(const Measure* measure);
     static void restoreTiesAndBends(System* system, LayoutContext& ctx);
+    static void layoutTuplets(const std::vector<ChordRest*> chordRests, LayoutContext &ctx);
 
     static double instrumentNamesWidth(System* system, LayoutContext& ctx, bool isFirstSystem);
     static double totalBracketOffset(LayoutContext& ctx);

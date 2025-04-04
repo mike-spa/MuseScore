@@ -794,53 +794,15 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         doLayoutNoteSpannersLinear(system, ctx);
     }
 
+    for (Chord* c : elementsToLayout.chords) {
+        ChordLayout::layoutArticulations(c, ctx);
+        ChordLayout::layoutArticulations2(c, ctx);
+        ChordLayout::layoutChordBaseFingering(c, system, ctx);
+    }
+
+    layoutTuplets(elementsToLayout.chordRests, ctx);
+
     collectSpannersToLayout(elementsToLayout, ctx);
-
-    for (Segment* s : sl) {
-        for (EngravingItem* e : s->elist()) {
-            if (!e || !e->isChord() || !ctx.dom().staff(e->staffIdx())->show()) {
-                continue;
-            }
-            Chord* c = toChord(e);
-            ChordLayout::layoutArticulations(c, ctx);
-            ChordLayout::layoutArticulations2(c, ctx);
-            ChordLayout::layoutChordBaseFingering(c, system, ctx);
-        }
-    }
-
-    //-------------------------------------------------------------
-    // layout tuplets
-    //-------------------------------------------------------------
-
-    std::map<track_idx_t, Fraction> skipTo;
-    for (Segment* s : sl) {
-        for (EngravingItem* e : s->elist()) {
-            if (!e || !e->isChordRest() || !ctx.dom().staff(e->staffIdx())->show()) {
-                continue;
-            }
-            track_idx_t track = e->track();
-            if (skipTo.count(track) && e->tick() < skipTo[track]) {
-                continue; // don't lay out tuplets for this voice that have already been done
-            }
-            // find the top tuplet for this segment
-            DurationElement* de = toChordRest(e);
-            if (!de->tuplet()) {
-                continue;
-            }
-            while (de->tuplet()) {
-                de = de->tuplet();
-            }
-            TupletLayout::layout(de, ctx); // recursively lay out all tuplets covered by this tuplet
-
-            // don't layout any tuplets covered by this top level tuplet for this voice--
-            // they've already been laid out by layoutTuplet().
-            skipTo[track] = de->tick() + de->actualTicks();
-        }
-    }
-
-    //-------------------------------------------------------------
-    // layout slurs
-    //-------------------------------------------------------------
 
     // slurs
     std::vector<Spanner*> spanner;
@@ -1396,6 +1358,7 @@ void SystemLayout::collectElementsToLayout(Measure* measure, ElementsToLayout& e
             if (segment.isChordRestType()) {
                 for (track_idx_t track = trackZero; track < endTrack; ++track) {
                     if (EngravingItem* e = segment.element(track)) {
+                        elements.chordRests.push_back(toChordRest(e));
                         if (e->isChord()) {
                             elements.chords.push_back(toChord(e));
                         }
@@ -1545,6 +1508,24 @@ void SystemLayout::doLayoutTies(System* system, std::vector<Segment*> sl, const 
             }
             layoutTies(c, system, stick, ctx);
         }
+    }
+}
+
+void SystemLayout::layoutTuplets(const std::vector<ChordRest*> chordRests, LayoutContext& ctx)
+{
+    std::set<Tuplet*> laidoutTuplets;
+    for (ChordRest* cr : chordRests) {
+        Tuplet* tuplet = cr->tuplet();
+        while (tuplet && tuplet->tuplet()) { // find top level tuplet
+            tuplet = tuplet->tuplet();
+        }
+
+        if (!tuplet || muse::contains(laidoutTuplets, tuplet)) {
+            continue;
+        }
+
+        TupletLayout::layoutTopTuplet(tuplet, ctx); // this lays out also the inner tuplets
+        laidoutTuplets.insert(tuplet);
     }
 }
 

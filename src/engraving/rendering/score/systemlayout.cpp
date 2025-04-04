@@ -733,7 +733,6 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     //    create cr segment list to speed up computations
     //-------------------------------------------------------------
 
-    std::vector<Segment*> sl;
     for (MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {
             continue;
@@ -742,24 +741,10 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         MeasureLayout::layoutMeasureNumber(m, ctx);
         MeasureLayout::layoutMMRestRange(m, ctx);
         MeasureLayout::layoutTimeTickAnchors(m, ctx);
-
-        // in continuous view, entire score is one system
-        // but we only need to process the range
-        if (ctx.conf().isLinearMode() && (m->tick() < ctx.state().startTick() || m->tick() > ctx.state().endTick())) {
-            continue;
-        }
-        for (Segment* s = m->first(); s; s = s->next()) {
-            if (s->isChordRestType() || !s->annotations().empty()) {
-                sl.push_back(s);
-            }
-        }
-    }
-
-    if (sl.empty()) {
-        return;
     }
 
     struct ElementsToLayout {
+        std::vector<Segment*> segments;
         std::vector<MeasureNumber*> measureNumbers;
         std::vector<MMRestRange*> mmrRanges;
     } elementsToLayout;
@@ -781,6 +766,23 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
                 elementsToLayout.mmrRanges.push_back(mmrr);
             }
         }
+
+        // in continuous view, entire score is one system
+        // but we only need to process the range
+        if (ctx.conf().isLinearMode() && (measure->tick() < ctx.state().startTick() || measure->tick() > ctx.state().endTick())) {
+            continue;
+        }
+
+        for (Segment* s = measure->first(); s; s = s->next()) {
+            if (s->isChordRestType() || !s->annotations().empty()) {
+                elementsToLayout.segments.push_back(s);
+            }
+        }
+    }
+
+    const std::vector<Segment*>& sl = elementsToLayout.segments;
+    if (sl.empty()) {
+        return;
     }
 
     //-------------------------------------------------------------
@@ -790,10 +792,9 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     //-------------------------------------------------------------
 
     for (Segment* s : sl) {
-        if (!s->isChordRestType()) {
-            continue;
+        if (s->isChordRestType()) {
+            BeamLayout::layoutNonCrossBeams(s, ctx);
         }
-        BeamLayout::layoutNonCrossBeams(s, ctx);
     }
 
     //-------------------------------------------------------------

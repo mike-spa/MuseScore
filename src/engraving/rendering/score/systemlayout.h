@@ -112,6 +112,8 @@ private:
         std::vector<MMRestRange*> mmrRanges;
         std::vector<BarLine*> barlines;
 
+        std::vector<Sticking*> stickings;
+
         std::vector<Spanner*> spanners;
         std::vector<Spanner*> slurs;
         std::vector<Spanner*> trills;
@@ -155,6 +157,8 @@ private:
     static bool shouldBeJustified(System* system, double curSysWidth, double targetSystemWidth, LayoutContext& ctx);
 
     static void updateBigTimeSigIfNeeded(System* system, LayoutContext& ctx);
+
+    static void layoutSticking(const ElementsToLayout& ElementsToLayout, LayoutContext& ctx);
 };
 }
 

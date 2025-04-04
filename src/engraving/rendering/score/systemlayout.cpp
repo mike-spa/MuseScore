@@ -721,6 +721,29 @@ void SystemLayout::updateBigTimeSigIfNeeded(System* system, LayoutContext& ctx)
     }
 }
 
+void SystemLayout::layoutSticking(const ElementsToLayout& elementsToLayout, LayoutContext& ctx)
+{
+    struct StaffStickingGroups {
+        std::vector<EngravingItem*> stickingsAbove;
+        std::vector<EngravingItem*> stickingsBelow;
+    };
+
+    std::map<staff_idx_t, StaffStickingGroups> staffStickings;
+
+    for (Sticking* e : elementsToLayout.stickings) {
+        TLayout::layoutItem(e, ctx);
+        if (e->addToSkyline()) {
+            e->placeAbove() ? staffStickings[e->staffIdx()].stickingsAbove.push_back(e) : staffStickings[e->staffIdx()].
+            stickingsBelow.push_back(e);
+        }
+    }
+
+    for (const auto& staffSticking : staffStickings) {
+        AlignmentLayout::alignItemsGroup(staffSticking.second.stickingsAbove, elementsToLayout.system);
+        AlignmentLayout::alignItemsGroup(staffSticking.second.stickingsBelow, elementsToLayout.system);
+    }
+}
+
 void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 {
     TRACEFUNC;
@@ -820,29 +843,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     processLines(system, ctx, elementsToLayout.trills);
 
-    //-------------------------------------------------------------
-    // Drumline sticking
-    //-------------------------------------------------------------
-    struct StaffStickingGroups {
-        std::vector<EngravingItem*> stickingsAbove;
-        std::vector<EngravingItem*> stickingsBelow;
-    };
-    std::map<staff_idx_t, StaffStickingGroups> staffStickings;
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isSticking()) {
-                TLayout::layoutItem(e, ctx);
-                if (e->addToSkyline()) {
-                    e->placeAbove() ? staffStickings[e->staffIdx()].stickingsAbove.push_back(e) : staffStickings[e->staffIdx()].
-                    stickingsBelow.push_back(e);
-                }
-            }
-        }
-    }
-    for (const auto& staffSticking : staffStickings) {
-        AlignmentLayout::alignItemsGroup(staffSticking.second.stickingsAbove, system);
-        AlignmentLayout::alignItemsGroup(staffSticking.second.stickingsBelow, system);
-    }
+    layoutSticking(elementsToLayout, ctx);
 
     //-------------------------------------------------------------
     // Fermata, TremoloBar
@@ -1345,6 +1346,14 @@ void SystemLayout::collectElementsToLayout(Measure* measure, ElementsToLayout& e
         if (s->isChordRestType() || !s->annotations().empty()) {
             elements.segments.push_back(s);
         }
+        for (EngravingItem* item : s->annotations()) {
+            if (!system->staff(item->staffIdx())->show()) {
+                continue;
+            }
+            if (item->isSticking()) {
+                elements.stickings.push_back(toSticking(item));
+            }
+        }
     }
 }
 
@@ -1496,7 +1505,7 @@ void SystemLayout::doLayoutTies(System* system, const std::vector<Segment*>& sl,
     }
 }
 
-void SystemLayout::layoutTuplets(const std::vector<ChordRest *> &chordRests, LayoutContext& ctx)
+void SystemLayout::layoutTuplets(const std::vector<ChordRest*>& chordRests, LayoutContext& ctx)
 {
     std::set<Tuplet*> laidoutTuplets;
     for (ChordRest* cr : chordRests) {

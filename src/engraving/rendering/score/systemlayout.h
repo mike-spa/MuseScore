@@ -114,6 +114,7 @@ private:
 
         std::vector<Spanner*> spanners;
         std::vector<Spanner*> slurs;
+        std::vector<Spanner*> trills;
 
         ElementsToLayout(System* s)
             : system(s) {}

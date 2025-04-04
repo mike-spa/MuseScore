@@ -818,19 +818,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         }
     }
 
-    //-------------------------------------------------------------
-    // Trills
-    //-------------------------------------------------------------
-    std::vector<Spanner*> trills;
-    for (Spanner* sp : elementsToLayout.spanners) {
-        if (sp->staff() && !sp->staff()->show()) {
-            continue;
-        }
-        if (sp->tick() < etick && sp->tick2() > stick && sp->isTrill()) {
-            trills.push_back(sp);
-        }
-    }
-    processLines(system, ctx, trills);
+    processLines(system, ctx, elementsToLayout.trills);
 
     //-------------------------------------------------------------
     // Drumline sticking
@@ -1375,8 +1363,13 @@ void SystemLayout::collectSpannersToLayout(ElementsToLayout& elements, const Lay
     }
 
     for (Spanner* spanner : elements.spanners) {
-        if (spanner->isSlur() && spanner->tick() < etick && spanner->tick2() >= stick && !toSlur(spanner)->isCrossStaff()) {
+        bool startIsInside = spanner->tick() < etick;
+        bool endIsInside = spanner->tick2() > stick;
+        bool endIsInsideOrEqual = spanner->tick2() >= stick;
+        if (spanner->isSlur() && startIsInside && endIsInsideOrEqual && !toSlur(spanner)->isCrossStaff()) {
             elements.slurs.push_back(spanner);
+        } else if (spanner->isTrill() && startIsInside && endIsInside) {
+            elements.trills.push_back(spanner);
         }
     }
 }

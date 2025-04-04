@@ -108,12 +108,14 @@ private:
         std::vector<MeasureNumber*> measureNumbers;
         std::vector<MMRestRange*> mmrRanges;
         std::vector<BarLine*> barlines;
+        std::vector<Spanner*> spanners;
 
         ElementsToLayout(System* s)
             : system(s) {}
     };
 
     static void collectElementsToLayout(Measure* measure, ElementsToLayout& elements, const LayoutContext& ctx);
+    static void collectSpannersToLayout(ElementsToLayout& elements, const LayoutContext& ctx);
 
     static System* getNextSystem(LayoutContext& lc);
     static void createSkylines(const ElementsToLayout& elementsToLayout, LayoutContext& ctx);
@@ -123,6 +125,7 @@ private:
     static void doLayoutNoteSpannersLinear(System* system, LayoutContext& ctx);
     static void layoutNoteAnchoredSpanners(System* system, Chord* chord);
     static void layoutGuitarBends(const std::vector<Segment*>& sl, LayoutContext& ctx);
+    static void doLayoutGuitarBends(Chord* chord, LayoutContext& ctx);
     static void updateCrossBeams(System* system, LayoutContext& ctx);
     static bool measureHasCrossStuffOrModifiedBeams(const Measure* measure);
     static void restoreTiesAndBends(System* system, LayoutContext& ctx);

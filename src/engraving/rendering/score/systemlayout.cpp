@@ -773,30 +773,28 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     createSkylines(elementsToLayout, ctx);
 
-    //-------------------------------------------------------------
-    // layout ties and guitar bends
-    //-------------------------------------------------------------
+    Fraction stick = elementsToLayout.measures.front()->tick();
+    Fraction etick = elementsToLayout.measures.back()->endTick();
 
-    bool useRange = false;    // TODO: lineMode();
-    Fraction stick = useRange ? ctx.state().startTick() : system->measures().front()->tick();
-    Fraction etick = useRange ? ctx.state().endTick() : system->measures().back()->endTick();
-    auto spanners = ctx.dom().spannerMap().findOverlapping(stick.ticks(), etick.ticks());
-    std::sort(spanners.begin(), spanners.end(), [](const auto& sp1, const auto& sp2) {
-        return sp1.value->tick() < sp2.value->tick();
-    });
-
-    // ties
-    if (ctx.conf().isLinearMode()) {
-        doLayoutNoteSpannersLinear(system, ctx);
-    } else {
-        doLayoutTies(system, sl, stick, etick, ctx);
+    for (Chord* chord : elementsToLayout.chords) {
+        for (Chord* grace : chord->graceNotesBefore()) {
+            layoutTies(grace, system, stick, ctx);
+            doLayoutGuitarBends(grace, ctx);
+        }
+        layoutTies(chord, system, stick, ctx);
+        doLayoutGuitarBends(chord, ctx);
+        for (Chord* grace : chord->graceNotesAfter()) {
+            layoutTies(grace, system, stick, ctx);
+            doLayoutGuitarBends(grace, ctx);
+        }
     }
-    // guitar bends
-    layoutGuitarBends(sl, ctx);
 
-    //-------------------------------------------------------------
-    // layout articulations, fingering and stretched bends
-    //-------------------------------------------------------------
+    if (ctx.conf().isLinearMode()) {
+        // TODO: get rid of this
+        doLayoutNoteSpannersLinear(system, ctx);
+    }
+
+    collectSpannersToLayout(elementsToLayout, ctx);
 
     for (Segment* s : sl) {
         for (EngravingItem* e : s->elist()) {
@@ -846,8 +844,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     // slurs
     std::vector<Spanner*> spanner;
-    for (auto interval : spanners) {
-        Spanner* sp = interval.value;
+    for (Spanner* sp : elementsToLayout.spanners) {
         if (sp->staff() && !sp->staff()->show()) {
             continue;
         }
@@ -879,8 +876,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     // Trills
     //-------------------------------------------------------------
     std::vector<Spanner*> trills;
-    for (auto interval : spanners) {
-        Spanner* sp = interval.value;
+    for (Spanner* sp : elementsToLayout.spanners) {
         if (sp->staff() && !sp->staff()->show()) {
             continue;
         }
@@ -995,8 +991,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     std::vector<Spanner*> tempoChangeLines;
     std::vector<Spanner*> partialLyricsLines;
 
-    for (auto interval : spanners) {
-        Spanner* sp = interval.value;
+    for (Spanner* sp : elementsToLayout.spanners) {
         if (!sp->systemFlag() && sp->staff() && !sp->staff()->show()) {
             continue;
         }
@@ -1417,6 +1412,21 @@ void SystemLayout::collectElementsToLayout(Measure* measure, ElementsToLayout& e
     }
 }
 
+void SystemLayout::collectSpannersToLayout(ElementsToLayout& elements, const LayoutContext& ctx)
+{
+    Fraction stick = elements.measures.front()->tick();
+    Fraction etick = elements.measures.back()->endTick();
+    auto spanners = ctx.dom().spannerMap().findOverlapping(stick.ticks(), etick.ticks());
+    std::sort(spanners.begin(), spanners.end(), [](const auto& sp1, const auto& sp2) {
+        return sp1.value->tick() < sp2.value->tick();
+    });
+
+    elements.spanners.reserve(spanners.size());
+    for (auto item : spanners) {
+        elements.spanners.push_back(item.value);
+    }
+}
+
 void SystemLayout::createSkylines(const ElementsToLayout& elementsToLayout, LayoutContext& ctx)
 {
     System* system = elementsToLayout.system;
@@ -1576,28 +1586,6 @@ void SystemLayout::doLayoutNoteSpannersLinear(System* system, LayoutContext& ctx
 
 void SystemLayout::layoutGuitarBends(const std::vector<Segment*>& sl, LayoutContext& ctx)
 {
-    auto doLayoutGuitarBends = [&] (Chord* chord) {
-        for (Note* note : chord->notes()) {
-            GuitarBend* bendBack = note->bendBack();
-            if (bendBack) {
-                TLayout::layoutGuitarBend(bendBack, ctx);
-            }
-
-            Note* startOfTie = note->firstTiedNote();
-            if (startOfTie != note) {
-                GuitarBend* bendBack2 = startOfTie->bendBack();
-                if (bendBack2) {
-                    TLayout::layoutGuitarBend(bendBack2, ctx);
-                }
-            }
-
-            GuitarBend* bendFor = note->bendFor();
-            if (bendFor && bendFor->type() == GuitarBendType::SLIGHT_BEND) {
-                TLayout::layoutGuitarBend(bendFor, ctx);
-            }
-        }
-    };
-
     for (Segment* seg : sl) {
         for (EngravingItem* el : seg->elist()) {
             if (!el || !el->isChord()) {
@@ -1605,12 +1593,35 @@ void SystemLayout::layoutGuitarBends(const std::vector<Segment*>& sl, LayoutCont
             }
             Chord* chord = toChord(el);
             for (Chord* grace : chord->graceNotesBefore()) {
-                doLayoutGuitarBends(grace);
+                doLayoutGuitarBends(grace, ctx);
             }
-            doLayoutGuitarBends(chord);
+            doLayoutGuitarBends(chord, ctx);
             for (Chord* grace : chord->graceNotesAfter()) {
-                doLayoutGuitarBends(grace);
+                doLayoutGuitarBends(grace, ctx);
             }
+        }
+    }
+}
+
+void SystemLayout::doLayoutGuitarBends(Chord* chord, LayoutContext& ctx)
+{
+    for (Note* note : chord->notes()) {
+        GuitarBend* bendBack = note->bendBack();
+        if (bendBack) {
+            TLayout::layoutGuitarBend(bendBack, ctx);
+        }
+
+        Note* startOfTie = note->firstTiedNote();
+        if (startOfTie != note) {
+            GuitarBend* bendBack2 = startOfTie->bendBack();
+            if (bendBack2) {
+                TLayout::layoutGuitarBend(bendBack2, ctx);
+            }
+        }
+
+        GuitarBend* bendFor = note->bendFor();
+        if (bendFor && bendFor->type() == GuitarBendType::SLIGHT_BEND) {
+            TLayout::layoutGuitarBend(bendFor, ctx);
         }
     }
 }

@@ -729,34 +729,33 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         return;
     }
 
-    //-------------------------------------------------------------
-    //    create cr segment list to speed up computations
-    //-------------------------------------------------------------
-
-    for (MeasureBase* mb : system->measures()) {
-        if (!mb->isMeasure()) {
-            continue;
-        }
-        Measure* m = toMeasure(mb);
-        MeasureLayout::layoutMeasureNumber(m, ctx);
-        MeasureLayout::layoutMMRestRange(m, ctx);
-        MeasureLayout::layoutTimeTickAnchors(m, ctx);
-    }
-
     struct ElementsToLayout {
         std::vector<Segment*> segments;
         std::vector<MeasureNumber*> measureNumbers;
         std::vector<MMRestRange*> mmrRanges;
+        std::vector<BarLine*> barlines;
     } elementsToLayout;
 
     for (MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {
             continue;
         }
+        if (ctx.conf().isLinearMode() && (mb->tick() < ctx.state().startTick() || mb->tick() > ctx.state().endTick())) {
+            // in continuous view, entire score is one system but we only need to process the range
+            continue;
+        }
 
         Measure* measure = toMeasure(mb);
 
+        MeasureLayout::layoutMeasureNumber(measure, ctx);
+        MeasureLayout::layoutMMRestRange(measure, ctx);
+        MeasureLayout::layoutTimeTickAnchors(measure, ctx);
+
         for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+            if (!system->staff(staffIdx)->show()) {
+                continue;
+            }
+
             MeasureNumber* mno = measure->noText(staffIdx);
             if (mno && mno->addToSkyline()) {
                 elementsToLayout.measureNumbers.push_back(mno);
@@ -767,15 +766,17 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
             }
         }
 
-        // in continuous view, entire score is one system
-        // but we only need to process the range
-        if (ctx.conf().isLinearMode() && (measure->tick() < ctx.state().startTick() || measure->tick() > ctx.state().endTick())) {
-            continue;
-        }
-
         for (Segment* s = measure->first(); s; s = s->next()) {
             if (s->isChordRestType() || !s->annotations().empty()) {
                 elementsToLayout.segments.push_back(s);
+            }
+            if (s->isType(SegmentType::BarLineType)) {
+                for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+                    BarLine* bl = toBarLine(s->element(staffIdx * VOICES));
+                    if (bl) {
+                        elementsToLayout.barlines.push_back(bl);
+                    }
+                }
             }
         }
     }
@@ -785,21 +786,15 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         return;
     }
 
-    //-------------------------------------------------------------
-    // layout beams
-    //  Needs to be done before creating skylines as stem lengths
-    //  may change.
-    //-------------------------------------------------------------
-
     for (Segment* s : sl) {
         if (s->isChordRestType()) {
             BeamLayout::layoutNonCrossBeams(s, ctx);
         }
     }
 
-    //-------------------------------------------------------------
-    //    create skylines
-    //-------------------------------------------------------------
+    for (BarLine* bl : elementsToLayout.barlines) {
+        TLayout::layoutRect(bl, bl->mutldata(), ctx);
+    }
 
     createSkylines(system, ctx);
 
@@ -1422,12 +1417,10 @@ void SystemLayout::createSkylines(System* system, LayoutContext& ctx)
                     continue;
                 }
                 PointF p(s.pos() + m->pos());
-                if (s.segmentType()
-                    & (SegmentType::BarLine | SegmentType::EndBarLine | SegmentType::StartRepeatBarLine | SegmentType::BeginBarLine)) {
+                if (s.isType(SegmentType::BarLineType)) {
                     BarLine* bl = toBarLine(s.element(staffIdx * VOICES));
                     if (bl && bl->addToSkyline()) {
-                        RectF r = TLayout::layoutRect(bl, ctx);
-                        skyline.add(r.translated(bl->pos() + p + bl->staffOffset()), bl);
+                        skyline.add(bl->shape().translated(bl->pos() + p + bl->staffOffset()));
                     }
                 } else if (s.isType(SegmentType::TimeSigType)) {
                     TimeSig* ts = toTimeSig(s.element(staffIdx * VOICES));

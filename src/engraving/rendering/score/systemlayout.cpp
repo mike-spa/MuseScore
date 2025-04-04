@@ -1477,7 +1477,8 @@ void SystemLayout::createSkylines(const ElementsToLayout& elementsToLayout, Layo
     }
 }
 
-void SystemLayout::doLayoutTies(System* system, std::vector<Segment*> sl, const Fraction& stick, const Fraction& etick, LayoutContext& ctx)
+void SystemLayout::doLayoutTies(System* system, const std::vector<Segment*>& sl, const Fraction& stick, const Fraction& etick,
+                                LayoutContext& ctx)
 {
     UNUSED(etick);
 
@@ -1495,7 +1496,7 @@ void SystemLayout::doLayoutTies(System* system, std::vector<Segment*> sl, const 
     }
 }
 
-void SystemLayout::layoutTuplets(const std::vector<ChordRest*> chordRests, LayoutContext& ctx)
+void SystemLayout::layoutTuplets(const std::vector<ChordRest *> &chordRests, LayoutContext& ctx)
 {
     std::set<Tuplet*> laidoutTuplets;
     for (ChordRest* cr : chordRests) {
@@ -1591,7 +1592,7 @@ void SystemLayout::doLayoutGuitarBends(Chord* chord, LayoutContext& ctx)
     }
 }
 
-void SystemLayout::processLines(System* system, LayoutContext& ctx, std::vector<Spanner*> lines, bool align)
+void SystemLayout::processLines(System* system, LayoutContext& ctx, const std::vector<Spanner*>& lines, bool align)
 {
     std::vector<SpannerSegment*> segments;
     for (Spanner* sp : lines) {

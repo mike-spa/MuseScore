@@ -125,9 +125,10 @@ private:
 
     static System* getNextSystem(LayoutContext& lc);
     static void createSkylines(const ElementsToLayout& elementsToLayout, LayoutContext& ctx);
-    static void processLines(System* system, LayoutContext& ctx, std::vector<Spanner*> lines, bool align = false);
+    static void processLines(System* system, LayoutContext& ctx, const std::vector<Spanner*>& lines, bool align = false);
     static void layoutTies(Chord* ch, System* system, const Fraction& stick, LayoutContext& ctx);
-    static void doLayoutTies(System* system, std::vector<Segment*> sl, const Fraction& stick, const Fraction& etick, LayoutContext& ctx);
+    static void doLayoutTies(System* system, const std::vector<Segment*>& sl, const Fraction& stick, const Fraction& etick,
+                             LayoutContext& ctx);
     static void doLayoutNoteSpannersLinear(System* system, LayoutContext& ctx);
     static void layoutNoteAnchoredSpanners(System* system, Chord* chord);
     static void layoutGuitarBends(const std::vector<Segment*>& sl, LayoutContext& ctx);
@@ -135,7 +136,7 @@ private:
     static void updateCrossBeams(System* system, LayoutContext& ctx);
     static bool measureHasCrossStuffOrModifiedBeams(const Measure* measure);
     static void restoreTiesAndBends(System* system, LayoutContext& ctx);
-    static void layoutTuplets(const std::vector<ChordRest*> chordRests, LayoutContext& ctx);
+    static void layoutTuplets(const std::vector<ChordRest*>& chordRests, LayoutContext& ctx);
 
     static double instrumentNamesWidth(System* system, LayoutContext& ctx, bool isFirstSystem);
     static double totalBracketOffset(LayoutContext& ctx);

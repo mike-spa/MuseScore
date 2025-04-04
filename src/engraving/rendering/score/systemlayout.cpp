@@ -759,6 +759,30 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         return;
     }
 
+    struct ElementsToLayout {
+        std::vector<MeasureNumber*> measureNumbers;
+        std::vector<MMRestRange*> mmrRanges;
+    } elementsToLayout;
+
+    for (MeasureBase* mb : system->measures()) {
+        if (!mb->isMeasure()) {
+            continue;
+        }
+
+        Measure* measure = toMeasure(mb);
+
+        for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+            MeasureNumber* mno = measure->noText(staffIdx);
+            if (mno && mno->addToSkyline()) {
+                elementsToLayout.measureNumbers.push_back(mno);
+            }
+            MMRestRange* mmrr = measure->mmRangeText(staffIdx);
+            if (mmrr && mmrr->addToSkyline()) {
+                elementsToLayout.mmrRanges.push_back(mmrr);
+            }
+        }
+    }
+
     //-------------------------------------------------------------
     // layout beams
     //  Needs to be done before creating skylines as stem lengths
@@ -776,127 +800,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     //    create skylines
     //-------------------------------------------------------------
 
-    std::vector<MeasureNumber*> measureNumbers;
-    std::vector<MMRestRange*> mmrRanges;
-
-    for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
-        SysStaff* ss = system->staff(staffIdx);
-        Skyline& skyline = ss->skyline();
-        skyline.clear();
-        for (MeasureBase* mb : system->measures()) {
-            if (!mb->isMeasure()) {
-                continue;
-            }
-            Measure* m = toMeasure(mb);
-            MeasureNumber* mno = m->noText(staffIdx);
-            MMRestRange* mmrr  = m->mmRangeText(staffIdx);
-            // no need to build skyline outside of range in continuous view
-            if (ctx.conf().isLinearMode() && (m->tick() < ctx.state().startTick() || m->tick() > ctx.state().endTick())) {
-                continue;
-            }
-            if (mno && mno->addToSkyline()) {
-                measureNumbers.push_back(mno);
-            }
-            if (mmrr && mmrr->addToSkyline()) {
-                mmrRanges.push_back(mmrr);
-            }
-            if (m->staffLines(staffIdx)->addToSkyline()) {
-                ss->skyline().add(m->staffLines(staffIdx)->ldata()->bbox().translated(m->pos()), m->staffLines(staffIdx));
-            }
-            for (Segment& s : m->segments()) {
-                if (!s.enabled()) {
-                    continue;
-                }
-                PointF p(s.pos() + m->pos());
-                if (s.segmentType()
-                    & (SegmentType::BarLine | SegmentType::EndBarLine | SegmentType::StartRepeatBarLine | SegmentType::BeginBarLine)) {
-                    BarLine* bl = toBarLine(s.element(staffIdx * VOICES));
-                    if (bl && bl->addToSkyline()) {
-                        RectF r = TLayout::layoutRect(bl, ctx);
-                        skyline.add(r.translated(bl->pos() + p + bl->staffOffset()), bl);
-                    }
-                } else if (s.isType(SegmentType::TimeSigType)) {
-                    TimeSig* ts = toTimeSig(s.element(staffIdx * VOICES));
-                    if (ts && ts->addToSkyline() && ts->showOnThisStaff()) {
-                        TimeSigPlacement timeSigPlacement = ts->style().styleV(Sid::timeSigPlacement).value<TimeSigPlacement>();
-                        if (timeSigPlacement != TimeSigPlacement::ACROSS_STAVES) {
-                            skyline.add(ts->shape().translate(ts->pos() + p + ts->staffOffset()));
-                        }
-                    }
-                } else {
-                    track_idx_t strack = staffIdx * VOICES;
-                    track_idx_t etrack = strack + VOICES;
-                    for (EngravingItem* e : s.elist()) {
-                        if (!e) {
-                            continue;
-                        }
-                        track_idx_t effectiveTrack = e->vStaffIdx() * VOICES + e->voice();
-                        if (effectiveTrack < strack || effectiveTrack >= etrack) {
-                            continue;
-                        }
-
-                        // add element to skyline
-                        if (e->addToSkyline()) {
-                            const PointF offset = e->staffOffset();
-                            skyline.add(e->shape().translate(e->pos() + p + offset));
-                            // add grace notes to skyline
-                            if (e->isChord()) {
-                                GraceNotesGroup& graceBefore = toChord(e)->graceNotesBefore();
-                                GraceNotesGroup& graceAfter = toChord(e)->graceNotesAfter();
-                                TLayout::layoutGraceNotesGroup2(&graceBefore, graceBefore.mutldata());
-                                TLayout::layoutGraceNotesGroup2(&graceAfter, graceAfter.mutldata());
-                                if (!graceBefore.empty()) {
-                                    skyline.add(graceBefore.shape().translate(graceBefore.pos() + p + offset));
-                                }
-                                if (!graceAfter.empty()) {
-                                    skyline.add(graceAfter.shape().translate(graceAfter.pos() + p + offset));
-                                }
-                            }
-                            // If present, add ornament cue note to skyline
-                            if (e->isChord()) {
-                                Ornament* ornament = toChord(e)->findOrnament();
-                                if (ornament) {
-                                    Chord* cue = ornament->cueNoteChord();
-                                    if (cue && cue->upNote()->visible()) {
-                                        skyline.add(cue->shape().translate(cue->pos() + p + cue->staffOffset()));
-                                    }
-                                }
-                            }
-                        }
-
-                        // add tremolo to skyline
-                        if (e->isChord()) {
-                            Chord* ch = item_cast<Chord*>(e);
-                            if (ch->tremoloSingleChord()) {
-                                TremoloSingleChord* t = ch->tremoloSingleChord();
-                                if (t->addToSkyline()) {
-                                    skyline.add(t->shape().translate(t->pos() + e->pos() + p));
-                                }
-                            } else if (ch->tremoloTwoChord()) {
-                                TremoloTwoChord* t = ch->tremoloTwoChord();
-                                Chord* c1 = t->chord1();
-                                Chord* c2 = t->chord2();
-                                if (c1 && !c1->staffMove() && c2 && !c2->staffMove()) {
-                                    if (t->chord() == e && t->addToSkyline()) {
-                                        skyline.add(t->shape().translate(t->pos() + e->pos() + p));
-                                    }
-                                }
-                            }
-                        }
-
-                        // add beams to skline
-                        if (e->isChordRest()) {
-                            ChordRest* cr = toChordRest(e);
-                            if (BeamLayout::isTopBeam(cr)) {
-                                Beam* b = cr->beam();
-                                b->addSkyline(skyline);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    createSkylines(system, ctx);
 
     //-------------------------------------------------------------
     // layout ties and guitar bends
@@ -1169,13 +1073,14 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     AlignmentLayout::alignItemsWithTheirSnappingChain(dynamicsExprAndHairpinsToAlign, system);
 
     processLines(system, ctx, spanner);
-    for (MeasureNumber* mno : measureNumbers) {
+
+    for (MeasureNumber* mno : elementsToLayout.measureNumbers) {
         Autoplace::autoplaceMeasureElement(mno, mno->mutldata());
         system->staff(mno->staffIdx())->skyline().add(mno->ldata()->bbox().translated(mno->measure()->pos() + mno->pos()
                                                                                       + mno->staffOffset()), mno);
     }
 
-    for (MMRestRange* mmrr : mmrRanges) {
+    for (MMRestRange* mmrr : elementsToLayout.mmrRanges) {
         Autoplace::autoplaceMeasureElement(mmrr, mmrr->mutldata());
         system->staff(mmrr->staffIdx())->skyline().add(mmrr->ldata()->bbox().translated(mmrr->measure()->pos() + mmrr->pos()), mmrr);
     }
@@ -1486,6 +1391,120 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
                                                                            timeSig->track(), timeSig->track());
                     for (EngravingItem* el : parens) {
                         el->mutldata()->moveY(yPosDiff);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void SystemLayout::createSkylines(System* system, LayoutContext& ctx)
+{
+    for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+        SysStaff* ss = system->staff(staffIdx);
+        Skyline& skyline = ss->skyline();
+        skyline.clear();
+        for (MeasureBase* mb : system->measures()) {
+            if (!mb->isMeasure()) {
+                continue;
+            }
+            Measure* m = toMeasure(mb);
+            // no need to build skyline outside of range in continuous view
+            if (ctx.conf().isLinearMode() && (m->tick() < ctx.state().startTick() || m->tick() > ctx.state().endTick())) {
+                continue;
+            }
+            if (m->staffLines(staffIdx)->addToSkyline()) {
+                ss->skyline().add(m->staffLines(staffIdx)->ldata()->bbox().translated(m->pos()), m->staffLines(staffIdx));
+            }
+            for (Segment& s : m->segments()) {
+                if (!s.enabled()) {
+                    continue;
+                }
+                PointF p(s.pos() + m->pos());
+                if (s.segmentType()
+                    & (SegmentType::BarLine | SegmentType::EndBarLine | SegmentType::StartRepeatBarLine | SegmentType::BeginBarLine)) {
+                    BarLine* bl = toBarLine(s.element(staffIdx * VOICES));
+                    if (bl && bl->addToSkyline()) {
+                        RectF r = TLayout::layoutRect(bl, ctx);
+                        skyline.add(r.translated(bl->pos() + p + bl->staffOffset()), bl);
+                    }
+                } else if (s.isType(SegmentType::TimeSigType)) {
+                    TimeSig* ts = toTimeSig(s.element(staffIdx * VOICES));
+                    if (ts && ts->addToSkyline() && ts->showOnThisStaff()) {
+                        TimeSigPlacement timeSigPlacement = ts->style().styleV(Sid::timeSigPlacement).value<TimeSigPlacement>();
+                        if (timeSigPlacement != TimeSigPlacement::ACROSS_STAVES) {
+                            skyline.add(ts->shape().translate(ts->pos() + p + ts->staffOffset()));
+                        }
+                    }
+                } else {
+                    track_idx_t strack = staffIdx * VOICES;
+                    track_idx_t etrack = strack + VOICES;
+                    for (EngravingItem* e : s.elist()) {
+                        if (!e) {
+                            continue;
+                        }
+                        track_idx_t effectiveTrack = e->vStaffIdx() * VOICES + e->voice();
+                        if (effectiveTrack < strack || effectiveTrack >= etrack) {
+                            continue;
+                        }
+
+                        // add element to skyline
+                        if (e->addToSkyline()) {
+                            const PointF offset = e->staffOffset();
+                            skyline.add(e->shape().translate(e->pos() + p + offset));
+                            // add grace notes to skyline
+                            if (e->isChord()) {
+                                GraceNotesGroup& graceBefore = toChord(e)->graceNotesBefore();
+                                GraceNotesGroup& graceAfter = toChord(e)->graceNotesAfter();
+                                TLayout::layoutGraceNotesGroup2(&graceBefore, graceBefore.mutldata());
+                                TLayout::layoutGraceNotesGroup2(&graceAfter, graceAfter.mutldata());
+                                if (!graceBefore.empty()) {
+                                    skyline.add(graceBefore.shape().translate(graceBefore.pos() + p + offset));
+                                }
+                                if (!graceAfter.empty()) {
+                                    skyline.add(graceAfter.shape().translate(graceAfter.pos() + p + offset));
+                                }
+                            }
+                            // If present, add ornament cue note to skyline
+                            if (e->isChord()) {
+                                Ornament* ornament = toChord(e)->findOrnament();
+                                if (ornament) {
+                                    Chord* cue = ornament->cueNoteChord();
+                                    if (cue && cue->upNote()->visible()) {
+                                        skyline.add(cue->shape().translate(cue->pos() + p + cue->staffOffset()));
+                                    }
+                                }
+                            }
+                        }
+
+                        // add tremolo to skyline
+                        if (e->isChord()) {
+                            Chord* ch = item_cast<Chord*>(e);
+                            if (ch->tremoloSingleChord()) {
+                                TremoloSingleChord* t = ch->tremoloSingleChord();
+                                if (t->addToSkyline()) {
+                                    skyline.add(t->shape().translate(t->pos() + e->pos() + p));
+                                }
+                            } else if (ch->tremoloTwoChord()) {
+                                TremoloTwoChord* t = ch->tremoloTwoChord();
+                                Chord* c1 = t->chord1();
+                                Chord* c2 = t->chord2();
+                                if (c1 && !c1->staffMove() && c2 && !c2->staffMove()) {
+                                    if (t->chord() == e && t->addToSkyline()) {
+                                        skyline.add(t->shape().translate(t->pos() + e->pos() + p));
+                                    }
+                                }
+                            }
+                        }
+
+                        // add beams to skline
+                        if (e->isChordRest()) {
+                            ChordRest* cr = toChordRest(e);
+                            if (BeamLayout::isTopBeam(cr)) {
+                                Beam* b = cr->beam();
+                                b->addSkyline(skyline);
+                            }
+                        }
                     }
                 }
             }

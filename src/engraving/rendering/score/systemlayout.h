@@ -100,6 +100,7 @@ private:
     };
 
     static System* getNextSystem(LayoutContext& lc);
+    static void createSkylines(System* system, LayoutContext& ctx);
     static void processLines(System* system, LayoutContext& ctx, std::vector<Spanner*> lines, bool align = false);
     static void layoutTies(Chord* ch, System* system, const Fraction& stick, LayoutContext& ctx);
     static void doLayoutTies(System* system, std::vector<Segment*> sl, const Fraction& stick, const Fraction& etick, LayoutContext& ctx);

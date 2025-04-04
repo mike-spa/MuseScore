@@ -723,6 +723,8 @@ void SystemLayout::updateBigTimeSigIfNeeded(System* system, LayoutContext& ctx)
 
 void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 {
+    TRACEFUNC;
+
     if (ctx.dom().nstaves() == 0) {
         return;
     }

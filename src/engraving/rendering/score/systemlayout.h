@@ -107,16 +107,28 @@ private:
 
         std::vector<ChordRest*> chordRests;
         std::vector<Chord*> chords;
+        std::vector<BarLine*> barlines;
+        std::vector<TimeSig*> timeSigAboveStaves;
 
         std::vector<MeasureNumber*> measureNumbers;
         std::vector<MMRestRange*> mmrRanges;
-        std::vector<BarLine*> barlines;
+        std::vector<EngravingItem*> markersAndJumps;
 
         std::vector<Sticking*> stickings;
         std::vector<EngravingItem*> fermatasAndTremoloBars;
         std::vector<FiguredBass*> figuredBass;
         std::vector<Dynamic*> dynamics;
         std::vector<Expression*> expressions;
+        std::vector<HarpPedalDiagram*> harpDiagrams;
+        std::vector<FretDiagram*> fretDiagrams;
+        std::vector<StaffText*> staffText;
+        std::vector<InstrumentChange*> instrChanges;
+        std::vector<SystemText*> systemText;
+        std::vector<EngravingItem*> playTechCapoStringTunSystemTextTripletFeel;
+        std::vector<RehearsalMark*> rehMarks;
+        std::vector<TempoText*> tempoText;
+        std::vector<Image*> images;
+        std::vector<Parenthesis*> parenthesis;
 
         std::vector<Spanner*> slurs;
         std::vector<Spanner*> trills;

@@ -934,112 +934,42 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     layoutLyrics(elementsToLayout, ctx);
 
-    //-------------------------------------------------------------
-    // Harp pedal diagrams
-    //-------------------------------------------------------------
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isHarpPedalDiagram()) {
-                TLayout::layoutItem(e, ctx);
-            }
-        }
+    for (HarpPedalDiagram* hpd : elementsToLayout.harpDiagrams) {
+        TLayout::layoutItem(hpd, ctx);
     }
 
-    //
-    // We need to known if we have FretDiagrams in the system to decide when to layout the Harmonies
-    //
-
-    bool hasFretDiagram = false;
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isFretDiagram()) {
-                hasFretDiagram = true;
-                break;
-            }
-        }
-
-        if (hasFretDiagram) {
-            break;
-        }
-    }
-
-    //-------------------------------------------------------------
-    // Harmony, 1st place
-    // If we have FretDiagrams, we want the Harmony above this and
-    // above the volta, therefore we delay the layout.
-    //-------------------------------------------------------------
-
+    bool hasFretDiagram = elementsToLayout.fretDiagrams.size() > 0;
     if (!hasFretDiagram) {
         HarmonyLayout::autoplaceHarmonies(sl);
         HarmonyLayout::alignHarmonies(system, sl, true, ctx.conf().maxChordShiftAbove(), ctx.conf().maxChordShiftBelow());
     }
 
-    //-------------------------------------------------------------
-    // StaffText
-    //-------------------------------------------------------------
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isStaffText()) {
-                TLayout::layoutItem(e, ctx);
-            }
-        }
+    for (StaffText* st : elementsToLayout.staffText) {
+        TLayout::layoutItem(st, ctx);
     }
 
-    //-------------------------------------------------------------
-    // InstrumentChange
-    //-------------------------------------------------------------
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isInstrumentChange()) {
-                TLayout::layoutItem(e, ctx);
-            }
-        }
+    for (InstrumentChange* ic : elementsToLayout.instrChanges) {
+        TLayout::layoutItem(ic, ctx);
     }
 
-    //-------------------------------------------------------------
-    // SystemText
-    //-------------------------------------------------------------
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isPlayTechAnnotation() || e->isCapo() || e->isStringTunings() || e->isSystemText() || e->isTripletFeel()) {
-                TLayout::layoutItem(e, ctx);
-            }
-        }
+    for (EngravingItem* item : elementsToLayout.playTechCapoStringTunSystemTextTripletFeel) {
+        TLayout::layoutItem(item, ctx);
     }
-
-    //-------------------------------------------------------------
-    // FretDiagram
-    //-------------------------------------------------------------
 
     if (hasFretDiagram) {
-        for (const Segment* s : sl) {
-            for (EngravingItem* e : s->annotations()) {
-                if (e->isFretDiagram()) {
-                    Autoplace::autoplaceSegmentElement(e, e->mutldata());
-                    if (Harmony* harmony = toFretDiagram(e)->harmony()) {
-                        SkylineLine& skl = system->staff(e->staffIdx())->skyline().north();
-                        Shape harmShape = harmony->ldata()->shape().translated(harmony->pos() + e->pos() + s->pos() + s->measure()->pos());
-                        skl.add(harmShape);
-                    }
-                }
+        for (FretDiagram* fretDiag : elementsToLayout.fretDiagrams) {
+            Autoplace::autoplaceSegmentElement(fretDiag, fretDiag->mutldata());
+            if (Harmony* harmony = fretDiag->harmony()) {
+                SkylineLine& skl = system->staff(fretDiag->staffIdx())->skyline().north();
+                Segment* s = fretDiag->segment();
+                Shape harmShape = harmony->ldata()->shape().translated(harmony->pos() + fretDiag->pos() + s->pos() + s->measure()->pos());
+                skl.add(harmShape);
             }
         }
-
-        //-------------------------------------------------------------
-        // Harmony, 2nd place
-        //-------------------------------------------------------------
 
         HarmonyLayout::autoplaceHarmonies(sl);
         HarmonyLayout::alignHarmonies(system, sl, false, ctx.conf().maxFretShiftAbove(), ctx.conf().maxFretShiftBelow());
     }
-
-    //-------------------------------------------------------------
-    // layout Voltas for current system
-    //-------------------------------------------------------------
 
     processLines(system, ctx, elementsToLayout.voltas);
 
@@ -1087,33 +1017,14 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         }
     }
 
-    //-------------------------------------------------------------
-    // RehearsalMark
-    //-------------------------------------------------------------
-    // Layout before tempo text but autoplace after
-    std::vector<RehearsalMark*> rehearsMarks;
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isRehearsalMark()) {
-                TLayout::layoutItem(e, ctx);
-                rehearsMarks.push_back(toRehearsalMark(e));
-            }
-        }
+    for (RehearsalMark* rm : elementsToLayout.rehMarks) {
+        TLayout::layoutItem(rm, ctx);
     }
 
-    //-------------------------------------------------------------
-    // TempoText, tempo change lines
-    //-------------------------------------------------------------
-
     std::vector<EngravingItem*> tempoElementsToAlign;
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isTempoText()) {
-                TLayout::layoutItem(e, ctx);
-                tempoElementsToAlign.push_back(e);
-            }
-        }
+    for (TempoText* tt : elementsToLayout.tempoText) {
+        TLayout::layoutItem(tt, ctx);
+        tempoElementsToAlign.push_back(tt);
     }
 
     processLines(system, ctx, elementsToLayout.tempoChangeLines);
@@ -1125,97 +1036,50 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     AlignmentLayout::alignItemsWithTheirSnappingChain(tempoElementsToAlign, system);
 
-    for (RehearsalMark* rehearsMark : rehearsMarks) {
+    for (RehearsalMark* rehearsMark : elementsToLayout.rehMarks) {
         Autoplace::autoplaceSegmentElement(rehearsMark, rehearsMark->mutldata());
     }
 
-    //-------------------------------------------------------------
-    // Marker and Jump
-    //-------------------------------------------------------------
-
-    for (MeasureBase* mb : system->measures()) {
-        if (!mb->isMeasure()) {
-            continue;
-        }
-        Measure* m = toMeasure(mb);
-        for (EngravingItem* e : m->el()) {
-            if (e->isMarker() || e->isJump()) {
-                TLayout::layoutItem(e, ctx);
-            }
-        }
+    for (EngravingItem* item : elementsToLayout.markersAndJumps) {
+        TLayout::layoutItem(item, ctx);
     }
 
-    //-------------------------------------------------------------
-    // Image
-    //-------------------------------------------------------------
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isImage()) {
-                TLayout::layoutItem(e, ctx);
-            }
-        }
+    for (Image* image : elementsToLayout.images) {
+        TLayout::layoutItem(image, ctx);
     }
 
-    //-------------------------------------------------------------
-    // Parenthesis
-    //-------------------------------------------------------------
-
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (!e->isParenthesis() || !e->addToSkyline()) {
+    for (Parenthesis* e : elementsToLayout.parenthesis) {
+        Segment* s = toSegment(e->parentItem());
+        if (s->isType(SegmentType::TimeSigType)) {
+            EngravingItem* el = s->element(e->track());
+            TimeSig* timeSig = el ? toTimeSig(el) : nullptr;
+            if (!timeSig) {
                 continue;
             }
-
-            if (s->isType(SegmentType::TimeSigType)) {
-                EngravingItem* el = s->element(e->track());
-                TimeSig* timeSig = el ? toTimeSig(el) : nullptr;
-                if (!timeSig) {
-                    continue;
+            TimeSigPlacement timeSigPlacement = timeSig->style().styleV(Sid::timeSigPlacement).value<TimeSigPlacement>();
+            if (timeSigPlacement == TimeSigPlacement::ACROSS_STAVES) {
+                if (!timeSig->showOnThisStaff()) {
+                    e->mutldata()->reset();
                 }
-                TimeSigPlacement timeSigPlacement = timeSig->style().styleV(Sid::timeSigPlacement).value<TimeSigPlacement>();
-                if (timeSigPlacement == TimeSigPlacement::ACROSS_STAVES) {
-                    if (!timeSig->showOnThisStaff()) {
-                        e->mutldata()->reset();
-                    }
-                    continue;
-                }
-            }
-
-            staff_idx_t si = e->staffIdx();
-            Measure* m = s->measure();
-            system->staff(si)->skyline().add(e->shape().translate(e->pos() + s->pos() + m->pos() + e->staffOffset()));
-        }
-    }
-
-    //-------------------------------------------------------------
-    // TimeSig above staff
-    //-------------------------------------------------------------
-
-    if (system->style().styleV(Sid::timeSigPlacement).value<TimeSigPlacement>() == TimeSigPlacement::ABOVE_STAVES) {
-        for (MeasureBase* mb : system->measures()) {
-            if (!mb->isMeasure()) {
                 continue;
             }
-            for (Segment& s : toMeasure(mb)->segments()) {
-                if (!s.isType(SegmentType::TimeSigType)) {
-                    continue;
-                }
-                for (EngravingItem* timeSig : s.elist()) {
-                    if (!timeSig || !toTimeSig(timeSig)->showOnThisStaff()) {
-                        continue;
-                    }
-                    const double yBefore = timeSig->pos().y();
-                    Autoplace::autoplaceSegmentElement(timeSig, timeSig->mutldata());
-                    const double yAfter = timeSig->pos().y();
-                    const double yPosDiff = yAfter - yBefore;
-                    std::vector<EngravingItem*> parens = s.findAnnotations(ElementType::PARENTHESIS,
-                                                                           timeSig->track(), timeSig->track());
-                    for (EngravingItem* el : parens) {
-                        el->mutldata()->moveY(yPosDiff);
-                    }
-                }
-            }
+        }
+
+        staff_idx_t si = e->staffIdx();
+        Measure* m = s->measure();
+        system->staff(si)->skyline().add(e->shape().translate(e->pos() + s->pos() + m->pos() + e->staffOffset()));
+    }
+
+    for (TimeSig* timeSig : elementsToLayout.timeSigAboveStaves) {
+        const double yBefore = timeSig->pos().y();
+        Autoplace::autoplaceSegmentElement(timeSig, timeSig->mutldata());
+        const double yAfter = timeSig->pos().y();
+        const double yPosDiff = yAfter - yBefore;
+        Segment* s = timeSig->segment();
+        std::vector<EngravingItem*> parens = s->findAnnotations(ElementType::PARENTHESIS,
+                                                                timeSig->track(), timeSig->track());
+        for (EngravingItem* el : parens) {
+            el->mutldata()->moveY(yPosDiff);
         }
     }
 }
@@ -1239,47 +1103,110 @@ void SystemLayout::collectElementsToLayout(Measure* measure, ElementsToLayout& e
             elements.mmrRanges.push_back(mmrr);
         }
 
-        track_idx_t trackZero = staffIdx * VOICES;
-        track_idx_t endTrack = trackZero + VOICES;
-        for (Segment& segment : measure->segments()) {
-            if (segment.isType(SegmentType::BarLineType)) {
-                if (BarLine* bl = toBarLine(segment.element(trackZero))) {
-                    elements.barlines.push_back(bl);
-                }
-                continue;
-            }
-
-            if (segment.isChordRestType()) {
-                for (track_idx_t track = trackZero; track < endTrack; ++track) {
-                    if (EngravingItem* e = segment.element(track)) {
-                        elements.chordRests.push_back(toChordRest(e));
-                        if (e->isChord()) {
-                            elements.chords.push_back(toChord(e));
-                        }
-                    }
-                }
+        for (EngravingItem* item : measure->el()) {
+            if (item->staffIdx() == staffIdx && (item->isMarker() || item->isJump())) {
+                elements.markersAndJumps.push_back(item);
             }
         }
     }
 
+    track_idx_t nTracks = ctx.dom().ntracks();
     for (Segment* s = measure->first(); s; s = s->next()) {
         if (s->isChordRestType() || !s->annotations().empty()) {
             elements.segments.push_back(s);
         }
-        for (EngravingItem* item : s->annotations()) {
-            if (!system->staff(item->staffIdx())->show()) {
+
+        for (track_idx_t track = 0; track < nTracks; /* intentionally empty*/ ) {
+            if (s->hasTimeSigAboveStaves()) {
+                TimeSig* timeSig = toTimeSig(s->element(track));
+                if (timeSig && timeSig->showOnThisStaff()) {
+                    elements.timeSigAboveStaves.push_back(timeSig);
+                }
+                track += VOICES;
                 continue;
             }
-            if (item->isSticking()) {
+
+            if (!system->staff(track2staff(track))->show()) {
+                track += VOICES;
+                continue;
+            }
+
+            if (s->isType(SegmentType::BarLineType)) {
+                if (BarLine* bl = toBarLine(s->element(track))) {
+                    elements.barlines.push_back(bl);
+                }
+                track += VOICES;
+                continue;
+            }
+
+            if (s->isChordRestType()) {
+                if (ChordRest* cr = toChordRest(s->element(track))) {
+                    elements.chordRests.push_back(cr);
+                    if (cr->isChord()) {
+                        elements.chords.push_back(toChord(cr));
+                    }
+                }
+                ++track;
+                continue;
+            }
+
+            ++track;
+        }
+
+        for (EngravingItem* item : s->annotations()) {
+            if (!item->systemFlag() && !system->staff(item->staffIdx())->show()) {
+                continue;
+            }
+            switch (item->type()) {
+            case ElementType::STICKING:
                 elements.stickings.push_back(toSticking(item));
-            } else if (item->isFermata() || item->isTremoloBar()) {
+                break;
+            case ElementType::FERMATA:
+            case ElementType::TREMOLOBAR:
                 elements.fermatasAndTremoloBars.push_back(item);
-            } else if (item->isFiguredBass()) {
+                break;
+            case ElementType::FIGURED_BASS:
                 elements.figuredBass.push_back(toFiguredBass(item));
-            } else if (item->isDynamic()) {
+                break;
+            case ElementType::DYNAMIC:
                 elements.dynamics.push_back(toDynamic(item));
-            } else if (item->isExpression()) {
+                break;
+            case ElementType::EXPRESSION:
                 elements.expressions.push_back(toExpression(item));
+                break;
+            case ElementType::HARP_DIAGRAM:
+                elements.harpDiagrams.push_back(toHarpPedalDiagram(item));
+                break;
+            case ElementType::FRET_DIAGRAM:
+                elements.fretDiagrams.push_back(toFretDiagram(item));
+                break;
+            case ElementType::STAFF_TEXT:
+                elements.staffText.push_back(toStaffText(item));
+                break;
+            case ElementType::INSTRUMENT_CHANGE:
+                elements.instrChanges.push_back(toInstrumentChange(item));
+                break;
+            case ElementType::PLAYTECH_ANNOTATION:
+            case ElementType::CAPO:
+            case ElementType::STRING_TUNINGS:
+            case ElementType::SYSTEM_TEXT:
+            case ElementType::TRIPLET_FEEL:
+                elements.playTechCapoStringTunSystemTextTripletFeel.push_back(item);
+                break;
+            case ElementType::REHEARSAL_MARK:
+                elements.rehMarks.push_back(toRehearsalMark(item));
+                break;
+            case ElementType::TEMPO_TEXT:
+                elements.tempoText.push_back(toTempoText(item));
+                break;
+            case ElementType::IMAGE:
+                elements.images.push_back(toImage(item));
+                break;
+            case ElementType::PARENTHESIS:
+                elements.parenthesis.push_back(toParenthesis(item));
+                break;
+            default:
+                break;
             }
         }
     }

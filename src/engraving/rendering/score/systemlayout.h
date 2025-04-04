@@ -101,17 +101,22 @@ private:
 
     struct ElementsToLayout
     {
+        System* system;
         std::vector<Measure*> measures;
         std::vector<Segment*> segments;
+        std::vector<Chord*> chords;
         std::vector<MeasureNumber*> measureNumbers;
         std::vector<MMRestRange*> mmrRanges;
         std::vector<BarLine*> barlines;
+
+        ElementsToLayout(System* s)
+            : system(s) {}
     };
 
-    static void collectElementsToLayout(System *system, Measure* measure, ElementsToLayout& elements, const LayoutContext &ctx);
+    static void collectElementsToLayout(Measure* measure, ElementsToLayout& elements, const LayoutContext& ctx);
 
     static System* getNextSystem(LayoutContext& lc);
-    static void createSkylines(System* system, LayoutContext& ctx);
+    static void createSkylines(const ElementsToLayout& elementsToLayout, LayoutContext& ctx);
     static void processLines(System* system, LayoutContext& ctx, std::vector<Spanner*> lines, bool align = false);
     static void layoutTies(Chord* ch, System* system, const Fraction& stick, LayoutContext& ctx);
     static void doLayoutTies(System* system, std::vector<Segment*> sl, const Fraction& stick, const Fraction& etick, LayoutContext& ctx);

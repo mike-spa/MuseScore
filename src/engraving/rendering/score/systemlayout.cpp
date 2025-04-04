@@ -729,7 +729,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         return;
     }
 
-    ElementsToLayout elementsToLayout;
+    ElementsToLayout elementsToLayout(system);
 
     for (MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {
@@ -746,12 +746,19 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         MeasureLayout::layoutMMRestRange(measure, ctx);
         MeasureLayout::layoutTimeTickAnchors(measure, ctx);
 
-        collectElementsToLayout(system, measure, elementsToLayout, ctx);
+        collectElementsToLayout(measure, elementsToLayout, ctx);
     }
 
     const std::vector<Segment*>& sl = elementsToLayout.segments;
     if (sl.empty()) {
         return;
+    }
+
+    for (Chord* chord : elementsToLayout.chords) {
+        GraceNotesGroup& graceBefore = chord->graceNotesBefore();
+        GraceNotesGroup& graceAfter = chord->graceNotesAfter();
+        TLayout::layoutGraceNotesGroup2(&graceBefore, graceBefore.mutldata());
+        TLayout::layoutGraceNotesGroup2(&graceAfter, graceAfter.mutldata());
     }
 
     for (Segment* s : sl) {
@@ -764,7 +771,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         TLayout::layoutRect(bl, bl->mutldata(), ctx);
     }
 
-    createSkylines(system, ctx);
+    createSkylines(elementsToLayout, ctx);
 
     //-------------------------------------------------------------
     // layout ties and guitar bends
@@ -1362,10 +1369,11 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     }
 }
 
-void SystemLayout::collectElementsToLayout(System* system, Measure* measure, ElementsToLayout& elements, const LayoutContext& ctx)
+void SystemLayout::collectElementsToLayout(Measure* measure, ElementsToLayout& elements, const LayoutContext& ctx)
 {
     elements.measures.push_back(measure);
 
+    System* system = elements.system;
     for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
         if (!system->staff(staffIdx)->show()) {
             continue;
@@ -1381,10 +1389,22 @@ void SystemLayout::collectElementsToLayout(System* system, Measure* measure, Ele
         }
 
         track_idx_t trackZero = staffIdx * VOICES;
+        track_idx_t endTrack = trackZero + VOICES;
         for (Segment& segment : measure->segments()) {
             if (segment.isType(SegmentType::BarLineType)) {
                 if (BarLine* bl = toBarLine(segment.element(trackZero))) {
                     elements.barlines.push_back(bl);
+                }
+                continue;
+            }
+
+            if (segment.isChordRestType()) {
+                for (track_idx_t track = trackZero; track < endTrack; ++track) {
+                    if (EngravingItem* e = segment.element(track)) {
+                        if (e->isChord()) {
+                            elements.chords.push_back(toChord(e));
+                        }
+                    }
                 }
             }
         }
@@ -1397,21 +1417,14 @@ void SystemLayout::collectElementsToLayout(System* system, Measure* measure, Ele
     }
 }
 
-void SystemLayout::createSkylines(System* system, LayoutContext& ctx)
+void SystemLayout::createSkylines(const ElementsToLayout& elementsToLayout, LayoutContext& ctx)
 {
+    System* system = elementsToLayout.system;
     for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
         SysStaff* ss = system->staff(staffIdx);
         Skyline& skyline = ss->skyline();
         skyline.clear();
-        for (MeasureBase* mb : system->measures()) {
-            if (!mb->isMeasure()) {
-                continue;
-            }
-            Measure* m = toMeasure(mb);
-            // no need to build skyline outside of range in continuous view
-            if (ctx.conf().isLinearMode() && (m->tick() < ctx.state().startTick() || m->tick() > ctx.state().endTick())) {
-                continue;
-            }
+        for (Measure* m : elementsToLayout.measures) {
             if (m->staffLines(staffIdx)->addToSkyline()) {
                 ss->skyline().add(m->staffLines(staffIdx)->ldata()->bbox().translated(m->pos()), m->staffLines(staffIdx));
             }
@@ -1453,8 +1466,6 @@ void SystemLayout::createSkylines(System* system, LayoutContext& ctx)
                             if (e->isChord()) {
                                 GraceNotesGroup& graceBefore = toChord(e)->graceNotesBefore();
                                 GraceNotesGroup& graceAfter = toChord(e)->graceNotesAfter();
-                                TLayout::layoutGraceNotesGroup2(&graceBefore, graceBefore.mutldata());
-                                TLayout::layoutGraceNotesGroup2(&graceAfter, graceAfter.mutldata());
                                 if (!graceBefore.empty()) {
                                     skyline.add(graceBefore.shape().translate(graceBefore.pos() + p + offset));
                                 }

@@ -113,6 +113,10 @@ private:
         std::vector<BarLine*> barlines;
 
         std::vector<Sticking*> stickings;
+        std::vector<EngravingItem*> fermatasAndTremoloBars;
+        std::vector<FiguredBass*> figuredBass;
+        std::vector<Dynamic*> dynamics;
+        std::vector<Expression*> expressions;
 
         std::vector<Spanner*> spanners;
         std::vector<Spanner*> slurs;

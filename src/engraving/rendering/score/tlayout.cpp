@@ -2480,7 +2480,7 @@ void TLayout::layoutFiguredBass(const FiguredBass* item, FiguredBass::LayoutData
         for (FiguredBassItem* fit : item->items()) {
             FiguredBassItem::LayoutData* fildata = fit->mutldata();
             layoutFiguredBassItem(fit, fildata, ctx);
-            shape.add(fildata->bbox().translated(fit->pos()));
+            shape.add(fildata->bbox().translated(fit->pos()), fit);
         }
         ldata->setShape(shape);
     }

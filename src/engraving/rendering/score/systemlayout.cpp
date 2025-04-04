@@ -845,71 +845,32 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     layoutSticking(elementsToLayout, ctx);
 
-    //-------------------------------------------------------------
-    // Fermata, TremoloBar
-    //-------------------------------------------------------------
+    for (EngravingItem* item : elementsToLayout.fermatasAndTremoloBars) {
+        TLayout::layoutItem(item, ctx);
+    }
 
-    for (const Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isFermata() || e->isTremoloBar()) {
-                TLayout::layoutItem(e, ctx);
-            }
+    for (FiguredBass* item : elementsToLayout.figuredBass) {
+        TLayout::layoutItem(item, ctx);
+        if (item->autoplace()) {
+            Autoplace::autoplaceSegmentElement(item, item->mutldata(), true);
         }
     }
 
     std::vector<EngravingItem*> dynamicsExprAndHairpinsToAlign;
 
-    //-------------------------------------------------------------
-    // Dynamics and figured bass
-    //-------------------------------------------------------------
-
-    std::vector<EngravingItem*> dynamicsAndFigBass;
-    for (Segment* s : sl) {
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isDynamic() || e->isFiguredBass()) {
-                TLayout::layoutItem(e, ctx);
-                if (e->autoplace()) {
-                    if (e->isDynamic()) {
-                        toDynamic(e)->manageBarlineCollisions();
-                        dynamicsExprAndHairpinsToAlign.push_back(e);
-                    }
-                    Autoplace::autoplaceSegmentElement(e, e->mutldata(), false);
-                    dynamicsAndFigBass.push_back(e);
-                }
-            }
+    for (Dynamic* dynamic : elementsToLayout.dynamics) {
+        TLayout::layoutItem(dynamic, ctx);
+        if (dynamic->autoplace()) {
+            dynamic->manageBarlineCollisions();
+            Autoplace::autoplaceSegmentElement(dynamic, dynamic->mutldata());
+            dynamicsExprAndHairpinsToAlign.push_back(dynamic);
         }
     }
 
-    // add dynamics shape to skyline
-    for (EngravingItem* e : dynamicsAndFigBass) {
-        if (!e->addToSkyline()) {
-            continue;
-        }
-        EngravingItem* parent = e->parentItem(true);
-        IF_ASSERT_FAILED(parent && parent->isSegment()) {
-            continue;
-        }
-        staff_idx_t si = e->staffIdx();
-        Segment* s = toSegment(parent);
-        Measure* m = s->measure();
-        system->staff(si)->skyline().add(e->shape().translate(e->pos() + s->pos() + m->pos() + e->staffOffset()));
-    }
-
-    //-------------------------------------------------------------
-    // Expressions
-    // Must be done after dynamics. Remember that expressions may
-    // also snap into alignment with dynamics.
-    //-------------------------------------------------------------
-    for (Segment* s : sl) {
-        Measure* m = s->measure();
-        for (EngravingItem* e : s->annotations()) {
-            if (e->isExpression()) {
-                TLayout::layoutItem(e, ctx);
-                if (e->addToSkyline()) {
-                    dynamicsExprAndHairpinsToAlign.push_back(e);
-                    system->staff(e->staffIdx())->skyline().add(e->shape().translate(e->pos() + s->pos() + m->pos()));
-                }
-            }
+    for (Expression* e : elementsToLayout.expressions) {
+        TLayout::layoutItem(e, ctx);
+        if (e->addToSkyline()) {
+            dynamicsExprAndHairpinsToAlign.push_back(e);
         }
     }
 
@@ -1352,6 +1313,14 @@ void SystemLayout::collectElementsToLayout(Measure* measure, ElementsToLayout& e
             }
             if (item->isSticking()) {
                 elements.stickings.push_back(toSticking(item));
+            } else if (item->isFermata() || item->isTremoloBar()) {
+                elements.fermatasAndTremoloBars.push_back(item);
+            } else if (item->isFiguredBass()) {
+                elements.figuredBass.push_back(toFiguredBass(item));
+            } else if (item->isDynamic()) {
+                elements.dynamics.push_back(toDynamic(item));
+            } else if (item->isExpression()) {
+                elements.expressions.push_back(toExpression(item));
             }
         }
     }

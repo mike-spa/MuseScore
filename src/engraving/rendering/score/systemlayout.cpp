@@ -773,19 +773,6 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         s->createShapes();
     }
 
-    for (Segment* s : sl) {
-        for (EngravingItem* item : s->elist()) {
-            if (!item || !item->isRest()) {
-                continue;
-            }
-            Rest* rest = toRest(item);
-            Beam* beam = rest->beam();
-            if (beam && !beam->cross() && !beam->fullCross()) {
-                BeamLayout::verticalAdjustBeamedRests(rest, beam, ctx);
-            }
-        }
-    }
-
     //-------------------------------------------------------------
     //    create skylines
     //-------------------------------------------------------------

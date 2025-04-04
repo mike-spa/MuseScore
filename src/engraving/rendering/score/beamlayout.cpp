@@ -884,10 +884,11 @@ void BeamLayout::layoutNonCrossBeams(Segment* s, LayoutContext& ctx)
         ChordRest* cr = toChordRest(e);
         // layout beam
         if (BeamLayout::isTopBeam(cr)) {
-            TLayout::layoutBeam(cr->beam(), ctx);
-            if (!cr->beam()->tremAnchors().empty()) {
+            Beam* beam = cr->beam();
+            TLayout::layoutBeam(beam, ctx);
+            if (!beam->tremAnchors().empty()) {
                 // there are inset tremolos in here
-                for (ChordRest* beamCr : cr->beam()->elements()) {
+                for (ChordRest* beamCr : beam->elements()) {
                     if (!beamCr->isChord()) {
                         continue;
                     }
@@ -897,10 +898,18 @@ void BeamLayout::layoutNonCrossBeams(Segment* s, LayoutContext& ctx)
                     }
                 }
             }
+
+            for (ChordRest* beamCR : beam->elements()) {
+                if (beamCR->isRest()) {
+                    verticalAdjustBeamedRests(toRest(beamCR), beam, ctx);
+                }
+            }
         }
+
         if (!cr->isChord()) {
             continue;
         }
+
         for (Chord* grace : toChord(cr)->graceNotes()) {
             if (BeamLayout::isTopBeam(grace)) {
                 TLayout::layoutBeam(grace->beam(), ctx);

@@ -442,7 +442,7 @@ EngravingItem* ChordRest::drop(EditData& data)
 
 Beam* ChordRest::beam() const
 {
-    return !(measure() && measure()->stemless(staffIdx())) ? m_beam : nullptr;
+    return m_beam;
 }
 
 //---------------------------------------------------------

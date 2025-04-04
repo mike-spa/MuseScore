@@ -729,12 +729,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         return;
     }
 
-    struct ElementsToLayout {
-        std::vector<Segment*> segments;
-        std::vector<MeasureNumber*> measureNumbers;
-        std::vector<MMRestRange*> mmrRanges;
-        std::vector<BarLine*> barlines;
-    } elementsToLayout;
+    ElementsToLayout elementsToLayout;
 
     for (MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {
@@ -751,34 +746,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         MeasureLayout::layoutMMRestRange(measure, ctx);
         MeasureLayout::layoutTimeTickAnchors(measure, ctx);
 
-        for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
-            if (!system->staff(staffIdx)->show()) {
-                continue;
-            }
-
-            MeasureNumber* mno = measure->noText(staffIdx);
-            if (mno && mno->addToSkyline()) {
-                elementsToLayout.measureNumbers.push_back(mno);
-            }
-            MMRestRange* mmrr = measure->mmRangeText(staffIdx);
-            if (mmrr && mmrr->addToSkyline()) {
-                elementsToLayout.mmrRanges.push_back(mmrr);
-            }
-        }
-
-        for (Segment* s = measure->first(); s; s = s->next()) {
-            if (s->isChordRestType() || !s->annotations().empty()) {
-                elementsToLayout.segments.push_back(s);
-            }
-            if (s->isType(SegmentType::BarLineType)) {
-                for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
-                    BarLine* bl = toBarLine(s->element(staffIdx * VOICES));
-                    if (bl) {
-                        elementsToLayout.barlines.push_back(bl);
-                    }
-                }
-            }
-        }
+        collectElementsToLayout(system, measure, elementsToLayout, ctx);
     }
 
     const std::vector<Segment*>& sl = elementsToLayout.segments;
@@ -1390,6 +1358,41 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
                     }
                 }
             }
+        }
+    }
+}
+
+void SystemLayout::collectElementsToLayout(System* system, Measure* measure, ElementsToLayout& elements, const LayoutContext& ctx)
+{
+    elements.measures.push_back(measure);
+
+    for (size_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+        if (!system->staff(staffIdx)->show()) {
+            continue;
+        }
+
+        MeasureNumber* mno = measure->noText(staffIdx);
+        if (mno && mno->addToSkyline()) {
+            elements.measureNumbers.push_back(mno);
+        }
+        MMRestRange* mmrr = measure->mmRangeText(staffIdx);
+        if (mmrr && mmrr->addToSkyline()) {
+            elements.mmrRanges.push_back(mmrr);
+        }
+
+        track_idx_t trackZero = staffIdx * VOICES;
+        for (Segment& segment : measure->segments()) {
+            if (segment.isType(SegmentType::BarLineType)) {
+                if (BarLine* bl = toBarLine(segment.element(trackZero))) {
+                    elements.barlines.push_back(bl);
+                }
+            }
+        }
+    }
+
+    for (Segment* s = measure->first(); s; s = s->next()) {
+        if (s->isChordRestType() || !s->annotations().empty()) {
+            elements.segments.push_back(s);
         }
     }
 }

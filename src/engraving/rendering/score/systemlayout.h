@@ -99,6 +99,17 @@ private:
         }
     };
 
+    struct ElementsToLayout
+    {
+        std::vector<Measure*> measures;
+        std::vector<Segment*> segments;
+        std::vector<MeasureNumber*> measureNumbers;
+        std::vector<MMRestRange*> mmrRanges;
+        std::vector<BarLine*> barlines;
+    };
+
+    static void collectElementsToLayout(System *system, Measure* measure, ElementsToLayout& elements, const LayoutContext &ctx);
+
     static System* getNextSystem(LayoutContext& lc);
     static void createSkylines(System* system, LayoutContext& ctx);
     static void processLines(System* system, LayoutContext& ctx, std::vector<Spanner*> lines, bool align = false);

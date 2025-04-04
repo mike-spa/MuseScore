@@ -804,28 +804,12 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     collectSpannersToLayout(elementsToLayout, ctx);
 
-    // slurs
-    std::vector<Spanner*> spanner;
-    for (Spanner* sp : elementsToLayout.spanners) {
-        if (sp->staff() && !sp->staff()->show()) {
-            continue;
-        }
+    processLines(system, ctx, elementsToLayout.slurs);
 
-        sp->computeStartElement();
-        sp->computeEndElement();
-        ctx.mutState().processedSpanners().insert(sp);
-        if (sp->tick() < etick && sp->tick2() >= stick) {
-            if (sp->isSlur() && !toSlur(sp)->isCrossStaff()) {
-                // skip cross-staff slurs, will be done after page layout
-                spanner.push_back(sp);
-            }
-        }
-    }
-    processLines(system, ctx, spanner);
-    for (auto s : spanner) {
-        Slur* slur = toSlur(s);
-        ChordRest* scr = s->startCR();
-        ChordRest* ecr = s->endCR();
+    for (Spanner* sp : elementsToLayout.slurs) {
+        Slur* slur = toSlur(sp);
+        ChordRest* scr = toChordRest(slur->startElement());
+        ChordRest* ecr = toChordRest(slur->endElement());
         if (scr && scr->isChord()) {
             ChordLayout::layoutArticulations3(toChord(scr), slur, ctx);
         }
@@ -945,6 +929,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     // voltas and tempo change lines are collected here, but laid out later
     //-------------------------------------------------------------
 
+    std::vector<Spanner*> spanner;
     spanner.clear();
     std::vector<Spanner*> hairpins;
     std::vector<Spanner*> ottavas;
@@ -1387,6 +1372,12 @@ void SystemLayout::collectSpannersToLayout(ElementsToLayout& elements, const Lay
     elements.spanners.reserve(spanners.size());
     for (auto item : spanners) {
         elements.spanners.push_back(item.value);
+    }
+
+    for (Spanner* spanner : elements.spanners) {
+        if (spanner->isSlur() && spanner->tick() < etick && spanner->tick2() >= stick && !toSlur(spanner)->isCrossStaff()) {
+            elements.slurs.push_back(spanner);
+        }
     }
 }
 

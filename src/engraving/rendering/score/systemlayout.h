@@ -118,9 +118,15 @@ private:
         std::vector<Dynamic*> dynamics;
         std::vector<Expression*> expressions;
 
-        std::vector<Spanner*> spanners;
         std::vector<Spanner*> slurs;
         std::vector<Spanner*> trills;
+        std::vector<Spanner*> hairpins;
+        std::vector<Spanner*> ottavas;
+        std::vector<Spanner*> pedal;
+        std::vector<Spanner*> voltas;
+        std::vector<Spanner*> tempoChangeLines;
+        std::vector<Spanner*> partialLyricsLines;
+        std::vector<Spanner*> allOtherSpanners;
 
         ElementsToLayout(System* s)
             : system(s) {}

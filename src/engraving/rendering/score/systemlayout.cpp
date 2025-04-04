@@ -874,58 +874,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         }
     }
 
-    //-------------------------------------------------------------
-    // layout SpannerSegments for current system
-    // voltas and tempo change lines are collected here, but laid out later
-    //-------------------------------------------------------------
-
-    std::vector<Spanner*> spanner;
-    spanner.clear();
-    std::vector<Spanner*> hairpins;
-    std::vector<Spanner*> ottavas;
-    std::vector<Spanner*> pedal;
-    std::vector<Spanner*> voltas;
-    std::vector<Spanner*> tempoChangeLines;
-    std::vector<Spanner*> partialLyricsLines;
-
-    for (Spanner* sp : elementsToLayout.spanners) {
-        if (!sp->systemFlag() && sp->staff() && !sp->staff()->show()) {
-            continue;
-        }
-
-        const Measure* startMeas = sp->findStartMeasure();
-        const Measure* endMeas = sp->findEndMeasure();
-        if (!sp->visible() && ((startMeas && startMeas->isMMRest()) || (endMeas && endMeas->isMMRest()))
-            && ctx.conf().styleB(Sid::createMultiMeasureRests)) {
-            continue;
-        }
-        if (sp->tick2() == stick && sp->isPedal() && toPedal(sp)->connect45HookToNext()) {
-            pedal.push_back(sp);
-        }
-
-        if (sp->tick() < etick && sp->tick2() > stick) {
-            if (sp->isOttava()) {
-                if (sp->staff()->staffType()->isTabStaff()) {
-                    continue;
-                }
-
-                ottavas.push_back(sp);
-            } else if (sp->isPedal()) {
-                pedal.push_back(sp);
-            } else if (sp->isVolta()) {
-                voltas.push_back(sp);
-            } else if (sp->isHairpin()) {
-                hairpins.push_back(sp);
-            } else if (sp->isGradualTempoChange()) {
-                tempoChangeLines.push_back(sp);
-            } else if (sp->isPartialLyricsLine()) {
-                partialLyricsLines.push_back(sp);
-            } else if (!sp->isSlur() && !sp->isVolta() && !sp->isTrill()) {      // slurs are already
-                spanner.push_back(sp);
-            }
-        }
-    }
-    processLines(system, ctx, hairpins);
+    processLines(system, ctx, elementsToLayout.hairpins);
 
     for (SpannerSegment* spannerSegment : system->spannerSegments()) {
         if (spannerSegment->isHairpinSegment()) {
@@ -935,7 +884,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
 
     AlignmentLayout::alignItemsWithTheirSnappingChain(dynamicsExprAndHairpinsToAlign, system);
 
-    processLines(system, ctx, spanner);
+    processLines(system, ctx, elementsToLayout.allOtherSpanners);
 
     for (MeasureNumber* mno : elementsToLayout.measureNumbers) {
         Autoplace::autoplaceMeasureElement(mno, mno->mutldata());
@@ -948,10 +897,10 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         system->staff(mmrr->staffIdx())->skyline().add(mmrr->ldata()->bbox().translated(mmrr->measure()->pos() + mmrr->pos()), mmrr);
     }
 
-    processLines(system, ctx, ottavas);
-    processLines(system, ctx, pedal, /*align=*/ true);
+    processLines(system, ctx, elementsToLayout.ottavas);
+    processLines(system, ctx, elementsToLayout.pedal, /*align=*/ true);
 
-    for (Spanner* sp : partialLyricsLines) {
+    for (Spanner* sp : elementsToLayout.partialLyricsLines) {
         TLayout::layoutSystem(sp, system, ctx);
     }
 
@@ -1082,7 +1031,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
     // layout Voltas for current system
     //-------------------------------------------------------------
 
-    processLines(system, ctx, voltas);
+    processLines(system, ctx, elementsToLayout.voltas);
 
     //
     // vertical align volta segments
@@ -1157,7 +1106,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         }
     }
 
-    processLines(system, ctx, tempoChangeLines);
+    processLines(system, ctx, elementsToLayout.tempoChangeLines);
     for (SpannerSegment* spannerSeg : system->spannerSegments()) {
         if (spannerSeg->isGradualTempoChangeSegment()) {
             tempoElementsToAlign.push_back(spannerSeg);
@@ -1335,19 +1284,64 @@ void SystemLayout::collectSpannersToLayout(ElementsToLayout& elements, const Lay
         return sp1.value->tick() < sp2.value->tick();
     });
 
-    elements.spanners.reserve(spanners.size());
+    std::vector<Spanner*> allSpanners;
+    allSpanners.reserve(spanners.size());
     for (auto item : spanners) {
-        elements.spanners.push_back(item.value);
+        allSpanners.push_back(item.value);
     }
 
-    for (Spanner* spanner : elements.spanners) {
-        bool startIsInside = spanner->tick() < etick;
-        bool endIsInside = spanner->tick2() > stick;
-        bool endIsInsideOrEqual = spanner->tick2() >= stick;
-        if (spanner->isSlur() && startIsInside && endIsInsideOrEqual && !toSlur(spanner)->isCrossStaff()) {
-            elements.slurs.push_back(spanner);
-        } else if (spanner->isTrill() && startIsInside && endIsInside) {
-            elements.trills.push_back(spanner);
+    const System* system = elements.system;
+
+    for (Spanner* spanner : allSpanners) {
+        if (!spanner->systemFlag() && !system->staff(spanner->staffIdx())->show()) {
+            continue;
+        }
+        if (spanner->tick() >= etick || spanner->tick2() < stick) {
+            continue;
+        }
+
+        if (spanner->tick2() == stick) {
+            // Only these two spanner types are laid out if at the end of the previous system
+            // TODO: pedal makes sense, but slur doesn't... to figure out
+            if (spanner->isSlur() && !toSlur(spanner)->isCrossStaff()) {
+                elements.slurs.push_back(spanner);
+            } else if (spanner->isPedal() && toPedal(spanner)->connect45HookToNext()) {
+                elements.pedal.push_back(spanner);
+            }
+        } else {
+            switch (spanner->type()) {
+            case ElementType::SLUR:
+                if (!toSlur(spanner)->isCrossStaff()) {
+                    elements.slurs.push_back(spanner);
+                }
+                break;
+            case ElementType::PEDAL:
+                elements.pedal.push_back(spanner);
+                break;
+            case ElementType::TRILL:
+                elements.trills.push_back(spanner);
+                break;
+            case ElementType::VOLTA:
+                elements.voltas.push_back(spanner);
+                break;
+            case ElementType::HAIRPIN:
+                elements.hairpins.push_back(spanner);
+                break;
+            case ElementType::GRADUAL_TEMPO_CHANGE:
+                elements.tempoChangeLines.push_back(spanner);
+                break;
+            case ElementType::PARTIAL_LYRICSLINE:
+                elements.partialLyricsLines.push_back(spanner);
+                break;
+            case ElementType::OTTAVA:
+                if (!spanner->staff()->staffType()->isTabStaff()) {
+                    elements.ottavas.push_back(spanner);
+                }
+                break;
+            default:
+                elements.allOtherSpanners.push_back(spanner);
+                break;
+            }
         }
     }
 }

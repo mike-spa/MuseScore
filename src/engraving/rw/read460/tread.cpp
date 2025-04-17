@@ -548,7 +548,7 @@ bool TRead::readItemProperties(EngravingItem* item, XmlReader& e, ReadContext& c
             }
         }
         if (tag == "linkedMain") {
-            item->setLinks(new LinkedObjects(item->score()));
+            item->setLinks(new LinkedObjects());
             item->links()->push_back(item);
 
             ctx.addLink(s, item->links(), ctx.location(true));
@@ -613,7 +613,7 @@ bool TRead::readItemProperties(EngravingItem* item, XmlReader& e, ReadContext& c
             if (!ctx.isMasterScore()) {       // DEBUG
                 LOGD() << "not found link, id: " << id << ", count: " << ctx.linkIds().size() << ", item: " << item->typeName();
             }
-            item->setLinks(new LinkedObjects(item->score(), id));
+            item->setLinks(new LinkedObjects());
             ctx.linkIds().insert({ id, item->links() });
         }
 #ifndef NDEBUG

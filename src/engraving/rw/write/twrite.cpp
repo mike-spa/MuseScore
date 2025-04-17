@@ -487,37 +487,11 @@ void TWrite::writeItemProperties(const EngravingItem* item, XmlWriter& xml, Writ
 
     // copy paste should not keep links
     if (item->links() && (item->links()->size() > 1) && !ctx.clipboardmode()) {
-        EngravingItem* me = static_cast<EngravingItem*>(item->links()->mainElement());
-        DO_ASSERT(item->type() == me->type());
-        Staff* s = item->staff();
-        if (!s) {
-            s = item->score()->staff(ctx.curTrack() / VOICES);
-            if (!s) {
-                LOGW("EngravingItem::writeProperties: linked element's staff not found (%s)", item->typeName());
-            }
+        EngravingItem* mainElement = static_cast<EngravingItem*>(item->links()->mainElement());
+        if (mainElement != item) {
+            xml.tag("linkedTo", mainElement->eid().toStdString());
         }
-        Location loc = Location::positionForElement(item);
-        if (me == item) {
-            xml.tag("linkedMain");
-        } else {
-            if (s && s->links()) {
-                Staff* linkedStaff = toStaff(s->links()->mainElement());
-                loc.setStaff(static_cast<int>(linkedStaff->idx()));
-            }
-            xml.startElement("linked");
-            if (!me->score()->isMaster()) {
-                if (me->score() == item->score()) {
-                    xml.tag("score", "same");
-                }
-            }
-
-            Location mainLoc = Location::positionForElement(me);
-            if (loc != mainLoc) {
-                mainLoc.toRelative(loc);
-                write(&mainLoc, xml, ctx);
-            }
-            xml.endElement();       // </linked>
-        }
+    }
     }
     if ((ctx.writeTrack() || item->track() != ctx.curTrack())
         && (item->track() != muse::nidx) && !item->isBeam() && !item->isTuplet()) {

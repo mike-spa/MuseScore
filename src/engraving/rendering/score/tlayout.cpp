@@ -2112,7 +2112,6 @@ void TLayout::layoutFermata(const Fermata* item, Fermata::LayoutData* ldata, con
     }
 
     double x = 0.0;
-    double y = 0.0;
     const Segment* s = item->segment();
     const EngravingItem* e = s->element(item->track());
 
@@ -2123,14 +2122,11 @@ void TLayout::layoutFermata(const Fermata* item, Fermata::LayoutData* ldata, con
         if (e->isChord()) {
             const Chord* chord = toChord(e);
             x = chord->x() + chord->centerX();
-            y = chord->y();
         } else if (e->isRest()) {
             const Rest* rest = toRest(e);
             x = rest->x() + rest->centerX();
-            y = rest->y();
         } else {
             x = e->x() - e->shape().left() + e->width() * item->staff()->staffMag(Fraction(0, 1)) * .5;
-            y = e->y();
         }
     }
 
@@ -2146,6 +2142,22 @@ void TLayout::layoutFermata(const Fermata* item, Fermata::LayoutData* ldata, con
             const_cast<Fermata*>(item)->setSymId(SymNames::symIdByName(name.left(name.size() - 5) + u"Below"));
         }
     }
+
+    double y = item->placeAbove() ? 0.0 : item->staff()->staffHeight(item->tick());
+    if (item->isStyled(Pid::OFFSET)) {
+        y += item->offset().y();
+    }
+    Shape staffShape = item->segment()->staffShape(item->staffIdx());
+    staffShape.removeTypes({ElementType::FERMATA});
+    if (item->placeAbove()) {
+        y = std::min(y, staffShape.top());
+    } else {
+        y = std::max(y, staffShape.bottom());
+    }
+    if (item->isStyled(Pid::OFFSET)) {
+        y -= item->offset().y();
+    }
+
     ldata->setPos(x, y);
     RectF b(item->symBbox(item->symId()));
     ldata->setBbox(b.translated(-0.5 * b.width(), 0.0));

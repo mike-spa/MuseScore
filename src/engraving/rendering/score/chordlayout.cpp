@@ -1135,30 +1135,10 @@ void ChordLayout::layoutArticulations2(Chord* item, LayoutContext& ctx, bool lay
                     staffBotY = a->y() + a->height() + minDist + yOffset;
                 }
             }
-            Autoplace::doAutoplace(a, a->mutldata());
-        }
-    }
-
-    for (Articulation* a : item->articulations()) {
-        if (a->addToSkyline() && !a->isOnCrossBeamSide()) {
-            // the segment shape has already been calculated
-            // so measure width and spacing is already determined
-            // in line mode, we cannot add to segment shape without throwing this off
-            // but adding to skyline is always good
-            Segment* s = item->segment();
-            Measure* m = s->measure();
-            Shape sh = a->shape().translate(a->pos() + item->pos() + item->staffOffset());
-            // TODO: limit to width of chord
-            // this avoids "staircase" effect due to space not having been allocated already
-            // ANOTHER alternative is to allocate the space in layoutPitched() / layoutTablature()
-            //double w = std::min(r.width(), width());
-            //r.translate((r.width() - w) * 0.5, 0.0);
-            //r.setWidth(w);
+            Autoplace::autoplaceSegmentElement(a, a->mutldata(), a->up(), true);
             if (!ctx.conf().isLineMode()) {
-                s->staffShape(item->staffIdx()).add(sh);
+                a->segment()->staffShape(a->staffIdx()).add(a->shape().translated(a->pos() + item->pos() + item->staffOffset()));
             }
-            sh.translate(s->pos() + m->pos());
-            m->system()->staff(item->vStaffIdx())->skyline().add(sh);
         }
     }
 }

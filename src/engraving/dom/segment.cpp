@@ -2597,14 +2597,12 @@ void Segment::createShape(staff_idx_t staffIdx)
                    && !e->isTripletFeel()
                    && !e->isInstrumentChange()
                    && !e->isArticulationFamily()
-                   && !e->isFermata()
                    && !e->isStaffText()
                    && !e->isHarpPedalDiagram()
                    && !e->isPlayTechAnnotation()
                    && !e->isCapo()
                    && !e->isStringTunings()) {
             // annotations added here are candidates for collision detection
-            // lyrics, ...
             s.add(e->shape().translate(e->pos() + e->staffOffset()));
         }
     }

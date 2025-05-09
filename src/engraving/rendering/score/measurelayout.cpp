@@ -1131,6 +1131,14 @@ void MeasureLayout::computePreSpacingItems(Measure* m, LayoutContext& ctx)
     bool isFirstChordInMeasure = true;
     ChordLayout::clearLineAttachPoints(m);
     for (Segment& seg : m->segments()) {
+        if (seg.isType(SegmentType::ChordRest | SegmentType::BarLineType)) {
+            for (EngravingItem* annotation : seg.annotations()) {
+                if (annotation->isFermata()) {
+                    TLayout::layoutItem(annotation, ctx);
+                }
+            }
+        }
+
         if (!seg.isChordRestType()) {
             continue;
         }
@@ -1154,8 +1162,12 @@ void MeasureLayout::computePreSpacingItems(Measure* m, LayoutContext& ctx)
 
             ChordLayout::layoutArticulations(chord, ctx);
             ChordLayout::checkStartEndSlurs(chord, ctx);
+            if (!(chord->beam() && chord->beam()->cross())) {
+                ChordLayout::layoutArticulations2(chord, ctx);
+            }
             chord->computeKerningExceptions();
         }
+
         seg.createShapes();
         isFirstChordInMeasure = false;
     }

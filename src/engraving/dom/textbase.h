@@ -306,7 +306,6 @@ public:
     Text& operator=(const Text&) = delete;
 
     virtual void drawEditMode(muse::draw::Painter* p, EditData& ed, double currentViewScaling) override;
-    static void drawTextWorkaround(muse::draw::Painter* p, muse::draw::Font& f, const PointF& pos, const String& text);
 
     Align align() const { return m_align; }
     void setAlign(Align a) { m_align = a; }

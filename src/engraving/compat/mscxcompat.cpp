@@ -74,6 +74,13 @@ Ret mu::engraving::compat::loadMsczOrMscx(MasterScore* score, const io::path_t& 
         }
 
         msczData = msczFile.readAll();
+    } else if (suffix == "" && MScore::testMode) {
+        File msczFile(path + ".mscz");
+        if (!msczFile.open(IODevice::ReadOnly)) {
+            return make_ret(Err::FileOpenError, path);
+        }
+
+        msczData = msczFile.readAll();
     } else {
         return make_ret(Err::FileUnknownType, path);
     }

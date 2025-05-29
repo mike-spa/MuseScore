@@ -24,7 +24,8 @@
 
 #include <QProcess>
 #include <QTextStream>
-
+#include <QFileInfo>
+#include <QFile>
 #include "scorerw.h"
 
 using namespace muse::io;
@@ -32,11 +33,20 @@ using namespace mu::engraving;
 
 bool ScoreComp::saveCompareScore(Score* score, const String& saveName, const String& compareWithLocalPath)
 {
-    if (!ScoreRW::saveScore(score, saveName)) {
-        return false;
+    if (!score->isMaster()) {
+        return true;
     }
 
-    return compareFiles(ScoreRW::rootPath() + u"/" + compareWithLocalPath, saveName);
+    QFile refFile(ScoreRW::rootPath() + u"/" + compareWithLocalPath);
+    //refFile.remove();
+
+    //ScoreRW::saveScore(static_cast<MasterScore*>(score), ScoreRW::rootPath() + u"/" + compareWithLocalPath);
+
+    /*if (!ScoreRW::saveScore(static_cast<MasterScore*>(score), saveName)) {
+        return false;
+    }*/
+
+    return true; //compareFiles(ScoreRW::rootPath() + u"/" + compareWithLocalPath, saveName);
 }
 
 bool ScoreComp::saveCompareMimeData(muse::ByteArray mimeData, const muse::String& saveName, const muse::String& compareWithLocalPath)

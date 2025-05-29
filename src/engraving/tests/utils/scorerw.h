@@ -43,7 +43,7 @@ public:
     using ExportFunc = std::function<Err (Score* score, const muse::io::path_t& path)>;
 
     static MasterScore* readScore(const String& path, bool isAbsolutePath = false, ImportFunc importFunc = nullptr);
-    static bool saveScore(Score* score, const String& name);
+    static bool saveScore(MasterScore *score, const String& path);
     static bool saveScore(Score* score, const String& name, ExportFunc exportFunc);
     static EngravingItem* writeReadElement(EngravingItem* element);
     static bool saveMimeData(muse::ByteArray mimeData, const String& saveName);

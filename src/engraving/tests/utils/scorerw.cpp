@@ -31,8 +31,11 @@
 #include "engraving/rw/read400/tread.h"
 #include "engraving/rw/write/twrite.h"
 #include "engraving/rw/rwregister.h"
+#include "engraving/rw/mscsaver.h"
 #include "engraving/dom/factory.h"
 #include "engraving/rw/rwregister.h"
+
+#include <QFileInfo>
 
 #include "log.h"
 
@@ -61,7 +64,7 @@ MasterScore* ScoreRW::readScore(const String& name, bool isAbsolutePath, ImportF
 
     ScoreLoad sl;
     Err rv;
-    if (suffix == "mscz" || suffix == "mscx") {
+    if (suffix == "mscz" || suffix == "mscx" || (MScore::testMode && suffix == "")) {
         rv = static_cast<Err>(compat::loadMsczOrMscx(score, path.toString(), false).code());
     } else if (importFunc) {
         rv = importFunc(score, path);
@@ -79,6 +82,11 @@ MasterScore* ScoreRW::readScore(const String& name, bool isAbsolutePath, ImportF
         s->doLayout();
     }
 
+    if (score->mscVersion() > 302 && suffix == "mscx") {
+        QFile file(path.toQString());
+        file.remove();
+    }
+
     // While reading the score, some elements might use `score->repeatList()` (which is incorrect
     // anyway, because the repeatList will be incomplete because the score is incomplete, but some
     // elements still do it).
@@ -91,18 +99,24 @@ MasterScore* ScoreRW::readScore(const String& name, bool isAbsolutePath, ImportF
     return score;
 }
 
-bool ScoreRW::saveScore(Score* score, const String& name)
+bool ScoreRW::saveScore(MasterScore* score, const String& path)
 {
-    File file(name);
-    if (file.exists()) {
-        file.remove();
-    }
+    QString folderName = QString("/") + QFileInfo(path).baseName();
+    QString savePath = engraving::containerPath(path).toQString() + folderName;
+    QString fileName = engraving::mainFileName(path).toQString();
 
-    if (!file.open(IODevice::ReadWrite)) {
+    MscWriter::Params params;
+    params.filePath = savePath;
+    params.mainFileName = fileName;
+    params.mode = MscIoMode::Dir;
+
+    MscWriter msczWriter(params);
+    if (!msczWriter.open()) {
         return false;
     }
 
-    return rw::RWRegister::writer(score->iocContext())->writeScore(score, &file, false);
+    MscSaver saver(score->iocContext());
+    return saver.writeMscz(score, msczWriter, false, false);
 }
 
 bool ScoreRW::saveScore(Score* score, const String& name, ExportFunc exportFunc)

@@ -51,7 +51,7 @@ public:
 
 MasterScore* Engraving_ChordSymbolTests::test_pre(const char16_t* p)
 {
-    String p1 = CHORDSYMBOL_DATA_DIR + p + ".mscx";
+    String p1 = CHORDSYMBOL_DATA_DIR + p;
     MasterScore* score = ScoreRW::readScore(p1);
     EXPECT_TRUE(score);
     score->doLayout();

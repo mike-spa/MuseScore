@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+  <rootfiles>
+    <rootfile full-path="score_style.mss"/>
+    <rootfile full-path="no-system-ref.mscx"/>
+    <rootfile full-path="Excerpts/0_Flute/0_Flute.mss"/>
+    <rootfile full-path="Excerpts/0_Flute/0_Flute.mscx"/>
+    <rootfile full-path="Excerpts/1_Alto_Saxophone/1_Alto_Saxophone.mss"/>
+    <rootfile full-path="Excerpts/1_Alto_Saxophone/1_Alto_Saxophone.mscx"/>
+    </rootfiles>
+  </container>

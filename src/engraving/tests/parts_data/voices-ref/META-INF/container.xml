@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+  <rootfiles>
+    <rootfile full-path="score_style.mss"/>
+    <rootfile full-path="voices-ref.mscx"/>
+    <rootfile full-path="Excerpts/0_Piano/0_Piano.mss"/>
+    <rootfile full-path="Excerpts/0_Piano/0_Piano.mscx"/>
+    <rootfile full-path="Excerpts/1_Trombone/1_Trombone.mss"/>
+    <rootfile full-path="Excerpts/1_Trombone/1_Trombone.mscx"/>
+    <rootfile full-path="Excerpts/2_Trombone/2_Trombone.mss"/>
+    <rootfile full-path="Excerpts/2_Trombone/2_Trombone.mscx"/>
+    </rootfiles>
+  </container>

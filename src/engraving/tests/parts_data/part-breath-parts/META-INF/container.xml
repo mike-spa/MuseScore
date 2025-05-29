@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+  <rootfiles>
+    <rootfile full-path="score_style.mss"/>
+    <rootfile full-path="part-breath-parts.mscx"/>
+    <rootfile full-path="Excerpts/0_Alto/0_Alto.mss"/>
+    <rootfile full-path="Excerpts/0_Alto/0_Alto.mscx"/>
+    <rootfile full-path="Excerpts/1_Tenor/1_Tenor.mss"/>
+    <rootfile full-path="Excerpts/1_Tenor/1_Tenor.mscx"/>
+    </rootfiles>
+  </container>

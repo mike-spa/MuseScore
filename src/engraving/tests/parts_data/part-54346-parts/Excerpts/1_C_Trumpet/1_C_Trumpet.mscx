@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>1_1</eid>
+    <name>C Trumpet</name>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <metaTag name="partName">C Trumpet</metaTag>
+    <Part id="2">
+      <Staff>
+        <eid>2_2</eid>
+        <linkedTo>D_D</linkedTo>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <trackName>C Trumpet</trackName>
+      <Instrument id="c-trumpet">
+        <longName>C Trumpet</longName>
+        <shortName>C Tpt.</shortName>
+        <trackName>C Trumpet</trackName>
+        <minPitchP>54</minPitchP>
+        <maxPitchP>85</maxPitchP>
+        <minPitchA>54</minPitchA>
+        <maxPitchA>82</maxPitchA>
+        <instrumentId>brass.trumpet.c</instrumentId>
+        <Articulation>
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="staccatissimo">
+          <velocity>100</velocity>
+          <gateTime>33</gateTime>
+          </Articulation>
+        <Articulation name="staccato">
+          <velocity>100</velocity>
+          <gateTime>50</gateTime>
+          </Articulation>
+        <Articulation name="portato">
+          <velocity>100</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="tenuto">
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="marcato">
+          <velocity>120</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="sforzato">
+          <velocity>120</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Channel>
+          <program value="56"/>
+          </Channel>
+        <Channel name="mute">
+          <program value="59"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <VBox>
+        <height>10</height>
+        <sizeIsSpatiumDependent>1</sizeIsSpatiumDependent>
+        <eid>3_3</eid>
+        <linkedTo>E_E</linkedTo>
+        <Text>
+          <eid>4_4</eid>
+          <linkedTo>F_F</linkedTo>
+          <style>title</style>
+          <text>Test</text>
+          </Text>
+        <Text>
+          <eid>5_5</eid>
+          <style>instrument_excerpt</style>
+          <text>C Trumpet</text>
+          </Text>
+        </VBox>
+      <Measure len="1/4">
+        <eid>6_6</eid>
+        <irregular>1</irregular>
+        <voice>
+          <TimeSig>
+            <eid>7_7</eid>
+            <linkedTo>W_W</linkedTo>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Rest>
+            <eid>8_8</eid>
+            <linkedTo>X_X</linkedTo>
+            <durationType>quarter</durationType>
+            </Rest>
+          <location>
+            <fractions>-1/8</fractions>
+            </location>
+          <SystemText>
+            <swing unit="eighth" ratio="60"/>
+            <eid>9_9</eid>
+            <linkedTo>K_K</linkedTo>
+            <style>tempo</style>
+            <text>Swing</text>
+            </SystemText>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>+_+</eid>
+        <voice>
+          <Chord>
+            <eid>/_/</eid>
+            <linkedTo>Y_Y</linkedTo>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>AB_AB</eid>
+              <linkedTo>Z_Z</linkedTo>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>BB_BB</eid>
+            <linkedTo>a_a</linkedTo>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>CB_CB</eid>
+              <linkedTo>b_b</linkedTo>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>DB_DB</eid>
+            <linkedTo>c_c</linkedTo>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>EB_EB</eid>
+              <linkedTo>d_d</linkedTo>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>FB_FB</eid>
+            <linkedTo>e_e</linkedTo>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>GB_GB</eid>
+              <linkedTo>f_f</linkedTo>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

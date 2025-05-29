@@ -96,23 +96,23 @@
           </voice>
         </Measure>
       <Measure>
-        <eid>N_N</eid>
+        <eid>L_L</eid>
         <voice>
           <Rest>
-            <eid>O_O</eid>
+            <eid>M_M</eid>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>
           </voice>
         </Measure>
       <Measure>
-        <eid>P_P</eid>
+        <eid>N_N</eid>
         <voice>
           <Chord>
-            <eid>Q_Q</eid>
+            <eid>O_O</eid>
             <durationType>whole</durationType>
             <Note>
-              <eid>R_R</eid>
+              <eid>P_P</eid>
               <pitch>72</pitch>
               <tpc>14</tpc>
               </Note>
@@ -120,22 +120,32 @@
           <Clef>
             <concertClefType>F</concertClefType>
             <transposingClefType>F</transposingClefType>
-            <eid>S_S</eid>
+            <eid>Q_Q</eid>
             </Clef>
           </voice>
         </Measure>
       <Measure>
-        <eid>T_T</eid>
+        <eid>R_R</eid>
         <voice>
           <Chord>
-            <eid>U_U</eid>
+            <eid>S_S</eid>
             <durationType>whole</durationType>
             <Note>
-              <eid>V_V</eid>
+              <eid>T_T</eid>
               <pitch>60</pitch>
               <tpc>14</tpc>
               </Note>
             </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>U_U</eid>
+        <voice>
+          <Rest>
+            <eid>V_V</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
           </voice>
         </Measure>
       <Measure>
@@ -153,16 +163,6 @@
         <voice>
           <Rest>
             <eid>Z_Z</eid>
-            <durationType>measure</durationType>
-            <duration>4/4</duration>
-            </Rest>
-          </voice>
-        </Measure>
-      <Measure>
-        <eid>a_a</eid>
-        <voice>
-          <Rest>
-            <eid>b_b</eid>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>

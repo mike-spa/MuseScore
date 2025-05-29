@@ -102,47 +102,6 @@
           </voice>
         </Measure>
       <Measure>
-        <eid>P_P</eid>
-        <voice>
-          <Chord>
-            <eid>Q_Q</eid>
-            <durationType>quarter</durationType>
-            <Note>
-              <eid>R_R</eid>
-              <pitch>71</pitch>
-              <tpc>19</tpc>
-              </Note>
-            </Chord>
-          <Chord>
-            <eid>S_S</eid>
-            <durationType>quarter</durationType>
-            <Note>
-              <eid>T_T</eid>
-              <pitch>72</pitch>
-              <tpc>14</tpc>
-              </Note>
-            </Chord>
-          <Chord>
-            <eid>U_U</eid>
-            <durationType>quarter</durationType>
-            <Note>
-              <eid>V_V</eid>
-              <pitch>74</pitch>
-              <tpc>16</tpc>
-              </Note>
-            </Chord>
-          <Chord>
-            <eid>W_W</eid>
-            <durationType>quarter</durationType>
-            <Note>
-              <eid>X_X</eid>
-              <pitch>72</pitch>
-              <tpc>14</tpc>
-              </Note>
-            </Chord>
-          </voice>
-        </Measure>
-      <Measure>
         <eid>K_K</eid>
         <voice>
           <Chord>
@@ -154,12 +113,53 @@
               <tpc>19</tpc>
               </Note>
             </Chord>
-          <Rest>
+          <Chord>
             <eid>N_N</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>O_O</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>P_P</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Q_Q</eid>
+              <pitch>74</pitch>
+              <tpc>16</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>R_R</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>S_S</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>T_T</eid>
+        <voice>
+          <Chord>
+            <eid>U_U</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>V_V</eid>
+              <pitch>71</pitch>
+              <tpc>19</tpc>
+              </Note>
+            </Chord>
+          <Rest>
+            <eid>W_W</eid>
             <durationType>quarter</durationType>
             </Rest>
           <Rest>
-            <eid>O_O</eid>
+            <eid>X_X</eid>
             <durationType>half</durationType>
             </Rest>
           </voice>

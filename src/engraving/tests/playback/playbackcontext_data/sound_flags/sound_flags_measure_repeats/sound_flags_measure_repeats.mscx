@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>B_B</eid>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <open>1</open>
+    <metaTag name="arranger"></metaTag>
+    <metaTag name="composer">Composer / arranger</metaTag>
+    <metaTag name="copyright"></metaTag>
+    <metaTag name="lyricist"></metaTag>
+    <metaTag name="movementNumber"></metaTag>
+    <metaTag name="movementTitle"></metaTag>
+    <metaTag name="source"></metaTag>
+    <metaTag name="subtitle">Subtitle</metaTag>
+    <metaTag name="translator"></metaTag>
+    <metaTag name="workNumber"></metaTag>
+    <metaTag name="workTitle">Untitled score</metaTag>
+    <Order id="orchestral">
+      <name>Orchestral</name>
+      <instrument id="violin">
+        <family id="orchestral-strings">Orchestral Strings</family>
+        </instrument>
+      <section id="woodwind" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>flutes</family>
+        <family>oboes</family>
+        <family>clarinets</family>
+        <family>saxophones</family>
+        <family>bassoons</family>
+        <unsorted group="woodwinds"/>
+        </section>
+      <section id="brass" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>horns</family>
+        <family>trumpets</family>
+        <family>cornets</family>
+        <family>flugelhorns</family>
+        <family>trombones</family>
+        <family>tubas</family>
+        <unsorted group="brass"/>
+        </section>
+      <section id="timpani" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>timpani</family>
+        </section>
+      <section id="percussion" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>keyboard-percussion</family>
+        <unsorted group="pitched-percussion"/>
+        <family>drums</family>
+        <family>unpitched-metal-percussion</family>
+        <family>unpitched-wooden-percussion</family>
+        <family>other-percussion</family>
+        <unsorted group="unpitched-percussion"/>
+        </section>
+      <family>keyboards</family>
+      <family>harps</family>
+      <family>organs</family>
+      <family>synths</family>
+      <unsorted/>
+      <soloists/>
+      <section id="voices" brackets="true" barLineSpan="false" thinBrackets="true">
+        <family>voices</family>
+        <family>voice-groups</family>
+        </section>
+      <section id="strings" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>orchestral-strings</family>
+        </section>
+      </Order>
+    <Part id="1">
+      <Staff>
+        <eid>C_C</eid>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <trackName>Violin</trackName>
+      <Instrument id="violin">
+        <longName>Violin</longName>
+        <shortName>Vln.</shortName>
+        <trackName>Violin</trackName>
+        <minPitchP>55</minPitchP>
+        <maxPitchP>103</maxPitchP>
+        <minPitchA>55</minPitchA>
+        <maxPitchA>88</maxPitchA>
+        <instrumentId>strings.violin</instrumentId>
+        <Channel name="arco">
+          <program value="40"/>
+          </Channel>
+        <Channel name="pizzicato">
+          <program value="45"/>
+          </Channel>
+        <Channel name="tremolo">
+          <program value="44"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <Measure>
+        <eid>D_D</eid>
+        <voice>
+          <KeySig>
+            <eid>E_E</eid>
+            <concertKey>0</concertKey>
+            </KeySig>
+          <TimeSig>
+            <eid>F_F</eid>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Rest>
+            <eid>G_G</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>H_H</eid>
+        <voice>
+          <StaffText>
+            <eid>I_I</eid>
+            <text>espressivo</text>
+            <SoundFlag>
+              <playingTechnique>Espressivo</playingTechnique>
+              </SoundFlag>
+            </StaffText>
+          <Chord>
+            <eid>J_J</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>K_K</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>L_L</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>M_M</eid>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>N_N</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>O_O</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>P_P</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Q_Q</eid>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>R_R</eid>
+        <voice>
+          <StaffText>
+            <eid>S_S</eid>
+            <text>bartok</text>
+            <SoundFlag>
+              <playingTechnique>bartok</playingTechnique>
+              </SoundFlag>
+            </StaffText>
+          <Chord>
+            <eid>T_T</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>U_U</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>V_V</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>W_W</eid>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>X_X</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Y_Y</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>Z_Z</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>a_a</eid>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>b_b</eid>
+        <measureRepeatCount>1</measureRepeatCount>
+        <LayoutBreak>
+          <eid>c_c</eid>
+          <subtype>nobreak</subtype>
+          </LayoutBreak>
+        <voice>
+          <MeasureRepeat>
+            <subtype>2</subtype>
+            <eid>d_d</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </MeasureRepeat>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>e_e</eid>
+        <measureRepeatCount>2</measureRepeatCount>
+        <voice>
+          <Rest>
+            <eid>f_f</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

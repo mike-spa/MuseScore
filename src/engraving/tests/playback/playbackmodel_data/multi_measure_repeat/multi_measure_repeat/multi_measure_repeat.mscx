@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>B_B</eid>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <open>1</open>
+    <metaTag name="arranger"></metaTag>
+    <metaTag name="composer">Composer / arranger</metaTag>
+    <metaTag name="copyright"></metaTag>
+    <metaTag name="lyricist"></metaTag>
+    <metaTag name="movementNumber"></metaTag>
+    <metaTag name="movementTitle"></metaTag>
+    <metaTag name="originalFormat">mscx</metaTag>
+    <metaTag name="source"></metaTag>
+    <metaTag name="subtitle">Subtitle</metaTag>
+    <metaTag name="translator"></metaTag>
+    <metaTag name="workNumber"></metaTag>
+    <metaTag name="workTitle">Untitled Score</metaTag>
+    <Order id="orchestral">
+      <name>Orchestral</name>
+      <instrument id="violin">
+        <family id="orchestral-strings">Orchestral Strings</family>
+        </instrument>
+      <section id="woodwind" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>flutes</family>
+        <family>oboes</family>
+        <family>clarinets</family>
+        <family>saxophones</family>
+        <family>bassoons</family>
+        <unsorted group="woodwinds"/>
+        </section>
+      <section id="brass" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>horns</family>
+        <family>trumpets</family>
+        <family>cornets</family>
+        <family>flugelhorns</family>
+        <family>trombones</family>
+        <family>tubas</family>
+        </section>
+      <section id="timpani" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>timpani</family>
+        </section>
+      <section id="percussion" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>keyboard-percussion</family>
+        <family>drums</family>
+        <family>unpitched-metal-percussion</family>
+        <family>unpitched-wooden-percussion</family>
+        <family>other-percussion</family>
+        </section>
+      <family>keyboards</family>
+      <family>harps</family>
+      <family>organs</family>
+      <family>synths</family>
+      <section id="plucked-strings" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>plucked-strings</family>
+        </section>
+      <soloists/>
+      <section id="voices" brackets="true" barLineSpan="false" thinBrackets="true">
+        <family>voices</family>
+        </section>
+      <section id="strings" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>orchestral-strings</family>
+        </section>
+      <unsorted/>
+      </Order>
+    <Part id="1">
+      <Staff>
+        <eid>C_C</eid>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <trackName>Violin</trackName>
+      <Instrument id="violin">
+        <longName>Violin</longName>
+        <shortName>Vln.</shortName>
+        <trackName>Violin</trackName>
+        <minPitchP>55</minPitchP>
+        <maxPitchP>103</maxPitchP>
+        <minPitchA>55</minPitchA>
+        <maxPitchA>88</maxPitchA>
+        <instrumentId>strings.violin</instrumentId>
+        <Channel name="arco">
+          <program value="40"/>
+          </Channel>
+        <Channel name="pizzicato">
+          <program value="45"/>
+          </Channel>
+        <Channel name="tremolo">
+          <program value="44"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <VBox>
+        <height>10</height>
+        <sizeIsSpatiumDependent>1</sizeIsSpatiumDependent>
+        <eid>D_D</eid>
+        <Text>
+          <eid>E_E</eid>
+          <style>title</style>
+          <text>Untitled Score</text>
+          </Text>
+        <Text>
+          <eid>F_F</eid>
+          <style>subtitle</style>
+          <text>Subtitle</text>
+          </Text>
+        <Text>
+          <eid>G_G</eid>
+          <style>composer</style>
+          <text>Composer / arranger</text>
+          </Text>
+        </VBox>
+      <Measure>
+        <eid>H_H</eid>
+        <voice>
+          <TimeSig>
+            <eid>I_I</eid>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Chord>
+            <eid>J_J</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>K_K</eid>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>L_L</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>M_M</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>N_N</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>O_O</eid>
+              <pitch>69</pitch>
+              <tpc>17</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>P_P</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Q_Q</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>R_R</eid>
+        <measureRepeatCount>1</measureRepeatCount>
+        <voice>
+          <MeasureRepeat>
+            <subtype>1</subtype>
+            <eid>S_S</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </MeasureRepeat>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>T_T</eid>
+        <measureRepeatCount>1</measureRepeatCount>
+        <LayoutBreak>
+          <eid>U_U</eid>
+          <subtype>nobreak</subtype>
+          </LayoutBreak>
+        <voice>
+          <MeasureRepeat>
+            <subtype>2</subtype>
+            <eid>V_V</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </MeasureRepeat>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>W_W</eid>
+        <measureRepeatCount>2</measureRepeatCount>
+        <voice>
+          <Rest>
+            <eid>X_X</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>Y_Y</eid>
+        <measureRepeatCount>1</measureRepeatCount>
+        <LayoutBreak>
+          <eid>Z_Z</eid>
+          <subtype>nobreak</subtype>
+          </LayoutBreak>
+        <voice>
+          <Rest>
+            <eid>a_a</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>b_b</eid>
+        <measureRepeatCount>2</measureRepeatCount>
+        <LayoutBreak>
+          <eid>c_c</eid>
+          <subtype>nobreak</subtype>
+          </LayoutBreak>
+        <voice>
+          <MeasureRepeat>
+            <subtype>4</subtype>
+            <eid>d_d</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </MeasureRepeat>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>e_e</eid>
+        <measureRepeatCount>3</measureRepeatCount>
+        <LayoutBreak>
+          <eid>f_f</eid>
+          <subtype>nobreak</subtype>
+          </LayoutBreak>
+        <voice>
+          <Rest>
+            <eid>g_g</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>h_h</eid>
+        <measureRepeatCount>4</measureRepeatCount>
+        <voice>
+          <Rest>
+            <eid>i_i</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>j_j</eid>
+        <voice>
+          <Chord>
+            <eid>k_k</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>l_l</eid>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

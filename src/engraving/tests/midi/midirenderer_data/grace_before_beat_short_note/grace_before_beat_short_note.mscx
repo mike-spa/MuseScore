@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>B_B</eid>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <open>1</open>
+    <metaTag name="arranger"></metaTag>
+    <metaTag name="composer"></metaTag>
+    <metaTag name="copyright"></metaTag>
+    <metaTag name="lyricist"></metaTag>
+    <metaTag name="movementNumber"></metaTag>
+    <metaTag name="movementTitle"></metaTag>
+    <metaTag name="originalFormat">gp</metaTag>
+    <metaTag name="source"></metaTag>
+    <metaTag name="translator"></metaTag>
+    <metaTag name="workNumber"></metaTag>
+    <metaTag name="workTitle"></metaTag>
+    <Part id="1">
+      <Staff>
+        <eid>C_C</eid>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <Staff>
+        <eid>D_D</eid>
+        <linkedTo>C_C</linkedTo>
+        <StaffType group="tablature">
+          <name>tab6StrSimple</name>
+          <lines>6</lines>
+          <lineDistance>1.5</lineDistance>
+          <slashStyle>1</slashStyle>
+          <stemless>1</stemless>
+          <timesig>0</timesig>
+          <durations>0</durations>
+          <durationFontName>MuseScore Tab Modern</durationFontName>
+          <durationFontSize>15</durationFontSize>
+          <durationFontY>0</durationFontY>
+          <fretFontName>MuseScore Tab Sans</fretFontName>
+          <fretFontSize>9</fretFontSize>
+          <fretFontY>0</fretFontY>
+          <linesThrough>0</linesThrough>
+          <minimStyle>0</minimStyle>
+          <onLines>1</onLines>
+          <showRests>0</showRests>
+          <stemsDown>1</stemsDown>
+          <stemsThrough>0</stemsThrough>
+          <upsideDown>0</upsideDown>
+          <useNumbers>1</useNumbers>
+          </StaffType>
+        </Staff>
+      <trackName>Nylon Guitar</trackName>
+      <Instrument id="cavaquinho">
+        <longName>Nylon Guitar</longName>
+        <shortName>n.guit.</shortName>
+        <trackName></trackName>
+        <transposeDiatonic>-7</transposeDiatonic>
+        <transposeChromatic>-12</transposeChromatic>
+        <instrumentId>pluck.guitar</instrumentId>
+        <singleNoteDynamics>0</singleNoteDynamics>
+        <StringData>
+          <frets>24</frets>
+          <string>52</string>
+          <string>57</string>
+          <string>62</string>
+          <string>67</string>
+          <string>71</string>
+          <string>76</string>
+          </StringData>
+        <Articulation name="staccatissimo">
+          <velocity>100</velocity>
+          <gateTime>30</gateTime>
+          </Articulation>
+        <Articulation name="staccato">
+          <velocity>100</velocity>
+          <gateTime>50</gateTime>
+          </Articulation>
+        <Articulation name="portato">
+          <velocity>100</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="tenuto">
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="accent">
+          <velocity>120</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="marcato">
+          <velocity>144</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="sforzato">
+          <velocity>169</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Channel>
+          <program value="24"/>
+          <controller ctrl="7" value="95"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <Measure>
+        <eid>E_E</eid>
+        <voice>
+          <KeySig>
+            <eid>F_F</eid>
+            <concertKey>0</concertKey>
+            </KeySig>
+          <TimeSig>
+            <eid>G_G</eid>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Dynamic>
+            <subtype>mf</subtype>
+            <velocity>80</velocity>
+            <eid>H_H</eid>
+            </Dynamic>
+          <Tempo>
+            <tempo>2</tempo>
+            <eid>I_I</eid>
+            <text><sym>metNoteQuarterUp</sym> = 120</text>
+            </Tempo>
+          <Chord>
+            <eid>J_J</eid>
+            <dots>1</dots>
+            <durationType>half</durationType>
+            <Note>
+              <eid>K_K</eid>
+              <Accidental>
+                <subtype>accidentalSharp</subtype>
+                <eid>L_L</eid>
+                </Accidental>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>M_M</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>3/4</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>63</pitch>
+              <tpc>23</tpc>
+              <fret>8</fret>
+              <string>2</string>
+              </Note>
+            </Chord>
+          <Beam>
+            <eid>N_N</eid>
+            <l1>38</l1>
+            <l2>44</l2>
+            </Beam>
+          <Chord>
+            <eid>O_O</eid>
+            <dots>1</dots>
+            <durationType>eighth</durationType>
+            <Note>
+              <eid>P_P</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-3/4</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>63</pitch>
+              <tpc>23</tpc>
+              <fret>8</fret>
+              <string>2</string>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>Q_Q</eid>
+            <durationType>16th</durationType>
+            <Note>
+              <eid>R_R</eid>
+              <Accidental>
+                <subtype>accidentalSharp</subtype>
+                <eid>S_S</eid>
+                </Accidental>
+              <pitch>58</pitch>
+              <tpc>24</tpc>
+              <fret>3</fret>
+              <string>2</string>
+              </Note>
+            </Chord>
+          <BarLine>
+            <eid>T_T</eid>
+            </BarLine>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>U_U</eid>
+        <voice>
+          <Chord>
+            <eid>V_V</eid>
+            <durationType>eighth</durationType>
+            <duration>1/4</duration>
+            <acciaccatura/>
+            <Note>
+              <eid>W_W</eid>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              <fret>3</fret>
+              <string>0</string>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>X_X</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Y_Y</eid>
+              <pitch>69</pitch>
+              <tpc>17</tpc>
+              <fret>5</fret>
+              <string>0</string>
+              </Note>
+            </Chord>
+          <Rest>
+            <eid>Z_Z</eid>
+            <durationType>quarter</durationType>
+            </Rest>
+          <Rest>
+            <eid>a_a</eid>
+            <durationType>half</durationType>
+            </Rest>
+          </voice>
+        </Measure>
+      </Staff>
+    <Staff id="2">
+      <Measure>
+        <voice>
+          <KeySig>
+            <eid>b_b</eid>
+            <linkedTo>F_F</linkedTo>
+            <concertKey>0</concertKey>
+            </KeySig>
+          <Chord>
+            <eid>c_c</eid>
+            <linkedTo>J_J</linkedTo>
+            <dots>1</dots>
+            <durationType>half</durationType>
+            <Note>
+              <eid>d_d</eid>
+              <linkedTo>K_K</linkedTo>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>e_e</eid>
+                  <linkedTo>M_M</linkedTo>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>3/4</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>63</pitch>
+              <tpc>23</tpc>
+              <fret>8</fret>
+              <string>2</string>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>f_f</eid>
+            <linkedTo>O_O</linkedTo>
+            <dots>1</dots>
+            <durationType>eighth</durationType>
+            <Note>
+              <eid>g_g</eid>
+              <linkedTo>P_P</linkedTo>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-3/4</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>63</pitch>
+              <tpc>23</tpc>
+              <fret>8</fret>
+              <string>2</string>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>h_h</eid>
+            <linkedTo>Q_Q</linkedTo>
+            <durationType>16th</durationType>
+            <Note>
+              <eid>i_i</eid>
+              <linkedTo>R_R</linkedTo>
+              <pitch>58</pitch>
+              <tpc>24</tpc>
+              <fret>3</fret>
+              <string>2</string>
+              </Note>
+            </Chord>
+          <BarLine>
+            <eid>j_j</eid>
+            <linkedTo>T_T</linkedTo>
+            </BarLine>
+          </voice>
+        </Measure>
+      <Measure>
+        <voice>
+          <Chord>
+            <eid>k_k</eid>
+            <linkedTo>V_V</linkedTo>
+            <durationType>eighth</durationType>
+            <duration>1/4</duration>
+            <acciaccatura/>
+            <Note>
+              <eid>l_l</eid>
+              <linkedTo>W_W</linkedTo>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              <fret>3</fret>
+              <string>0</string>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>m_m</eid>
+            <linkedTo>X_X</linkedTo>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>n_n</eid>
+              <linkedTo>Y_Y</linkedTo>
+              <pitch>69</pitch>
+              <tpc>17</tpc>
+              <fret>5</fret>
+              <string>0</string>
+              </Note>
+            </Chord>
+          <Rest>
+            <eid>o_o</eid>
+            <linkedTo>Z_Z</linkedTo>
+            <durationType>quarter</durationType>
+            </Rest>
+          <Rest>
+            <eid>p_p</eid>
+            <linkedTo>a_a</linkedTo>
+            <durationType>half</durationType>
+            </Rest>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

@@ -84,32 +84,32 @@
           </voice>
         </Measure>
       <Measure>
-        <eid>I_I</eid>
+        <eid>G_G</eid>
         <voice>
           <Rest>
-            <eid>J_J</eid>
+            <eid>H_H</eid>
             <durationType>half</durationType>
             </Rest>
           <Chord>
-            <eid>K_K</eid>
+            <eid>I_I</eid>
             <durationType>quarter</durationType>
             <Lyrics>
               <ticks>480</ticks>
               <ticks_f>1/4</ticks_f>
-              <eid>L_L</eid>
+              <eid>J_J</eid>
               <text>A</text>
               </Lyrics>
             <Note>
-              <eid>M_M</eid>
+              <eid>K_K</eid>
               <pitch>69</pitch>
               <tpc>17</tpc>
               </Note>
             </Chord>
           <Chord>
-            <eid>N_N</eid>
+            <eid>L_L</eid>
             <durationType>quarter</durationType>
             <Note>
-              <eid>O_O</eid>
+              <eid>M_M</eid>
               <pitch>71</pitch>
               <tpc>19</tpc>
               </Note>
@@ -117,10 +117,10 @@
           </voice>
         </Measure>
       <Measure>
-        <eid>G_G</eid>
+        <eid>N_N</eid>
         <voice>
           <Rest>
-            <eid>H_H</eid>
+            <eid>O_O</eid>
             <durationType>measure</durationType>
             <duration>4/4</duration>
             </Rest>

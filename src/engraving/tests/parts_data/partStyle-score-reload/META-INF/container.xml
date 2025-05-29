@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+  <rootfiles>
+    <rootfile full-path="score_style.mss"/>
+    <rootfile full-path="partStyle-score-reload.mscx"/>
+    <rootfile full-path="Excerpts/0_Flute/0_Flute.mss"/>
+    <rootfile full-path="Excerpts/0_Flute/0_Flute.mscx"/>
+    <rootfile full-path="Excerpts/1_Oboe/1_Oboe.mss"/>
+    <rootfile full-path="Excerpts/1_Oboe/1_Oboe.mscx"/>
+    </rootfiles>
+  </container>

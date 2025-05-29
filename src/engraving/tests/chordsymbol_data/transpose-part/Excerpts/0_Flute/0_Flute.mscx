@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>N_N</eid>
+    <name>Flute</name>
+    <initialPartId>1</initialPartId>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <Part id="1">
+      <Staff>
+        <eid>O_O</eid>
+        <linkedTo>C_C</linkedTo>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <trackName>Flute</trackName>
+      <Instrument id="flute">
+        <longName>Flute</longName>
+        <shortName>Fl.</shortName>
+        <trackName>Flute</trackName>
+        <minPitchP>59</minPitchP>
+        <maxPitchP>98</maxPitchP>
+        <minPitchA>60</minPitchA>
+        <maxPitchA>93</maxPitchA>
+        <instrumentId>wind.flutes.flute</instrumentId>
+        <Articulation>
+          <velocity>100</velocity>
+          <gateTime>95</gateTime>
+          </Articulation>
+        <Articulation name="staccatissimo">
+          <velocity>100</velocity>
+          <gateTime>33</gateTime>
+          </Articulation>
+        <Articulation name="staccato">
+          <velocity>100</velocity>
+          <gateTime>50</gateTime>
+          </Articulation>
+        <Articulation name="portato">
+          <velocity>100</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="tenuto">
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="marcato">
+          <velocity>120</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="sforzato">
+          <velocity>120</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Channel>
+          <program value="73"/>
+          </Channel>
+        <Channel name="harmony">
+          <program value="0"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <VBox>
+        <height>10</height>
+        <sizeIsSpatiumDependent>1</sizeIsSpatiumDependent>
+        <eid>P_P</eid>
+        <linkedTo>D_D</linkedTo>
+        <Text>
+          <eid>Q_Q</eid>
+          <style>instrument_excerpt</style>
+          <text>Flute</text>
+          </Text>
+        </VBox>
+      <Measure>
+        <eid>R_R</eid>
+        <voice>
+          <TimeSig>
+            <eid>S_S</eid>
+            <linkedTo>F_F</linkedTo>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Harmony>
+            <root>15</root>
+            <name>7</name>
+            <eid>T_T</eid>
+            <linkedTo>G_G</linkedTo>
+            </Harmony>
+          <Chord>
+            <eid>U_U</eid>
+            <linkedTo>H_H</linkedTo>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>V_V</eid>
+              <linkedTo>I_I</linkedTo>
+              <pitch>71</pitch>
+              <tpc>19</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>W_W</eid>
+        <voice>
+          <Harmony>
+            <root>14</root>
+            <eid>X_X</eid>
+            <linkedTo>K_K</linkedTo>
+            </Harmony>
+          <Chord>
+            <eid>Y_Y</eid>
+            <linkedTo>L_L</linkedTo>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>Z_Z</eid>
+              <linkedTo>M_M</linkedTo>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

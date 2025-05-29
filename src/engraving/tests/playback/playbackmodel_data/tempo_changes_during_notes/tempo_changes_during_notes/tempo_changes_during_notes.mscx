@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>B_B</eid>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <open>1</open>
+    <metaTag name="arranger"></metaTag>
+    <metaTag name="audioComUrl"></metaTag>
+    <metaTag name="composer">Composer / arranger</metaTag>
+    <metaTag name="copyright"></metaTag>
+    <metaTag name="lyricist"></metaTag>
+    <metaTag name="movementNumber"></metaTag>
+    <metaTag name="movementTitle"></metaTag>
+    <metaTag name="poet"></metaTag>
+    <metaTag name="source"></metaTag>
+    <metaTag name="sourceRevisionId"></metaTag>
+    <metaTag name="subtitle">Subtitle</metaTag>
+    <metaTag name="translator"></metaTag>
+    <metaTag name="workNumber"></metaTag>
+    <metaTag name="workTitle">Untitled score</metaTag>
+    <Order id="orchestral">
+      <name>Orchestral</name>
+      <instrument id="violin">
+        <family id="orchestral-strings">Orchestral Strings</family>
+        </instrument>
+      <section id="woodwind" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>flutes</family>
+        <family>oboes</family>
+        <family>clarinets</family>
+        <family>saxophones</family>
+        <family>bassoons</family>
+        <unsorted group="woodwinds"/>
+        </section>
+      <section id="brass" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>horns</family>
+        <family>trumpets</family>
+        <family>cornets</family>
+        <family>flugelhorns</family>
+        <family>trombones</family>
+        <family>tubas</family>
+        <unsorted group="brass"/>
+        </section>
+      <section id="timpani" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>timpani</family>
+        </section>
+      <section id="percussion" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>keyboard-percussion</family>
+        <unsorted group="pitched-percussion"/>
+        <family>drums</family>
+        <family>unpitched-metal-percussion</family>
+        <family>unpitched-wooden-percussion</family>
+        <family>other-percussion</family>
+        <unsorted group="unpitched-percussion"/>
+        </section>
+      <family>keyboards</family>
+      <family>harps</family>
+      <family>organs</family>
+      <family>synths</family>
+      <unsorted/>
+      <soloists/>
+      <section id="voices" brackets="true" barLineSpan="false" thinBrackets="true">
+        <family>voices</family>
+        <family>voice-groups</family>
+        </section>
+      <section id="strings" brackets="true" barLineSpan="true" thinBrackets="true">
+        <family>orchestral-strings</family>
+        </section>
+      </Order>
+    <Part id="1">
+      <Staff>
+        <eid>C_C</eid>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <trackName>Violin</trackName>
+      <Instrument id="violin">
+        <longName>Violin</longName>
+        <shortName>Vln.</shortName>
+        <trackName>Violin</trackName>
+        <minPitchP>55</minPitchP>
+        <maxPitchP>103</maxPitchP>
+        <minPitchA>55</minPitchA>
+        <maxPitchA>88</maxPitchA>
+        <instrumentId>strings.violin</instrumentId>
+        <Channel name="arco">
+          <program value="40"/>
+          </Channel>
+        <Channel name="pizzicato">
+          <program value="45"/>
+          </Channel>
+        <Channel name="tremolo">
+          <program value="44"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <VBox>
+        <height>10</height>
+        <sizeIsSpatiumDependent>1</sizeIsSpatiumDependent>
+        <eid>D_D</eid>
+        <Text>
+          <eid>E_E</eid>
+          <style>title</style>
+          <text>Untitled score</text>
+          </Text>
+        <Text>
+          <eid>F_F</eid>
+          <style>subtitle</style>
+          <text>Subtitle</text>
+          </Text>
+        <Text>
+          <eid>G_G</eid>
+          <style>composer</style>
+          <text>Composer / arranger</text>
+          </Text>
+        </VBox>
+      <Measure>
+        <eid>H_H</eid>
+        <voice>
+          <KeySig>
+            <eid>I_I</eid>
+            <concertKey>0</concertKey>
+            </KeySig>
+          <TimeSig>
+            <eid>J_J</eid>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Tempo>
+            <tempo>1.666667</tempo>
+            <followText>1</followText>
+            <eid>K_K</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 100</text>
+            </Tempo>
+          <Chord>
+            <eid>L_L</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>M_M</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>N_N</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Tempo>
+            <tempo>0.166667</tempo>
+            <followText>1</followText>
+            <eid>O_O</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 10</text>
+            </Tempo>
+          <Chord>
+            <eid>P_P</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>Q_Q</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>R_R</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <measures>1</measures>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>S_S</eid>
+        <voice>
+          <Chord>
+            <eid>T_T</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>U_U</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>V_V</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <measures>-1</measures>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Tempo>
+            <tempo>1.666667</tempo>
+            <followText>1</followText>
+            <eid>W_W</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 100</text>
+            </Tempo>
+          <Chord>
+            <eid>X_X</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>Y_Y</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>Z_Z</eid>
+        <voice>
+          <Spanner type="GradualTempoChange">
+            <GradualTempoChange>
+              <tempoChangeType>ritardando</tempoChangeType>
+              <tempoChangeFactor>0.6</tempoChangeFactor>
+              <beginHookHeight>1.9</beginHookHeight>
+              <endHookType>0</endHookType>
+              <endHookHeight>1.9</endHookHeight>
+              <beginText>rit.</beginText>
+              <beginTextOffset x="0" y="0"/>
+              <continueText>(rit.)</continueText>
+              <eid>a_a</eid>
+              </GradualTempoChange>
+            <next>
+              <location>
+                <measures>2</measures>
+                </location>
+              </next>
+            </Spanner>
+          <Chord>
+            <eid>b_b</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>c_c</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>d_d</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <measures>1</measures>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>e_e</eid>
+        <LayoutBreak>
+          <eid>f_f</eid>
+          <subtype>line</subtype>
+          </LayoutBreak>
+        <voice>
+          <Chord>
+            <eid>g_g</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>h_h</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <measures>-1</measures>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>i_i</eid>
+        <voice>
+          <Tempo>
+            <tempo>1.666667</tempo>
+            <followText>1</followText>
+            <eid>j_j</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 100</text>
+            </Tempo>
+          <Spanner type="GradualTempoChange">
+            <prev>
+              <location>
+                <measures>-2</measures>
+                </location>
+              </prev>
+            </Spanner>
+          <Chord>
+            <eid>k_k</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>l_l</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>m_m</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            <TremoloSingleChord>
+              <subtype>r8</subtype>
+              <eid>n_n</eid>
+              </TremoloSingleChord>
+            </Chord>
+          <Tempo>
+            <tempo>0.166667</tempo>
+            <followText>1</followText>
+            <eid>o_o</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 10</text>
+            </Tempo>
+          <Chord>
+            <eid>p_p</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>q_q</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>r_r</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <measures>1</measures>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            <TremoloSingleChord>
+              <subtype>r8</subtype>
+              <eid>s_s</eid>
+              </TremoloSingleChord>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>t_t</eid>
+        <voice>
+          <Chord>
+            <eid>u_u</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>v_v</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>w_w</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <measures>-1</measures>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            <TremoloSingleChord>
+              <subtype>r8</subtype>
+              <eid>x_x</eid>
+              </TremoloSingleChord>
+            </Chord>
+          <Tempo>
+            <tempo>1.666667</tempo>
+            <followText>1</followText>
+            <eid>y_y</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 100</text>
+            </Tempo>
+          <Chord>
+            <eid>z_z</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>0_0</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            <TremoloSingleChord>
+              <subtype>r8</subtype>
+              <eid>1_1</eid>
+              </TremoloSingleChord>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>2_2</eid>
+        <voice>
+          <Spanner type="GradualTempoChange">
+            <GradualTempoChange>
+              <tempoChangeType>ritardando</tempoChangeType>
+              <tempoChangeFactor>0.6</tempoChangeFactor>
+              <beginHookHeight>1.9</beginHookHeight>
+              <endHookType>0</endHookType>
+              <endHookHeight>1.9</endHookHeight>
+              <beginText>rit.</beginText>
+              <beginTextOffset x="0" y="0"/>
+              <continueText>(rit.)</continueText>
+              <eid>3_3</eid>
+              </GradualTempoChange>
+            <next>
+              <location>
+                <measures>2</measures>
+                </location>
+              </next>
+            </Spanner>
+          <Chord>
+            <eid>4_4</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>5_5</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>6_6</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <measures>1</measures>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            <TremoloSingleChord>
+              <subtype>r8</subtype>
+              <eid>7_7</eid>
+              </TremoloSingleChord>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>8_8</eid>
+        <LayoutBreak>
+          <eid>9_9</eid>
+          <subtype>line</subtype>
+          </LayoutBreak>
+        <voice>
+          <Chord>
+            <eid>+_+</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>/_/</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <measures>-1</measures>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            <TremoloSingleChord>
+              <subtype>r8</subtype>
+              <eid>AB_AB</eid>
+              </TremoloSingleChord>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>BB_BB</eid>
+        <voice>
+          <Tempo>
+            <tempo>1.666667</tempo>
+            <followText>1</followText>
+            <eid>CB_CB</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 100</text>
+            </Tempo>
+          <Spanner type="GradualTempoChange">
+            <prev>
+              <location>
+                <measures>-2</measures>
+                </location>
+              </prev>
+            </Spanner>
+          <Spanner type="Pedal">
+            <Pedal>
+              <lineVisible>0</lineVisible>
+              <eid>DB_DB</eid>
+              </Pedal>
+            <next>
+              <location>
+                <measures>2</measures>
+                </location>
+              </next>
+            </Spanner>
+          <Chord>
+            <eid>EB_EB</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>FB_FB</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>GB_GB</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Tempo>
+            <tempo>0.166667</tempo>
+            <followText>1</followText>
+            <eid>HB_HB</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 10</text>
+            </Tempo>
+          <Chord>
+            <eid>IB_IB</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>JB_JB</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>KB_KB</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <measures>1</measures>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>LB_LB</eid>
+        <voice>
+          <Chord>
+            <eid>MB_MB</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>NB_NB</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>OB_OB</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </next>
+                </Spanner>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <measures>-1</measures>
+                    <fractions>1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Tempo>
+            <tempo>1.666667</tempo>
+            <followText>1</followText>
+            <eid>PB_PB</eid>
+            <text><sym>metNoteQuarterUp</sym><font face="Edwin"></font> = 100</text>
+            </Tempo>
+          <Chord>
+            <eid>QB_QB</eid>
+            <durationType>half</durationType>
+            <Note>
+              <eid>RB_RB</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <fractions>-1/2</fractions>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>SB_SB</eid>
+        <voice>
+          <Spanner type="Pedal">
+            <prev>
+              <location>
+                <measures>-2</measures>
+                </location>
+              </prev>
+            </Spanner>
+          <Spanner type="GradualTempoChange">
+            <GradualTempoChange>
+              <tempoChangeType>ritardando</tempoChangeType>
+              <tempoChangeFactor>0.6</tempoChangeFactor>
+              <beginHookHeight>1.9</beginHookHeight>
+              <endHookType>0</endHookType>
+              <endHookHeight>1.9</endHookHeight>
+              <beginText>rit.</beginText>
+              <beginTextOffset x="0" y="0"/>
+              <eid>TB_TB</eid>
+              </GradualTempoChange>
+            <next>
+              <location>
+                <measures>1</measures>
+                <fractions>1/1</fractions>
+                </location>
+              </next>
+            </Spanner>
+          <Spanner type="Pedal">
+            <Pedal>
+              <lineVisible>0</lineVisible>
+              <eid>UB_UB</eid>
+              </Pedal>
+            <next>
+              <location>
+                <measures>1</measures>
+                <fractions>1/1</fractions>
+                </location>
+              </next>
+            </Spanner>
+          <Chord>
+            <eid>VB_VB</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>WB_WB</eid>
+              <Spanner type="Tie">
+                <Tie>
+                  <eid>XB_XB</eid>
+                  </Tie>
+                <next>
+                  <location>
+                    <measures>1</measures>
+                    </location>
+                  </next>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>YB_YB</eid>
+        <voice>
+          <Chord>
+            <eid>ZB_ZB</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>aB_aB</eid>
+              <Spanner type="Tie">
+                <prev>
+                  <location>
+                    <measures>-1</measures>
+                    </location>
+                  </prev>
+                </Spanner>
+              <pitch>65</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Spanner type="GradualTempoChange">
+            <prev>
+              <location>
+                <measures>-1</measures>
+                <fractions>-1/1</fractions>
+                </location>
+              </prev>
+            </Spanner>
+          <Spanner type="Pedal">
+            <prev>
+              <location>
+                <measures>-1</measures>
+                <fractions>-1/1</fractions>
+                </location>
+              </prev>
+            </Spanner>
+          <Spanner type="GradualTempoChange">
+            <prev>
+              <location>
+                <measures>-1</measures>
+                <fractions>-1/1</fractions>
+                </location>
+              </prev>
+            </Spanner>
+          <Spanner type="Pedal">
+            <prev>
+              <location>
+                <measures>-1</measures>
+                <fractions>-1/1</fractions>
+                </location>
+              </prev>
+            </Spanner>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>B_B</eid>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <metaTag name="arranger"></metaTag>
+    <metaTag name="composer"></metaTag>
+    <metaTag name="copyright"></metaTag>
+    <metaTag name="lyricist"></metaTag>
+    <metaTag name="movementNumber"></metaTag>
+    <metaTag name="movementTitle"></metaTag>
+    <metaTag name="source"></metaTag>
+    <metaTag name="translator"></metaTag>
+    <metaTag name="workNumber"></metaTag>
+    <metaTag name="workTitle"></metaTag>
+    <Part id="1">
+      <Staff>
+        <eid>C_C</eid>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        </Staff>
+      <trackName>Flute</trackName>
+      <Instrument id="flute">
+        <trackName>Flute</trackName>
+        <minPitchP>59</minPitchP>
+        <maxPitchP>98</maxPitchP>
+        <minPitchA>60</minPitchA>
+        <maxPitchA>93</maxPitchA>
+        <instrumentId>wind.flutes.flute</instrumentId>
+        <Articulation>
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="staccato">
+          <velocity>100</velocity>
+          <gateTime>85</gateTime>
+          </Articulation>
+        <Articulation name="tenuto">
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="sforzato">
+          <velocity>120</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Channel>
+          <program value="73"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <Measure>
+        <eid>D_D</eid>
+        <voice>
+          <Clef>
+            <concertClefType>G</concertClefType>
+            <transposingClefType>G</transposingClefType>
+            <isHeader>1</isHeader>
+            <eid>E_E</eid>
+            </Clef>
+          <TimeSig>
+            <eid>F_F</eid>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Chord>
+            <eid>G_G</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>H_H</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>I_I</eid>
+        <voice>
+          <Chord>
+            <eid>J_J</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>K_K</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>L_L</eid>
+        <LayoutBreak>
+          <eid>M_M</eid>
+          <subtype>line</subtype>
+          </LayoutBreak>
+        <voice>
+          <Chord>
+            <eid>N_N</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>O_O</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>P_P</eid>
+        <voice>
+          <Chord>
+            <eid>Q_Q</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>R_R</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>S_S</eid>
+        <voice>
+          <Chord>
+            <eid>T_T</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>U_U</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>V_V</eid>
+        <LayoutBreak>
+          <eid>W_W</eid>
+          <subtype>section</subtype>
+          </LayoutBreak>
+        <voice>
+          <Chord>
+            <eid>X_X</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>Y_Y</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>Z_Z</eid>
+        <voice>
+          <Chord>
+            <eid>a_a</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>b_b</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>c_c</eid>
+        <voice>
+          <Chord>
+            <eid>d_d</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>e_e</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>f_f</eid>
+        <voice>
+          <Chord>
+            <eid>g_g</eid>
+            <durationType>whole</durationType>
+            <Note>
+              <eid>h_h</eid>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

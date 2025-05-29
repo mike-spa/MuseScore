@@ -100,7 +100,7 @@
     <repeatBarTips>0</repeatBarTips>
     <startBarlineSingle>0</startBarlineSingle>
     <startBarlineMultiple>1</startBarlineMultiple>
-    <maskBarlinesForText>1</maskBarlinesForText>
+    <maskBarlinesForText>0</maskBarlinesForText>
     <bracketWidth>0.45</bracketWidth>
     <bracketDistance>0.45</bracketDistance>
     <akkoladeWidth>1.5</akkoladeWidth>
@@ -377,7 +377,7 @@
     <measureNumberSystem>1</measureNumberSystem>
     <measureNumberAllStaves>0</measureNumberAllStaves>
     <smallNoteMag>0.7</smallNoteMag>
-    <scaleRythmicSpacingForSmallNotes>1</scaleRythmicSpacingForSmallNotes>
+    <scaleRythmicSpacingForSmallNotes>0</scaleRythmicSpacingForSmallNotes>
     <graceNoteMag>0.7</graceNoteMag>
     <graceToMainNoteDist>0.45</graceToMainNoteDist>
     <graceToGraceNoteDist>0.3</graceToGraceNoteDist>
@@ -1606,17 +1606,17 @@
     <dummyMusicalSymbolsScale>1</dummyMusicalSymbolsScale>
     <autoplaceEnabled>1</autoplaceEnabled>
     <defaultsVersion>460</defaultsVersion>
-    <changesBeforeBarlineRepeats>1</changesBeforeBarlineRepeats>
-    <changesBeforeBarlineOtherJumps>1</changesBeforeBarlineOtherJumps>
+    <changesBeforeBarlineRepeats>0</changesBeforeBarlineRepeats>
+    <changesBeforeBarlineOtherJumps>0</changesBeforeBarlineOtherJumps>
     <placeClefsBeforeRepeats>0</placeClefsBeforeRepeats>
     <changesBetweenEndStartRepeat>1</changesBetweenEndStartRepeat>
-    <showCourtesiesRepeats>1</showCourtesiesRepeats>
+    <showCourtesiesRepeats>0</showCourtesiesRepeats>
     <useParensRepeatCourtesies>1</useParensRepeatCourtesies>
-    <showCourtesiesOtherJumps>1</showCourtesiesOtherJumps>
+    <showCourtesiesOtherJumps>0</showCourtesiesOtherJumps>
     <useParensOtherJumpCourtesies>1</useParensOtherJumpCourtesies>
-    <showCourtesiesAfterCancellingRepeats>1</showCourtesiesAfterCancellingRepeats>
+    <showCourtesiesAfterCancellingRepeats>0</showCourtesiesAfterCancellingRepeats>
     <useParensRepeatCourtesiesAfterCancelling>1</useParensRepeatCourtesiesAfterCancelling>
-    <showCourtesiesAfterCancellingOtherJumps>1</showCourtesiesAfterCancellingOtherJumps>
+    <showCourtesiesAfterCancellingOtherJumps>0</showCourtesiesAfterCancellingOtherJumps>
     <useParensOtherJumpCourtesiesAfterCancelling>1</useParensOtherJumpCourtesiesAfterCancelling>
     <smallParens>1</smallParens>
     <spatium>1.74978</spatium>

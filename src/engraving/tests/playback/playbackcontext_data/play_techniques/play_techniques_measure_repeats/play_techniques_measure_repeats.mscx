@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore version="4.60">
+  <Score>
+    <eid>B_B</eid>
+    <Division>480</Division>
+    <showInvisible>1</showInvisible>
+    <showUnprintable>1</showUnprintable>
+    <showFrames>1</showFrames>
+    <showMargins>0</showMargins>
+    <open>1</open>
+    <metaTag name="arranger"></metaTag>
+    <metaTag name="audioComUrl"></metaTag>
+    <metaTag name="composer">Composer / arranger</metaTag>
+    <metaTag name="copyright"></metaTag>
+    <metaTag name="lyricist"></metaTag>
+    <metaTag name="movementNumber"></metaTag>
+    <metaTag name="movementTitle"></metaTag>
+    <metaTag name="poet"></metaTag>
+    <metaTag name="source"></metaTag>
+    <metaTag name="sourceRevisionId"></metaTag>
+    <metaTag name="subtitle">Subtitle</metaTag>
+    <metaTag name="translator"></metaTag>
+    <metaTag name="workNumber"></metaTag>
+    <metaTag name="workTitle">Untitled score</metaTag>
+    <Part id="1">
+      <Staff>
+        <eid>C_C</eid>
+        <StaffType group="pitched">
+          <name>stdNormal</name>
+          </StaffType>
+        <defaultClef>G8vb</defaultClef>
+        </Staff>
+      <trackName>Classical Guitar</trackName>
+      <Instrument id="guitar-nylon">
+        <longName>Classical Guitar</longName>
+        <shortName>Guit.</shortName>
+        <trackName>Classical Guitar</trackName>
+        <minPitchP>40</minPitchP>
+        <maxPitchP>83</maxPitchP>
+        <minPitchA>40</minPitchA>
+        <maxPitchA>83</maxPitchA>
+        <instrumentId>pluck.guitar.nylon-string</instrumentId>
+        <clef>G8vb</clef>
+        <StringData>
+          <frets>19</frets>
+          <string>40</string>
+          <string>45</string>
+          <string>50</string>
+          <string>55</string>
+          <string>59</string>
+          <string>64</string>
+          </StringData>
+        <Articulation>
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="staccatissimo">
+          <velocity>100</velocity>
+          <gateTime>33</gateTime>
+          </Articulation>
+        <Articulation name="staccato">
+          <velocity>100</velocity>
+          <gateTime>50</gateTime>
+          </Articulation>
+        <Articulation name="portato">
+          <velocity>100</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="tenuto">
+          <velocity>100</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="marcato">
+          <velocity>120</velocity>
+          <gateTime>67</gateTime>
+          </Articulation>
+        <Articulation name="sforzato">
+          <velocity>150</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Articulation name="sforzatoStaccato">
+          <velocity>150</velocity>
+          <gateTime>50</gateTime>
+          </Articulation>
+        <Articulation name="marcatoStaccato">
+          <velocity>120</velocity>
+          <gateTime>50</gateTime>
+          </Articulation>
+        <Articulation name="marcatoTenuto">
+          <velocity>120</velocity>
+          <gateTime>100</gateTime>
+          </Articulation>
+        <Channel>
+          <program value="24"/>
+          </Channel>
+        <Channel name="mute">
+          <program value="28"/>
+          </Channel>
+        <Channel name="harmony">
+          <program value="24"/>
+          </Channel>
+        </Instrument>
+      </Part>
+    <Staff id="1">
+      <Measure>
+        <eid>D_D</eid>
+        <startRepeat/>
+        <endRepeat>2</endRepeat>
+        <voice>
+          <KeySig>
+            <eid>E_E</eid>
+            <concertKey>0</concertKey>
+            </KeySig>
+          <TimeSig>
+            <eid>F_F</eid>
+            <sigN>4</sigN>
+            <sigD>4</sigD>
+            </TimeSig>
+          <Rest>
+            <eid>G_G</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>H_H</eid>
+        <voice>
+          <PlayTechAnnotation>
+            <playTechType>mute</playTechType>
+            <eid>I_I</eid>
+            <text>mute</text>
+            </PlayTechAnnotation>
+          <Chord>
+            <eid>J_J</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>K_K</eid>
+              <pitch>53</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>L_L</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>M_M</eid>
+              <pitch>55</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>N_N</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>O_O</eid>
+              <pitch>53</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>P_P</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Q_Q</eid>
+              <pitch>55</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>R_R</eid>
+        <voice>
+          <Chord>
+            <eid>S_S</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>T_T</eid>
+              <pitch>53</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <PlayTechAnnotation>
+            <playTechType>distortion</playTechType>
+            <eid>U_U</eid>
+            <text>distort</text>
+            </PlayTechAnnotation>
+          <Chord>
+            <eid>V_V</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>W_W</eid>
+              <pitch>55</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>X_X</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>Y_Y</eid>
+              <pitch>53</pitch>
+              <tpc>13</tpc>
+              </Note>
+            </Chord>
+          <Chord>
+            <eid>Z_Z</eid>
+            <durationType>quarter</durationType>
+            <Note>
+              <eid>a_a</eid>
+              <pitch>55</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>b_b</eid>
+        <measureRepeatCount>1</measureRepeatCount>
+        <LayoutBreak>
+          <eid>c_c</eid>
+          <subtype>nobreak</subtype>
+          </LayoutBreak>
+        <voice>
+          <MeasureRepeat>
+            <subtype>2</subtype>
+            <eid>d_d</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </MeasureRepeat>
+          </voice>
+        </Measure>
+      <Measure>
+        <eid>e_e</eid>
+        <measureRepeatCount>2</measureRepeatCount>
+        <voice>
+          <Rest>
+            <eid>f_f</eid>
+            <durationType>measure</durationType>
+            <duration>4/4</duration>
+            </Rest>
+          </voice>
+        </Measure>
+      </Staff>
+    </Score>
+  </museScore>

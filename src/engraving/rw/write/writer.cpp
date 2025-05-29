@@ -63,8 +63,7 @@ bool Writer::writeScore(Score* score, io::IODevice* device, bool onlySelection, 
         xml.tag("programRevision", application()->revision());
     }
 
-    compat::WriteScoreHook hook;
-    write(score, xml, ctx, onlySelection, hook);
+    write(score, xml, ctx, onlySelection);
 
     xml.endElement();
 
@@ -82,7 +81,7 @@ bool Writer::writeScore(Score* score, io::IODevice* device, bool onlySelection, 
     return true;
 }
 
-void Writer::write(Score* score, XmlWriter& xml, WriteContext& ctx, bool selectionOnly, compat::WriteScoreHook& hook)
+void Writer::write(Score* score, XmlWriter& xml, WriteContext& ctx, bool selectionOnly)
 {
     TRACEFUNC;
 
@@ -153,8 +152,6 @@ void Writer::write(Score* score, XmlWriter& xml, WriteContext& ctx, bool selecti
     }
     xml.tag("Division", Constants::DIVISION);
     ctx.setCurTrack(muse::nidx);
-
-    hook.onWriteStyle302(score, xml);
 
     xml.tag("showInvisible", score->m_showInvisible);
     xml.tag("showUnprintable", score->m_showUnprintable);
@@ -258,8 +255,6 @@ void Writer::write(Score* score, XmlWriter& xml, WriteContext& ctx, bool selecti
         }
     }
     ctx.setCurTrack(muse::nidx);
-
-    hook.onWriteExcerpts302(score, xml, ctx, selectionOnly);
 
     TWrite::writeSystemLocks(score, xml);
 

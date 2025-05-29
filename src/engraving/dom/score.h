@@ -90,10 +90,6 @@ namespace mu::engraving::write {
 class Writer;
 }
 
-namespace mu::engraving::compat {
-class WriteScoreHook;
-}
-
 namespace mu::engraving {
 class Articulation;
 class Audio;

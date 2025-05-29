@@ -23,8 +23,6 @@
 
 #include "io/buffer.h"
 
-#include "compat/writescorehook.h"
-
 #include "rw/mscloader.h"
 #include "rw/xmlreader.h"
 #include "rw/rwregister.h"

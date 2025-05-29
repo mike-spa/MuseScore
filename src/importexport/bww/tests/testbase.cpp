@@ -32,7 +32,6 @@
 #include "engraving/engravingerrors.h"
 #include "engraving/compat/mscxcompat.h"
 #include "engraving/compat/scoreaccess.h"
-#include "engraving/compat/writescorehook.h"
 #include "engraving/rw/rwregister.h"
 
 #include "log.h"

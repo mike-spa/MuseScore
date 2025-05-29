@@ -28,7 +28,6 @@
 #include "global/iapplication.h"
 
 #include "writecontext.h"
-#include "../compat/writescorehook.h"
 
 namespace mu::engraving::write {
 class Writer : public rw::IWriter, public muse::Injectable
@@ -41,7 +40,7 @@ public:
 
     bool writeScore(Score* score, muse::io::IODevice* device, bool onlySelection, rw::WriteInOutData* out) override;
 
-    static void write(Score* score, XmlWriter& xml, WriteContext& ctx, bool selectionOnly, compat::WriteScoreHook& hook);
+    static void write(Score* score, XmlWriter& xml, WriteContext& ctx, bool selectionOnly);
 
     void writeSegments(XmlWriter& xml, SelectionFilter* filter, track_idx_t st, track_idx_t et, Segment* sseg, Segment* eseg, bool, bool,
                        Fraction& curTick) override;

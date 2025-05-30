@@ -154,6 +154,8 @@
 
 #include "dom/whammybar.h"
 
+#include "dom/factory.h"
+
 #include "accidentalslayout.h"
 #include "arpeggiolayout.h"
 #include "autoplace.h"
@@ -6109,10 +6111,68 @@ void TLayout::layoutTabDurationSymbol(const TabDurationSymbol* item, TabDuration
     ldata->setPos(xpos * mag, ypos * mag);
 }
 
-void TLayout::layoutTapping(const Tapping* item, Tapping::LayoutData* ldata)
+void TLayout::layoutTapping(Tapping* item, Tapping::LayoutData* ldata)
 {
-    ldata->symId = SymId::windClosedHole;
-    ldata->setShape(Shape(item->symBbox(ldata->symId), item));
+    IF_ASSERT_FAILED(item->hand() != TappingHand::INVALID) {
+        return;
+    }
+
+    const MStyle& style = item->style();
+    if (item->hand() == TappingHand::LEFT) {
+        LHTappingSymbol lhSym = style.styleV(Sid::lhTappingSymbol).value<LHTappingSymbol>();
+
+        if (lhSym != LHTappingSymbol::DOT) {
+            ldata->symId = SymId::noSym;
+        }
+        if (lhSym != LHTappingSymbol::CIRCLED_T) {
+            delete item->text();
+            item->setText(nullptr);
+        }
+
+        if (lhSym == LHTappingSymbol::DOT) {
+            ldata->symId = SymId::windClosedHole;
+        } else if (lhSym == LHTappingSymbol::CIRCLED_T) {
+            Text* text = item->text();
+            if (!text) {
+                text = Factory::createText(item, TextStyleType::HAMMER_ON_PULL_OFF);
+            }
+            text->setParent(item);
+            text->setTrack(item->track());
+            text->setXmlText("T");
+            text->setFrameType(FrameType::CIRCLE);
+            text->setAlign(Align(AlignH::HCENTER, item->up() ? AlignV::BASELINE : AlignV::TOP));
+        }
+    } else {
+        RHTappingSymbol rhSym = item->staffType()->isTabStaff() ? style.styleV(Sid::rhTappingSymbolTab).value<RHTappingSymbol>()
+                                : style.styleV(Sid::rhTappingSymbolNormalStave).value<RHTappingSymbol>();
+        if (rhSym != RHTappingSymbol::PLUS) {
+            ldata->symId = SymId::noSym;
+        }
+        if (rhSym != RHTappingSymbol::T) {
+            delete item->text();
+            item->setText(nullptr);
+        }
+
+        if (rhSym == RHTappingSymbol::PLUS) {
+            ldata->symId = SymId::pluckedLeftHandPizzicato;
+        } else if (rhSym == RHTappingSymbol::T) {
+            Text* text = item->text();
+            if (!text) {
+                text = Factory::createText(item, TextStyleType::HAMMER_ON_PULL_OFF);
+            }
+            text->setParent(item);
+            text->setTrack(item->track());
+            text->setXmlText("T");
+            text->setAlign(Align(AlignH::HCENTER, item->up() ? AlignV::BASELINE : AlignV::TOP));
+        }
+    }
+
+    if (ldata->symId != SymId::noSym) {
+        ldata->setShape(Shape(item->symBbox(ldata->symId), item));
+    } else if (item->text()) {
+        layoutText(item->text(), item->text()->mutldata());
+        ldata->setShape(Shape(item->text()->ldata()->bbox(), item));
+    }
 }
 
 void TLayout::layoutTempoText(const TempoText* item, TempoText::LayoutData* ldata)

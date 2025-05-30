@@ -340,7 +340,7 @@ public:
     static void layoutSystemText(const SystemText* item, SystemText::LayoutData* ldata);
 
     static void layoutTabDurationSymbol(const TabDurationSymbol* item, TabDurationSymbol::LayoutData* ldata);
-    static void layoutTapping(const Tapping* item, Tapping::LayoutData* ldata);
+    static void layoutTapping(Tapping *item, Tapping::LayoutData* ldata);
     static void layoutTempoText(const TempoText* item, TempoText::LayoutData* ldata);
 
     static void layoutTextBase(TextBase* item, LayoutContext& ctx);                 // factory

@@ -3061,7 +3061,9 @@ void TDraw::draw(const TabDurationSymbol* item, Painter* painter)
 void TDraw::draw(const Tapping* item, muse::draw::Painter* painter)
 {
     painter->setPen(item->curColor());
-    item->drawSymbol(item->ldata()->symId, painter, PointF(-0.5 * item->width(), 0.0));
+    if (item->ldata()->symId != SymId::noSym) {
+        item->drawSymbol(item->ldata()->symId, painter, PointF(-0.5 * item->width(), 0.0));
+    } // else drawn by text
 }
 
 void TDraw::draw(const TempoText* item, Painter* painter)

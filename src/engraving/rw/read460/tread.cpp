@@ -2772,11 +2772,11 @@ bool TRead::readProperties(ChordRest* ch, XmlReader& e, ReadContext& ctx)
         ornament->setTrack(ch->track());
         TRead::read(ornament, e, ctx);
         ch->add(ornament);
-    } else if (tag == "Ornament") {
-        Ornament* ornament = Factory::createOrnament(ch);
-        ornament->setTrack(ch->track());
-        TRead::read(ornament, e, ctx);
-        ch->add(ornament);
+    } else if (tag == "Tapping") {
+        Tapping* tapping = Factory::createTapping(ch);
+        tapping->setTrack(ch->track());
+        TRead::read(tapping, e, ctx);
+        ch->add(tapping);
     } else if (tag == "leadingSpace" || tag == "trailingSpace") {
         LOGD("ChordRest: %s obsolete", tag.ascii());
         e.skipCurrentElement();

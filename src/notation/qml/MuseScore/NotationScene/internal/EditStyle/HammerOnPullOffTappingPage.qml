@@ -165,5 +165,156 @@ StyledFlickable {
                 }
             }
         }
+
+        StyledGroupBox {
+            Layout.fillWidth: true
+            Layout.minimumWidth: 500
+            title: qsTrc("notation/editstyle/hammeronpulloff", "Left-hand tapping")
+
+            ColumnLayout {
+                width: parent.width
+                spacing: 10
+
+                ColumnLayout {
+                    width: parent.width
+                    spacing: 8
+
+                    StyledTextLabel {
+                        text: qsTrc("notation/editstyle/hammeronpulloff", "Symbol")
+                    }
+
+                    RadioButtonGroup {
+                        orientation: ListView.Horizontal
+                        spacing: 6
+
+                        model: [
+                            {text: "T", value: 2 },
+                            {text: "DOT", value: 1 },
+                            {text: "None", value: 0 },
+                        ]
+
+                        delegate: FlatRadioButton {
+                            width: 40
+                            height: 30
+                            text: modelData.text
+                            checked: hopoPage.lhTappingSymbol.value === modelData.value
+                            onToggled: hopoPage.lhTappingSymbol.value = modelData.value
+                        }
+                    }
+                }
+
+                ColumnLayout {
+                    width: parent.width
+                    spacing: 8
+
+                    StyledTextLabel {
+                        text: qsTrc("notation/editstyle/hammeronpulloff", "Show half slurs on")
+                    }
+
+                    RowLayout {
+                        ToggleButton {
+                            checked: hopoPage.lhTappingShowHalfSlursOnNormalStave.value === true
+                            onToggled: {
+                                hopoPage.lhTappingShowHalfSlursOnNormalStave.value = !hopoPage.lhTappingShowHalfSlursOnNormalStave.value
+                            }
+                        }
+
+                        StyledTextLabel {
+                            Layout.fillWidth: true
+                            horizontalAlignment: Text.AlignLeft
+                            text: qsTrc("notation/editstyle/hammeronpulloff", "Standard staves")
+                        }
+                    }
+
+                    RowLayout {
+                        ToggleButton {
+                            checked: hopoPage.lhTappingShowHalfSlursOnTab.value === true
+                            onToggled: {
+                                hopoPage.lhTappingShowHalfSlursOnTab.value = !hopoPage.lhTappingShowHalfSlursOnTab.value
+                            }
+                        }
+
+                        StyledTextLabel {
+                            Layout.fillWidth: true
+                            horizontalAlignment: Text.AlignLeft
+                            text: qsTrc("notation/editstyle/hammeronpulloff", "Tablature staves")
+                        }
+                    }
+                }
+
+                CheckBox {
+                    text: qsTrc("notation/editstyle/hammeronpulloff", "Slur top and bottom notes in chords (tablature only)")
+                    checked: hopoPage.lhTappingSlurTopAndBottomNoteOnTab.value === true
+                    onClicked: hopoPage.lhTappingSlurTopAndBottomNoteOnTab.value = !hopoPage.lhTappingSlurTopAndBottomNoteOnTab.value
+                }
+            }
+        }
+
+        StyledGroupBox {
+            Layout.fillWidth: true
+            Layout.minimumWidth: 500
+            title: qsTrc("notation/editstyle/hammeronpulloff", "Right-hand tapping")
+
+            ColumnLayout {
+                width: parent.width
+                spacing: 10
+
+                ColumnLayout {
+                    width: parent.width
+                    spacing: 8
+
+                    StyledTextLabel {
+                        text: qsTrc("notation/editstyle/hammeronpulloff", "Symbol (standard stave)")
+                    }
+
+                    RadioButtonGroup {
+                        orientation: ListView.Horizontal
+                        spacing: 6
+
+                        model: [
+                            {text: "+", value: 2, width: 40 },
+                            {text: "T", value: 1, width: 40 },
+                            {text: "None", value: 0, width: 52},
+                        ]
+
+                        delegate: FlatRadioButton {
+                            height: 30
+                            width: modelData.width
+                            text: modelData.text
+                            checked: hopoPage.rhTappingSymbolNormalStave.value === modelData.value
+                            onToggled: hopoPage.rhTappingSymbolNormalStave.value = modelData.value
+                        }
+                    }
+                }
+
+                ColumnLayout {
+                    width: parent.width
+                    spacing: 8
+
+                    StyledTextLabel {
+                        text: qsTrc("notation/editstyle/hammeronpulloff", "Symbol (tablature stave)")
+                    }
+
+                    RadioButtonGroup {
+                        orientation: ListView.Horizontal
+                        spacing: 6
+
+                        model: [
+                            {text: "+", value: 2, width: 40 },
+                            {text: "T", value: 1, width: 40 },
+                            {text: "None", value: 0, width: 52 },
+                        ]
+
+                        delegate: FlatRadioButton {
+                            height: 30
+                            width: modelData.width
+                            text: modelData.text
+                            checked: hopoPage.rhTappingSymbolTab.value === modelData.value
+                            onToggled: hopoPage.rhTappingSymbolTab.value = modelData.value
+                        }
+                    }
+                }
+            }
+        }
     }
 }

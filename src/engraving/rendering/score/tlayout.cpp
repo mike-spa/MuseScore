@@ -433,7 +433,7 @@ void TLayout::layoutItem(EngravingItem* item, LayoutContext& ctx)
         layoutSystemText(item_cast<const SystemText*>(item), static_cast<SystemText::LayoutData*>(ldata));
         break;
     case ElementType::TAPPING:
-        layoutTapping(item_cast<const Tapping*>(item), static_cast<Tapping::LayoutData*>(ldata));
+        layoutTapping(toTapping(item), static_cast<Tapping::LayoutData*>(ldata));
         break;
     case ElementType::TEMPO_TEXT:
         layoutTempoText(item_cast<const TempoText*>(item), static_cast<TempoText::LayoutData*>(ldata));
@@ -6111,7 +6111,8 @@ void TLayout::layoutTabDurationSymbol(const TabDurationSymbol* item, TabDuration
 
 void TLayout::layoutTapping(const Tapping* item, Tapping::LayoutData* ldata)
 {
-    layoutArticulation(toArticulation(item), ldata);
+    ldata->symId = SymId::windClosedHole;
+    ldata->setShape(Shape(item->symBbox(ldata->symId), item));
 }
 
 void TLayout::layoutTempoText(const TempoText* item, TempoText::LayoutData* ldata)

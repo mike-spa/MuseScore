@@ -947,6 +947,18 @@ enum class TappingHand {
     RIGHT,
 };
 
+enum class LHTappingSymbol : unsigned char {
+    NONE,
+    DOT,
+    CIRCLED_T,
+};
+
+enum class RHTappingSymbol : unsigned char {
+    NONE,
+    T,
+    PLUS,
+};
+
 struct InstrumentTrackId {
     muse::ID partId = 0;
     String instrumentId;

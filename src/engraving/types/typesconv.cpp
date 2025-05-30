@@ -523,33 +523,55 @@ TimeSigVSMargin TConv::fromXml(const AsciiStringView& str, TimeSigVSMargin def)
     return findTypeByXmlTag<TimeSigVSMargin>(TIMESIG_MARGIN, str, def);
 }
 
+std::vector<Item<TappingHand> > TAPPING_HAND
+{
+    { TappingHand::INVALID, "invalid" },
+    { TappingHand::LEFT, "left" },
+    { TappingHand::RIGHT, "right" },
+};
+
 AsciiStringView TConv::toXml(TappingHand tappingHand)
 {
-    switch (tappingHand) {
-    case TappingHand::INVALID:
-        return "invalid";
-    case TappingHand::LEFT:
-        return "left";
-    case TappingHand::RIGHT:
-        return "right";
-    default:
-        UNREACHABLE;
-    }
+    return findXmlTagByType<TappingHand>(TAPPING_HAND, tappingHand);
 }
 
 TappingHand TConv::fromXml(const AsciiStringView& str, TappingHand def)
 {
-    if (str == "invalid") {
-        return TappingHand::INVALID;
-    }
-    if (str == "left") {
-        return TappingHand::LEFT;
-    }
-    if (str == "right") {
-        return TappingHand::RIGHT;
-    }
+    return findTypeByXmlTag<TappingHand>(TAPPING_HAND, str, def);
+}
 
-    UNREACHABLE;
+std::vector<Item<LHTappingSymbol> > LH_TAPPING_SYMBOL
+{
+    { LHTappingSymbol::NONE, "none" },
+    { LHTappingSymbol::DOT, "dot" },
+    { LHTappingSymbol::CIRCLED_T, "circledT" },
+};
+
+AsciiStringView TConv::toXml(LHTappingSymbol lh)
+{
+    return findXmlTagByType<LHTappingSymbol>(LH_TAPPING_SYMBOL, lh);
+}
+
+LHTappingSymbol TConv::fromXml(const AsciiStringView& str, LHTappingSymbol def)
+{
+    return findTypeByXmlTag<LHTappingSymbol>(LH_TAPPING_SYMBOL, str, def);
+}
+
+std::vector<Item<RHTappingSymbol> > RH_TAPPING_SYMBOL
+{
+    { RHTappingSymbol::NONE, "none" },
+    { RHTappingSymbol::T, "T" },
+    { RHTappingSymbol::PLUS, "plus" },
+};
+
+AsciiStringView TConv::toXml(RHTappingSymbol rh)
+{
+    return findXmlTagByType<RHTappingSymbol>(RH_TAPPING_SYMBOL, rh);
+}
+
+RHTappingSymbol TConv::fromXml(const AsciiStringView& str, RHTappingSymbol def)
+{
+    return findTypeByXmlTag<RHTappingSymbol>(RH_TAPPING_SYMBOL, str, def);
 }
 
 static const std::vector<Item<VoiceAssignment> > VOICE_ASSIGNMENT = {

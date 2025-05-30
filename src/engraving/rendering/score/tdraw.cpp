@@ -371,7 +371,7 @@ void TDraw::drawItem(const EngravingItem* item, Painter* painter)
 
     case ElementType::TAB_DURATION_SYMBOL:  draw(item_cast<const TabDurationSymbol*>(item), painter);
         break;
-    case ElementType::TAPPING:              draw(item_cast<const Tapping*>(item), painter);
+    case ElementType::TAPPING:              draw(toTapping(item), painter);
         break;
     case ElementType::TEMPO_TEXT:           draw(item_cast<const TempoText*>(item), painter);
         break;
@@ -3060,7 +3060,8 @@ void TDraw::draw(const TabDurationSymbol* item, Painter* painter)
 
 void TDraw::draw(const Tapping* item, muse::draw::Painter* painter)
 {
-    draw(toArticulation(item), painter);
+    painter->setPen(item->curColor());
+    item->drawSymbol(item->ldata()->symId, painter, PointF(-0.5 * item->width(), 0.0));
 }
 
 void TDraw::draw(const TempoText* item, Painter* painter)

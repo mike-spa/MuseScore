@@ -523,6 +523,35 @@ TimeSigVSMargin TConv::fromXml(const AsciiStringView& str, TimeSigVSMargin def)
     return findTypeByXmlTag<TimeSigVSMargin>(TIMESIG_MARGIN, str, def);
 }
 
+AsciiStringView TConv::toXml(TappingHand tappingHand)
+{
+    switch (tappingHand) {
+    case TappingHand::INVALID:
+        return "invalid";
+    case TappingHand::LEFT:
+        return "left";
+    case TappingHand::RIGHT:
+        return "right";
+    default:
+        UNREACHABLE;
+    }
+}
+
+TappingHand TConv::fromXml(const AsciiStringView& str, TappingHand def)
+{
+    if (str == "invalid") {
+        return TappingHand::INVALID;
+    }
+    if (str == "left") {
+        return TappingHand::LEFT;
+    }
+    if (str == "right") {
+        return TappingHand::RIGHT;
+    }
+
+    UNREACHABLE;
+}
+
 static const std::vector<Item<VoiceAssignment> > VOICE_ASSIGNMENT = {
     { VoiceAssignment::ALL_VOICE_IN_INSTRUMENT, "allInInstrument" },
     { VoiceAssignment::ALL_VOICE_IN_STAFF,      "allInStaff" },

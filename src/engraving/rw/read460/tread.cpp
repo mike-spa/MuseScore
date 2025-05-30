@@ -167,7 +167,7 @@ void TRead::readItem(EngravingItem* item, XmlReader& xml, ReadContext& ctx)
         break;
     case ElementType::ARTICULATION: read(item_cast<Articulation*>(item), xml, ctx);
         break;
-    case ElementType::TAPPING: read(item_cast<Articulation*>(item), xml, ctx);
+    case ElementType::TAPPING: read(item_cast<Tapping*>(item), xml, ctx);
         break;
     case ElementType::BAGPIPE_EMBELLISHMENT: read(item_cast<BagpipeEmbellishment*>(item), xml, ctx);
         break;
@@ -2102,6 +2102,18 @@ bool TRead::readProperties(Articulation* a, XmlReader& xml, ReadContext& ctx)
     return true;
 }
 
+void TRead::read(Tapping* t, XmlReader& xml, ReadContext& ctx)
+{
+    while (xml.readNextStartElement()) {
+        if (xml.name() == "hand") {
+            t->setHand(TConv::fromXml(xml.readAsciiText(), TappingHand::INVALID));
+        }
+        if (!readProperties(toArticulation(t), xml, ctx)) {
+            xml.unknown();
+        }
+    }
+}
+
 void TRead::read(Audio* a, XmlReader& e, ReadContext&)
 {
     while (e.readNextStartElement()) {
@@ -2755,6 +2767,11 @@ bool TRead::readProperties(ChordRest* ch, XmlReader& e, ReadContext& ctx)
         atr->setTrack(ch->track());
         TRead::read(atr, e, ctx);
         ch->add(atr);
+    } else if (tag == "Ornament") {
+        Ornament* ornament = Factory::createOrnament(ch);
+        ornament->setTrack(ch->track());
+        TRead::read(ornament, e, ctx);
+        ch->add(ornament);
     } else if (tag == "Ornament") {
         Ornament* ornament = Factory::createOrnament(ch);
         ornament->setTrack(ch->track());

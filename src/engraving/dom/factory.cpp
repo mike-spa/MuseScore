@@ -166,6 +166,7 @@ EngravingItem* Factory::doCreateItem(ElementType type, EngravingItem* parent)
     case ElementType::GLISSANDO:         return new Glissando(parent);
     case ElementType::BRACKET:           return new Bracket(parent);
     case ElementType::ARTICULATION:      return new Articulation(parent->isChordRest() ? toChordRest(parent) : dummy->chord());
+    case ElementType::TAPPING:           return new Tapping(parent->isChordRest() ? toChordRest(parent) : dummy->chord());
     case ElementType::ORNAMENT:          return new Ornament(parent->isChordRest() ? toChordRest(parent) : dummy->chord());
     case ElementType::FERMATA:           return new Fermata(parent);
     case ElementType::CHORDLINE:         return new ChordLine(parent->isChord() ? toChord(parent) : dummy->chord());
@@ -342,20 +343,11 @@ MAKE_ITEM_IMPL(Ambitus, Segment)
 CREATE_ITEM_IMPL(Arpeggio, ElementType::ARPEGGIO, Chord, isAccessibleEnabled)
 MAKE_ITEM_IMPL(Arpeggio, Chord)
 
-Tapping* Factory::createTapping(ChordRest * parent, Tapping::Hand hand, bool isAccessibleEnabled)
-{
-    Tapping* tapping = new Tapping(parent, hand);
-    tapping->setAccessibleEnabled(isAccessibleEnabled);
-    return tapping;
-}
-
-std::shared_ptr<Tapping> Factory::makeTapping(ChordRest* parent, Tapping::Hand hand)
-{
-    return std::shared_ptr<Tapping>(createTapping(parent, hand));
-}
-
 CREATE_ITEM_IMPL(Articulation, ElementType::ARTICULATION, ChordRest, isAccessibleEnabled)
 MAKE_ITEM_IMPL(Articulation, ChordRest)
+
+CREATE_ITEM_IMPL(Tapping, ElementType::TAPPING, ChordRest, isAccessibleEnabled)
+MAKE_ITEM_IMPL(Tapping, ChordRest)
 
 CREATE_ITEM_IMPL(Ornament, ElementType::ORNAMENT, ChordRest, isAccessibleEnabled)
 MAKE_ITEM_IMPL(Ornament, ChordRest)

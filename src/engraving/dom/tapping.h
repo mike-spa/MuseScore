@@ -21,6 +21,7 @@
  */
 #pragma once
 
+#include "engraving/types/types.h"
 #include "articulation.h"
 
 namespace mu::engraving {
@@ -35,18 +36,20 @@ public:
     };
     DECLARE_LAYOUTDATA_METHODS(Tapping)
 
-    enum Hand {
-        LEFT_HAND,
-        RIGHE_HAND,
-    };
+    TappingHand hand() const { return m_hand; }
+    void setHand(TappingHand h) { m_hand = h; }
 
-    Tapping::Hand hand() const { return m_hand; }
+    Text* text() const { return m_text; }
+    void setText(Text* text) { m_text = text; }
+
+    void scanElements(void* data, void (* func)(void*, EngravingItem*), bool all=true) override;
 
 protected:
     friend class mu::engraving::Factory;
-    Tapping(ChordRest* parent, Tapping::Hand hand);
+    Tapping(ChordRest* parent);
 
 private:
-    Hand m_hand = Hand::LEFT_HAND;
+    TappingHand m_hand = TappingHand::INVALID;
+    Text* m_text = nullptr;
 };
 } // namespace mu::engraving

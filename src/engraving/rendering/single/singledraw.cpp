@@ -2337,7 +2337,8 @@ void SingleDraw::draw(const SoundFlag* item, Painter* painter)
 
 void SingleDraw::draw(const Tapping* item, muse::draw::Painter* painter)
 {
-    draw(toArticulation(item), painter);
+    UNUSED(item);
+    UNUSED(painter);
 }
 
 void SingleDraw::draw(const TempoText* item, Painter* painter)

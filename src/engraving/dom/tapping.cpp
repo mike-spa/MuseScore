@@ -21,10 +21,20 @@
  */
 
 #include "tapping.h"
+#include "text.h"
 
 namespace mu::engraving {
-Tapping::Tapping(ChordRest* parent, Tapping::Hand hand)
-    : m_hand(hand), Articulation(parent, ElementType::TAPPING)
+Tapping::Tapping(ChordRest* parent)
+    : Articulation(parent, ElementType::TAPPING)
 {
+}
+
+void Tapping::scanElements(void* data, void (*func)(void* data, EngravingItem*), bool all)
+{
+    if (m_text) {
+        m_text->scanElements(data, func, all);
+    }
+
+    func(data, this);
 }
 }

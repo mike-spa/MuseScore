@@ -256,5 +256,8 @@ public:
 
     static AsciiStringView toXml(TimeSigVSMargin timeSigVSMargin);
     static TimeSigVSMargin fromXml(const AsciiStringView& str, TimeSigVSMargin def);
+
+    static AsciiStringView toXml(TappingHand tappingHand);
+    static TappingHand fromXml(const AsciiStringView& str, TappingHand def);
 };
 }

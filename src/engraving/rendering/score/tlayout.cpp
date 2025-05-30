@@ -434,6 +434,7 @@ void TLayout::layoutItem(EngravingItem* item, LayoutContext& ctx)
         break;
     case ElementType::TAPPING:
         layoutTapping(item_cast<const Tapping*>(item), static_cast<Tapping::LayoutData*>(ldata));
+        break;
     case ElementType::TEMPO_TEXT:
         layoutTempoText(item_cast<const TempoText*>(item), static_cast<TempoText::LayoutData*>(ldata));
         break;
@@ -6108,7 +6109,7 @@ void TLayout::layoutTabDurationSymbol(const TabDurationSymbol* item, TabDuration
     ldata->setPos(xpos * mag, ypos * mag);
 }
 
-void TLayout::layoutTapping(const Tapping *item, Tapping::LayoutData *ldata)
+void TLayout::layoutTapping(const Tapping* item, Tapping::LayoutData* ldata)
 {
     layoutArticulation(toArticulation(item), ldata);
 }

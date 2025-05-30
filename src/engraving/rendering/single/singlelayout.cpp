@@ -29,6 +29,8 @@
 
 #include "compat/dummyelement.h"
 
+#include "dom/factory.h"
+
 #include "dom/engravingitem.h"
 #include "dom/score.h"
 
@@ -1030,13 +1032,13 @@ void SingleLayout::layout(HammerOnPullOffSegment* item, const Context& ctx)
 {
     const std::vector<HammerOnPullOffText*>& hopoTexts = item->hopoText();
     if (item->hopoText().empty()) {
-        HammerOnPullOffText* hopoText = new HammerOnPullOffText(item);
-        hopoText->setParent(item);
-        hopoText->setXmlText("H/P");
-        item->addHopoText(hopoText);
+        item->addHopoText(new HammerOnPullOffText(item));
     }
 
     HammerOnPullOffText* hopoText = hopoTexts.front();
+    hopoText->setParent(item);
+    hopoText->setXmlText("H/P");
+
     Align align;
     align.vertical = AlignV::BASELINE;
     align.horizontal = AlignH::HCENTER;
@@ -1557,7 +1559,22 @@ void SingleLayout::layout(SystemText* item, const Context& ctx)
 
 void SingleLayout::layout(Tapping* item, const Context& ctx)
 {
-    layout(toArticulation(item), ctx);
+    Text* text = item->text();
+
+    if (!text) {
+        text = Factory::createText(item, TextStyleType::HAMMER_ON_PULL_OFF);
+    }
+
+    text->setParent(item);
+    item->setText(text);
+    text->setTrack(item->track());
+    DO_ASSERT(item->hand() != TappingHand::INVALID);
+    text->setXmlText(item->hand() == TappingHand::LEFT ? "l.h. tap" : "r.h. tap");
+    text->setAlign(Align(AlignH::HCENTER, AlignV::BASELINE));
+
+    layoutTextBase(text, ctx, text->mutldata());
+
+    item->setbbox(text->ldata()->bbox());
 }
 
 void SingleLayout::layout(SoundFlag* item, const Context& ctx)

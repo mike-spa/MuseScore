@@ -3048,6 +3048,9 @@ void TWrite::write(const SoundFlag* item, XmlWriter& xml, WriteContext&)
 void TWrite::write(const Tapping* item, XmlWriter& xml, WriteContext& ctx)
 {
     xml.startElement(item);
+
+    xml.tag("hand", TConv::toXml(item->hand()));
+
     writeProperties(toArticulation(item), xml, ctx);
     xml.endElement();
 }

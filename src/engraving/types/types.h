@@ -941,6 +941,12 @@ enum class SlurStyleType : signed char {
     WideDashed
 };
 
+enum class TappingHand {
+    INVALID = -1,
+    LEFT,
+    RIGHT,
+};
+
 struct InstrumentTrackId {
     muse::ID partId = 0;
     String instrumentId;

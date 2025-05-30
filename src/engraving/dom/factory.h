@@ -58,8 +58,8 @@ public:
     static Articulation* createArticulation(ChordRest* parent, bool isAccessibleEnabled = true);
     static std::shared_ptr<Articulation> makeArticulation(ChordRest* parent);
 
-    static Tapping* createTapping(ChordRest* parent, Tapping::Hand hand, bool isAccessibleEnabled = true);
-    static std::shared_ptr<Tapping> makeTapping(ChordRest* parent, Tapping::Hand hand);
+    static Tapping* createTapping(ChordRest* parent, bool isAccessibleEnabled = true);
+    static std::shared_ptr<Tapping> makeTapping(ChordRest* parent);
 
     static Ornament* createOrnament(ChordRest* parent, bool isAccessibleEnabled = true);
     static std::shared_ptr<Ornament> makeOrnament(ChordRest* parent);

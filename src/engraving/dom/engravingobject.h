@@ -168,6 +168,7 @@ class SystemDivider;
 class SystemLockIndicator;
 class SystemText;
 class SoundFlag;
+class Tapping;
 class TBox;
 class TempoText;
 class Text;
@@ -461,6 +462,7 @@ public:
     CONVERT(HammerOnPullOff, HAMMER_ON_PULL_OFF)
     CONVERT(HammerOnPullOffSegment, HAMMER_ON_PULL_OFF_SEGMENT)
     CONVERT(HammerOnPullOffText, HAMMER_ON_PULL_OFF_TEXT)
+    CONVERT(Tapping, TAPPING)
 #undef CONVERT
 
     virtual bool isEngravingItem() const { return false; }   // overridden in element.h
@@ -577,7 +579,7 @@ public:
 
     bool isArticulationFamily() const
     {
-        return isArticulation() || isOrnament();
+        return isArticulation() || isOrnament() || isTapping();
     }
 
     bool isArticulationOrFermata() const
@@ -896,5 +898,6 @@ CONVERT(ShadowNote)
 CONVERT(HammerOnPullOff)
 CONVERT(HammerOnPullOffSegment)
 CONVERT(HammerOnPullOffText)
+CONVERT(Tapping)
 #undef CONVERT
 }

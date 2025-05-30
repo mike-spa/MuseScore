@@ -307,10 +307,14 @@ static const std::vector<Item<ElementType> > ELEMENT_TYPES = {
     { ElementType::TREMOLO_SINGLECHORD,  "TremoloSingleChord",   muse::TranslatableString("engraving", "Tremolo") },
     { ElementType::TREMOLO_TWOCHORD,     "TremoloTwoChord",      muse::TranslatableString("engraving", "Tremolo") },
     { ElementType::TIME_TICK_ANCHOR,     "TimeTickAnchor",       muse::TranslatableString("engraving", "Time tick anchor") },
+
     { ElementType::HAMMER_ON_PULL_OFF,   "HammerOnPullOff",      muse::TranslatableString("engraving", "Hammer-on / pull-off") },
     { ElementType::HAMMER_ON_PULL_OFF_SEGMENT, "HammerOnPullOffSegment",
       muse::TranslatableString("engraving", "Hammer-on / pull-off segment") },
     { ElementType::HAMMER_ON_PULL_OFF_TEXT, "HammerOnPullOffText", muse::TranslatableString("engraving", "Hammer-on / pull-off text") },
+
+    { ElementType::TAPPING,              "Tapping",              muse::TranslatableString("engraving", "Tapping") },
+
     { ElementType::ROOT_ITEM,            "RootItem",             muse::TranslatableString::untranslatable("Root item") },
     { ElementType::DUMMY,                "Dummy",                muse::TranslatableString::untranslatable("Dummy") },
 };

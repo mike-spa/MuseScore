@@ -80,6 +80,7 @@
 #include "dom/stringtunings.h"
 #include "dom/symbol.h"
 #include "dom/systemtext.h"
+#include "dom/tapping.h"
 #include "dom/tempotext.h"
 #include "dom/text.h"
 #include "dom/textline.h"
@@ -215,6 +216,8 @@ void SingleLayout::layoutItem(EngravingItem* item)
     case ElementType::SYSTEM_TEXT:  layout(toSystemText(item), ctx);
         break;
     case ElementType::SOUND_FLAG:   layout(item_cast<SoundFlag*>(item), ctx);
+        break;
+    case ElementType::TAPPING:      layout(toTapping(item), ctx);
         break;
     case ElementType::TEMPO_TEXT:   layout(toTempoText(item), ctx);
         break;
@@ -1550,6 +1553,11 @@ void SingleLayout::layout(Symbol* item, const Context&)
 void SingleLayout::layout(SystemText* item, const Context& ctx)
 {
     layoutTextBase(item, ctx, item->mutldata());
+}
+
+void SingleLayout::layout(Tapping* item, const Context& ctx)
+{
+    layout(toArticulation(item), ctx);
 }
 
 void SingleLayout::layout(SoundFlag* item, const Context& ctx)

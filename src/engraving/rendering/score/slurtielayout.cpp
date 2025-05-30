@@ -1241,6 +1241,8 @@ void SlurTieLayout::addMinClearanceToShapes(Shape& segShapes, double spatium, bo
             clearance = noteClearance;
             break;
         case ElementType::ARTICULATION:
+        case ElementType::ORNAMENT:
+        case ElementType::TAPPING:
             clearance = articulationClearance;
             break;
         default:

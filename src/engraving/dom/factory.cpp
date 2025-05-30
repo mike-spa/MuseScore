@@ -103,6 +103,7 @@
 #include "systemlock.h"
 #include "systemtext.h"
 #include "soundflag.h"
+#include "tapping.h"
 #include "tempotext.h"
 #include "text.h"
 #include "textline.h"
@@ -340,6 +341,18 @@ MAKE_ITEM_IMPL(Ambitus, Segment)
 
 CREATE_ITEM_IMPL(Arpeggio, ElementType::ARPEGGIO, Chord, isAccessibleEnabled)
 MAKE_ITEM_IMPL(Arpeggio, Chord)
+
+Tapping* Factory::createTapping(ChordRest * parent, Tapping::Hand hand, bool isAccessibleEnabled)
+{
+    Tapping* tapping = new Tapping(parent, hand);
+    tapping->setAccessibleEnabled(isAccessibleEnabled);
+    return tapping;
+}
+
+std::shared_ptr<Tapping> Factory::makeTapping(ChordRest* parent, Tapping::Hand hand)
+{
+    return std::shared_ptr<Tapping>(createTapping(parent, hand));
+}
 
 CREATE_ITEM_IMPL(Articulation, ElementType::ARTICULATION, ChordRest, isAccessibleEnabled)
 MAKE_ITEM_IMPL(Articulation, ChordRest)

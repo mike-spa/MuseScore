@@ -142,6 +142,7 @@
 #include "dom/systemtext.h"
 #include "dom/soundflag.h"
 
+#include "dom/tapping.h"
 #include "dom/tempotext.h"
 #include "dom/text.h"
 #include "dom/textbase.h"
@@ -336,6 +337,8 @@ void TWrite::writeItem(const EngravingItem* item, XmlWriter& xml, WriteContext& 
     case ElementType::SYSTEM_TEXT:  write(item_cast<const SystemText*>(item), xml, ctx);
         break;
     case ElementType::SOUND_FLAG:   write(item_cast<const SoundFlag*>(item), xml, ctx);
+        break;
+    case ElementType::TAPPING:      write(item_cast<const Tapping*>(item), xml, ctx);
         break;
     case ElementType::TEMPO_TEXT:   write(item_cast<const TempoText*>(item), xml, ctx);
         break;
@@ -3039,6 +3042,13 @@ void TWrite::write(const SoundFlag* item, XmlWriter& xml, WriteContext&)
 
     writeProperty(item, xml, Pid::APPLY_TO_ALL_STAVES);
 
+    xml.endElement();
+}
+
+void TWrite::write(const Tapping* item, XmlWriter& xml, WriteContext& ctx)
+{
+    xml.startElement(item);
+    writeProperties(toArticulation(item), xml, ctx);
     xml.endElement();
 }
 

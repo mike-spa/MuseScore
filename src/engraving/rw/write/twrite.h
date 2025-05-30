@@ -153,6 +153,7 @@ class SystemDivider;
 class SystemText;
 class SoundFlag;
 
+class Tapping;
 class TempoText;
 class Text;
 class TextBase;
@@ -294,6 +295,7 @@ public:
     static void write(const SystemText* item, XmlWriter& xml, WriteContext& ctx);
     static void write(const SoundFlag* item, XmlWriter& xml, WriteContext& ctx);
 
+    static void write(const Tapping* item, XmlWriter& xml, WriteContext& ctx);
     static void write(const TempoText* item, XmlWriter& xml, WriteContext& ctx);
     static void write(const Text* item, XmlWriter& xml, WriteContext& ctx);
     static void write(const TextLine* item, XmlWriter& xml, WriteContext& ctx);

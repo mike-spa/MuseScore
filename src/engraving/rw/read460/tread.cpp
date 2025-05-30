@@ -167,6 +167,8 @@ void TRead::readItem(EngravingItem* item, XmlReader& xml, ReadContext& ctx)
         break;
     case ElementType::ARTICULATION: read(item_cast<Articulation*>(item), xml, ctx);
         break;
+    case ElementType::TAPPING: read(item_cast<Articulation*>(item), xml, ctx);
+        break;
     case ElementType::BAGPIPE_EMBELLISHMENT: read(item_cast<BagpipeEmbellishment*>(item), xml, ctx);
         break;
     case ElementType::BAR_LINE: read(item_cast<BarLine*>(item), xml, ctx);

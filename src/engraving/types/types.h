@@ -208,6 +208,7 @@ enum class ElementType : unsigned char {
     HAMMER_ON_PULL_OFF,
     HAMMER_ON_PULL_OFF_SEGMENT,
     HAMMER_ON_PULL_OFF_TEXT,
+    TAPPING,
 
     ROOT_ITEM,
     DUMMY,

@@ -71,6 +71,7 @@ private:
         Measure* startMeas = nullptr;
         double stretchReduction = 1.0;
         double squeezeFactor = 1.0;
+        double spacingMultiplier = 1.0;
         bool overrideMinMeasureWidth = false;
     };
 

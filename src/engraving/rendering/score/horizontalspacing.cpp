@@ -53,6 +53,7 @@ double HorizontalSpacing::computeSpacingForFullSystem(System* system, double str
 
     ctx.stretchReduction = stretchReduction;
     ctx.squeezeFactor = squeezeFactor;
+    ctx.spacingMultiplier = system->style().styleD(Sid::spacingMultiplier);
     ctx.overrideMinMeasureWidth = overrideMinMeasureWidth;
 
     ctx.xCur = system->leftMargin();
@@ -88,6 +89,7 @@ double HorizontalSpacing::updateSpacingForLastAddedMeasure(System* system, bool 
     ctx.system = system;
     ctx.spatium = system->spatium();
     ctx.xLeftBarrier = system->leftMargin();
+    ctx.spacingMultiplier = system->style().styleD(Sid::spacingMultiplier);
 
     size_t measureCount = system->measures().size();
     IF_ASSERT_FAILED(measureCount > 0) {
@@ -703,7 +705,7 @@ double HorizontalSpacing::chordRestSegmentNaturalWidth(Segment* segment, Horizon
     static constexpr double DEFAULT_QUARTER_NOTE_SPACE = 2.7; // In units of spatium
     double defaultQuarterNoteSpace = measure->spatium() * DEFAULT_QUARTER_NOTE_SPACE;
 
-    double naturalWidth = defaultQuarterNoteSpace * segTotalStretch * ctx.stretchReduction;
+    double naturalWidth = defaultQuarterNoteSpace * segTotalStretch * ctx.stretchReduction * ctx.spacingMultiplier;
 
     return naturalWidth;
 }

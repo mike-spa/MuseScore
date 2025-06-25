@@ -226,6 +226,7 @@ const std::array<StyleDef::StyleValue, size_t(Sid::STYLES)> StyleDef::styleValue
 
     styleDef(barAccidentalDistance,                      Spatium(0.65)),
     styleDef(noteBarDistance,                            Spatium(1.5)),
+    styleDef(spacingMultiplier,                          1.0),
     styleDef(measureSpacing,                             1.5),
     styleDef(measureRepeatNumberPos,                     Spatium(-0.5)),
     styleDef(mrNumberSeries,                             false),

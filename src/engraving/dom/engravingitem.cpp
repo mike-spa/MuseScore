@@ -264,6 +264,11 @@ bool EngravingItem::offsetIsSpatiumDependent() const
     return sizeIsSpatiumDependent() || (m_flags & ElementFlag::ON_STAFF);
 }
 
+PlacementV EngravingItem::placement() const
+{
+    return flag(ElementFlag::PLACE_ABOVE) && !isSystemObjectBelowBottomStaff() ? PlacementV::ABOVE : PlacementV::BELOW;
+}
+
 //---------------------------------------------------------
 //   magS
 //---------------------------------------------------------
@@ -444,6 +449,10 @@ staff_idx_t EngravingItem::effectiveStaffIdx() const
     const System* system = toSystem(findAncestor(ElementType::SYSTEM));
     if (!system || system->vbox()) {
         return vStaffIdx();
+    }
+
+    if (isSystemObjectBelowBottomStaff()) {
+        return system->lastVisibleStaff();
     }
 
     staff_idx_t originalStaffIdx = staffIdx();
@@ -1612,6 +1621,11 @@ bool EngravingItem::isPlayable() const
     }
 }
 
+bool EngravingItem::isSystemObjectBelowBottomStaff() const
+{
+    return systemFlag() && staff() && staff()->systemObjectsBelowBottomStaff();
+}
+
 //---------------------------------------------------------
 //   findAncestor
 //---------------------------------------------------------
@@ -2030,7 +2044,7 @@ bool EngravingItem::isUserModified() const
         PropertyValue defaultValue = propertyDefault(pid);
 
         if (propertyType(pid) == P_TYPE::MILLIMETRE) {
-            if (std::abs(val.value<Millimetre>() - defaultValue.value<Millimetre>()) > 0.0001) {         // we don’t care spatium diffs that small
+            if (std::abs(val.value<Millimetre>() - defaultValue.value<Millimetre>()) > 0.0001) {         // we donÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢t care spatium diffs that small
                 return true;
             }
         } else {

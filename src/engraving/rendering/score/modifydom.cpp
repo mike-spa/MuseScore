@@ -121,7 +121,7 @@ void ModifyDom::cmdUpdateNotes(const Measure* measure, const DomAccessor& dom)
             } else if (segment.isJustType(SegmentType::ChordRest)) {
                 for (track_idx_t t = startTrack; t < endTrack; ++t) {
                     Chord* chord = item_cast<Chord*>(segment.element(t), CastMode::MAYBE_BAD); // maybe Rest
-                    if (chord) {
+                    if (chord && chord->vStaffIdx() == staffIdx) {
                         chord->cmdUpdateNotes(&as, staffIdx);
                     }
                 }

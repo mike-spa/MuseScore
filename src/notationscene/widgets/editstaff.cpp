@@ -94,6 +94,9 @@ EditStaff::EditStaff(QWidget* parent)
     connect(lines, &QSpinBox::valueChanged, this, &EditStaff::numOfLinesChanged);
     connect(lineDistance, &QDoubleSpinBox::valueChanged, this, &EditStaff::lineDistanceChanged);
 
+    connect(longStaffName, &QTextEdit::textChanged, this, &EditStaff::longNameChanged);
+    connect(shortStaffName, &QTextEdit::textChanged, this, &EditStaff::shortNameChanged);
+
     WidgetUtils::setWidgetIcon(nextButton, IconCode::Code::ARROW_DOWN);
     WidgetUtils::setWidgetIcon(previousButton, IconCode::Code::ARROW_UP);
     WidgetUtils::setWidgetIcon(minPitchASelect, IconCode::Code::EDIT);
@@ -193,6 +196,9 @@ void EditStaff::updateStaffType(const mu::engraving::StaffType& staffType)
     showBarlines->setChecked(staffType.showBarlines());
     invisible->setChecked(staffType.invisible());
     staffGroupName->setText(staffType.translatedGroupName());
+
+    longStaffName->setPlainText(TextBase::unEscape(staffType.longName()));
+    shortStaffName->setPlainText(TextBase::unEscape(staffType.longName()));
 }
 
 void EditStaff::updateInstrument()
@@ -201,6 +207,7 @@ void EditStaff::updateInstrument()
 
     longName->setPlainText(m_instrument.nameAsPlainText());
     shortName->setPlainText(m_instrument.abbreviatureAsPlainText());
+
     const InstrumentTemplate* templ = mu::engraving::searchTemplate(m_instrument.id());
     if (templ) {
         instrumentName->setText(formatInstrumentTitle(templ->trackName, templ->trait));
@@ -415,6 +422,16 @@ void EditStaff::transpositionChanged()
     }
 }
 
+void EditStaff::longNameChanged()
+{
+    m_staff->staffType(Fraction(0, 1))->setLongName(longStaffName->toPlainText());
+}
+
+void EditStaff::shortNameChanged()
+{
+    m_staff->staffType(Fraction(0, 1))->setShortName(shortStaffName->toPlainText());
+}
+
 INotationPtr EditStaff::notation() const
 {
     return globalContext()->currentNotation();
@@ -512,15 +529,22 @@ void EditStaff::applyPartProperties()
 
     String _sn = shortName->toPlainText();
     String _ln = longName->toPlainText();
-    if (!mu::engraving::Text::validateText(_sn) || !mu::engraving::Text::validateText(_ln)) {
+    String _ssn = shortStaffName->toPlainText();
+    String _lsn = longStaffName->toPlainText();
+    if (!mu::engraving::Text::validateText(_sn) || !mu::engraving::Text::validateText(_ln)
+        || !mu::engraving::Text::validateText(_ssn) || !mu::engraving::Text::validateText(_lsn)) {
         interactive()->warning(muse::trc("notation/staffpartproperties", "Invalid instrument name"),
                                muse::trc("notation/staffpartproperties", "The instrument name is invalid."));
         return;
     }
     QString sn = _sn;
     QString ln = _ln;
+    QString ssn = _ssn;
+    QString lsn = _lsn;
     shortName->setPlainText(sn);    // show the fixed text
     longName->setPlainText(ln);
+    shortStaffName->setPlainText(ssn);
+    longStaffName->setPlainText(lsn);
 
     int intervalIdx = iList->currentIndex();
     bool upFlag     = up->isChecked();
@@ -541,6 +565,9 @@ void EditStaff::applyPartProperties()
 
     m_instrument.setShortName(String::fromQString(sn));
     m_instrument.setLongName(String::fromQString(ln));
+
+    size_t staffIdxInPart = muse::indexOf(part->staves(), m_orgStaff);
+    DO_ASSERT(staffIdxInPart != muse::nidx);
 
     if (m_instrument.id() != m_orgInstrument.id()) {
         masterNotationParts()->replaceInstrument(m_instrumentKey, m_instrument);

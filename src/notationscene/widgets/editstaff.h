@@ -78,6 +78,8 @@ private slots:
     void colorChanged();
     void magChanged(double newValue);
     void transpositionChanged();
+    void longNameChanged();
+    void shortNameChanged();
 
 signals:
     void instrumentChanged();

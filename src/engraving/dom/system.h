@@ -51,6 +51,7 @@ public:
     ~SysStaff();
 
     InstrumentName* instrumentName = nullptr;
+    InstrumentName* individualStaffName = nullptr;
 
     const RectF& bbox() const { return m_bbox; }
     RectF& bbox() { return m_bbox; }
@@ -192,6 +193,7 @@ public:
     staff_idx_t firstVisibleSysStaffOfPart(const Part* part) const;
     staff_idx_t lastSysStaffOfPart(const Part* part) const;
     staff_idx_t lastVisibleSysStaffOfPart(const Part* part) const;
+    std::vector<staff_idx_t> visibleStavesOfPart(const Part* part) const;
 
 #ifndef ENGRAVING_NO_ACCESSIBILITY
     AccessibleItemPtr createAccessible() override;

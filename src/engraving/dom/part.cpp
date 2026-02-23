@@ -37,6 +37,7 @@
 #include "measure.h"
 #include "score.h"
 #include "staff.h"
+#include "system.h"
 #include "stringtunings.h"
 
 #include "log.h"

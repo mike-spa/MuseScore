@@ -328,7 +328,9 @@ void SystemHeaderLayout::setInstrumentNamesVerticalPos(System* system, LayoutCon
     for (staff_idx_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
         SysStaff* s = system->staff(staffIdx);
         if (InstrumentName* individualName = s->individualStaffName) {
-            individualName->mutldata()->setPosY(0.5 * (s->bbox().top() + s->bbox().bottom()) + individualName->offset().y());
+            const RectF& staffBBox = s->bbox();
+            const RectF& nameBBox = individualName->ldata()->bbox();
+            individualName->mutldata()->setPosY(0.5 * (staffBBox.top() + staffBBox.bottom() - nameBBox.bottom() - nameBBox.top()));
             partsWithIndividualStaffNames.insert(ctx.dom().staff(staffIdx)->part());
         }
     }
@@ -344,6 +346,9 @@ void SystemHeaderLayout::setInstrumentNamesVerticalPos(System* system, LayoutCon
             continue;
         }
 
+        const RectF& bbox = t->ldata()->bbox();
+        double yCenter = 0.5 * (bbox.bottom() + bbox.top());
+
         std::vector<staff_idx_t> visibleStavesOfPart = system->visibleStavesOfPart(p);
         size_t visibleStavesCount = visibleStavesOfPart.size();
         DO_ASSERT(visibleStavesCount > 0);
@@ -356,26 +361,36 @@ void SystemHeaderLayout::setInstrumentNamesVerticalPos(System* system, LayoutCon
             SysStaff* bottomSt = system->staff(visibleStavesOfPart.back());
             y1 = topSt->bbox().top();
             y2 = bottomSt->bbox().bottom();
+            t->mutldata()->setPosY(0.5 * (y1 + y2) - yCenter);
         } else {
             if (visibleStavesCount % 2) {
                 SysStaff* midStaff = system->staff(visibleStavesOfPart[visibleStavesCount / 2]);
-                if (InstrumentName* staffName = midStaff->individualStaffName; staffName && staffName->position() != AlignH::RIGHT) {
-                    double lineSpacing = t->fontMetrics().lineSpacing();
-                    staffName->mutldata()->moveY(0.5 * lineSpacing);
-                    y1 = y2 = staffName->y() - t->fontMetrics().lineSpacing();
+                y1 = midStaff->bbox().top();
+                y2 = midStaff->bbox().bottom();
+                if (InstrumentName* staffName = midStaff->individualStaffName) {
+                    if (staffName->position() != AlignH::RIGHT) {
+                        double lineSpacing = t->fontMetrics().lineSpacing();
+                        double instrNameBottom = t->ldata()->blocks.back().y();
+                        double centerY = 0.5 * (midStaff->bbox().top() + midStaff->bbox().bottom());
+                        t->mutldata()->setPosY(centerY - instrNameBottom - 0.25 * lineSpacing);
+                        double staffNameTop = staffName->ldata()->blocks.front().y();
+                        staffName->mutldata()->setPosY(centerY - staffNameTop + 0.75 * lineSpacing);
+                    } else if (staffName->ldata()->rows() == 1 && t->ldata()->rows() == 1) {
+                        t->mutldata()->setPosY(staffName->y());
+                    } else {
+                        t->mutldata()->setPosY(0.5 * (y1 + y2) - yCenter);
+                    }
                 } else {
-                    y1 = midStaff->bbox().top();
-                    y2 = midStaff->bbox().bottom();
+                    t->mutldata()->setPosY(0.5 * (y1 + y2) - yCenter);
                 }
             } else {
                 SysStaff* staffAboveMid = system->staff(visibleStavesOfPart[visibleStavesCount / 2 - 1]);
                 SysStaff* staffBelowMid = system->staff(visibleStavesOfPart[visibleStavesCount / 2]);
                 y1 = staffAboveMid->bbox().top();
                 y2 = staffBelowMid->bbox().bottom();
+                t->mutldata()->setPosY(0.5 * (y1 + y2) - yCenter);
             }
         }
-
-        t->mutldata()->setPosY(0.5 * (y1 + y2));
 
         staffIdx += nstaves;
     }
@@ -500,6 +515,7 @@ void SystemHeaderLayout::setInstrumentNames(System* system, LayoutContext& ctx, 
             iname->setInstrumentNameRole(InstrumentNameRole::PART);
             ctx.mutDom().addElement(iname);
         }
+        iname->setAlign(Align(iname->align().horizontal, AlignV::BASELINE));
         iname->setXmlText(name);
     }
 }
@@ -555,6 +571,7 @@ void SystemHeaderLayout::setIndividualStaffNames(System* system, LayoutContext& 
             iname->setInstrumentNameRole(InstrumentNameRole::STAFF);
             ctx.mutDom().addElement(iname);
         }
+        iname->setAlign(Align(iname->align().horizontal, AlignV::BASELINE));
         iname->setXmlText(name);
     }
 }

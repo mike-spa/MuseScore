@@ -106,7 +106,7 @@ private:
     Instrument m_orgInstrument;
     InstrumentKey m_instrumentKey;
     int m_minPitchA, m_maxPitchA, m_minPitchP, m_maxPitchP;
-    mu::engraving::Fraction m_tickStart, m_tickEnd;
+    mu::engraving::Fraction m_tick;
 
     EditStaffType* editStaffTypeDialog = nullptr;
 };

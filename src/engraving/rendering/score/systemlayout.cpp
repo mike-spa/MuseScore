@@ -133,7 +133,6 @@ System* SystemLayout::collectSystem(LayoutContext& ctx)
     Fraction lcmTick = ctx.state().curMeasure()->tick();
     bool longNames = ctx.mutState().firstSystem() ? ctx.mutState().startWithLongNames() : subsSysLongName;
     SystemHeaderLayout::setInstrumentNames(system, ctx, longNames, lcmTick);
-    SystemHeaderLayout::setIndividualStaffNames(system, ctx, longNames, lcmTick);
 
     double curSysWidth = 0.0;
     double layoutSystemMinWidth = 0.0;
@@ -2076,28 +2075,8 @@ void SystemLayout::layoutSystem(System* system, LayoutContext& ctx, double xo1, 
         return;
     }
 
-    // Get standard instrument name distance
-    double instrumentNameOffset = ctx.conf().styleAbsolute(Sid::instrumentNameOffset);
-    // Now scale it depending on the text size (which also may not follow staff scaling)
-    double textSizeScaling = 1.0;
-    double actualSize = 0.0;
-    double defaultSize = 0.0;
-    bool followStaffSize = true;
-    if (ctx.state().startWithLongNames()) {
-        actualSize = ctx.conf().styleD(Sid::longInstrumentFontSize);
-        defaultSize = DefaultStyle::defaultStyle().value(Sid::longInstrumentFontSize).toDouble();
-        followStaffSize = ctx.conf().styleB(Sid::longInstrumentFontSpatiumDependent);
-    } else {
-        actualSize = ctx.conf().styleD(Sid::shortInstrumentFontSize);
-        defaultSize = DefaultStyle::defaultStyle().value(Sid::shortInstrumentFontSize).toDouble();
-        followStaffSize = ctx.conf().styleB(Sid::shortInstrumentFontSpatiumDependent);
-    }
-    textSizeScaling = actualSize / defaultSize;
-    if (!followStaffSize) {
-        textSizeScaling *= DefaultStyle::defaultStyle().value(Sid::spatium).toDouble() / ctx.conf().styleD(Sid::spatium);
-    }
-    textSizeScaling = std::max(textSizeScaling, 1.0);
-    instrumentNameOffset *= textSizeScaling;
+    SystemHeaderLayout::computeInstrumentNameOffset(system, ctx);
+    double instrumentNameOffset = system->ldata()->instrumentNameOffset();
 
     size_t nstaves = system->staves().size();
 
@@ -2107,7 +2086,8 @@ void SystemLayout::layoutSystem(System* system, LayoutContext& ctx, double xo1, 
     SystemHeaderLayout::layoutBrackets(system, ctx);
     double maxBracketsWidth = SystemHeaderLayout::totalBracketOffset(ctx);
 
-    double maxNamesWidth = SystemHeaderLayout::instrumentNamesWidth(system, ctx, isFirstSystem, instrumentNameOffset);
+    SystemHeaderLayout::computeInstrumentNamesWidth(system, ctx);
+    double maxNamesWidth = system->ldata()->totalNamesWidth();
     double indent = maxNamesWidth > 0 ? maxNamesWidth + instrumentNameOffset : 0.0;
     if (isFirstSystem && firstSystemIndent) {
         indent = std::max(indent, system->styleP(Sid::firstSystemIndentationValue) * system->mag() - maxBracketsWidth);
@@ -2150,7 +2130,7 @@ void SystemLayout::layoutSystem(System* system, LayoutContext& ctx, double xo1, 
 
     system->setBracketsXPosition(xo1 + system->leftMargin());
 
-    SystemHeaderLayout::setInstrumentNamesHorizontalPos(system, maxNamesWidth, instrumentNameOffset);
+    SystemHeaderLayout::setInstrumentNamesHorizontalPos(system);
 
     for (MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {

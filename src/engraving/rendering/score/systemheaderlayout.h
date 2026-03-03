@@ -23,10 +23,14 @@
 
 #include "layoutcontext.h"
 
+#include "dom/instrumentname.h"
+
 namespace mu::engraving {
 class Bracket;
 class BracketItem;
+class InstrumentName;
 class System;
+class SysStaff;
 }
 
 namespace mu::engraving::rendering::score {
@@ -37,14 +41,18 @@ public:
     static void addBrackets(System* system, Measure* measure, LayoutContext& ctx);
     static double totalBracketOffset(LayoutContext& ctx);
 
-    static double instrumentNamesWidth(System* system, LayoutContext& ctx, bool isFirstSystem, double instrumentNameOffset);
+    static void computeInstrumentNameOffset(System* system, LayoutContext& ctx);
+    static void computeInstrumentNamesWidth(System* system, LayoutContext& ctx);
     static void setInstrumentNamesVerticalPos(System* system, LayoutContext& ctx);
-    static void setInstrumentNamesHorizontalPos(System* system, double maxNamesWidth, double instrumentNameOffset);
+    static void setInstrumentNamesHorizontalPos(System* system);
     static void setInstrumentNames(System* system, LayoutContext& ctx, bool longName, Fraction tick = { 0, 1 });
-    static void setIndividualStaffNames(System* system, LayoutContext& ctx, bool longName, Fraction tick = { 0, 1 });
 
 private:
     static Bracket* createBracket(System* system, LayoutContext& ctx, BracketItem* bi, size_t column, staff_idx_t staffIdx,
                                   std::vector<Bracket*>& bl, Measure* measure);
+
+    static void updateName(System* system, staff_idx_t staffIdx, LayoutContext& ctx, const String& name, InstrumentNameType type,
+                           InstrumentNameRole role);
+    static bool stackVertically(InstrumentName* n);
 };
 }

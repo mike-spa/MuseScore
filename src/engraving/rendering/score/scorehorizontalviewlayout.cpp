@@ -280,7 +280,6 @@ void ScoreHorizontalViewLayout::collectLinearSystem(LayoutContext& ctx)
 
     System* system = ctx.mutDom().systems().front();
     SystemHeaderLayout::setInstrumentNames(system, ctx, /* longNames */ true);
-    SystemHeaderLayout::setIndividualStaffNames(system, ctx, /* longNames */ true);
 
     double targetSystemWidth = ctx.dom().nmeasures() * ctx.conf().styleAbsolute(Sid::minMeasureWidth);
     system->setWidth(targetSystemWidth);

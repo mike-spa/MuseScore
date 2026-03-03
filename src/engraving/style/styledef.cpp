@@ -58,6 +58,9 @@ const std::array<StyleDef::StyleValue, size_t(Sid::STYLES)> StyleDef::styleValue
     styleDef(minSystemDistance,                          8.5_sp),
     styleDef(maxSystemDistance,                          15.0_sp),
     styleDef(alignSystemToMargin,                        true),
+    styleDef(instrumentNamesAlignLong,                   InstrumentNamesAlign::RIGHT_RIGHT),
+    styleDef(instrumentNamesAlignShort,                  InstrumentNamesAlign::RIGHT_RIGHT),
+    styleDef(instrumentNamesStackVertically,             false),
 
     styleDef(enableVerticalSpread,                       true),
     styleDef(spreadSystem,                               2.5),

@@ -274,6 +274,11 @@ double SystemHeaderLayout::instrumentNamesWidth(System* system, LayoutContext& c
     std::set<Part*> partsWithIndividualStaffNames;
 
     for (staff_idx_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+        if (!ctx.dom().staff(staffIdx)->show()) {
+            // We know that the staff is hidden in the entire score so safe to skip
+            continue;
+        }
+
         const SysStaff* staff = system->staff(staffIdx);
         if (!staff || (isFirstSystem && !staff->show())) {
             continue;
@@ -288,9 +293,14 @@ double SystemHeaderLayout::instrumentNamesWidth(System* system, LayoutContext& c
     }
 
     for (staff_idx_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
+        if (!ctx.dom().staff(staffIdx)->part()->show()) {
+            // We know that the part is hidden in the entire score so safe to skip
+            continue;
+        }
+
         const SysStaff* staff = system->staff(staffIdx);
 
-        if (InstrumentName* name = staff->instrumentName; name && name->effectiveStaffIdx() != muse::nidx) {
+        if (InstrumentName* name = staff->instrumentName) {
             TLayout::layoutInstrumentName(name, name->mutldata());
             namesWidth = std::max(namesWidth, name->width());
 

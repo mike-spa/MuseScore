@@ -186,7 +186,7 @@ void EditStaff::updateStaffType(const mu::engraving::StaffType& staffType)
     staffGroupName->setText(staffType.translatedGroupName());
 
     longStaffName->setPlainText(TextBase::unEscape(staffType.longName()));
-    shortStaffName->setPlainText(TextBase::unEscape(staffType.longName()));
+    shortStaffName->setPlainText(TextBase::unEscape(staffType.shortName()));
 }
 
 void EditStaff::updateInstrument()

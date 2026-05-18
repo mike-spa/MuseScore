@@ -138,7 +138,7 @@ bool GuitarPro::createTuningString(int strings, int tuning[])
 {
     bool useFlats = false;
     const char* tune[] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
-    std::vector<int> pitch;
+    muse::vector<int> pitch;
     uint64_t k = 0;
     for (int i = 0; i < strings; ++i) {
         pitch.push_back(tuning[i]);
@@ -209,7 +209,7 @@ uint8_t GuitarPro::readUInt8()
 String GuitarPro::readPascalString(int n)
 {
     uint8_t l = readUInt8();
-    std::vector<char> s(l + 1);
+    muse::vector<char> s(l + 1);
     read(&s[0], l);
     s[l] = 0;
     if (n - l > 0) {
@@ -229,7 +229,7 @@ String GuitarPro::readPascalString(int n)
 String GuitarPro::readWordPascalString()
 {
     int l = readInt();
-    std::vector<char> c(l + 1);
+    muse::vector<char> c(l + 1);
     read(&c[0], l);
     c[l] = 0;
     std::string_view sw(&c[0], l);
@@ -246,7 +246,7 @@ String GuitarPro::readWordPascalString()
 String GuitarPro::readBytePascalString()
 {
     int l = readUInt8();
-    std::vector<char> c(l + 1);
+    muse::vector<char> c(l + 1);
     read(&c[0], l);
     c[l] = 0;
     std::string_view sw(&c[0], l);
@@ -268,7 +268,7 @@ String GuitarPro::readDelphiString()
         ASSERT_X("readDelphiString: first word doesn't match second byte");
         l = maxl - 1;
     }
-    std::vector<char> c(l + 1);
+    muse::vector<char> c(l + 1);
     read(&c[0], l);
     c[l] = 0;
     return String::fromAscii(&c[0]);
@@ -611,9 +611,9 @@ void GuitarPro::readVolta(GPVolta* gpVolta, Measure* m)
     }
 }
 
-std::vector<PitchValue> GuitarPro::readBendDataFromFile()
+muse::vector<PitchValue> GuitarPro::readBendDataFromFile()
 {
-    std::vector<PitchValue> bendData;
+    muse::vector<PitchValue> bendData;
 
     readUInt8();                          // icon
     /*int amplitude =*/ readInt();        // shown amplitude
@@ -629,7 +629,7 @@ std::vector<PitchValue> GuitarPro::readBendDataFromFile()
     return bendData;
 }
 
-void GuitarPro::createBend(Note* note, std::vector<PitchValue>& bendData)
+void GuitarPro::createBend(Note* note, muse::vector<PitchValue>& bendData)
 {
     if (bendData.size() < 2) {
         return;
@@ -654,7 +654,7 @@ void GuitarPro::createBend(Note* note, std::vector<PitchValue>& bendData)
 
 void GuitarPro::readBend(Note* note)
 {
-    std::vector<PitchValue> bendData = readBendDataFromFile();
+    muse::vector<PitchValue> bendData = readBendDataFromFile();
     createBend(note, bendData);
 }
 
@@ -1048,7 +1048,7 @@ bool GuitarPro1::read(IODevice* io)
         for (int j = 0; j < strings; ++j) {
             tuning[j] = readInt();
         }
-        std::vector<int> tuning2(strings);
+        muse::vector<int> tuning2(strings);
         for (int k = 0; k < strings; ++k) {
             tuning2[strings - k - 1] = tuning[k];
         }
@@ -1101,7 +1101,7 @@ bool GuitarPro1::read(IODevice* io)
             s->setTrack(0);
             segment->add(s);
         }
-        std::vector<Tuplet*> tuplets(staves);
+        muse::vector<Tuplet*> tuplets(staves);
         for (size_t staffIdx = 0; staffIdx < staves; ++staffIdx) {
             tuplets[staffIdx] = 0;
         }
@@ -1509,7 +1509,7 @@ bool GuitarPro2::read(IODevice* io)
         int capo         = readInt();
         /*int color        =*/ readInt();
 
-        std::vector<int> tuning2(strings);
+        muse::vector<int> tuning2(strings);
         //int tuning2[strings];
         for (int k = 0; k < strings; ++k) {
             tuning2[strings - k - 1] = tuning[k];
@@ -1602,7 +1602,7 @@ bool GuitarPro2::read(IODevice* io)
             segment->add(s);
         }
 
-        std::vector<Tuplet*> tuplets(staves);
+        muse::vector<Tuplet*> tuplets(staves);
         // Tuplet* tuplets[staves];
         for (size_t staffIdx = 0; staffIdx < staves; ++staffIdx) {
             tuplets[staffIdx] = 0;
@@ -1989,7 +1989,7 @@ GuitarPro::ReadNoteResult GuitarPro1::readNote(int string, Note* note)
         Chord* chord     = note->chord();
         Segment* segment = chord->segment()->prev1(SegmentType::ChordRest);
         track_idx_t track = note->track();
-        std::vector<Chord*> chords;
+        muse::vector<Chord*> chords;
         Note* true_note = nullptr;
         while (segment) {
             EngravingItem* e = segment->element(track);
@@ -2257,7 +2257,7 @@ bool GuitarPro3::read(IODevice* io)
         int capo         = readInt();
         /*int color        =*/ readInt();
 
-        std::vector<int> tuning2(strings);
+        muse::vector<int> tuning2(strings);
         //int tuning2[strings];
         for (int k = 0; k < strings; ++k) {
             tuning2[strings - k - 1] = tuning[k];
@@ -2350,7 +2350,7 @@ bool GuitarPro3::read(IODevice* io)
             segment->add(s);
         }
 
-        std::vector<Tuplet*> tuplets(staves);
+        muse::vector<Tuplet*> tuplets(staves);
         for (size_t staffIdx = 0; staffIdx < staves; ++staffIdx) {
             tuplets[staffIdx] = 0;
         }
@@ -2718,7 +2718,7 @@ void GuitarPro::readTremoloBar(int /*track*/, Segment* /*segment*/)
     /*int a4 =*/ readChar();
     /*int a5 =*/ readChar();
     int n  =  readInt();
-    std::vector<PitchValue> points;
+    muse::vector<PitchValue> points;
     for (int i = 0; i < n; ++i) {
         int time    = readInt();
         int pitch   = readInt();
@@ -2750,7 +2750,7 @@ void GuitarPro::addTunings()
             }
 
             const StringData sd = *p->instrument()->stringData();
-            std::vector<int> tuning(sd.strings());
+            muse::vector<int> tuning(sd.strings());
             for (size_t i = 0; i < tuning.size(); ++i) {
                 tuning[i] = sd.stringList().at(i).pitch + p->instrument()->transpose().chromatic;
             }
@@ -2778,7 +2778,7 @@ void GuitarPro::addTunings()
 
 static void addMetaInfo(MasterScore* score, GuitarPro* gp, bool experimental)
 {
-    std::vector<String> fieldNames = { gp->title, gp->subtitle, gp->artist,
+    muse::vector<String> fieldNames = { gp->title, gp->subtitle, gp->artist,
                                        gp->album, gp->composer };
 
     bool createTitleField

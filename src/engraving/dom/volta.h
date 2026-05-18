@@ -78,9 +78,9 @@ public:
     void setChannel() const;
     void setTempo() const;
 
-    std::vector<int> endings() const { return m_endings; }
-    std::vector<int>& endings() { return m_endings; }
-    void setEndings(const std::vector<int>& l);
+    muse::vector<int> endings() const { return m_endings; }
+    muse::vector<int>& endings() { return m_endings; }
+    void setEndings(const muse::vector<int>& l);
     void setText(const String& s);
     String text() const;
 
@@ -104,7 +104,7 @@ protected:
     Sid defaultPosSid() const override;
 
 private:
-    std::vector<int> m_endings;
+    muse::vector<int> m_endings;
 };
 } // namespace mu::engraving
 

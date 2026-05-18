@@ -48,7 +48,7 @@ class GuitarBend;
 //---------------------------------------------------------
 
 struct ElementPattern {
-    std::vector<EngravingItem*> el;
+    muse::vector<EngravingItem*> el;
     int type = 0;
     int subtype = 0;
     staff_idx_t staffStart = 0;
@@ -66,7 +66,7 @@ struct ElementPattern {
 //---------------------------------------------------------
 
 struct NotePattern : ElementPattern {
-    std::vector<Note*> el;
+    muse::vector<Note*> el;
     int pitch = -1;
     int string = INVALID_STRING_INDEX;
     int tpc = Tpc::TPC_INVALID;
@@ -110,9 +110,9 @@ public:
     bool isLocked() const { return !m_lockReason.isEmpty(); }
     const String& lockReason() const { return m_lockReason; }
 
-    const std::vector<EngravingItem*>& elements() const { return m_el; }
-    std::vector<EngravingItem*> elements(ElementType type) const;
-    std::vector<Note*> noteList(track_idx_t track = muse::nidx) const;
+    const muse::vector<EngravingItem*>& elements() const { return m_el; }
+    muse::vector<EngravingItem*> elements(ElementType type) const;
+    muse::vector<Note*> noteList(track_idx_t track = muse::nidx) const;
 
     const std::list<EngravingItem*> uniqueElements() const;
     std::list<Note*> uniqueNotes(track_idx_t track = muse::nidx, bool tied = true) const;
@@ -131,7 +131,7 @@ public:
     Measure* findMeasure() const;
     MeasureBase* startMeasureBase() const;
     MeasureBase* endMeasureBase() const;
-    std::vector<System*> selectedSystems() const;
+    muse::vector<System*> selectedSystems() const;
     void update();
     void updateState();
     void dump();
@@ -183,7 +183,7 @@ private:
 
     Score* m_score = nullptr;
     SelState m_state = SelState::NONE;
-    std::vector<EngravingItem*> m_el;            // valid in mode SelState::LIST
+    muse::vector<EngravingItem*> m_el;            // valid in mode SelState::LIST
 
     staff_idx_t m_staffStart = 0;            // valid if selState is SelState::RANGE
     staff_idx_t m_staffEnd = 0;

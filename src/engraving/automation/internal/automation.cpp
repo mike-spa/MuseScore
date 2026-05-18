@@ -154,7 +154,7 @@ void Automation::moveTicks(int utickFrom, int diff)
         // Step 1: find the first point >= utickFrom
         auto startIt = curve.lower_bound(utickFrom);
 
-        std::vector<std::pair<int, AutomationPoint> > toMove;
+        muse::vector<std::pair<int, AutomationPoint> > toMove;
         toMove.reserve(std::distance(startIt, curve.end()));
 
         // Step 2: copy affected points

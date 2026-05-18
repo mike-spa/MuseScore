@@ -175,7 +175,7 @@ void CompatMidiRender::createPlayEvents(const Score* score, const CompatMidiRend
     //
     //    render normal (and articulated) chords
     //
-    std::vector<NoteEventList> el = CompatMidiRender::renderChord(context, chord, prevChord, gateTime, ontime, trailtime);
+    muse::vector<NoteEventList> el = CompatMidiRender::renderChord(context, chord, prevChord, gateTime, ontime, trailtime);
     if (chord->playEventType() == PlayEventType::Auto) {
         chord->setNoteEventLists(el);
     }
@@ -189,15 +189,15 @@ void CompatMidiRender::createPlayEvents(const Score* score, const CompatMidiRend
 //    trailtime signifies how much gap to leave after the note to allow for graceNotesAfter to be rendered
 //---------------------------------------------------------
 
-std::vector<NoteEventList> CompatMidiRender::renderChord(const CompatMidiRendererInternal::Context& context, Chord* chord, Chord* prevChord,
+muse::vector<NoteEventList> CompatMidiRender::renderChord(const CompatMidiRendererInternal::Context& context, Chord* chord, Chord* prevChord,
                                                          int gateTime, int ontime, int trailtime)
 {
-    const std::vector<mu::engraving::Note*>& notes = chord->notes();
+    const muse::vector<mu::engraving::Note*>& notes = chord->notes();
     if (notes.empty()) {
-        return std::vector<NoteEventList>();
+        return muse::vector<NoteEventList>();
     }
 
-    std::vector<NoteEventList> ell(notes.size(), NoteEventList());
+    muse::vector<NoteEventList> ell(notes.size(), NoteEventList());
 
     bool arpeggio = false;
 
@@ -279,7 +279,7 @@ std::vector<NoteEventList> CompatMidiRender::renderChord(const CompatMidiRendere
 //   renderArpeggio
 //---------------------------------------------------------
 
-void CompatMidiRender::renderArpeggio(Chord* chord, std::vector<NoteEventList>& ell, int ontime)
+void CompatMidiRender::renderArpeggio(Chord* chord, muse::vector<NoteEventList>& ell, int ontime)
 {
     int notes = int(chord->notes().size());
     int l = 64;
@@ -316,7 +316,7 @@ void CompatMidiRender::renderArpeggio(Chord* chord, std::vector<NoteEventList>& 
 //   renderTremolo
 //---------------------------------------------------------
 
-void CompatMidiRender::renderTremolo(Chord* chord, std::vector<NoteEventList>& ell, int& ontime, double tremoloPartOfChord /* = 1.0 */)
+void CompatMidiRender::renderTremolo(Chord* chord, muse::vector<NoteEventList>& ell, int& ontime, double tremoloPartOfChord /* = 1.0 */)
 {
     if (muse::RealIsNull(tremoloPartOfChord)) {
         return;
@@ -464,7 +464,7 @@ void CompatMidiRender::renderTremolo(Chord* chord, std::vector<NoteEventList>& e
 //---------------------------------------------------------
 
 void CompatMidiRender::renderChordArticulation(const CompatMidiRendererInternal::Context& context, Chord* chord,
-                                               std::vector<NoteEventList>& ell, int& gateTime, double graceOnBeatProportion,
+                                               muse::vector<NoteEventList>& ell, int& gateTime, double graceOnBeatProportion,
                                                bool tremoloBefore /* = false */)
 {
     Segment* seg = chord->segment();
@@ -528,8 +528,8 @@ void CompatMidiRender::updateGateTime(const Instrument* instrument, int& gateTim
 
 void CompatMidiRender::createGraceNotesPlayEvents(const Score* score, const Fraction& tick, Chord* chord, int& ontime, int& trailtime)
 {
-    std::vector<Chord*> gnb = chord->graceNotesBefore(true);
-    std::vector<Chord*> gna = chord->graceNotesAfter(true);
+    muse::vector<Chord*> gnb = chord->graceNotesBefore(true);
+    muse::vector<Chord*> gna = chord->graceNotesAfter(true);
     int nb = int(gnb.size());
     int na = int(gna.size());
     if (0 == nb + na) {
@@ -588,7 +588,7 @@ void CompatMidiRender::createGraceNotesPlayEvents(const Score* score, const Frac
     }
 
     for (int i = 0, on = 0; i < nb; ++i) {
-        std::vector<NoteEventList> el;
+        muse::vector<NoteEventList> el;
         Chord* gc = gnb.at(i);
         size_t nn = gc->notes().size();
         for (unsigned ii = 0; ii < nn; ++ii) {
@@ -625,7 +625,7 @@ void CompatMidiRender::createGraceNotesPlayEvents(const Score* score, const Frac
         int graceDuration1 = trailtime / na;
         int on = 1000 - trailtime;
         for (int i = 0; i < na; ++i) {
-            std::vector<NoteEventList> el;
+            muse::vector<NoteEventList> el;
             Chord* gc = gna.at(i);
             size_t nn = gc->notes().size();
             for (size_t ii = 0; ii < nn; ++ii) {
@@ -649,8 +649,8 @@ void CompatMidiRender::createGraceNotesPlayEvents(const Score* score, const Frac
 void CompatMidiRender::renderGlissando(NoteEventList* events, Note* notestart, double graceOnBeatProportion,
                                        bool tremoloBefore /* = false */)
 {
-    std::vector<int> empty = {};
-    std::vector<int> body;
+    muse::vector<int> empty = {};
+    muse::vector<int> body;
     for (Spanner* s : notestart->spannerFor()) {
         if (s->isGlissando() && s->playSpanner() && Glissando::pitchSteps(s, body)) {
             CompatMidiRender::renderNoteArticulation(events, notestart, true, Constants::DIVISION, empty, body, false, true, empty, 16, 0,
@@ -669,8 +669,8 @@ void CompatMidiRender::renderGlissando(NoteEventList* events, Note* notestart, d
 //---------------------------------------------------------
 
 bool CompatMidiRender::renderNoteArticulation(NoteEventList* events, Note* note, bool chromatic, int requestedTicksPerNote,
-                                              const std::vector<int>& prefix, const std::vector<int>& body,
-                                              bool repeatp, bool sustainp, const std::vector<int>& suffix,
+                                              const muse::vector<int>& prefix, const muse::vector<int>& body,
+                                              bool repeatp, bool sustainp, const muse::vector<int>& suffix,
                                               int fastestFreq /* = 64 */, int slowestFreq /* = 8 */, // 64 Hz and 8 Hz
                                               double graceOnBeatProportion /* = 0 */, bool tremoloBefore /* = false */)
 {
@@ -752,7 +752,7 @@ bool CompatMidiRender::renderNoteArticulation(NoteEventList* events, Note* note,
     // If so, increment the duration by the appropriate note duration, and increment the index, j, to the next note index
     // of a different pitch.
     // The total duration of the tied note is returned, and the index is modified.
-    auto tieForward = [millespernote](int& j, const std::vector<int>& vec) {
+    auto tieForward = [millespernote](int& j, const muse::vector<int>& vec) {
         int size = int(vec.size());
         int duration = millespernote;
         while (j < size - 1 && vec[j] == vec[j + 1]) {
@@ -801,7 +801,7 @@ bool CompatMidiRender::renderNoteArticulation(NoteEventList* events, Note* note,
             INVALID
         } glissandoState = GlissandoState::NOT_FOUND;
 
-        std::vector<int> onTimes;
+        muse::vector<int> onTimes;
         for (Spanner* spanner : note->spannerFor()) {
             if (spanner->isGlissando()) {
                 Glissando* glissando = toGlissando(spanner);
@@ -894,7 +894,7 @@ bool CompatMidiRender::renderNoteArticulation(NoteEventList* events, Note* note,
         return false;
     }
 
-    std::vector<int> emptypattern = {};
+    muse::vector<int> emptypattern = {};
     for (auto& oe : excursions) {
         if (oe.atype == articulationType && (0 == oe.ostyles.size()
                                              || oe.ostyles.end() != oe.ostyles.find(ornamentStyle))) {
@@ -1037,8 +1037,8 @@ int CompatMidiRender::adjustTrailtime(int trailtime, Chord* currentChord, Chord*
         return trailtime;
     }
 
-    const std::vector<Chord*>& graceBeforeChords = nextChord->graceNotesBefore();
-    std::vector<Chord*> graceNotesBeforeBar;
+    const muse::vector<Chord*>& graceBeforeChords = nextChord->graceNotesBefore();
+    muse::vector<Chord*> graceNotesBeforeBar;
 
     bool hasGraceBend = std::any_of(graceBeforeChords.begin(), graceBeforeChords.end(), [](Chord* ch) {
         return std::any_of(ch->notes().begin(), ch->notes().end(), [](Note* n) {

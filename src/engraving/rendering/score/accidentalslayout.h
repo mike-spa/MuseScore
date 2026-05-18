@@ -37,21 +37,21 @@ struct ShapeElement;
 namespace mu::engraving::rendering::score {
 class LayoutContext;
 
-using AccidentalGroups = std::vector<std::vector<Accidental*> >;
+using AccidentalGroups = muse::vector<muse::vector<Accidental*> >;
 
 class AccidentalsLayout
 {
 public:
-    static void layoutAccidentals(const std::vector<Chord*>& chords, LayoutContext& ctx);
+    static void layoutAccidentals(const muse::vector<Chord*>& chords, LayoutContext& ctx);
 
 private:
     struct AccidentalsLayoutContext {
-        AccidentalsLayoutContext (std::vector<Accidental*> acc, std::vector<Chord*> ch);
+        AccidentalsLayoutContext (muse::vector<Accidental*> acc, muse::vector<Chord*> ch);
 
-        std::vector<Accidental*> allAccidentals;
-        std::vector<Chord*> chords;
+        muse::vector<Accidental*> allAccidentals;
+        muse::vector<Chord*> chords;
         AccidentalGroups accidentalSubChords;
-        std::vector<Accidental*> stackedAccidentals;
+        muse::vector<Accidental*> stackedAccidentals;
         Shape stackedAccidentalsShape;
         Shape chordsShape;
         size_t subChordsCountBeforeOctaveMerge = 1;
@@ -102,9 +102,9 @@ private:
 
     using AccidentalsVectorView = muse::VectorView<Accidental*>;
 
-    static void collectAccidentals(const std::vector<Chord*> chords, std::vector<Accidental*>& allAccidentals,
-                                   std::vector<Accidental*>& redundantAccidentals, std::vector<Accidental*>& invisibleAccidentals);
-    static bool accidentalIsRedundant(const Accidental* acc, const std::vector<Accidental*>& allAccidentals);
+    static void collectAccidentals(const muse::vector<Chord*> chords, muse::vector<Accidental*>& allAccidentals,
+                                   muse::vector<Accidental*>& redundantAccidentals, muse::vector<Accidental*>& invisibleAccidentals);
+    static bool accidentalIsRedundant(const Accidental* acc, const muse::vector<Accidental*>& allAccidentals);
 
     static void doAccidentalPlacement(AccidentalsLayoutContext& ctx);
 
@@ -116,30 +116,30 @@ private:
 
     static void createChordsShape(AccidentalsLayoutContext& ctx);
 
-    static void layoutSubChord(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static void layoutSubChord(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
     static void stackAccidental(Accidental* acc, AccidentalsLayoutContext& ctx);
 
-    static void computeOrdering(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
-    static AccidentalGroups splitIntoPriorityGroups(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static void computeOrdering(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static AccidentalGroups splitIntoPriorityGroups(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
 
-    static AccidentalGroups splitAccordingToAccidDisplacement(std::vector<Accidental*>& accidentals, const AccidentalsLayoutContext& ctx);
-    static AccidentalGroups groupAccidentalsByXPos(std::vector<Accidental*>& accidentals, const AccidentalsLayoutContext& ctx);
+    static AccidentalGroups splitAccordingToAccidDisplacement(muse::vector<Accidental*>& accidentals, const AccidentalsLayoutContext& ctx);
+    static AccidentalGroups groupAccidentalsByXPos(muse::vector<Accidental*>& accidentals, const AccidentalsLayoutContext& ctx);
     static void moveOctavesToSecondGroup(AccidentalGroups& subGroups);
 
-    static AccidentalGroups splitAccordingToNoteDisplacement(std::vector<Accidental*>& accidentals, const AccidentalsLayoutContext& ctx);
-    static AccidentalGroups groupAccidentalsByNoteXPos(const std::vector<Accidental*>& accidentals);
+    static AccidentalGroups splitAccordingToNoteDisplacement(muse::vector<Accidental*>& accidentals, const AccidentalsLayoutContext& ctx);
+    static AccidentalGroups groupAccidentalsByNoteXPos(const muse::vector<Accidental*>& accidentals);
     static void moveSecondsInSameGroup(AccidentalGroups& subGroups);
 
-    static void determineStackingOrder(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
-    static void computeStandardOrdering(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
-    static void computeCompactOrdering(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
-    static void computeOrderingWithLeastColumns(std::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
-    static void findAndInsertSecond(Accidental* acc, std::vector<Accidental*>& accidentalsPlaced, AccidentalsVectorView& accidentalsToPlace,
+    static void determineStackingOrder(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static void computeStandardOrdering(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static void computeCompactOrdering(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static void computeOrderingWithLeastColumns(muse::vector<Accidental*>& accidentals, AccidentalsLayoutContext& ctx);
+    static void findAndInsertSecond(Accidental* acc, muse::vector<Accidental*>& accidentalsPlaced, AccidentalsVectorView& accidentalsToPlace,
                                     AccidentalsLayoutContext& ctx);
-    static bool findAndInsertOctave(Accidental* acc, std::vector<Accidental*>& accidentalsPlaced, AccidentalsVectorView& accidentalsToPlace,
+    static bool findAndInsertOctave(Accidental* acc, muse::vector<Accidental*>& accidentalsPlaced, AccidentalsVectorView& accidentalsToPlace,
                                     AccidentalsLayoutContext& ctx, bool acceptAbove = true, bool acceptBelow = true);
 
-    static void applyOrderingOffsets(std::vector<Accidental*>& accidentals);
+    static void applyOrderingOffsets(muse::vector<Accidental*>& accidentals);
 
     static double minAccidentalToChordDistance(Accidental* acc, const Shape& accShape, const AccidentalsLayoutContext& ctx);
     static double kerningLimitationsIntoChord(Accidental* acc, const Shape& accShape, const ShapeElement& chordElement,
@@ -155,9 +155,9 @@ private:
 
     static void verticallyAlignAccidentals(AccidentalsLayoutContext& ctx);
     static void collectVerticalSetsOfOffsetOctaves(std::set<Accidental*>& accidentalsAlreadyGrouped, std::map<Accidental*,
-                                                                                                              std::vector<Accidental*> >& verticalSets, AccidentalsLayoutContext& ctx);
+                                                                                                              muse::vector<Accidental*> >& verticalSets, AccidentalsLayoutContext& ctx);
     static void collectVerticalSets(std::set<Accidental*>& accidentalsAlreadyGrouped, std::map<Accidental*,
-                                                                                               std::vector<Accidental*> >& verticalSets,
+                                                                                               muse::vector<Accidental*> >& verticalSets,
                                     AccidentalsLayoutContext& ctx);
     static void alignVerticalSets(AccidentalGroups& vertSets, AccidentalsLayoutContext& ctx);
 
@@ -173,7 +173,7 @@ private:
     static void setXposRelativeToSegment(Accidental* accidental, double x);
     static double xPosRelativeToSegment(const Accidental* accidental);
 
-    static void sortTopDown(std::vector<Accidental*>& accidentals);
+    static void sortTopDown(muse::vector<Accidental*>& accidentals);
 
     static bool keepAccidentalsCloseToChord(const Chord* chord);
 };

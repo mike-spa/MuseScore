@@ -77,8 +77,8 @@ void StringTuningsSettingsModel::init()
         m_itemId = instrument->family().toStdString();
     }
 
-    const std::vector<engraving::instrString>& stringList = stringData->stringList();
-    const std::vector<engraving::string_idx_t>& visibleStrings = stringTunings->visibleStrings();
+    const muse::vector<engraving::instrString>& stringList = stringData->stringList();
+    const muse::vector<engraving::string_idx_t>& visibleStrings = stringTunings->visibleStrings();
     int numOfStrings = static_cast<int>(stringList.size());
     for (int i = 0; i < numOfStrings; ++i) {
         engraving::string_idx_t instrStringIndex = numOfStrings - i - 1;
@@ -343,7 +343,7 @@ void StringTuningsSettingsModel::saveStrings()
 
     const mu::engraving::StringData* originStringData = stringTunings->stringData();
 
-    std::vector<engraving::instrString> stringList = originStringData->stringList();
+    muse::vector<engraving::instrString> stringList = originStringData->stringList();
     stringList.resize(m_strings.size());
 
     int numOfStrings = m_strings.size();
@@ -364,7 +364,7 @@ void StringTuningsSettingsModel::saveStrings()
 
 void StringTuningsSettingsModel::saveStringsVisibleState()
 {
-    std::vector<int> visibleStrings;
+    muse::vector<int> visibleStrings;
     int numOfStrings = static_cast<int>(m_strings.size());
     for (int i = 0; i < numOfStrings; ++i) {
         const StringTuningsItem* item = m_strings.at(i);

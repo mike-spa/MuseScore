@@ -31,7 +31,7 @@ using namespace mu::engraving;
 using namespace muse;
 using namespace muse::mpe;
 
-static std::vector<int> pitchSteps(const Note* note)
+static muse::vector<int> pitchSteps(const Note* note)
 {
     const Glissando* glissando = nullptr;
     for (const Spanner* spanner : note->spannerFor()) {
@@ -45,7 +45,7 @@ static std::vector<int> pitchSteps(const Note* note)
         return {};
     }
 
-    std::vector<int> pitchSteps;
+    muse::vector<int> pitchSteps;
     Glissando::pitchSteps(glissando, pitchSteps);
 
     return pitchSteps;
@@ -53,7 +53,7 @@ static std::vector<int> pitchSteps(const Note* note)
 
 muse::mpe::duration_t GlissandosRenderer::discreteGlissandoStepDuration(const Note* note, const duration_t noteDuration)
 {
-    const std::vector<int> steps = pitchSteps(note);
+    const muse::vector<int> steps = pitchSteps(note);
     if (steps.empty()) {
         return 0;
     }
@@ -63,7 +63,7 @@ muse::mpe::duration_t GlissandosRenderer::discreteGlissandoStepDuration(const No
 
 void GlissandosRenderer::renderDiscreteGlissando(const Note* note, NominalNoteCtx& ctx, mpe::PlaybackEventList& result)
 {
-    const std::vector<int> steps = pitchSteps(note);
+    const muse::vector<int> steps = pitchSteps(note);
     if (steps.empty()) {
         return;
     }

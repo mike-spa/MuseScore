@@ -55,7 +55,7 @@ public:
     };
 
     EngravingItem* e = nullptr;
-    std::vector<PropertyData> propertyData;
+    muse::vector<PropertyData> propertyData;
 
     void pushProperty(Pid pid)
     {

@@ -35,14 +35,14 @@ using namespace mu::project;
 using namespace mu::notation;
 using namespace mu::engraving;
 
-std::vector<INotationWriter::UnitType> NotationMidiWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> NotationMidiWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool NotationMidiWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

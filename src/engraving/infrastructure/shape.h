@@ -81,7 +81,7 @@ public:
         : m_type(t) {}
     Shape(const RectF& r, const EngravingItem* p = nullptr, Type t = Type::Fixed)
         : m_type(t) { setBBox(r, p); }
-    Shape(const std::vector<RectF>& rects, const EngravingItem* p = nullptr);
+    Shape(const muse::vector<RectF>& rects, const EngravingItem* p = nullptr);
 
     Type type() const { return m_type; }
     bool isComposite() const { return m_type == Type::Composite; }
@@ -128,9 +128,9 @@ public:
 
     // ---
 
-    const std::vector<ShapeElement>& elements() const { return m_elements; }
-    std::vector<ShapeElement>& elements() { return m_elements; }
-    std::vector<RectF> toRects() const;
+    const muse::vector<ShapeElement>& elements() const { return m_elements; }
+    muse::vector<ShapeElement>& elements() { return m_elements; }
+    muse::vector<RectF> toRects() const;
 
     std::optional<ShapeElement> find_if(const std::function<bool(const ShapeElement&)>& func) const;
     std::optional<ShapeElement> find_first(ElementType type) const;
@@ -183,7 +183,7 @@ private:
     void invalidateBBox();
 
     Type m_type = Type::Fixed;
-    std::vector<ShapeElement> m_elements;
+    muse::vector<ShapeElement> m_elements;
     mutable RectF m_bbox;   // cache
 };
 

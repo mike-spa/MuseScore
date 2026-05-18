@@ -36,7 +36,7 @@ namespace mu::notation {
 class ScoreRangeUtilities
 {
 public:
-    static std::vector<muse::RectF> boundingArea(
+    static muse::vector<muse::RectF> boundingArea(
         const engraving::Score* score, const engraving::Segment* startSegment, const engraving::Segment* endSegment,
         engraving::staff_idx_t startStaffIndex, engraving::staff_idx_t endStaffIndex);
 
@@ -47,7 +47,7 @@ private:
         const engraving::Segment* endSegment = nullptr;
     };
 
-    static std::vector<RangeSection> splitRangeBySections(
+    static muse::vector<RangeSection> splitRangeBySections(
         const engraving::Segment* rangeStartSegment, const engraving::Segment* rangeEndSegment);
 
     static engraving::staff_idx_t firstVisibleStaffIdx(

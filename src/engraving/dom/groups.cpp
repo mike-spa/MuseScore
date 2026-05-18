@@ -49,7 +49,7 @@ struct NoteGroup {
 //   noteGroups
 //---------------------------------------------------------
 
-static std::vector<NoteGroup> noteGroups {
+static muse::vector<NoteGroup> noteGroups {
     { Fraction(2, 2),
       Groups({ { 4, 0x200 }, { 8, 0x110 }, { 12, 0x200 }, { 16, 0x111 }, { 20, 0x200 }, { 24, 0x110 }, { 28, 0x200 } })
     },
@@ -161,8 +161,8 @@ BeamMode Groups::baseBeamMode(const ChordRest* cr, const ChordRest* prev)
 }
 
 //---------------------------------------------------------
-//   actualBeamMode
-//    final beam mode after applying contextual corrections
+//   actualBeamMode
+//    final beam mode after applying contextual corrections
 //---------------------------------------------------------
 
 BeamMode Groups::actualBeamMode(const ChordRest* cr, const ChordRest* prev)

@@ -1178,7 +1178,7 @@ void Measure::cmdRemoveStaves(staff_idx_t sStaff, staff_idx_t eStaff)
         }
 
         // Create copy, because s->annotations() will be modified during the loop
-        std::vector<EngravingItem*> annotations = s->annotations();
+        muse::vector<EngravingItem*> annotations = s->annotations();
         for (EngravingItem* e : annotations) {
             if (allowRemoveWhenRemovingStaves(e, sStaff, eStaff)) {
                 e->undoUnlink();
@@ -1234,7 +1234,7 @@ void Measure::cmdAddStaves(staff_idx_t sStaff, staff_idx_t eStaff, bool createRe
 
     // collect unique staves (only one instance for linked staves):
 
-    std::vector<staff_idx_t> sl;
+    muse::vector<staff_idx_t> sl;
     for (staff_idx_t staffIdx = sStaff; staffIdx < eStaff; ++staffIdx) {
         Staff* s = score()->staff(staffIdx);
         if (s->links()) {
@@ -1880,7 +1880,7 @@ void Measure::adjustToLen(Fraction nf, bool appendRestsIfNecessary)
     }
     Score* s      = score()->masterScore();
     Measure* m    = s->tick2measure(tick());
-    std::vector<staff_idx_t> sl = s->uniqueStaves();
+    muse::vector<staff_idx_t> sl = s->uniqueStaves();
 
     for (staff_idx_t staffIdx : sl) {
         int rests  = 0;
@@ -1910,7 +1910,7 @@ void Measure::adjustToLen(Fraction nf, bool appendRestsIfNecessary)
                 rest->undoChangeProperty(Pid::DURATION_TYPE_WITH_DOTS, DurationTypeWithDots(DurationType::V_MEASURE));
             } else {          // if measure value did change, represent with rests actual measure value
                 // convert the measure duration in a list of values (no dots for rests)
-                std::vector<TDuration> durList = toRhythmicDurationList(nf * stretch,
+                muse::vector<TDuration> durList = toRhythmicDurationList(nf * stretch,
                                                                         /*isRest=*/ true,
                                                                         /*rtickStart=*/ Fraction(0, 1),
                                                                         /*nominal=*/ score()->sigmap()->timesig(tick().ticks()).nominal(),
@@ -2271,9 +2271,9 @@ void Measure::createVoice(int track)
 //   sortStaves
 //---------------------------------------------------------
 
-void Measure::sortStaves(std::vector<staff_idx_t>& dst)
+void Measure::sortStaves(muse::vector<staff_idx_t>& dst)
 {
-    std::vector<MStaff*> ms;
+    muse::vector<MStaff*> ms;
     for (staff_idx_t idx : dst) {
         ms.push_back(m_mstaves[idx]);
     }

@@ -2161,7 +2161,7 @@ void TLayout::layoutFiguredBassItem(const FiguredBassItem* item, FiguredBassItem
 
 static void layoutLines(const FiguredBass* item, FiguredBass::LayoutData* ldata, const LayoutContext& ctx)
 {
-    std::vector<double> lineLengths = ldata->lineLengths;
+    muse::vector<double> lineLengths = ldata->lineLengths;
     if (item->ticks() <= Fraction(0, 1) || !item->segment()) {
         lineLengths.resize(1);                             // be sure to always have
         lineLengths[0] = 0;                                // at least 1 item in array
@@ -2219,7 +2219,7 @@ static void layoutLines(const FiguredBass* item, FiguredBass::LayoutData* ldata,
     ldata->printedLineLength = printedLineLength;
 
     // get duration indicator line(s) from page position of nextSegm
-    const std::vector<System*>& systems = ctx.dom().systems();
+    const muse::vector<System*>& systems = ctx.dom().systems();
     System* s1  = item->segment()->measure()->system();
     System* s2  = nextSegm->measure()->system();
     system_idx_t sysIdx1 = muse::indexOf(systems, s1);
@@ -4293,7 +4293,7 @@ void TLayout::layoutOrnamentCueNote(Ornament* item, LayoutContext& ctx)
         return;
     }
 
-    const std::vector<Note*>& notes = cueNoteChord->notes();
+    const muse::vector<Note*>& notes = cueNoteChord->notes();
     Note* cueNote = notes.empty() ? nullptr : notes.front();
 
     if (!cueNote) {
@@ -4752,7 +4752,7 @@ void TLayout::layoutLine(SLine* item, LayoutContext& ctx)
     PointF p1(item->linePos(Grip::START, &s1));
     PointF p2(item->linePos(Grip::END,   &s2));
 
-    const std::vector<System*>& systems = ctx.dom().systems();
+    const muse::vector<System*>& systems = ctx.dom().systems();
     system_idx_t sysIdx1 = muse::indexOf(systems, s1);
     system_idx_t sysIdx2 = muse::indexOf(systems, s2);
     int segmentsNeeded = 0;
@@ -5113,7 +5113,7 @@ void TLayout::layoutForWidth(StaffLines* item, double w, LayoutContext& ctx)
     double y  = item->pos().y();
     ldata->setBbox(x1, -item->lw() * .5 + y, w, (_lines - 1) * dist + item->lw());
 
-    std::vector<LineF> ll;
+    muse::vector<LineF> ll;
     for (int i = 0; i < _lines; ++i) {
         ll.push_back(LineF(x1, y, x2, y));
         y += dist;
@@ -6842,7 +6842,7 @@ SpannerSegment* TLayout::layoutSystem(Slur* line, System* system, LayoutContext&
 void TLayout::layoutSystemsDone(Spanner* item)
 {
     LAYOUT_CALL_ITEM(item);
-    std::vector<SpannerSegment*> validSegments;
+    muse::vector<SpannerSegment*> validSegments;
     for (SpannerSegment* seg : item->spannerSegments()) {
         if (seg->system()) {
             validSegments.push_back(seg);

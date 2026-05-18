@@ -27,6 +27,8 @@
 
 #include "engraving/thirdparty/intervaltree/IntervalTree.h"
 
+#include "global/types/vector.h"
+
 namespace mu::engraving {
 class Spanner;
 

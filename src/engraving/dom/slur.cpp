@@ -263,7 +263,7 @@ void SlurSegment::changeAnchor(EditData& ed, EngravingItem* element)
     ups(ed.curGrip).off = PointF();
     renderer()->layoutItem(spanner());
     if (spanner()->spannerSegments().size() != segments) {
-        const std::vector<SpannerSegment*>& ss = spanner()->spannerSegments();
+        const muse::vector<SpannerSegment*>& ss = spanner()->spannerSegments();
         const bool moveEnd = ed.curGrip == Grip::END || ed.curGrip == Grip::DRAG;
         SlurSegment* newSegment = toSlurSegment(moveEnd ? ss.back() : ss.front());
         ed.view()->changeEditElement(newSegment);

@@ -96,8 +96,8 @@ struct HarmonyMapKey
     }
 };
 
-static std::map<HarmonyMapKey /*key*/, std::vector<DiagramInfo> > s_harmonyToDiagramMap;
-static std::unordered_map<String /*pattern*/, std::vector<String /*harmonyName*/> > s_diagramPatternToHarmoniesMap;
+static std::map<HarmonyMapKey /*key*/, muse::vector<DiagramInfo> > s_harmonyToDiagramMap;
+static std::unordered_map<String /*pattern*/, muse::vector<String /*harmonyName*/> > s_diagramPatternToHarmoniesMap;
 
 static const muse::io::path_t HARMONY_TO_DIAGRAM_FILE_PATH("://data/harmony_to_diagram.xml");
 
@@ -135,7 +135,7 @@ static HarmonyMapKey createHarmonyMapKey(const String& harmony, const NoteSpelli
     return HarmonyMapKey(keys, rootTpc, bassTpc);
 }
 
-static DiagramInfo resolveDiagram(const std::vector<DiagramInfo>& diagrams)
+static DiagramInfo resolveDiagram(const muse::vector<DiagramInfo>& diagrams)
 {
     auto isSimpler = [](const DiagramInfo& a, const DiagramInfo& b) {
         const String& harmonyNameA = a.harmonyName;
@@ -200,7 +200,7 @@ void FretDiagram::initDefaultValues()
     m_userMag = 1.0;
 
     m_showFingering = false;
-    m_fingering = std::vector<int>(m_strings, 0);
+    m_fingering = muse::vector<int>(m_strings, 0);
 }
 
 FretDiagram::~FretDiagram()
@@ -238,7 +238,7 @@ Segment* FretDiagram::segment() const
 
 void FretDiagram::updateDiagram(const String& harmonyName)
 {
-    std::vector<DiagramInfo> availableDiagrams = patternsFromHarmony(harmonyName);
+    muse::vector<DiagramInfo> availableDiagrams = patternsFromHarmony(harmonyName);
     if (availableDiagrams.empty()) {
         return;
     }
@@ -275,7 +275,7 @@ double FretDiagram::mainWidth() const
 //   dragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> FretDiagram::dragAnchorLines() const
+muse::vector<LineF> FretDiagram::dragAnchorLines() const
 {
     return genericDragAnchorLines();
 }
@@ -556,7 +556,7 @@ void FretDiagram::removeMarker(int s)
 void FretDiagram::removeDot(int s, int f /*= 0*/)
 {
     if (f > 0) {
-        std::vector<FretItem::Dot> tempDots;
+        muse::vector<FretItem::Dot> tempDots;
         for (auto const& d : dot(s)) {
             if (d.exists() && d.fret != f) {
                 tempDots.push_back(FretItem::Dot(d));
@@ -618,13 +618,13 @@ void FretDiagram::applyDiagramPattern(FretDiagram* diagram, const String& patter
 {
     diagram->clear();
 
-    const std::vector<String> parts = pattern.split(';');
+    const muse::vector<String> parts = pattern.split(';');
     if (parts.empty()) {
         return;
     }
 
     const String& mainPart = parts[0];
-    std::vector<String> stringTokens;
+    muse::vector<String> stringTokens;
 
     for (size_t i = 0; i < mainPart.size();) {
         if (mainPart[i] == u'[') {
@@ -657,7 +657,7 @@ void FretDiagram::applyDiagramPattern(FretDiagram* diagram, const String& patter
         if (token.startsWith(u"[") && token.endsWith(u"]")) {
             // Example: [1-O,2-X,3-S]
             String inner = token.mid(1, token.size() - 2);
-            std::vector<String> pairs = inner.split(u',');
+            muse::vector<String> pairs = inner.split(u',');
 
             for (const String& p : pairs) {
                 size_t dash = p.indexOf(u'-');
@@ -745,9 +745,9 @@ String FretDiagram::patternFromDiagram() const
         }
 
         const auto it = dotsMap.find(i);
-        std::vector<FretItem::Dot> dotList;
+        muse::vector<FretItem::Dot> dotList;
         if (it != dotsMap.end()) {
-            const std::vector<FretItem::Dot>& dots = it->second;
+            const muse::vector<FretItem::Dot>& dots = it->second;
             for (const FretItem::Dot& dot : dots) {
                 if (!dot.isPartOfSlurBarre) { // Don't write dot if part of slur barré
                     dotList.push_back(dot);
@@ -812,7 +812,7 @@ String FretDiagram::patternFromDiagram() const
     return pattern;
 }
 
-std::vector<String> FretDiagram::harmoniesFromPattern(const String& pattern) const
+muse::vector<String> FretDiagram::harmoniesFromPattern(const String& pattern) const
 {
     if (s_diagramPatternToHarmoniesMap.empty()) {
         readHarmonyToDiagramFile(HARMONY_TO_DIAGRAM_FILE_PATH);
@@ -820,7 +820,7 @@ std::vector<String> FretDiagram::harmoniesFromPattern(const String& pattern) con
     return muse::value(s_diagramPatternToHarmoniesMap, pattern);
 }
 
-std::vector<DiagramInfo> FretDiagram::patternsFromHarmony(const String& harmonyName)
+muse::vector<DiagramInfo> FretDiagram::patternsFromHarmony(const String& harmonyName)
 {
     if (s_harmonyToDiagramMap.empty()) {
         readHarmonyToDiagramFile(HARMONY_TO_DIAGRAM_FILE_PATH);
@@ -873,20 +873,20 @@ int FretDiagram::numPos() const
 //    take fret value of zero to mean all dots
 //---------------------------------------------------------
 
-std::vector<FretItem::Dot> FretDiagram::dot(int s, int f /*= 0*/) const
+muse::vector<FretItem::Dot> FretDiagram::dot(int s, int f /*= 0*/) const
 {
     if (m_dots.find(s) != m_dots.end()) {
         if (f != 0) {
             for (auto const& d : m_dots.at(s)) {
                 if (d.fret == f) {
-                    return std::vector<FretItem::Dot> { FretItem::Dot(d) };
+                    return muse::vector<FretItem::Dot> { FretItem::Dot(d) };
                 }
             }
         } else {
             return m_dots.at(s);
         }
     }
-    return std::vector<FretItem::Dot> { FretItem::Dot(0) };
+    return muse::vector<FretItem::Dot> { FretItem::Dot(0) };
 }
 
 //---------------------------------------------------------
@@ -985,7 +985,7 @@ void FretDiagram::add(EngravingItem* e)
 
             String pattern = patternFromDiagram();
             if (!pattern.empty()) {
-                std::vector<String> matchedHarmonies = muse::value(s_diagramPatternToHarmoniesMap, pattern);
+                muse::vector<String> matchedHarmonies = muse::value(s_diagramPatternToHarmoniesMap, pattern);
                 if (!matchedHarmonies.empty()) {
                     m_harmony->setHarmony(matchedHarmonies.front());
                 }
@@ -1155,7 +1155,7 @@ bool FretDiagram::setProperty(Pid propertyId, const PropertyValue& v)
         setShowFingering(v.toBool());
         break;
     case Pid::FRET_FINGERING:
-        setFingering(v.value<std::vector<int> >());
+        setFingering(v.value<muse::vector<int> >());
         break;
     case Pid::EXCLUDE_VERTICAL_ALIGN: {
         setExcludeVerticalAlign(v.toBool());
@@ -1178,7 +1178,7 @@ PropertyValue FretDiagram::propertyDefault(Pid pid) const
     if (pid == Pid::FRET_OFFSET) {
         return PropertyValue(0);
     } else if (pid == Pid::FRET_FINGERING) {
-        return std::vector<int>(m_strings, 0);
+        return muse::vector<int>(m_strings, 0);
     }
 
     for (const StyledProperty& p : *styledProperties()) {
@@ -1241,7 +1241,7 @@ String FretDiagram::screenReaderInfo() const
         }
 
         int dotsCount = 0;
-        std::vector<int> fretsWithDots;
+        muse::vector<int> fretsWithDots;
         for (auto const& d : dot(i)) {
             if (!d.exists()) {
                 continue;
@@ -1322,7 +1322,7 @@ String FretDiagram::screenReaderInfo() const
     return res;
 }
 
-void FretDiagram::setFingering(std::vector<int> v)
+void FretDiagram::setFingering(muse::vector<int> v)
 {
     m_fingering = std::move(v);
 }
@@ -1393,7 +1393,7 @@ bool FretDiagram::isCustom(const String& harmonyNameForCompare) const
     NoteSpellingType spellingType = style().styleV(Sid::chordSymbolSpelling).value<NoteSpellingType>();
     HarmonyMapKey key = createHarmonyMapKey(harmonyNameForCompare, spellingType, score()->chordList());
 
-    std::vector<DiagramInfo> availableDiagrams = muse::value(s_harmonyToDiagramMap, key);
+    muse::vector<DiagramInfo> availableDiagrams = muse::value(s_harmonyToDiagramMap, key);
     if (availableDiagrams.empty()) {
         return true;
     }
@@ -1454,7 +1454,7 @@ Char FretItem::markerToChar(FretMarkerType t)
 //   markerTypeToName
 //---------------------------------------------------------
 
-const std::vector<FretItem::MarkerTypeNameItem> FretItem::markerTypeNameMap = {
+const muse::vector<FretItem::MarkerTypeNameItem> FretItem::markerTypeNameMap = {
     { FretMarkerType::CIRCLE,     "circle" },
     { FretMarkerType::CROSS,      "cross" },
     { FretMarkerType::NONE,       "none" }
@@ -1491,7 +1491,7 @@ FretMarkerType FretItem::nameToMarkerType(String n)
 //   dotTypeToName
 //---------------------------------------------------------
 
-const std::vector<FretItem::DotTypeNameItem> FretItem::dotTypeNameMap = {
+const muse::vector<FretItem::DotTypeNameItem> FretItem::dotTypeNameMap = {
     { FretDotType::NORMAL,        "normal" },
     { FretDotType::CROSS,         "cross" },
     { FretDotType::SQUARE,        "square" },

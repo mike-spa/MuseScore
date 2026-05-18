@@ -215,7 +215,7 @@ int Location::note(const EngravingItem* e)
 {
     if (e->isNote()) {
         const Note* n = toNote(e);
-        const std::vector<Note*>& notes = n->chord()->notes();
+        const muse::vector<Note*>& notes = n->chord()->notes();
         if (notes.size() == 1) {
             return 0;
         }

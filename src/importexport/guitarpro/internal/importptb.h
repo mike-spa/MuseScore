@@ -147,7 +147,7 @@ class PowerTab
             return Bar;
         }
     };
-    std::vector<ptBar*> bars;
+    muse::vector<ptBar*> bars;
 
     struct ptNote final : public ptComponent {
         int value{ 0 };
@@ -169,7 +169,7 @@ class PowerTab
         int modification;
         int extra;
         int top_fret;
-        std::vector<int> frets;
+        muse::vector<int> frets;
     };
 
     struct ptChordText final : public ptComponent {
@@ -199,7 +199,7 @@ class PowerTab
         bool palmMute{ false };
         bool accent{ false };
         bool staccato{ false };
-        std::vector<ptNote> notes;
+        muse::vector<ptNote> notes;
 
         ptBeat(int _staff, int _voice)
             : staff(_staff), voice(_voice) {}
@@ -255,7 +255,7 @@ class PowerTab
 
     struct ptPosition {
         int position{ 0 };
-        std::vector<std::shared_ptr<ptComponent> > components;
+        muse::vector<std::shared_ptr<ptComponent> > components;
         void addComponent(ptComponent* c);
     };
 
@@ -272,7 +272,7 @@ class PowerTab
         int capo{ 0 };
         std::string tuningName;
         int offset{ 0 };
-        std::vector<int> strings;
+        muse::vector<int> strings;
         int notes_count{ 0 };
     };
 
@@ -285,16 +285,16 @@ class PowerTab
         std::string partName;
         char partMarker { 0 };
 
-        std::vector<ptPosition> positions;
+        muse::vector<ptPosition> positions;
 
-        std::vector<int> staffMap;
+        muse::vector<int> staffMap;
 
         int tempo { 0 };
 
         std::list<stRhytmSlash> rhythm;
 
         std::map<int, ptChordText> chordTextMap;
-        std::vector<tBeatList> beats;
+        muse::vector<tBeatList> beats;
         std::list<std::shared_ptr<ptBar> > bars;
         bool readed { false };
 
@@ -336,8 +336,8 @@ class PowerTab
     };
 
     struct ptTrack {
-        std::vector<TrackInfo> infos;
-        std::vector<ptSection> sections;
+        muse::vector<TrackInfo> infos;
+        muse::vector<ptSection> sections;
         ptSection& getSection(int ind);
         std::map < chordData, ptChord > diagramMap;
 
@@ -376,13 +376,13 @@ class PowerTab
     bool              readVersion();
     int               readHeaderItems();
 
-    std::vector<int> lastStaffMap;
-    std::vector<int> getStaffMap(ptSection& sec);
+    muse::vector<int> lastStaffMap;
+    muse::vector<int> getStaffMap(ptSection& sec);
     int repeatCount{ 0 };
     void              addToScore(ptSection& sec);
 
     mu::engraving::Measure* createMeasure(ptBar* bar, const mu::engraving::Fraction& tick);
-    void              fillMeasure(tBeatList& elist, mu::engraving::Measure* measure, int staff, std::vector<mu::engraving::Note*>&);
+    void              fillMeasure(tBeatList& elist, mu::engraving::Measure* measure, int staff, muse::vector<mu::engraving::Note*>&);
 
     int staves{ 0 };
 
@@ -392,7 +392,7 @@ class PowerTab
 
     ptSection* cur_section;
 
-    std::vector<mu::engraving::PalmMute*> _palmMutes;
+    muse::vector<mu::engraving::PalmMute*> _palmMutes;
     void addPalmMute(mu::engraving::Chord*);
 
 public:

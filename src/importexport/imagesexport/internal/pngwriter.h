@@ -35,7 +35,7 @@ class PngWriter : public AbstractImageWriter
     muse::GlobalInject<IImagesExportConfiguration> configuration;
 
 public:
-    std::vector<project::INotationWriter::UnitType> supportedUnitTypes() const override;
+    muse::vector<project::INotationWriter::UnitType> supportedUnitTypes() const override;
     muse::Ret write(notation::INotationPtr notation, muse::io::IODevice& dstDevice, const Options& options = Options()) override;
 
 private:

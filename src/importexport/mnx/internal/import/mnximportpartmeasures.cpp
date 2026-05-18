@@ -167,7 +167,7 @@ void MnxImporter::buildLyricLineVerseMap()
             std::string id;
             LyricLineInterval interval;
         };
-        std::vector<LineEntry> entries;
+        muse::vector<LineEntry> entries;
         entries.reserve(lineUsage.size());
         for (const auto& [lineId, usage] : lineUsage) {
             entries.push_back(LineEntry { lineId, { usage.first, usage.second } });
@@ -196,7 +196,7 @@ void MnxImporter::buildLyricLineVerseMap()
             return a.id < b.id;
         });
 
-        std::vector<std::vector<LyricLineInterval> > verseIntervals;
+        muse::vector<muse::vector<LyricLineInterval> > verseIntervals;
         auto& lineToVerse = m_lyricLineToVerse[staffIdx];
         for (const auto& entry : entries) {
             size_t verseIndex = 0;
@@ -384,7 +384,7 @@ void MnxImporter::createTies(const mnx::Array<mnx::sequence::Tie>& ties, engravi
         mnx::sequence::Tie tie;
         Note* targetNote = nullptr;
     };
-    std::vector<JumpTieTarget> jumpTargets;
+    muse::vector<JumpTieTarget> jumpTargets;
     for (const mnx::sequence::Tie& mnxTie : ties) {
         if (mnxTie.targetType() != mnx::TieTargetType::CrossJump) {
             continue;
@@ -774,7 +774,7 @@ bool MnxImporter::importNonGraceEvents(const mnx::Sequence& sequence, Measure* m
     TremoloTwoChord* activeTremolo = nullptr;
 
     ChordRest* lastCR = nullptr;
-    std::vector<std::string> pendingNext;
+    muse::vector<std::string> pendingNext;
 
     mnx::util::SequenceWalkHooks hooks;
     hooks.onFullMeasure = [&](const mnx::Sequence&,
@@ -944,7 +944,7 @@ void MnxImporter::importGraceEvents(const mnx::Sequence& sequence, Measure* meas
 void MnxImporter::importSequences(const mnx::Part& mnxPart, const mnx::part::Measure& partMeasure,
                                   Measure* measure)
 {
-    std::vector<std::vector<track_idx_t> > staffVoiceMaps(mnxPart.staves());
+    muse::vector<muse::vector<track_idx_t> > staffVoiceMaps(mnxPart.staves());
 
     // pass1: import non-grace-note events to ChordRest
     for (const auto& sequence : partMeasure.sequences()) {

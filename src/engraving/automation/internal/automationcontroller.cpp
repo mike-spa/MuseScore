@@ -76,11 +76,11 @@ static const std::unordered_map<DynamicType, std::pair<double, double> > COMPOUN
     { DynamicType::SFPP, { ORDINARY_DYNAMIC_VALUES.at(DynamicType::F), ORDINARY_DYNAMIC_VALUES.at(DynamicType::PP) } },
 };
 
-static std::vector<AutomationCurveKey> resolveKeys(const EngravingItem* item, AutomationType type)
+static muse::vector<AutomationCurveKey> resolveKeys(const EngravingItem* item, AutomationType type)
 {
     const VoiceAssignment voiceAssignment = item->getProperty(Pid::VOICE_ASSIGNMENT).value<VoiceAssignment>();
 
-    std::vector<AutomationCurveKey> result;
+    muse::vector<AutomationCurveKey> result;
     AutomationCurveKey key;
     key.type = type;
 
@@ -270,7 +270,7 @@ void AutomationController::addSegmentPoints(const Segment* segment, int tickOffs
 
 void AutomationController::addDynamicPoints(const Dynamic* dynamic, int tickOffset)
 {
-    const std::vector<AutomationCurveKey> keys = resolveKeys(dynamic, AutomationType::Dynamics);
+    const muse::vector<AutomationCurveKey> keys = resolveKeys(dynamic, AutomationType::Dynamics);
     for (const AutomationCurveKey& key : keys) {
         addDynamicPoints(dynamic, tickOffset, key);
     }
@@ -354,7 +354,7 @@ void AutomationController::addSpannerPoints(const Score* score, int repeatStartT
         }
 
         const Hairpin* hairpin = toHairpin(spanner);
-        const std::vector<AutomationCurveKey> keys = resolveKeys(hairpin, AutomationType::Dynamics);
+        const muse::vector<AutomationCurveKey> keys = resolveKeys(hairpin, AutomationType::Dynamics);
         for (const AutomationCurveKey& key : keys) {
             addHairpinPoints(hairpin, tickOffset, key);
         }

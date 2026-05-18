@@ -59,14 +59,14 @@ public:
     muse::ByteArray readStyleFile() const;
     muse::ByteArray readScoreFile() const;
 
-    std::vector<muse::String> excerptFileNames() const;
+    muse::vector<muse::String> excerptFileNames() const;
     muse::ByteArray readExcerptStyleFile(const muse::String& excerptFileName) const;
     muse::ByteArray readExcerptFile(const muse::String& excerptFileName) const;
 
     muse::ByteArray readChordListFile() const;
     muse::ByteArray readThumbnailFile() const;
 
-    std::vector<muse::String> imageFileNames() const;
+    muse::vector<muse::String> imageFileNames() const;
     muse::ByteArray readImageFile(const muse::String& fileName) const;
 
     muse::ByteArray readAudioFile() const;

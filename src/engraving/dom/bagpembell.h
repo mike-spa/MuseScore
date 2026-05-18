@@ -28,7 +28,7 @@
 #include "engravingitem.h"
 
 namespace mu::engraving {
-using BagpipeNoteList = std::vector<int>;
+using BagpipeNoteList = muse::vector<int>;
 
 //---------------------------------------------------------
 //   BagpipeEmbellishmentInfo

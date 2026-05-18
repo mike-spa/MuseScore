@@ -304,7 +304,7 @@ void NoteInputBarModel::updateTieState()
         return;
     }
 
-    std::vector<Note*> tiedNotes = selection()->notes(NoteFilter::WithTie);
+    muse::vector<Note*> tiedNotes = selection()->notes(NoteFilter::WithTie);
 
     bool checked = !tiedNotes.empty();
     for (const Note* note: tiedNotes) {
@@ -327,7 +327,7 @@ void NoteInputBarModel::updateLvState()
         return;
     }
 
-    std::vector<Note*> tiedNotes = selection()->notes(NoteFilter::WithTie);
+    muse::vector<Note*> tiedNotes = selection()->notes(NoteFilter::WithTie);
 
     bool checked = !tiedNotes.empty();
     for (const Note* note: tiedNotes) {
@@ -409,7 +409,7 @@ int NoteInputBarModel::resolveCurrentVoiceIndex() const
         return INVALID_VOICE;
     }
 
-    const std::vector<EngravingItem*>& selectedElements = selection()->elements();
+    const muse::vector<EngravingItem*>& selectedElements = selection()->elements();
     if (selectedElements.empty()) {
         return INVALID_VOICE;
     }
@@ -523,7 +523,7 @@ DurationType NoteInputBarModel::resolveCurrentDurationType() const
         return INVALID_DURATION_TYPE;
     }
 
-    const std::vector<EngravingItem*>& selectedElements = selection()->elements();
+    const muse::vector<EngravingItem*>& selectedElements = selection()->elements();
     if (selectedElements.empty()) {
         return INVALID_DURATION_TYPE;
     }

@@ -44,7 +44,7 @@ public:
 
     bool isFiltered(UndoCommand::Filter f, const EngravingItem* target) const override;
 
-    std::vector<EngravingObject*> objectItems() const override;
+    muse::vector<EngravingObject*> objectItems() const override;
 
     UNDO_TYPE(CommandType::AddElement)
 };
@@ -64,7 +64,7 @@ public:
 
     bool isFiltered(UndoCommand::Filter f, const EngravingItem* target) const override;
 
-    std::vector<EngravingObject*> objectItems() const override;
+    muse::vector<EngravingObject*> objectItems() const override;
 
     UNDO_TYPE(CommandType::RemoveElement)
 };

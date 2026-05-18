@@ -50,7 +50,7 @@ public:
                       const muse::modularity::ContextPtr& iocCtx);
 
     void onMidiEventReceived(const muse::midi::Event& event) override;
-    muse::async::Channel<std::vector<const Note*> > notesReceived() const override;
+    muse::async::Channel<muse::vector<const Note*> > notesReceived() const override;
 
     void onRealtimeAdvance() override;
 
@@ -67,7 +67,7 @@ private:
 
     using ControllerEventMap = std::map<muse::midi::Event::Opcode, muse::midi::Event>;
     void triggerControllers(const ControllerEventMap& events);
-    void releasePlayingNotes(const std::vector<int>& pitches);
+    void releasePlayingNotes(const muse::vector<int>& pitches);
 
     void enableMetronome();
     void disableMetronome();
@@ -89,10 +89,10 @@ private:
     IGetScore* m_getScore = nullptr;
     INotationInteractionPtr m_notationInteraction;
     INotationUndoStackPtr m_undoStack;
-    muse::async::Channel<std::vector<const Note*> > m_notesReceivedChannel;
+    muse::async::Channel<muse::vector<const Note*> > m_notesReceivedChannel;
 
     QTimer m_processTimer;
-    std::vector<muse::midi::Event> m_eventsQueue;
+    muse::vector<muse::midi::Event> m_eventsQueue;
 
     QTimer m_realtimeTimer;
     QTimer m_extendNoteTimer;

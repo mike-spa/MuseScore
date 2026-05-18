@@ -22,8 +22,9 @@
 #ifndef IMPORTMIDI_TUPLET_DETECT_H
 #define IMPORTMIDI_TUPLET_DETECT_H
 
-#include <vector>
 #include <map>
+
+#include "global/types/vector.h"
 
 namespace mu::iex::midi {
 class ReducedFraction;
@@ -32,7 +33,7 @@ class MidiChord;
 namespace MidiTuplet {
 struct TupletInfo;
 
-std::vector<TupletInfo> detectTuplets(
+muse::vector<TupletInfo> detectTuplets(
     const std::multimap<ReducedFraction, MidiChord>::iterator& startBarChordIt, const std::multimap<ReducedFraction,
                                                                                                     MidiChord>::iterator& endBarChordIt,
     const ReducedFraction& startBarTick, const ReducedFraction& barFraction, std::multimap<ReducedFraction, MidiChord>& chords,

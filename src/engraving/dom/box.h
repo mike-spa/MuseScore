@@ -83,7 +83,7 @@ public:
     int gripsCount() const override { return 1; }
     Grip initialEditModeGrip() const override { return Grip::START; }
     Grip defaultGrip() const override { return Grip::START; }
-    std::vector<PointF> gripsPositions(const EditData&) const override { return { PointF() }; }   // overridden in descendants
+    muse::vector<PointF> gripsPositions(const EditData&) const override { return { PointF() }; }   // overridden in descendants
 
     bool canBeExcludedFromOtherParts() const override { return true; }
     void manageExclusionFromParts(bool exclude) override;
@@ -129,7 +129,7 @@ public:
     bool setProperty(Pid propertyId, const PropertyValue&) override;
     PropertyValue propertyDefault(Pid) const override;
 
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
 private:
     bool m_createSystemHeader = true;
@@ -159,7 +159,7 @@ public:
 
     void startDragGrip(EditData&) override;
 
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
     Spatium paddingToNotationAbove() const { return m_paddingToNotationAbove; }
     Spatium paddingToNotationBelow() const { return m_paddingToNotationBelow; }
@@ -205,7 +205,7 @@ public:
     int gripsCount() const override;
     Grip initialEditModeGrip() const override;
     Grip defaultGrip() const override;
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
     bool needStartEditingAfterSelecting() const override { return false; }
 

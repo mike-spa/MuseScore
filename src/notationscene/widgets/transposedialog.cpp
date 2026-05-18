@@ -59,7 +59,7 @@ void TransposeDialog::componentComplete()
     setEnableTransposeKeys(rangeSelection);
     setEnableTransposeToKey(rangeSelection);
 
-    const std::vector<EngravingItem*>& elements = selection()->elements();
+    const muse::vector<EngravingItem*>& elements = selection()->elements();
     bool hasChordNames = std::any_of(elements.cbegin(), elements.cend(), [](const EngravingItem* item) {
         return item->isHarmony() || item->isFretDiagram();
     });

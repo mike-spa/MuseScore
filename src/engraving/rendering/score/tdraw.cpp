@@ -1562,7 +1562,7 @@ static void setDashAndGapLen(const SLine* line, double& dash, double& gap, Pen& 
     }
 }
 
-static std::vector<double> distributedDashPattern(double dash, double gap, double lineLength)
+static muse::vector<double> distributedDashPattern(double dash, double gap, double lineLength)
 {
     int numPairs = std::max(1.0, lineLength / (dash + gap));
     double newGap = (lineLength - dash * (numPairs + 1)) / numPairs;
@@ -2659,9 +2659,9 @@ void TDraw::draw(const SlurSegment* item, Painter* painter, const PaintOptions& 
     double mag = item->staff() ? item->staff()->staffMag(item->slur()->tick()) : 1.0;
 
     //Replace generic Qt dash patterns with improved equivalents to show true dots (keep in sync with tie.cpp)
-    std::vector<double> dotted     = { 0.01, 1.99 };   // tighter than Qt PenStyle::DotLine equivalent - would be { 0.01, 2.99 }
-    std::vector<double> dashed     = { 3.00, 3.00 };   // Compensating for caps. Qt default PenStyle::DashLine is { 4.0, 2.0 }
-    std::vector<double> wideDashed = { 5.00, 6.00 };
+    muse::vector<double> dotted     = { 0.01, 1.99 };   // tighter than Qt PenStyle::DotLine equivalent - would be { 0.01, 2.99 }
+    muse::vector<double> dashed     = { 3.00, 3.00 };   // Compensating for caps. Qt default PenStyle::DashLine is { 4.0, 2.0 }
+    muse::vector<double> wideDashed = { 5.00, 6.00 };
 
     switch (item->slurTie()->styleType()) {
     case SlurStyleType::Solid:
@@ -3105,9 +3105,9 @@ void TDraw::draw(const TieSegment* item, Painter* painter, const PaintOptions& o
     Pen pen(penColor);
     double mag = item->staff() ? item->staff()->staffMag(item->tie()->tick()) : 1.0;
     //Replace generic Qt dash patterns with improved equivalents to show true dots (keep in sync with slur.cpp)
-    std::vector<double> dotted     = { 0.01, 1.99 };   // tighter than Qt PenStyle::DotLine equivalent - would be { 0.01, 2.99 }
-    std::vector<double> dashed     = { 3.00, 3.00 };   // Compensating for caps. Qt default PenStyle::DashLine is { 4.0, 2.0 }
-    std::vector<double> wideDashed = { 5.00, 6.00 };
+    muse::vector<double> dotted     = { 0.01, 1.99 };   // tighter than Qt PenStyle::DotLine equivalent - would be { 0.01, 2.99 }
+    muse::vector<double> dashed     = { 3.00, 3.00 };   // Compensating for caps. Qt default PenStyle::DashLine is { 4.0, 2.0 }
+    muse::vector<double> wideDashed = { 5.00, 6.00 };
 
     switch (item->slurTie()->styleType()) {
     case SlurStyleType::Solid:

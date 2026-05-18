@@ -69,11 +69,11 @@ struct OrnamentExcursion {
     SymId atype;
     std::set<OrnamentStyle> ostyles;
     int duration;
-    std::vector<int> prefix;
-    std::vector<int> body;
+    muse::vector<int> prefix;
+    muse::vector<int> body;
     bool repeatp;
     bool sustainp;
-    std::vector<int> suffix;
+    muse::vector<int> suffix;
 };
 static const std::set<OrnamentStyle> baroque  = { OrnamentStyle::BAROQUE };
 static const std::set<OrnamentStyle> defstyle = { OrnamentStyle::DEFAULT };
@@ -82,7 +82,7 @@ static constexpr int _16th = Constants::DIVISION / 4;
 static constexpr int _32nd = _16th / 2;
 constexpr int SLIDE_DURATION = _32nd;
 constexpr int GRACE_BEND_DURATION = _16th;
-static const std::vector<OrnamentExcursion> excursions = {
+static const muse::vector<OrnamentExcursion> excursions = {
     //  articulation type            set of  duration       body         repeatp      suffix
     //                               styles          prefix                    sustainp
     { SymId::ornamentTurn,                any, _32nd, {},    { 1, 0, -1, 0 },   false, true, {} },

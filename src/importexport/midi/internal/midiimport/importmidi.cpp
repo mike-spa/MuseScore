@@ -160,10 +160,10 @@ bool noTooShortNotes(const std::multimap<int, MTrack>& tracks)
 
 #endif
 
-std::vector<std::multimap<ReducedFraction, MidiChord> >
+muse::vector<std::multimap<ReducedFraction, MidiChord> >
 separateDrumChordsTo2Voices(const std::multimap<ReducedFraction, MidiChord>& chords)
 {
-    std::vector<std::multimap<ReducedFraction, MidiChord> > separatedChords(2);
+    muse::vector<std::multimap<ReducedFraction, MidiChord> > separatedChords(2);
     for (const auto& chord: chords) {
         const MidiChord& c = chord.second;
 
@@ -200,7 +200,7 @@ void findAllTupletsForDrums(
     // it's a small hack due to the fact that tuplet detection
     // is designed to work before voice setting
 
-    std::vector<std::multimap<ReducedFraction, MidiChord> > chords(drumVoiceCount);
+    muse::vector<std::multimap<ReducedFraction, MidiChord> > chords(drumVoiceCount);
     for (const auto& chord: mtrack.chords) {
         const MidiChord& c = chord.second;
 
@@ -209,8 +209,8 @@ void findAllTupletsForDrums(
         chords[c.voice].insert({ chord.first, c });
     }
 
-    std::vector<std::multimap<ReducedFraction,
-                              MidiTuplet::TupletData> > tuplets(drumVoiceCount);
+    muse::vector<std::multimap<ReducedFraction,
+                               MidiTuplet::TupletData> > tuplets(drumVoiceCount);
     for (size_t voice = 0; voice < drumVoiceCount; ++voice) {
         if (!chords[voice].empty()) {
             MidiTuplet::findAllTuplets(tuplets[voice], chords[voice], sigmap, basicQuant);
@@ -414,7 +414,7 @@ MTrack::toDurationList(const Measure* measure,
         }
     } comparator;
     // sort by tuplet length in desc order
-    sort(tupletsData.begin(), tupletsData.end(), comparator);
+    std::sort(tupletsData.begin(), tupletsData.end(), comparator);
 
     const ReducedFraction startTickInBar = startTick - barTick;
     const ReducedFraction endTickInBar = startTickInBar + len;

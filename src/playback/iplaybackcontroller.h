@@ -84,7 +84,7 @@ public:
         bool flushSound = true;
     };
 
-    virtual void playElements(const std::vector<const notation::EngravingItem*>& elements,
+    virtual void playElements(const muse::vector<const notation::EngravingItem*>& elements,
                               const PlayParams& params = PlayParams(), bool isMidi = false) = 0;
     virtual void playNotes(const notation::NoteValList& notes, notation::staff_idx_t staffIdx, const notation::Segment* segment,
                            const PlayParams& params = PlayParams()) = 0;

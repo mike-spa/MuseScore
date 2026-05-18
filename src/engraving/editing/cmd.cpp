@@ -179,7 +179,7 @@ static void resetTextProperties(EngravingItem* e)
         return;
     }
 
-    static const std::vector<Pid> TEXT_STYLE_TO_RESET {
+    static const muse::vector<Pid> TEXT_STYLE_TO_RESET {
         Pid::FONT_FACE,
         Pid::FONT_SIZE,
         Pid::FONT_STYLE,
@@ -711,11 +711,11 @@ void Score::expandVoice()
 //   addInterval
 //---------------------------------------------------------
 
-void Score::addInterval(int val, const std::vector<Note*>& nl)
+void Score::addInterval(int val, const muse::vector<Note*>& nl)
 {
     // Prepare note selection in case there are not selected tied notes and sort them
-    std::vector<Note*> tmpnl;
-    std::vector<Note*> _nl = nl;
+    muse::vector<Note*> tmpnl;
+    muse::vector<Note*> _nl = nl;
     bool selIsList = selection().isList();
     bool selIsSingle = selIsList && _nl.size() == 1;
     bool shouldSelectFirstNote = selIsSingle && _nl.front()->tieFor();
@@ -734,7 +734,7 @@ void Score::addInterval(int val, const std::vector<Note*>& nl)
     }
 
     Note* prevTied = nullptr;
-    std::vector<EngravingItem*> notesToSelect;
+    muse::vector<EngravingItem*> notesToSelect;
     int deltaLine = val < 0 ? val + 1 : val - 1;
     bool accidental = m_is.noteEntryMode() && m_is.accidentalType() != AccidentalType::NONE;
     bool useOctaveRule = (deltaLine % STEP_DELTA_OCTAVE == 0) && !accidental;  // Both octaves and unison
@@ -1106,7 +1106,7 @@ Segment* Score::setNoteRest(Segment* segment, track_idx_t track, NoteVal nval, F
     bool targetIsRest = cr && cr->isRest();
 
     // preserve lyrics before the ChordRest is removed or replaced
-    std::vector<Lyrics*> lyricsToPreserve;
+    muse::vector<Lyrics*> lyricsToPreserve;
     bool shouldPreserveLyrics = false;
     if (!isRest && cr) {
         lyricsToPreserve = cr->lyrics();
@@ -1133,7 +1133,7 @@ Segment* Score::setNoteRest(Segment* segment, track_idx_t track, NoteVal nval, F
 
         measure = segment->measure();
         Fraction timeStretch = staff(track2staff(track))->timeStretch(tick);
-        std::vector<TDuration> dl;
+        muse::vector<TDuration> dl;
         if (rhythmic) {
             dl = toRhythmicDurationList(dd, isRest, segment->rtick() * timeStretch, sigmap()->timesig(
                                             tick).nominal(), measure, 1, timeStretch);
@@ -1166,7 +1166,7 @@ Segment* Score::setNoteRest(Segment* segment, track_idx_t track, NoteVal nval, F
                 chord->setStemDirection(stemDirection);
                 chord->add(note);
                 if (cr && cr->isChord()) {
-                    std::vector<Chord*> graceNotes = toChord(cr)->graceNotes();
+                    muse::vector<Chord*> graceNotes = toChord(cr)->graceNotes();
                     for (Chord* grace : graceNotes) {
                         undoChangeParent(grace, chord, chord->staffIdx());
                     }
@@ -1429,7 +1429,7 @@ Fraction Score::makeGap(Segment* segment, track_idx_t track, const Fraction& _sd
             Fraction rd = td - sd;
             Fraction tick = cr->tick() + actualTicks(sd, tuplet, timeStretch);
 
-            std::vector<TDuration> dList;
+            muse::vector<TDuration> dList;
             if (tuplet) {
                 dList = toDurationList(rd, false);
                 std::reverse(dList.begin(), dList.end());
@@ -1561,7 +1561,7 @@ bool Score::makeGapVoice(Segment* seg, track_idx_t track, Fraction len, const Fr
         ChordRest* cr1 = toChordRest(seg1->element(track));
         Fraction srcF = cr1->ticks();
         Fraction dstF = (tick - cr1->tick()) * cr1->staff()->timeStretch(cr1->tick());
-        std::vector<TDuration> dList = toDurationList(dstF, true);
+        muse::vector<TDuration> dList = toDurationList(dstF, true);
         if (dList.empty()) {
             LOGD("Could not make durations for: %d/%d", dstF.numerator(), dstF.denominator());
             return false;
@@ -1654,9 +1654,9 @@ bool Score::makeGapVoice(Segment* seg, track_idx_t track, Fraction len, const Fr
 //    gap - gap len in local (stretched) time
 //---------------------------------------------------------
 
-std::vector<Fraction> Score::splitGapToMeasureBoundaries(ChordRest* cr, Fraction gap)
+muse::vector<Fraction> Score::splitGapToMeasureBoundaries(ChordRest* cr, Fraction gap)
 {
-    std::vector<Fraction> flist;
+    muse::vector<Fraction> flist;
 
     Tuplet* tuplet = cr->tuplet();
     if (tuplet) {
@@ -1759,7 +1759,7 @@ void Score::changeCRlen(ChordRest* cr, const Fraction& dstF, bool fillWithRest)
             }
         }
         Fraction timeStretch = cr->staff()->timeStretch(cr->tick());
-        std::vector<TDuration> dList = toDurationList(dstF, true);
+        muse::vector<TDuration> dList = toDurationList(dstF, true);
         if (dList.empty()) {
             LOGD("Could not make durations for: %d/%d", dstF.numerator(), dstF.denominator());
             return;
@@ -1785,7 +1785,7 @@ void Score::changeCRlen(ChordRest* cr, const Fraction& dstF, bool fillWithRest)
     // make longer
     //
     // split required len into Measures
-    std::vector<Fraction> flist = splitGapToMeasureBoundaries(cr, dstF);
+    muse::vector<Fraction> flist = splitGapToMeasureBoundaries(cr, dstF);
     if (flist.empty()) {
         return;
     }
@@ -1813,7 +1813,7 @@ void Score::changeCRlen(ChordRest* cr, const Fraction& dstF, bool fillWithRest)
             Fraction timeStretch = cr1->staff()->timeStretch(cr1->tick());
             Rest* r = toRest(cr);
             if (first) {
-                std::vector<TDuration> dList = toDurationList(f2, true);
+                muse::vector<TDuration> dList = toDurationList(f2, true);
                 undoChangeChordRestLen(cr, dList[0]);
                 Fraction tick2 = cr->tick();
                 for (unsigned i = 1; i < dList.size(); ++i) {
@@ -1830,7 +1830,7 @@ void Score::changeCRlen(ChordRest* cr, const Fraction& dstF, bool fillWithRest)
             }
             tick += actualTicks(f2, tuplet, timeStretch);
         } else {
-            std::vector<TDuration> dList = toDurationList(f2, true);
+            muse::vector<TDuration> dList = toDurationList(f2, true);
             Measure* measure             = tick2measure(tick);
             Fraction etick                    = measure->tick();
 
@@ -1944,7 +1944,7 @@ void Score::moveUp(ChordRest* cr)
         return;
     }
 
-    const std::vector<Staff*>& staves = part->staves();
+    const muse::vector<Staff*>& staves = part->staves();
     // we know that staffMove+rstaff-1 index exists due to the previous condition.
     if (staff->staffType(cr->tick())->group() != StaffGroup::STANDARD
         || staves.at(rstaff + staffMove - 1)->staffType(cr->tick())->group() != StaffGroup::STANDARD) {
@@ -1973,7 +1973,7 @@ void Score::moveDown(ChordRest* cr)
         return;
     }
 
-    const std::vector<Staff*>& staves = part->staves();
+    const muse::vector<Staff*>& staves = part->staves();
     // we know that staffMove+rstaff+1 index exists due to the previous condition.
     if (staff->staffType(cr->tick())->group() != StaffGroup::STANDARD
         || staves.at(staffMove + rstaff + 1)->staffType(cr->tick())->group() != StaffGroup::STANDARD) {
@@ -2229,7 +2229,7 @@ void Score::cmdResetMeasuresLayout()
 {
     TRACEFUNC;
 
-    std::vector<EngravingItem*> itemsToRemove;
+    muse::vector<EngravingItem*> itemsToRemove;
 
     for (MeasureBase* mb = first(); mb; mb = mb->next()) {
         if (mb->isMeasure()) {
@@ -2731,7 +2731,7 @@ EngravingItem* Score::selectMove(const String& cmd)
 
 void Score::cmdMirrorNoteHead()
 {
-    const std::vector<EngravingItem*>& el = selection().elements();
+    const muse::vector<EngravingItem*>& el = selection().elements();
     for (EngravingItem* e : el) {
         if (e->isNote()) {
             Note* note = toNote(e);
@@ -2786,9 +2786,9 @@ void Score::cmdIncDecDuration(int nSteps, bool stepDotted)
                     staff2track(m_selection.staffEnd()), selectionFilter(), m_selection.rangeContainsMultiNoteChords());
         pasteStaff(e, m_selection.startSegment(), m_selection.staffStart(), scale);
     } else if (m_selection.isList()) {
-        const std::vector<Note*> notes = m_selection.noteList();
+        const muse::vector<Note*> notes = m_selection.noteList();
         const std::set<ChordRest*> crsSet = getSelectedChordRests();
-        std::vector<ChordRest*> crs(crsSet.begin(), crsSet.end());
+        muse::vector<ChordRest*> crs(crsSet.begin(), crsSet.end());
         std::sort(crs.begin(), crs.end(), [](const ChordRest* a, const ChordRest* b) { return a->tick() > b->tick(); });
 
         for (ChordRest* cr : crs) {
@@ -2834,17 +2834,17 @@ void Score::cmdExtendToNextNote()
     const staff_idx_t startStaff = selection().staffStart();
     const staff_idx_t endStaff = selection().staffEnd();
 
-    std::vector<EngravingItem*> toSelect;
+    muse::vector<EngravingItem*> toSelect;
     const bool wasRangeSelection = selection().isRange();
-    const std::vector<Note*> initialSelection = selection().noteList();
+    const muse::vector<Note*> initialSelection = selection().noteList();
 
     for (ChordRest* cr : getSelectedChordRests()) {
         ChordRest* ncr = nextChordRest(cr);
         if (cr->isRest() || cr->isGrace() || cr->endTick() == this->endTick() || (ncr && ncr->isChord() && cr->endTick() == ncr->tick())) {
             continue;
         }
-        std::vector<Note*> chordNotes = toChord(cr)->notes();
-        std::vector<Note*> selectedChordNotes;
+        muse::vector<Note*> chordNotes = toChord(cr)->notes();
+        muse::vector<Note*> selectedChordNotes;
         for (Note* n : chordNotes) {
             if (std::find(initialSelection.begin(), initialSelection.end(), n) != initialSelection.end()) {
                 selectedChordNotes.push_back(n);
@@ -2862,7 +2862,7 @@ void Score::cmdExtendToNextNote()
             }
             if (!ncr || cr->endTick() != ncr->tick()  // if voices>0 have empty measures till end OR have empty measures between cr and ncr
                 || cr->tuplet() != ncr->tuplet() || !allNotesSelected) {
-                std::vector<Note*> notesToExtend = !allNotesSelected ? (allNotesSelected = true, selectedChordNotes) : toChord(cr)->notes();
+                muse::vector<Note*> notesToExtend = !allNotesSelected ? (allNotesSelected = true, selectedChordNotes) : toChord(cr)->notes();
                 m_is.setTrack(cr->track());
                 m_is.setSegment(cr->segment());
                 m_is.moveToNextInputPos();
@@ -2908,7 +2908,7 @@ void Score::cmdExtendToNextNote()
     } else {
         for (EngravingItem* ei : toSelect) {
             if (ei->isChord()) {
-                std::vector<Note*> notes = toChord(ei)->notes();
+                muse::vector<Note*> notes = toChord(ei)->notes();
                 select({ notes.begin(), notes.end() }, SelectType::ADD);
             } else {
                 select(ei, SelectType::ADD);
@@ -2974,14 +2974,14 @@ static std::map<Chord*, std::set<Note*, NoteComparator> > getNotesByChord(std::l
         const Note* firstNote = noteIsBefore(noteToAdd, prevNote) ? noteToAdd : prevNote;
         const Note* secondNote = firstNote == noteToAdd ? prevNote : noteToAdd;
 
-        const std::vector<Note*>& chordNotes = chord->notes();
+        const muse::vector<Note*>& chordNotes = chord->notes();
 
-        std::vector<Note*>::const_iterator firstNoteIt = std::find(chordNotes.begin(), chordNotes.end(), firstNote);
-        std::vector<Note*>::const_iterator secondNoteIt = std::find(chordNotes.begin(), chordNotes.end(), secondNote);
+        muse::vector<Note*>::const_iterator firstNoteIt = std::find(chordNotes.begin(), chordNotes.end(), firstNote);
+        muse::vector<Note*>::const_iterator secondNoteIt = std::find(chordNotes.begin(), chordNotes.end(), secondNote);
 
         assert(firstNoteIt != chordNotes.end() && secondNoteIt != chordNotes.end());
 
-        for (std::vector<Note*>::const_iterator chordNoteIt = firstNoteIt; chordNoteIt != std::next(secondNoteIt);
+        for (muse::vector<Note*>::const_iterator chordNoteIt = firstNoteIt; chordNoteIt != std::next(secondNoteIt);
              chordNoteIt = std::next(chordNoteIt)) {
             Note* note = *chordNoteIt;
             notesByChordIt->second.insert(note);
@@ -3017,7 +3017,7 @@ void Score::cmdAddParenthesesToNotes(std::list<Note*>& notes)
 
     for (auto& chordNoteEntry : notesByChord) {
         Chord* chord = chordNoteEntry.first;
-        std::vector<Note*> noteVec(chordNoteEntry.second.begin(), chordNoteEntry.second.end());
+        muse::vector<Note*> noteVec(chordNoteEntry.second.begin(), chordNoteEntry.second.end());
 
         for (Note* note : noteVec) {
             // User has overriden generated parentheses
@@ -3042,7 +3042,7 @@ void Score::cmdRemoveParenthesesFromNotes(std::list<Note*>& notes)
 
     for (auto& chordNoteEntry : notesByChord) {
         Chord* chord = chordNoteEntry.first;
-        std::vector<Note*> noteVec(chordNoteEntry.second.begin(), chordNoteEntry.second.end());
+        muse::vector<Note*> noteVec(chordNoteEntry.second.begin(), chordNoteEntry.second.end());
 
         for (Note* note : noteVec) {
             note->undoChangeProperty(Pid::HAS_PARENTHESES, ParenthesesMode::NONE);
@@ -3211,7 +3211,7 @@ void Score::cmdInsertClef(Clef* clef, ChordRest* cr)
 
 void Score::cmdAddGrace(NoteType graceType, int duration)
 {
-    const std::vector<EngravingItem*> copyOfElements = selection().elements();
+    const muse::vector<EngravingItem*> copyOfElements = selection().elements();
     for (EngravingItem* e : copyOfElements) {
         if (e->isNote()) {
             Note* n = toNote(e);
@@ -3266,7 +3266,7 @@ bool Score::makeMeasureRepeatGroup(Measure* firstMeasure, int numMeasures, staff
     //
     // check that sufficient measures exist, with equal durations
     //
-    std::vector<Measure*> measures;
+    muse::vector<Measure*> measures;
     Measure* measure = firstMeasure;
     for (int i = 1; i <= numMeasures; ++i) {
         if (!measure || measure->ticks() != firstMeasure->ticks()) {
@@ -3525,7 +3525,7 @@ static Segment* setChord(Score* score, Segment* segment, track_idx_t track, cons
 
     Fraction tick = segment->tick();
     Chord* nr     = nullptr;   //current added chord used so we can select the last added chord and so we can apply ties
-    std::vector<Tie*> tie(chordTemplate->notes().size());   //keep pointer to a tie for each note in the chord in case we need to tie notes
+    muse::vector<Tie*> tie(chordTemplate->notes().size());   //keep pointer to a tie for each note in the chord in case we need to tie notes
     ChordRest* cr = toChordRest(segment->element(track));   //chord rest under the segment for the specified track
 
     bool addTie = false;
@@ -3577,7 +3577,7 @@ static Segment* setChord(Score* score, Segment* segment, track_idx_t track, cons
         }
 
         measure = segment->measure();
-        std::vector<TDuration> dl = toDurationList(dd, true);
+        muse::vector<TDuration> dl = toDurationList(dd, true);
         size_t n = dl.size();
         //add chord, tieing when necessary within measure
         for (size_t i = 0; i < n; ++i) {
@@ -3594,7 +3594,7 @@ static Segment* setChord(Score* score, Segment* segment, track_idx_t track, cons
             score->undoAddCR(chord, measure, tick);
             //if there is something to tie, complete tie backwards
             //and add the tie to score
-            const std::vector<Note*> notes = chord->notes();
+            const muse::vector<Note*> notes = chord->notes();
             if (addTie) {
                 for (size_t j = 0; j < notes.size(); ++j) {
                     tie[j]->setEndNote(notes[j]);
@@ -3658,7 +3658,7 @@ static Segment* setChord(Score* score, Segment* segment, track_idx_t track, cons
         //
         //  Note does not fit on current measure, create Tie to
         //  next part of note
-        std::vector<Note*> notes = nr->notes();
+        muse::vector<Note*> notes = nr->notes();
         for (size_t i = 0; i < notes.size(); ++i) {
             tie[i] = Factory::createTie(score->dummy());
             tie[i]->setStartNote(notes[i]);
@@ -3690,7 +3690,7 @@ void Score::cmdRealizeChordSymbols(bool literal, Voicing voicing, HDuration dura
 {
     // Create copy, because setChord selects newly created chord and thus
     // modifies selection().elements() while we're iterating over it
-    const std::vector<EngravingItem*> elist = selection().elements();
+    const muse::vector<EngravingItem*> elist = selection().elements();
 
     for (EngravingItem* e : elist) {
         if (!e->isHarmony()) {
@@ -3970,7 +3970,7 @@ void Score::cmdPadNoteDecreaseTAB()
 void Score::cmdToggleLayoutBreak(LayoutBreakType type)
 {
     // find measure(s)
-    std::vector<MeasureBase*> mbl;
+    muse::vector<MeasureBase*> mbl;
     bool allNoBreaks = true; // NOBREAK is not removed unless every measure in selection already has one
     if (selection().isRange()) {
         Measure* startMeasure = nullptr;

@@ -44,7 +44,7 @@ using namespace mu::notation;
 using namespace muse;
 using namespace muse::io;
 
-std::vector<INotationWriter::UnitType> SvgWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> SvgWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PAGE };
 }
@@ -67,7 +67,7 @@ Ret SvgWriter::write(INotationPtr notation, io::IODevice& destinationDevice, con
     mu::engraving::MScore::pdfPrinting = true;
     mu::engraving::MScore::svgPrinting = true;
 
-    const std::vector<mu::engraving::Page*>& pages = score->pages();
+    const muse::vector<mu::engraving::Page*>& pages = score->pages();
 
     const size_t PAGE_NUMBER = muse::value(options, OptionKey::PAGE_NUMBER, Val(0)).toInt();
     if (PAGE_NUMBER >= pages.size()) {
@@ -177,7 +177,7 @@ Ret SvgWriter::write(INotationPtr notation, io::IODevice& destinationDevice, con
                     qreal lastX = sl->ldata()->bbox().right()
                                   + sl->pagePos().x()
                                   - concatenatedSL->pagePos().x();
-                    std::vector<muse::LineF> lines = concatenatedSL->lines();
+                    muse::vector<muse::LineF> lines = concatenatedSL->lines();
                     for (size_t l = 0, c = lines.size(); l < c; l++) {
                         lines[l].setP2(muse::PointF(lastX, lines[l].p2().y()));
                     }
@@ -231,7 +231,7 @@ Ret SvgWriter::write(INotationPtr notation, io::IODevice& destinationDevice, con
     }
 
     // 3rd pass: the rest of the elements
-    std::vector<mu::engraving::EngravingItem*> elements = page->elements();
+    muse::vector<mu::engraving::EngravingItem*> elements = page->elements();
     std::sort(elements.begin(), elements.end(), mu::engraving::elementLessThan);
 
     for (const mu::engraving::EngravingItem* element : elements) {

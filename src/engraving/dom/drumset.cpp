@@ -121,7 +121,7 @@ void Drumset::save(XmlWriter& xml) const
         if (!shortcut(i).empty()) {
             xml.tag("shortcut", shortcut(i));
         }
-        const std::vector<DrumInstrumentVariant>& vs = variants(i);
+        const muse::vector<DrumInstrumentVariant>& vs = variants(i);
         if (!vs.empty()) {
             xml.startElement("variants");
             for (const auto& v : vs) {
@@ -279,10 +279,10 @@ int Drumset::prevPitch(int ii) const
 /// find a variant for the given pitch with matching chord articulation and tremolo
 //---------------------------------------------------------
 
-DrumInstrumentVariant Drumset::findVariant(int p, const std::vector<Articulation*>& articulations, TremoloType tremType) const
+DrumInstrumentVariant Drumset::findVariant(int p, const muse::vector<Articulation*>& articulations, TremoloType tremType) const
 {
     DrumInstrumentVariant div;
-    const std::vector<DrumInstrumentVariant>& vs = variants(p);
+    const muse::vector<DrumInstrumentVariant>& vs = variants(p);
     for (const DrumInstrumentVariant& v : vs) {
         bool matchTremolo = ((tremType == TremoloType::INVALID_TREMOLO) && (v.tremolo == TremoloType::INVALID_TREMOLO))
                             || (v.tremolo == tremType);

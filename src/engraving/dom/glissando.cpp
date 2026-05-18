@@ -159,7 +159,7 @@ Sid Glissando::getPropertyStyle(Pid id) const
     return SLine::getPropertyStyle(id);
 }
 
-bool Glissando::pitchSteps(const Spanner* spanner, std::vector<int>& pitchOffsets)
+bool Glissando::pitchSteps(const Spanner* spanner, muse::vector<int>& pitchOffsets)
 {
     if (!spanner->endElement()->isNote()) {
         return false;
@@ -187,7 +187,7 @@ bool Glissando::pitchSteps(const Spanner* spanner, std::vector<int>& pitchOffset
         if (glissando->isHarpGliss().value_or(false)) {
             HarpPedalDiagram* hd = spanner->part()->currentHarpDiagram(spanner->tick());
             std::set<int> playableTpcs = hd ? hd->playableTpcs() : std::set<int>({ 14, 16, 18, 13, 15, 17, 19 });
-            std::vector<int> playablePitches;
+            muse::vector<int> playablePitches;
             for (int t : playableTpcs) {
                 playablePitches.push_back(tpc2pitch(t) % PITCH_DELTA_OCTAVE);
             }
@@ -235,7 +235,7 @@ bool Glissando::pitchSteps(const Spanner* spanner, std::vector<int>& pitchOffset
         }
         return true;
     }
-    static const std::vector<bool> whiteNotes = { true, false, true, false, true, true, false, true, false, true, false, true };
+    static const muse::vector<bool> whiteNotes = { true, false, true, false, true, true, false, true, false, true, false, true };
     int Cnote = 60;   // pitch of middle C
     bool notePick = glissandoStyle == GlissandoStyle::WHITE_KEYS;
     for (int pitch = pitchStart; pitch != pitchEnd; pitch += direction) {
@@ -290,7 +290,7 @@ Note* Glissando::guessInitialNote(Chord* chord)
     case NoteType::NORMAL:
     {
         // if chord has grace notes before, the last one is the previous note
-        std::vector<Chord*> graces = chord->graceNotesBefore();
+        muse::vector<Chord*> graces = chord->graceNotesBefore();
         if (graces.size() > 0) {
             return graces.back()->upNote();
         }
@@ -331,7 +331,7 @@ Note* Glissando::guessInitialNote(Chord* chord)
             // if we found a target previous chord
             if (target) {
                 // if chord has grace notes after, the last one is the previous note
-                std::vector<Chord*> graces = target->graceNotesAfter();
+                muse::vector<Chord*> graces = target->graceNotesAfter();
                 if (graces.size() > 0) {
                     return graces.back()->upNote();
                 }

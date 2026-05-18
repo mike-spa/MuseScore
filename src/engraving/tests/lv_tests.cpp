@@ -81,7 +81,7 @@ TEST_F(Engraving_LVTests, LV_Double_Notehead_test)
     Note* second_note = score->addPitch(newNoteVal, true);
 
     // Check if there is a double notehead
-    std::vector<Note*> tn = second_note->tiedNotes();
+    muse::vector<Note*> tn = second_note->tiedNotes();
     EXPECT_TRUE(tn.size() < 2);
 
     const String savePath = u"lv_test.mscx";

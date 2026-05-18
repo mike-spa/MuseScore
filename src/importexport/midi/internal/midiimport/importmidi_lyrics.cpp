@@ -109,7 +109,7 @@ struct BestTrack
 {
     int index = -1;
     // <orig time, current time - after quantization>
-    std::vector<std::pair<ReducedFraction, ReducedFraction> > matchedLyricTimes;
+    muse::vector<std::pair<ReducedFraction, ReducedFraction> > matchedLyricTimes;
 };
 
 // find track to insert lyrics
@@ -220,7 +220,7 @@ void addTitleIfAny(const std::multimap<ReducedFraction, std::string>& lyricTrack
 
 void addLyricsToScore(
     const std::multimap<ReducedFraction, std::string>& lyricTrack,
-    const std::vector<std::pair<ReducedFraction, ReducedFraction> >& matchedLyricTimes,
+    const muse::vector<std::pair<ReducedFraction, ReducedFraction> >& matchedLyricTimes,
     const Staff* staffAddTo)
 {
     Score* score = staffAddTo->score();
@@ -273,12 +273,12 @@ void setInitialLyricsFromMidiData(const QList<MTrack>& tracks)
     }
 }
 
-std::vector<std::pair<ReducedFraction, ReducedFraction> > findMatchedLyricTimes(
+muse::vector<std::pair<ReducedFraction, ReducedFraction> > findMatchedLyricTimes(
     const std::multimap<ReducedFraction, MidiChord>& chords,
     const std::multimap<ReducedFraction, std::string>& lyricTrack)
 {
     // <chord quantized on time, chord original on time>
-    std::vector<std::pair<ReducedFraction, ReducedFraction> > matchedLyricTimes;
+    muse::vector<std::pair<ReducedFraction, ReducedFraction> > matchedLyricTimes;
 
     for (const auto& chord: chords) {
         for (const auto& note: chord.second.notes) {

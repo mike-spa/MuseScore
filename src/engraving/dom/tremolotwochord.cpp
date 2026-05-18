@@ -319,7 +319,7 @@ Grip TremoloTwoChord::defaultGrip() const
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> TremoloTwoChord::gripsPositions(const EditData&) const
+muse::vector<PointF> TremoloTwoChord::gripsPositions(const EditData&) const
 {
     int idx = directionIdx();
 

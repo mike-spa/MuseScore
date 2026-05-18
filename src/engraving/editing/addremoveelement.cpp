@@ -190,7 +190,7 @@ bool AddElement::isFiltered(UndoCommand::Filter f, const EngravingItem* target) 
     return false;
 }
 
-std::vector<EngravingObject*> AddElement::objectItems() const
+muse::vector<EngravingObject*> AddElement::objectItems() const
 {
     return compoundObjects(element);
 }
@@ -372,7 +372,7 @@ bool RemoveElement::isFiltered(UndoCommand::Filter f, const EngravingItem* targe
     return false;
 }
 
-std::vector<EngravingObject*> RemoveElement::objectItems() const
+muse::vector<EngravingObject*> RemoveElement::objectItems() const
 {
     return compoundObjects(element);
 }

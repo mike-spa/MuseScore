@@ -125,7 +125,7 @@ Volta::Volta(EngravingItem* parent)
 ///
 /// \brief sorts the provided list in ascending order
 ///
-void Volta::setEndings(const std::vector<int>& l)
+void Volta::setEndings(const muse::vector<int>& l)
 {
     m_endings = l;
     std::sort(m_endings.begin(), m_endings.end());
@@ -226,7 +226,7 @@ bool Volta::setProperty(Pid propertyId, const PropertyValue& val)
 {
     switch (propertyId) {
     case Pid::VOLTA_ENDING: {
-        setEndings(val.value<std::vector<int> >());
+        setEndings(val.value<muse::vector<int> >());
     } break;
     default:
         if (!TextLineBase::setProperty(propertyId, val)) {
@@ -246,7 +246,7 @@ PropertyValue Volta::propertyDefault(Pid propertyId) const
 {
     switch (propertyId) {
     case Pid::VOLTA_ENDING:
-        return PropertyValue::fromValue(std::vector<int>());
+        return PropertyValue::fromValue(muse::vector<int>());
     case Pid::ANCHOR:
         return int(VOLTA_ANCHOR);
     case Pid::BEGIN_HOOK_TYPE:

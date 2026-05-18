@@ -203,7 +203,7 @@ public:
     void updateTickIndex();
 
     Measure* measureByTick(int tick) const;
-    std::vector<MeasureBase*> measureBasesAtTick(int tick) const;
+    muse::vector<MeasureBase*> measureBasesAtTick(int tick) const;
 
 private:
     void push_back(MeasureBase* m);

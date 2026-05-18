@@ -472,7 +472,7 @@ TEST_F(Engraving_PlaybackModelTests, Spanners)
     };
 
     // [THEN] Amount of applied articulations matches expectations
-    static const std::vector<ExpectedArticulation> expectedArticulations = {
+    static const muse::vector<ExpectedArticulation> expectedArticulations = {
         {},
         { ArticulationType::Pedal, 1 * QUARTER_NOTE_DURATION, 3 * QUARTER_NOTE_DURATION },
         { ArticulationType::Pedal, 1 * QUARTER_NOTE_DURATION, 3 * QUARTER_NOTE_DURATION },
@@ -829,7 +829,7 @@ TEST_F(Engraving_PlaybackModelTests, MeasureRepeat_TiedNotes)
     // [THEN] Expected timestamps & durations
     constexpr duration_t expectedDuration = HALF_NOTE_DURATION + HALF_NOTE_DURATION; // 2 tied half notes
 
-    const std::vector<TimestampAndDuration> expectedTnDList {
+    const muse::vector<TimestampAndDuration> expectedTnDList {
         // 2nd measure
         { WHOLE_NOTE_DURATION, expectedDuration },
 
@@ -992,7 +992,7 @@ TEST_F(Engraving_PlaybackModelTests, TempoChangesDuringNotes)
     // [GIVEN] Expected events durations
     auto quarterAtTempo = [](double tempo) { return static_cast<duration_t>(QUARTER_NOTE_DURATION / (tempo / 120.0)); };
 
-    const std::vector<duration_t> expectedDurations {
+    const muse::vector<duration_t> expectedDurations {
         // Tied note of two measures long, with tempo changes in the middle of it
         2 * quarterAtTempo(100) + 4 * quarterAtTempo(10) + 2 * quarterAtTempo(100),
 

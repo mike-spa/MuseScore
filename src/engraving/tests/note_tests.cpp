@@ -475,7 +475,7 @@ TEST_F(Engraving_NoteTests, noteLimits)
     // interval below
     score->cmdAddPitch(42, false, false);
     for (int i = 0; i < 20; i++) {
-        std::vector<Note*> nl = score->selection().noteList();
+        muse::vector<Note*> nl = score->selection().noteList();
         score->startCmd(TranslatableString::untranslatable("Engraving note tests"));
         score->addInterval(-8, nl);
         score->endCmd();
@@ -484,7 +484,7 @@ TEST_F(Engraving_NoteTests, noteLimits)
     // interval above
     score->cmdAddPitch(42, false, false);
     for (int i = 0; i < 20; i++) {
-        std::vector<Note*> nl = score->selection().noteList();
+        muse::vector<Note*> nl = score->selection().noteList();
         score->startCmd(TranslatableString::untranslatable("Engraving note tests"));
         score->addInterval(8, nl);
         score->endCmd();
@@ -546,7 +546,7 @@ TEST_F(Engraving_NoteTests, LongNoteAfterShort_183746)
     EngravingItem* e = s->firstElementForNavigation(0);
     EXPECT_TRUE(e && e->isNote());
 
-    std::vector<Note*> nl = toNote(e)->tiedNotes();
+    muse::vector<Note*> nl = toNote(e)->tiedNotes();
     EXPECT_TRUE(nl.size() >= 3);   // the breve must be divided across at least 3 measures
     Fraction totalTicks = Fraction(0, 1);
     for (Note* n : nl) {

@@ -148,7 +148,7 @@ String Instrument::recognizeMusicXmlId() const
     static const String defaultMusicXmlId(u"keyboard.piano");
     static const String defaultMusicXmlPercussionId(u"drum.group"); // our General MIDI Percussion
 
-    std::vector<String> nameList;
+    muse::vector<String> nameList;
     nameList.reserve(3);
 
     nameList.push_back(m_trackName);
@@ -328,7 +328,7 @@ InstrChannel::InstrChannel()
 //   initList
 //---------------------------------------------------------
 
-std::vector<MidiCoreEvent>& InstrChannel::initList() const
+muse::vector<MidiCoreEvent>& InstrChannel::initList() const
 {
     if (m_mustUpdateInit) {
         updateInitList();

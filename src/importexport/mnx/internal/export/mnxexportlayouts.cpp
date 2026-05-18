@@ -46,14 +46,14 @@ struct LayoutGroupSpan {
 
 struct LayoutGroupNode {
     LayoutGroupSpan span;
-    std::vector<size_t> children;
+    muse::vector<size_t> children;
 };
 
 struct LayoutBuildContext {
     MnxExporter* exporter{};
-    const std::vector<Staff*>* staves{};
+    const muse::vector<Staff*>* staves{};
     size_t staffCount{};
-    const std::vector<LayoutGroupNode>* nodes{};
+    const muse::vector<LayoutGroupNode>* nodes{};
 };
 } // namespace
 
@@ -70,7 +70,7 @@ static bool containsSpan(const LayoutGroupSpan& parent, const LayoutGroupSpan& c
 //   sortChildIndices
 //---------------------------------------------------------
 
-static void sortChildIndices(std::vector<size_t>& childIdxs, const std::vector<LayoutGroupNode>& nodes)
+static void sortChildIndices(muse::vector<size_t>& childIdxs, const muse::vector<LayoutGroupNode>& nodes)
 {
     std::sort(childIdxs.begin(), childIdxs.end(), [&](size_t lhs, size_t rhs) {
         const LayoutGroupSpan& a = nodes[lhs].span;
@@ -89,9 +89,9 @@ static void sortChildIndices(std::vector<size_t>& childIdxs, const std::vector<L
 //   buildGroupSpans
 //---------------------------------------------------------
 
-static std::vector<LayoutGroupSpan> buildGroupSpans(const std::vector<Staff*>& staves, size_t staffCount)
+static muse::vector<LayoutGroupSpan> buildGroupSpans(const muse::vector<Staff*>& staves, size_t staffCount)
 {
-    std::vector<LayoutGroupSpan> groups;
+    muse::vector<LayoutGroupSpan> groups;
     groups.reserve(staffCount);
 
     for (size_t staffIdx = 0; staffIdx < staffCount; ++staffIdx) {
@@ -153,8 +153,8 @@ static std::vector<LayoutGroupSpan> buildGroupSpans(const std::vector<Staff*>& s
 //   buildGroupNodes
 //---------------------------------------------------------
 
-static void buildGroupNodes(const std::vector<LayoutGroupSpan>& groups, std::vector<LayoutGroupNode>& nodes,
-                            std::vector<size_t>& rootChildren)
+static void buildGroupNodes(const muse::vector<LayoutGroupSpan>& groups, muse::vector<LayoutGroupNode>& nodes,
+                            muse::vector<size_t>& rootChildren)
 {
     nodes.clear();
     rootChildren.clear();
@@ -318,7 +318,7 @@ static mnx::StaffGroupBarlineOverride calcGroupBarlineOverride(const LayoutBuild
 //---------------------------------------------------------
 
 static void buildContent(LayoutBuildContext& ctx, mnx::ContentArray content,
-                         size_t start, size_t end, const std::vector<size_t>& children)
+                         size_t start, size_t end, const muse::vector<size_t>& children)
 {
     size_t staffIdx = start;
     size_t childPos = 0;
@@ -363,7 +363,7 @@ static void buildContent(LayoutBuildContext& ctx, mnx::ContentArray content,
 //   createLayout
 //---------------------------------------------------------
 
-void MnxExporter::createLayout(const std::vector<Staff*>& staves, const std::string& layoutId)
+void MnxExporter::createLayout(const muse::vector<Staff*>& staves, const std::string& layoutId)
 {
     auto mnxLayout = m_mnxDocument.ensure_layouts().append();
     if (!layoutId.empty()) {
@@ -375,10 +375,10 @@ void MnxExporter::createLayout(const std::vector<Staff*>& staves, const std::str
         return;
     }
 
-    std::vector<LayoutGroupSpan> groups = buildGroupSpans(staves, staffCount);
+    muse::vector<LayoutGroupSpan> groups = buildGroupSpans(staves, staffCount);
 
-    std::vector<LayoutGroupNode> nodes;
-    std::vector<size_t> rootChildren;
+    muse::vector<LayoutGroupNode> nodes;
+    muse::vector<size_t> rootChildren;
     buildGroupNodes(groups, nodes, rootChildren);
 
     LayoutBuildContext ctx;

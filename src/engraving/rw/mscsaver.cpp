@@ -84,7 +84,7 @@ bool MscSaver::writeMscz(MasterScore* score, MscWriter& mscWriter, bool createTh
     // Write Excerpts
     {
         if (!ctx || !ctx->shouldWriteRange()) {
-            const std::vector<Excerpt*>& excerpts = score->excerpts();
+            const muse::vector<Excerpt*>& excerpts = score->excerpts();
 
             struct ExcerptData {
                 String fileName;
@@ -115,7 +115,7 @@ bool MscSaver::writeMscz(MasterScore* score, MscWriter& mscWriter, bool createTh
 
 #ifdef MUSE_THREADS_SUPPORT
             // Parallelize excerpt serialization (CPU-bound, independent per excerpt)
-            std::vector<std::future<ExcerptData> > futures;
+            muse::vector<std::future<ExcerptData> > futures;
             futures.reserve(excerpts.size());
 
             for (size_t excerptIndex = 0; excerptIndex < excerpts.size(); ++excerptIndex) {

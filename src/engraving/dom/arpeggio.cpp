@@ -198,7 +198,7 @@ void Arpeggio::rebaseEndAnchor(AnchorRebaseDirection direction)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> Arpeggio::gripsPositions(const EditData&) const
+muse::vector<PointF> Arpeggio::gripsPositions(const EditData&) const
 {
     const LayoutData* ldata = this->ldata();
     const PointF pp(pagePos());
@@ -264,24 +264,24 @@ void Arpeggio::dragGrip(EditData& ed)
 //   dragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> Arpeggio::dragAnchorLines() const
+muse::vector<LineF> Arpeggio::dragAnchorLines() const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
 
     Chord* c = chord();
     if (c) {
         result.push_back(LineF(canvasPos(), c->upNote()->canvasPos()));
     }
-    return std::vector<LineF>();
+    return muse::vector<LineF>();
 }
 
 //---------------------------------------------------------
 //   gripAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> Arpeggio::gripAnchorLines(Grip grip) const
+muse::vector<LineF> Arpeggio::gripAnchorLines(Grip grip) const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
 
     const int gripIndex = static_cast<int>(grip);
     if (gripIndex >= gripsCount() || grip == Grip::MIDDLE) {

@@ -71,7 +71,7 @@ void NotationStyle::resetStyleValue(const StyleId& styleId)
     m_styleChanged.notify();
 }
 
-void NotationStyle::resetStyleValues(const std::vector<StyleId>& styleIds)
+void NotationStyle::resetStyleValues(const muse::vector<StyleId>& styleIds)
 {
     for (StyleId id : styleIds) {
         score()->resetStyleValue(id);

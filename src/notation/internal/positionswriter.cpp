@@ -90,14 +90,14 @@ PositionsWriter::PositionsWriter(PositionsWriter::ElementType elementType)
 {
 }
 
-std::vector<INotationWriter::UnitType> PositionsWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> PositionsWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool PositionsWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

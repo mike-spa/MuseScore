@@ -1054,7 +1054,7 @@ void CompatMidiRendererInternal::collectGraceBeforeChordEvents(Chord* chord, Cho
 {
     // calculate offset for grace notes here
     const auto& grChords = chord->graceNotesBefore();
-    std::vector<Chord*> graceNotesBeforeBar;
+    muse::vector<Chord*> graceNotesBeforeBar;
     std::copy_if(grChords.begin(), grChords.end(), std::back_inserter(graceNotesBeforeBar), [](Chord* ch) {
         return ch->noteType() == NoteType::ACCIACCATURA;
     });
@@ -1362,10 +1362,10 @@ void CompatMidiRendererInternal::renderSpanners(EventsHolder& events, PitchWheel
     }
 }
 
-static std::vector<std::pair<int, int> > collectTicksForEffect(const Score* const score, track_idx_t track, int stick, int etick,
+static muse::vector<std::pair<int, int> > collectTicksForEffect(const Score* const score, track_idx_t track, int stick, int etick,
                                                                MidiInstrumentEffect effect)
 {
-    std::vector<std::pair<int, int> > ticksForEffect;
+    muse::vector<std::pair<int, int> > ticksForEffect;
     int curTick = stick;
 
     for (auto it : score->spannerMap().findOverlapping(stick, etick)) {
@@ -1461,7 +1461,7 @@ void CompatMidiRendererInternal::doRenderSpanners(EventsHolder& events, Spanner*
         }
     };
 
-    std::vector<PedalEvent> pedalEventList;
+    muse::vector<PedalEvent> pedalEventList;
 
     int staffIdx = static_cast<int>(s->staffIdx());
 
@@ -1499,7 +1499,7 @@ void CompatMidiRendererInternal::doRenderSpanners(EventsHolder& events, Spanner*
         Vibrato* t = toVibrato(s);
         VibratoParams vibratoParams = getVibratoParams(t->vibratoType());
 
-        std::vector<std::pair<int, int> > vibratoTicksForEffect = collectTicksForEffect(score, s->track(), stick, etick, effect);
+        muse::vector<std::pair<int, int> > vibratoTicksForEffect = collectTicksForEffect(score, s->track(), stick, etick, effect);
 
         for (const auto& [tickStart, tickEnd] : vibratoTicksForEffect) {
             collectVibrato(channel, tickStart, tickEnd, vibratoParams, pitchWheelRenderer, effect, s->staffIdx());
@@ -1586,7 +1586,7 @@ void CompatMidiRendererInternal::fillArticulationsInfo()
             String instrId = instr->id();
             for (auto it = Context::s_builtInArticulationsValues.cbegin(); it != Context::s_builtInArticulationsValues.cend(); it++) {
                 const String& articulationName = it->first;
-                const std::vector<MidiArticulation>& instrArticulations = instr->articulation();
+                const muse::vector<MidiArticulation>& instrArticulations = instr->articulation();
                 bool instrHasArticulation
                     = std::any_of(instrArticulations.begin(),
                                   instrArticulations.end(), [articulationName](const MidiArticulation& instrArticulation) {

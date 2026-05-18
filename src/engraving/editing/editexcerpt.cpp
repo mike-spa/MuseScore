@@ -52,7 +52,7 @@ void AddExcerpt::redo(EditData*)
     excerpt->masterScore()->addExcerpt(excerpt);
 }
 
-std::vector<EngravingObject*> AddExcerpt::objectItems() const
+muse::vector<EngravingObject*> AddExcerpt::objectItems() const
 {
     if (excerpt) {
         if (MasterScore* score = excerpt->masterScore()) {
@@ -93,7 +93,7 @@ void RemoveExcerpt::redo(EditData*)
     excerpt->masterScore()->removeExcerpt(excerpt);
 }
 
-std::vector<EngravingObject*> RemoveExcerpt::objectItems() const
+muse::vector<EngravingObject*> RemoveExcerpt::objectItems() const
 {
     if (excerpt) {
         if (MasterScore* score = excerpt->masterScore()) {
@@ -150,7 +150,7 @@ void AddPartToExcerpt::undo(EditData*)
 
 void AddPartToExcerpt::redo(EditData*)
 {
-    std::vector<Part*>& excerptParts = m_excerpt->parts();
+    muse::vector<Part*>& excerptParts = m_excerpt->parts();
     if (m_targetPartIdx < excerptParts.size()) {
         excerptParts.insert(excerptParts.begin() + m_targetPartIdx, m_part);
     } else {

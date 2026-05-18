@@ -879,14 +879,14 @@ int GuitarBendSegment::gripsCount() const
     }
 }
 
-std::vector<PointF> GuitarBendSegment::gripsPositions(const EditData&) const
+muse::vector<PointF> GuitarBendSegment::gripsPositions(const EditData&) const
 {
     int gripCount = gripsCount();
     if (gripCount == 0) {
         return {};
     }
 
-    std::vector<PointF> grips(gripsCount());
+    muse::vector<PointF> grips(gripsCount());
     PointF pp(pagePos());
     grips[int(Grip::START)] = pp;
     grips[int(Grip::END)] = pos2() + pp;

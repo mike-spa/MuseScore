@@ -257,7 +257,7 @@ void ChangeStringData::flip(EditData*)
 {
     const StringData* stringData =  m_stringTunings ? m_stringTunings->stringData() : m_instrument->stringData();
     int frets = stringData->frets();
-    std::vector<instrString> stringList = stringData->stringList();
+    muse::vector<instrString> stringList = stringData->stringList();
 
     if (m_stringTunings) {
         m_stringTunings->setStringData(m_stringData);
@@ -471,7 +471,7 @@ void EditPart::setStaffType(Score* score, Staff* staff, StaffTypes typeId)
     score->undo(new ChangeStaffType(staff, *staffType));
 }
 
-void EditPart::removeParts(Score* score, const std::vector<Part*>& parts)
+void EditPart::removeParts(Score* score, const muse::vector<Part*>& parts)
 {
     if (!score || parts.empty()) {
         return;
@@ -484,7 +484,7 @@ void EditPart::removeParts(Score* score, const std::vector<Part*>& parts)
     score->setBracketsAndBarlines();
 }
 
-void EditPart::removeStaves(Score* score, const std::vector<Staff*>& staves)
+void EditPart::removeStaves(Score* score, const muse::vector<Staff*>& staves)
 {
     if (!score || staves.empty()) {
         return;
@@ -497,14 +497,14 @@ void EditPart::removeStaves(Score* score, const std::vector<Staff*>& staves)
     score->setBracketsAndBarlines();
 }
 
-void EditPart::moveParts(Score* score, const std::vector<Part*>& sourceParts, Part* destinationPart, bool insertAfter)
+void EditPart::moveParts(Score* score, const muse::vector<Part*>& sourceParts, Part* destinationPart, bool insertAfter)
 {
     if (!score || sourceParts.empty() || !destinationPart) {
         return;
     }
 
     // Build new part order: remove source parts, then insert at destination
-    std::vector<Part*> allParts(score->parts().begin(), score->parts().end());
+    muse::vector<Part*> allParts(score->parts().begin(), score->parts().end());
 
     // Remove source parts from the list
     for (Part* srcPart : sourceParts) {
@@ -528,7 +528,7 @@ void EditPart::moveParts(Score* score, const std::vector<Part*>& sourceParts, Pa
     }
 
     // Build staff index mapping from the new part order
-    std::vector<staff_idx_t> staffMapping;
+    muse::vector<staff_idx_t> staffMapping;
     staffMapping.reserve(score->nstaves());
     for (Part* part : allParts) {
         for (Staff* staff : part->staves()) {
@@ -540,14 +540,14 @@ void EditPart::moveParts(Score* score, const std::vector<Part*>& sourceParts, Pa
     score->setBracketsAndBarlines();
 }
 
-void EditPart::moveStaves(Score* score, const std::vector<Staff*>& sourceStaves, Staff* destinationStaff, bool insertAfter)
+void EditPart::moveStaves(Score* score, const muse::vector<Staff*>& sourceStaves, Staff* destinationStaff, bool insertAfter)
 {
     if (!score || sourceStaves.empty() || !destinationStaff) {
         return;
     }
 
     // Build new staff order: remove source staves, then insert at destination
-    std::vector<Staff*> allStaves(score->staves().begin(), score->staves().end());
+    muse::vector<Staff*> allStaves(score->staves().begin(), score->staves().end());
 
     // Remove source staves from the list
     for (Staff* srcStaff : sourceStaves) {
@@ -571,7 +571,7 @@ void EditPart::moveStaves(Score* score, const std::vector<Staff*>& sourceStaves,
     }
 
     // Build index mapping
-    std::vector<staff_idx_t> sortedIndexes;
+    muse::vector<staff_idx_t> sortedIndexes;
     sortedIndexes.reserve(allStaves.size());
     for (const Staff* staff : allStaves) {
         sortedIndexes.push_back(staff->idx());
@@ -581,13 +581,13 @@ void EditPart::moveStaves(Score* score, const std::vector<Staff*>& sourceStaves,
     score->setBracketsAndBarlines();
 }
 
-void EditPart::addSystemObjects(Score* score, const std::vector<Staff*>& staves)
+void EditPart::addSystemObjects(Score* score, const muse::vector<Staff*>& staves)
 {
     if (!score || staves.empty()) {
         return;
     }
 
-    std::vector<EngravingItem*> topSystemObjects = collectSystemObjects(score);
+    muse::vector<EngravingItem*> topSystemObjects = collectSystemObjects(score);
 
     for (Staff* staff : staves) {
         if (staff->isSystemObjectStaff()) {
@@ -609,13 +609,13 @@ void EditPart::addSystemObjects(Score* score, const std::vector<Staff*>& staves)
     }
 }
 
-void EditPart::removeSystemObjects(Score* score, const std::vector<Staff*>& staves)
+void EditPart::removeSystemObjects(Score* score, const muse::vector<Staff*>& staves)
 {
     if (!score || staves.empty()) {
         return;
     }
 
-    std::vector<EngravingItem*> systemObjects = collectSystemObjects(score, staves);
+    muse::vector<EngravingItem*> systemObjects = collectSystemObjects(score, staves);
 
     for (Staff* staff : staves) {
         if (staff->isSystemObjectStaff()) {
@@ -646,7 +646,7 @@ void EditPart::moveSystemObjects(Score* score, Staff* sourceStaff, Staff* destin
         return;
     }
 
-    const std::vector<EngravingItem*> systemObjects = collectSystemObjects(score, { sourceStaff, destinationStaff });
+    const muse::vector<EngravingItem*> systemObjects = collectSystemObjects(score, { sourceStaff, destinationStaff });
     const staff_idx_t dstStaffIdx = destinationStaff->idx();
 
     score->undo(new RemoveSystemObjectStaff(sourceStaff));

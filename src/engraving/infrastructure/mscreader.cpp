@@ -169,14 +169,14 @@ ByteArray MscReader::readScoreFile() const
     return fileData(mscxFileName);
 }
 
-std::vector<String> MscReader::excerptFileNames() const
+muse::vector<String> MscReader::excerptFileNames() const
 {
     if (!reader()->isContainer()) {
         NOT_SUPPORTED << " not container";
-        return std::vector<String>();
+        return muse::vector<String>();
     }
 
-    std::vector<String> names;
+    muse::vector<String> names;
     StringList files = reader()->fileList();
     for (const String& filePath : files) {
         if (filePath.startsWith(u"Excerpts/") && filePath.endsWith(u".mscx", muse::CaseInsensitive)) {
@@ -216,14 +216,14 @@ ByteArray MscReader::readImageFile(const String& fileName) const
     return fileData(u"Pictures/" + fileName);
 }
 
-std::vector<String> MscReader::imageFileNames() const
+muse::vector<String> MscReader::imageFileNames() const
 {
     if (!reader()->isContainer()) {
         // NOT_SUPPORTED << " not container";
-        return std::vector<String>();
+        return muse::vector<String>();
     }
 
-    std::vector<String> names;
+    muse::vector<String> names;
     StringList files = reader()->fileList();
     for (const String& filePath : files) {
         if (filePath.startsWith(u"Pictures/")) {
@@ -322,7 +322,7 @@ StringList MscReader::ZipFileReader::fileList() const
     }
 
     StringList files;
-    std::vector<ZipReader::FileInfo> fileInfoList = m_zip->fileInfoList();
+    std::vector<ZipReader::FileInfo> fileInfoList =  m_zip->fileInfoList();
     if (m_zip->hasError()) {
         LOGE() << "failed read meta";
     }

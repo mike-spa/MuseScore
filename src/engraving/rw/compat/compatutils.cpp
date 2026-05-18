@@ -213,7 +213,7 @@ void CompatUtils::replaceStaffTextWithPlayTechniqueAnnotation(MasterScore* score
 
     for (Measure* measure = score->firstMeasure(); measure; measure = measure->nextMeasure()) {
         for (Segment* segment = measure->first(); segment; segment = segment->next()) {
-            std::vector<EngravingItem*> annotations = segment->annotations();
+            muse::vector<EngravingItem*> annotations = segment->annotations();
 
             for (EngravingItem* annotation : annotations) {
                 if (!annotation || !annotation->isStaffTextBase()) {
@@ -271,7 +271,7 @@ void CompatUtils::replaceStaffTextWithPlayTechniqueAnnotation(MasterScore* score
     }
 }
 
-void CompatUtils::assignInitialPartToExcerpts(const std::vector<Excerpt*>& excerpts)
+void CompatUtils::assignInitialPartToExcerpts(const muse::vector<Excerpt*>& excerpts)
 {
     TRACEFUNC;
 
@@ -542,7 +542,7 @@ void CompatUtils::splitArticulations(MasterScore* masterScore)
 
 DynamicType CompatUtils::reconstructDynamicTypeFromString(Dynamic* dynamic)
 {
-    static std::vector<Dyn> sortedDynList; // copy of dynList sorted by string length
+    static muse::vector<Dyn> sortedDynList; // copy of dynList sorted by string length
 
     if (sortedDynList.empty()) {
         sortedDynList = Dynamic::dynamicList();
@@ -775,7 +775,7 @@ void CompatUtils::mapHeaderFooterStyles(MasterScore* score)
     // Copyright and page numbers used header/footer styling before 4.4 - after 4.4 these have their own styles. To ensure nothing
     // changes visually when loading a pre-4.4 score for the first time, we must search the header/footer strings for copyright/page
     // number macros and set the "defaults" for copyright/page number styles based on where the macros were inserted...
-    const auto doMap = [score](const TextStyleType type, const std::vector<Sid>& headerFooterStringSids) {
+    const auto doMap = [score](const TextStyleType type, const muse::vector<Sid>& headerFooterStringSids) {
         const TextStyle* headerFooterTextStyle = textStyle(type);
         const TextStyle* copyrightTextStyle = textStyle(TextStyleType::COPYRIGHT);
         const TextStyle* pageNumberTextStyle = textStyle(TextStyleType::PAGE_NUMBER);
@@ -967,7 +967,7 @@ Sid CompatUtils::positionStyleFromAlign(Sid align)
     return muse::value(ALIGN_VALS_TO_CONVERT, align, Sid::NOSTYLE);
 }
 
-void CompatUtils::setPositionStylesFromAlign(MStyle* style, std::vector<Sid> ignoreSids)
+void CompatUtils::setPositionStylesFromAlign(MStyle* style, muse::vector<Sid> ignoreSids)
 {
     // Make sure new position styles are initially the same as align values
     for (const StyleDef::StyleValue& st : StyleDef::styleValues) {

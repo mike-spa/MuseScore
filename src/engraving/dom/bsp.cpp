@@ -38,7 +38,7 @@ class InsertItemBspTreeVisitor : public BspTreeVisitor
 public:
     EngravingItem* item;
 
-    inline void visit(std::vector<EngravingItem*>& items) override { items.push_back(item); }
+    inline void visit(muse::vector<EngravingItem*>& items) override { items.push_back(item); }
 };
 
 //---------------------------------------------------------
@@ -51,7 +51,7 @@ class RemoveItemBspTreeVisitor : public BspTreeVisitor
 public:
     EngravingItem* item;
 
-    inline void visit(std::vector<EngravingItem*>& items) override { muse::remove(items, item); }
+    inline void visit(muse::vector<EngravingItem*>& items) override { muse::remove(items, item); }
 };
 
 //---------------------------------------------------------
@@ -62,9 +62,9 @@ class FindItemBspTreeVisitor : public BspTreeVisitor
 {
     OBJECT_ALLOCATOR(engraving, FindItemBspTreeVisitor)
 public:
-    std::vector<EngravingItem*> foundItems;
+    muse::vector<EngravingItem*> foundItems;
 
-    void visit(std::vector<EngravingItem*>& items) override
+    void visit(muse::vector<EngravingItem*>& items) override
     {
         for (auto item : items) {
             if (!item->itemDiscovered) {
@@ -105,7 +105,7 @@ void BspTree::initialize(const RectF& rec, int n)
     m_leafCnt    = 0;
 
     m_nodes.resize((1 << (m_depth + 1)) - 1);
-    m_leaves.assign(1LL << m_depth, std::vector<EngravingItem*>());
+    m_leaves.assign(1LL << m_depth, muse::vector<EngravingItem*>());
     initialize(rec, m_depth, 0);
 }
 
@@ -146,11 +146,11 @@ void BspTree::remove(EngravingItem* element)
 //   items
 //---------------------------------------------------------
 
-std::vector<EngravingItem*> BspTree::items(const RectF& rec)
+muse::vector<EngravingItem*> BspTree::items(const RectF& rec)
 {
     FindItemBspTreeVisitor findVisitor;
     climbTree(&findVisitor, rec);
-    std::vector<EngravingItem*> l;
+    muse::vector<EngravingItem*> l;
     for (EngravingItem* e : findVisitor.foundItems) {
         e->itemDiscovered = false;
         if (e->pageBoundingRect().intersects(rec)) {
@@ -164,12 +164,12 @@ std::vector<EngravingItem*> BspTree::items(const RectF& rec)
 //   items
 //---------------------------------------------------------
 
-std::vector<EngravingItem*> BspTree::items(const PointF& pos)
+muse::vector<EngravingItem*> BspTree::items(const PointF& pos)
 {
     FindItemBspTreeVisitor findVisitor;
     climbTree(&findVisitor, pos);
 
-    std::vector<EngravingItem*> l;
+    muse::vector<EngravingItem*> l;
     for (EngravingItem* e : findVisitor.foundItems) {
         e->itemDiscovered = false;
         if (e->contains(pos)) {

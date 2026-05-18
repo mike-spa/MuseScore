@@ -57,7 +57,7 @@ StringData::StringData(int numFrets, int numStrings, int strings[], bool useFlat
     m_useFlats = useFlats;
 }
 
-StringData::StringData(int numFrets, std::vector<instrString>& strings)
+StringData::StringData(int numFrets, muse::vector<instrString>& strings)
 {
     m_frets = numFrets;
 
@@ -220,7 +220,7 @@ void StringData::fretChords(Chord* chord) const
     }
 
     // we need to keep track of string allocation
-    std::vector<int> bUsed(strings);
+    muse::vector<int> bUsed(strings);
 
     // determine used range of frets
     int minFret = INT32_MAX;
@@ -530,7 +530,7 @@ int StringData::fret(int pitch, int string, int pitchOffset) const
 //    ties break toward lower string index.
 //---------------------------------------------------------
 
-bool StringData::tryResolveStringConflictWithOutOfRangeFret(const Note* note, int numStrings, std::vector<int>& bUsed,
+bool StringData::tryResolveStringConflictWithOutOfRangeFret(const Note* note, int numStrings, muse::vector<int>& bUsed,
                                                             int& nNewString, int& nNewFret) const
 {
     int bestString = -1;

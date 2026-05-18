@@ -54,7 +54,7 @@ public:
 
     Key key() const { return m_sig.key(); }
     Key concertKey() const { return m_sig.concertKey(); }
-    const std::vector<CustDef>& customKeyDefs() const { return m_sig.customKeyDefs(); }
+    const muse::vector<CustDef>& customKeyDefs() const { return m_sig.customKeyDefs(); }
     int degInKey(int degree) const { return m_sig.degInKey(degree); }
     SymId symInKey(SymId sym, int degree) const { return m_sig.symInKey(sym, degree); }
     bool isCustom() const { return m_sig.custom(); }
@@ -92,7 +92,7 @@ public:
     muse::TranslatableString subtypeUserName() const override;
 
     struct LayoutData : public EngravingItem::LayoutData {
-        std::vector<KeySym> keySymbols;
+        muse::vector<KeySym> keySymbols;
     };
     DECLARE_LAYOUTDATA_METHODS(KeySig)
 

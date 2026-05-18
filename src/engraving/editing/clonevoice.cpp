@@ -237,7 +237,7 @@ static void doCloneVoice(Score* destScore, track_idx_t srcTrack, track_idx_t dst
             }
         }
 
-        const std::vector<EngravingItem*> annotations = oseg->annotations();
+        const muse::vector<EngravingItem*> annotations = oseg->annotations();
         for (EngravingItem* annotation : annotations) {
             if (!annotation->elementAppliesToTrack(srcTrack)) {
                 continue;
@@ -354,7 +354,7 @@ void CloneVoice::cloneVoice(
                 link ? s->doUndoRemoveElement(el) : s->undoRemoveElement(el);
             }
 
-            const std::vector<EngravingItem*> annotations = seg->annotations();
+            const muse::vector<EngravingItem*> annotations = seg->annotations();
             for (EngravingItem* annotation : annotations) {
                 if (annotation && annotation->track() == strack) {
                     if (annotation->hasVoiceAssignmentProperties()) {

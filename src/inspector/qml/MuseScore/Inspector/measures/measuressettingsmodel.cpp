@@ -144,7 +144,7 @@ void MeasuresSettingsModel::updateAllSystemsAreLocked()
         return;
     }
 
-    std::vector<System*> systems = selection()->selectedSystems();
+    muse::vector<System*> systems = selection()->selectedSystems();
 
     bool allLocked = true;
     for (System* system : systems) {

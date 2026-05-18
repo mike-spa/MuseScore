@@ -98,7 +98,7 @@ void assignKeyListToStaff(const KeyList& kl, Staff* staff)
 Key findKey(const QList<MTrack>& tracks)
 {
     const int octave = 12;
-    std::vector<int> counts(octave);
+    muse::vector<int> counts(octave);
 
     for (const auto& track: tracks) {
         if (track.mtrack->drumTrack()) {
@@ -120,7 +120,7 @@ Key findKey(const QList<MTrack>& tracks)
         }
     }
 
-    std::vector<KeyData> keys = {
+    muse::vector<KeyData> keys = {
         { Key::C_B, counts[3] + counts[10] },
         { Key::G_B, counts[10] + counts[5] },
         { Key::D_B, counts[5] + counts[0] },

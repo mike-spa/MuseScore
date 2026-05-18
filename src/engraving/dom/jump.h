@@ -93,7 +93,7 @@ struct JumpTypeTableItem {
     AsciiStringView continueAt;
 };
 
-extern const std::vector<JumpTypeTableItem> jumpTypeTable;
+extern const muse::vector<JumpTypeTableItem> jumpTypeTable;
 } // namespace mu::engraving
 
 #endif

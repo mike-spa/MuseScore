@@ -35,7 +35,7 @@ class Measure;
 class Volta;
 class Jump;
 class RepeatListElement;
-using RepeatListElementList = std::vector<RepeatListElement*>;
+using RepeatListElementList = muse::vector<RepeatListElement*>;
 
 //---------------------------------------------------------
 //   RepeatSegment
@@ -67,21 +67,21 @@ public:
     Measure const* firstMeasure() const { return m_measureList.empty() ? nullptr : m_measureList.front(); }
     Measure const* lastMeasure() const { return m_measureList.empty() ? nullptr : m_measureList.back(); }
 
-    const std::vector<const Measure*>& measureList() const;
+    const muse::vector<const Measure*>& measureList() const;
 
     friend bool operator==(const RepeatSegment& lhs, const RepeatSegment& rhs);
     inline friend bool operator!=(const RepeatSegment& lhs, const RepeatSegment& rhs) { return !(lhs == rhs); }
 
     friend class RepeatList;
 private:
-    std::vector<const Measure*> m_measureList;
+    muse::vector<const Measure*> m_measureList;
 };
 
 //---------------------------------------------------------
 //   RepeatList
 //---------------------------------------------------------
 
-class RepeatList : public std::vector<RepeatSegment*>
+class RepeatList : public muse::vector<RepeatSegment*>
 {
     OBJECT_ALLOCATOR(engraving, RepeatList)
 
@@ -102,15 +102,15 @@ public:
     void updateTempo();
     int ticks() const;
 
-    std::vector<RepeatSegment*>::const_iterator findRepeatSegmentFromUTick(int utick) const;
+    muse::vector<RepeatSegment*>::const_iterator findRepeatSegmentFromUTick(int utick) const;
 
 private:
     void collectRepeatListElements();
-    std::pair<std::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> findMarker(
-        muse::String label, std::vector<RepeatListElementList>::const_iterator referenceSectionIt,
+    std::pair<muse::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> findMarker(
+        muse::String label, muse::vector<RepeatListElementList>::const_iterator referenceSectionIt,
         RepeatListElementList::const_iterator referenceRepeatListElementIt) const;
 
-    void performJump(std::vector<RepeatListElementList>::const_iterator sectionIt,
+    void performJump(muse::vector<RepeatListElementList>::const_iterator sectionIt,
                      RepeatListElementList::const_iterator repeatListElementTargetIt, bool withRepeats, int* const playbackCount,
                      Volta const** const activeVolta, RepeatListElement const** const startRepeatReference) const;
     void unwind();
@@ -123,7 +123,7 @@ private:
     bool m_scoreChanged = true;
 
     std::set<std::pair<Jump const* const, int> > m_jumpsTaken;     // take the jumps only once, so track them during unwind
-    std::vector<RepeatListElementList> m_rlElements;               // all elements of the score that influence the RepeatList
+    muse::vector<RepeatListElementList> m_rlElements;               // all elements of the score that influence the RepeatList
 };
 } // namespace mu::engraving
 #endif

@@ -41,11 +41,11 @@ class EditStringData : public muse::ui::WidgetDialog, private Ui::EditStringData
     muse::ContextInject<context::IGlobalContext> globalContext = { this };
 
 public:
-    EditStringData(QWidget* parent = nullptr, const std::vector<engraving::instrString>& strings = {}, int frets = 0);
+    EditStringData(QWidget* parent = nullptr, const muse::vector<engraving::instrString>& strings = {}, int frets = 0);
 
     void componentComplete() override;
 
-    std::vector<mu::engraving::instrString> strings() const;
+    muse::vector<mu::engraving::instrString> strings() const;
     int frets() const;
 
 protected:
@@ -72,8 +72,8 @@ private:
 
     int _frets = -1;
     bool _modified = false;
-    std::vector<mu::engraving::instrString> _strings;           // pointer to original string list
-    std::vector<mu::engraving::instrString> _stringsLoc;         // local working copy of string list
+    muse::vector<mu::engraving::instrString> _strings;           // pointer to original string list
+    muse::vector<mu::engraving::instrString> _stringsLoc;         // local working copy of string list
 
     bool m_updateOnExit = false;
     Instrument* m_instrument = nullptr;

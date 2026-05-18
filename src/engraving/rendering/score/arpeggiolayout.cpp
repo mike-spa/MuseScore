@@ -217,7 +217,7 @@ double ArpeggioLayout::insetDistance(const Arpeggio* item, const LayoutContext& 
         return 0.0;
     }
 
-    std::vector<Accidental*> _accidentals;
+    muse::vector<Accidental*> _accidentals;
 
     // generate list of accidentals if none provided
     for (Note* note : chord->notes()) {
@@ -235,7 +235,7 @@ double ArpeggioLayout::insetDistance(const Arpeggio* item, const LayoutContext& 
 }
 
 double ArpeggioLayout::insetDistance(const Arpeggio* item, const LayoutContext& ctx, double mag_, const Chord* chord,
-                                     const std::vector<Accidental*>& accidentals)
+                                     const muse::vector<Accidental*>& accidentals)
 {
     if (!item || !chord) {
         return 0.0;

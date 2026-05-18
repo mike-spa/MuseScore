@@ -503,7 +503,7 @@ void LyricsLayout::computeVerticalPositions(System* system, LayoutContext& ctx)
 {
     staff_idx_t nStaves = system->score()->nstaves();
 
-    std::vector<staff_idx_t> visibleStaves;
+    muse::vector<staff_idx_t> visibleStaves;
     visibleStaves.reserve(system->staves().size());
 
     for (staff_idx_t staffIdx = 0; staffIdx < nStaves; ++staffIdx) {

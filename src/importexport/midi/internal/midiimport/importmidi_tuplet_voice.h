@@ -38,23 +38,23 @@ struct TiedTuplet
     int tupletId;
     int voice;
     std::pair<const ReducedFraction, MidiChord>* chord;    // chord the tuplet is tied with
-    std::vector<int> tiedNoteIndexes;     // indexes of tied notes of that chord
+    muse::vector<int> tiedNoteIndexes;     // indexes of tied notes of that chord
 };
 
 int tupletVoiceLimit();
 
 bool excludeExtraVoiceTuplets(
-    std::vector<TupletInfo>& tuplets, std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
+    muse::vector<TupletInfo>& tuplets, std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
     std::list<TiedTuplet>& backTiedTuplets, const std::multimap<ReducedFraction, MidiChord>& chords, const ReducedFraction& basicQuant,
     const ReducedFraction& barStart, int barIndex);
 
 std::list<TiedTuplet>
 findBackTiedTuplets(
-    const std::multimap<ReducedFraction, MidiChord>& chords, const std::vector<TupletInfo>& tuplets, const ReducedFraction& prevBarStart,
+    const std::multimap<ReducedFraction, MidiChord>& chords, const muse::vector<TupletInfo>& tuplets, const ReducedFraction& prevBarStart,
     const ReducedFraction& startBarTick, const ReducedFraction& basicQuant, int currentBarIndex);
 
 void assignVoices(
-    std::vector<TupletInfo>& tuplets, std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
+    muse::vector<TupletInfo>& tuplets, std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
     std::list<TiedTuplet>& backTiedTuplets, const std::multimap<ReducedFraction, MidiChord>& chords, const ReducedFraction& basicQuant,
     const ReducedFraction& barStart, int barIndex);
 
@@ -65,7 +65,7 @@ chordInterval(const std::pair<const ReducedFraction, MidiChord>& chord, const st
 #ifdef QT_DEBUG
 
 bool haveOverlappingVoices(
-    const std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets, const std::vector<TupletInfo>& tuplets,
+    const std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets, const muse::vector<TupletInfo>& tuplets,
     const std::list<TiedTuplet>& backTiedTuplets, const std::multimap<ReducedFraction, MidiChord>& chords,
     const ReducedFraction& basicQuant, const ReducedFraction& barStart);
 

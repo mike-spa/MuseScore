@@ -132,7 +132,7 @@ void Bracket::startEdit(EditData& ed)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> Bracket::gripsPositions(const EditData&) const
+muse::vector<PointF> Bracket::gripsPositions(const EditData&) const
 {
     return { PointF(0.0, ldata()->bracketHeight()) + pagePos() };
 }

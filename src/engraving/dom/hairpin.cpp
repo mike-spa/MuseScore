@@ -155,7 +155,7 @@ int HairpinSegment::gripsCount() const
     return hairpin()->isLineType() ? 3 : 4;
 }
 
-std::vector<PointF> HairpinSegment::gripsPositions(const EditData&) const
+muse::vector<PointF> HairpinSegment::gripsPositions(const EditData&) const
 {
     double _spatium = spatium();
     double x = pos2().x();
@@ -165,7 +165,7 @@ std::vector<PointF> HairpinSegment::gripsPositions(const EditData&) const
     double y = pos2().y();
     PointF p(x, y);
 
-    std::vector<PointF> grips(gripsCount());
+    muse::vector<PointF> grips(gripsCount());
     PointF pp(pagePos());
     grips[int(Grip::START)] = pp;
     grips[int(Grip::END)] = p + pp;
@@ -360,7 +360,7 @@ TextBase* HairpinSegment::findStartDynamicOrExpression(bool ignoreInvisible) con
         return nullptr;
     }
 
-    std::vector<TextBase*> dynamicsAndExpr;
+    muse::vector<TextBase*> dynamicsAndExpr;
     dynamicsAndExpr.reserve(2);
 
     for (Segment* segment = measure->last(); segment; segment = segment->prev1()) {
@@ -414,7 +414,7 @@ TextBase* HairpinSegment::findEndDynamicOrExpression(bool ignoreInvisible, bool 
         return nullptr;
     }
 
-    std::vector<TextBase*> dynamicsAndExpr;
+    muse::vector<TextBase*> dynamicsAndExpr;
     dynamicsAndExpr.reserve(2);
 
     for (Segment* segment = measure->first(); segment; segment = segment->next1()) {

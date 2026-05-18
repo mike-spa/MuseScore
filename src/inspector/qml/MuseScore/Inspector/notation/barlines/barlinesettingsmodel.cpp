@@ -233,7 +233,7 @@ void BarlineSettingsModel::setSpanIntervalAsStaffDefault()
 {
     undoStack()->prepareChanges(muse::TranslatableString("undoableAction", "Set barline span interval as staff default"));
 
-    std::vector<mu::engraving::EngravingItem*> staves;
+    muse::vector<mu::engraving::EngravingItem*> staves;
 
     auto undoChangeProperty = [](mu::engraving::EngravingObject* o, mu::engraving::Pid pid, const QVariant& val)
     {

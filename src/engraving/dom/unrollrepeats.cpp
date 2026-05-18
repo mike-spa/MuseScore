@@ -62,7 +62,7 @@ static void removeRepeatMarkings(Score* score)
     }
 
     // remove coda/fine labels and jumps
-    std::vector<EngravingItem*> elems = score->getChildren(false);
+    muse::vector<EngravingItem*> elems = score->getChildren(false);
     for (auto e : elems) {
         if (e->isMarker() || e->isJump()) {
             score->deleteItem(e);
@@ -91,7 +91,7 @@ static void removeRepeatMarkings(Score* score)
 //    has been unrolled
 //---------------------------------------------------------
 
-static void createExcerpts(MasterScore* cs, const std::vector<Excerpt*>& excerpts)
+static void createExcerpts(MasterScore* cs, const muse::vector<Excerpt*>& excerpts)
 {
     // borrowed from musescore.cpp endsWith(".pdf")
     for (Excerpt* e : excerpts) {
@@ -136,7 +136,7 @@ MasterScore* MasterScore::unrollRepeats()
     }
 
     // remove excerpts for now (they are re-created after unrolling master score)
-    std::vector<Excerpt*> excerpts;
+    muse::vector<Excerpt*> excerpts;
     for (Excerpt* e : score->excerpts()) {
         excerpts.push_back(new Excerpt(*e, false));
         score->masterScore()->deleteExcerpt(e);

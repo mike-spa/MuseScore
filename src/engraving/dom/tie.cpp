@@ -99,7 +99,7 @@ void TieSegment::changeAnchor(EditData& ed, EngravingItem* element)
     ups(ed.curGrip).off = PointF();
     renderer()->layoutItem(spanner());
     if (spanner()->spannerSegments().size() != segments) {
-        const std::vector<SpannerSegment*>& ss = spanner()->spannerSegments();
+        const muse::vector<SpannerSegment*>& ss = spanner()->spannerSegments();
 
         TieSegment* newSegment = toTieSegment(ed.curGrip == Grip::END ? ss.back() : ss.front());
         ed.view()->changeEditElement(newSegment);

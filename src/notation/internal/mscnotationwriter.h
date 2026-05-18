@@ -34,7 +34,7 @@ public:
 
     explicit MscNotationWriter(engraving::MscIoMode mode);
 
-    std::vector<UnitType> supportedUnitTypes() const override;
+    muse::vector<UnitType> supportedUnitTypes() const override;
     bool supportsUnitType(UnitType unitType) const override;
 
     muse::Ret write(notation::INotationPtr notation, muse::io::IODevice& device, const Options& options = Options()) override;

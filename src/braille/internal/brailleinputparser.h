@@ -32,7 +32,7 @@ class braille_code;
 
 struct BiePattern {
     std::string name;
-    std::vector<braille_code*> codes;
+    muse::vector<braille_code*> codes;
     bool mandatory = false;
 };
 
@@ -62,7 +62,7 @@ public:
     bool valid() const;
 private:
     BieSequencePatternType _type;
-    std::vector<BiePattern> patterns;
+    muse::vector<BiePattern> patterns;
     bool _valid;
     std::map<std::string, braille_code*> _res;
     int max_cell_length;

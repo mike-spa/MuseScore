@@ -35,7 +35,7 @@ bool isTupletAllowed(const TupletInfo& tupletInfo)
 {
     {
         // special check for duplets and triplets
-        const std::vector<int> nums = { 2, 3 };
+        const muse::vector<int> nums = { 2, 3 };
         // for duplet: if note first and single - only 1/2*tupletLen duration is allowed
         // for triplet: if note first and single - only 1/3*tupletLen duration is allowed
         for (int num: nums) {
@@ -84,12 +84,12 @@ bool isTupletAllowed(const TupletInfo& tupletInfo)
     return false;
 }
 
-std::vector<int> findTupletNumbers(const ReducedFraction& divLen,
+muse::vector<int> findTupletNumbers(const ReducedFraction& divLen,
                                    const ReducedFraction& barFraction)
 {
     const auto& opers = midiImportOperations.data()->trackOpers;
     const int currentTrack = midiImportOperations.currentTrack();
-    std::vector<int> tupletNumbers;
+    muse::vector<int> tupletNumbers;
 
     if (Meter::isCompound(barFraction) && divLen == Meter::beatLength(barFraction)) {
         if (opers.search2plets.value(currentTrack)) {
@@ -351,7 +351,7 @@ bool isNextBarOwnershipOk(
     return nextBarCounter == 1;
 }
 
-std::vector<TupletInfo> detectTuplets(
+muse::vector<TupletInfo> detectTuplets(
     const std::multimap<ReducedFraction, MidiChord>::iterator& startBarChordIt,
     const std::multimap<ReducedFraction, MidiChord>::iterator& endBarChordIt,
     const ReducedFraction& startBarTick,
@@ -362,7 +362,7 @@ std::vector<TupletInfo> detectTuplets(
 {
     const auto divLengths = Meter::divisionsOfBarForTuplets(barFraction);
 
-    std::vector<TupletInfo> tuplets;
+    muse::vector<TupletInfo> tuplets;
     int id = 0;
     const auto tol = basicQuant / 2;
 

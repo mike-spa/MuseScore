@@ -192,7 +192,7 @@ StyleItem* ClefKeyTimeSigPageModel::timeSigAcrossScaleLock() const
 
 void ClefKeyTimeSigPageModel::resetStyleAndSize() const
 {
-    static const std::vector<StyleId> NORMAL_IDS = {
+    static const muse::vector<StyleId> NORMAL_IDS = {
         StyleId::timeSigNormalStyle,
         StyleId::timeSigNormalScale,
         StyleId::timeSigNormalScaleLock,
@@ -200,7 +200,7 @@ void ClefKeyTimeSigPageModel::resetStyleAndSize() const
         StyleId::timeSigNormalY,
     };
 
-    static const std::vector<StyleId> ABOVE_IDS = {
+    static const muse::vector<StyleId> ABOVE_IDS = {
         StyleId::timeSigAboveStyle,
         StyleId::timeSigAboveScale,
         StyleId::timeSigAboveScaleLock,
@@ -211,7 +211,7 @@ void ClefKeyTimeSigPageModel::resetStyleAndSize() const
         StyleId::timeSigVSMarginNonCentered,
     };
 
-    static const std::vector<StyleId> ACROSS_IDS = {
+    static const muse::vector<StyleId> ACROSS_IDS = {
         StyleId::timeSigAcrossStyle,
         StyleId::timeSigAcrossScale,
         StyleId::timeSigAcrossScaleLock,

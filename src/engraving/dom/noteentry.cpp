@@ -565,7 +565,7 @@ void Score::handleOverlappingChordRest(InputState& inputState)
         if (prevCr->isChord() && difference.isNotZero()) {
             Fraction startTick = prevCr->endTick();
             Chord* prevChord = toChord(prevCr);
-            const std::vector<TDuration> durationList = toDurationList(difference, true);
+            const muse::vector<TDuration> durationList = toDurationList(difference, true);
             for (const TDuration& dur : durationList) {
                 prevChord = ms->addChord(startTick, dur, prevChord, /*genTie*/ bool(prevChord), prevChord->tuplet());
                 startTick += dur.fraction();
@@ -672,7 +672,7 @@ std::pair<Note*, Note*> Score::repitchReplaceNote(Chord* chord, const NoteVal& n
     Note* firstTiedNote = nullptr;
     Note* lastTiedNote = note;
     ChordLine* chordLine = nullptr;
-    std::vector<Note*> notes = chord->notes();
+    muse::vector<Note*> notes = chord->notes();
     // break all ties into current chord
     // these will exist only if user explicitly moved cursor to a tied-into note
     // in ordinary use, cursor will automatically skip past these during note entry
@@ -683,7 +683,7 @@ std::pair<Note*, Note*> Score::repitchReplaceNote(Chord* chord, const NoteVal& n
     }
     // Keep first chordline only
     chordLine = chord->chordLine() ? chord->chordLine()->clone() : nullptr;
-    std::vector<EngravingItem*> chordEls = chord->el();
+    muse::vector<EngravingItem*> chordEls = chord->el();
     for (EngravingItem* e : chordEls) {
         if (e->isChordLine()) {
             undoRemoveElement(e);
@@ -697,7 +697,7 @@ std::pair<Note*, Note*> Score::repitchReplaceNote(Chord* chord, const NoteVal& n
         while (tn) {
             Chord* tc = tn->chord();
             if (tc->notes().size() != 1) {
-                std::vector<Note*> notesToRemove;
+                muse::vector<Note*> notesToRemove;
                 for (Note* n : tc->notes()) {
                     if (n != tn) {
                         notesToRemove.push_back(n);
@@ -853,7 +853,7 @@ Ret Score::insertChordByInsertingTime(const Position& pos)
                     ms->setRest(cr->tick(), track, fillLen, /* useDots */ false, /* tuplet */ nullptr, /* useFullMeasureRest */ false);
                 } else if (cr->isChord()) {
                     Chord* chord = toChord(cr);
-                    std::vector<TDuration> durations = toDurationList(chord->ticks() + fraction, /* useDots */ true);
+                    muse::vector<TDuration> durations = toDurationList(chord->ticks() + fraction, /* useDots */ true);
                     Fraction p = chord->tick();
                     ms->undoRemoveElement(chord);
                     Chord* prevChord = nullptr;

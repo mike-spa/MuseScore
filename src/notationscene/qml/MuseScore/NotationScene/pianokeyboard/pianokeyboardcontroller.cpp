@@ -119,7 +119,7 @@ void PianoKeyboardController::onNotationChanged()
                 return;
             }
 
-            std::vector<const Note*> notes;
+            muse::vector<const Note*> notes;
             for (const mu::engraving::Note* note : selection->notes()) {
                 notes.push_back(note);
             }
@@ -128,14 +128,14 @@ void PianoKeyboardController::onNotationChanged()
             updateNotesKeys(notes);
         }, Asyncable::Mode::SetReplace /* FIXME */);
 
-        notation->midiInput()->notesReceived().onReceive(this, [this](const std::vector<const Note*>& notes) {
+        notation->midiInput()->notesReceived().onReceive(this, [this](const muse::vector<const Note*>& notes) {
             m_isFromMidi = true;
             updateNotesKeys(notes);
         }, Asyncable::Mode::SetReplace /* FIXME */);
     }
 }
 
-void PianoKeyboardController::updateNotesKeys(const std::vector<const Note*>& receivedNotes)
+void PianoKeyboardController::updateNotesKeys(const muse::vector<const Note*>& receivedNotes)
 {
     std::unordered_set<piano_key_t> newKeys;
     std::unordered_set<piano_key_t> newOtherNotesInChord;

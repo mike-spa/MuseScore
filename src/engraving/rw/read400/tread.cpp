@@ -4371,7 +4371,7 @@ void TRead::read(Volta* v, XmlReader& e, ReadContext& ctx)
     while (e.readNextStartElement()) {
         const AsciiStringView tag(e.name());
         if (tag == "endings") {
-            v->setEndings(TConv::fromXml(e.readText(), std::vector<int>()));
+            v->setEndings(TConv::fromXml(e.readText(), muse::vector<int>()));
         } else if (TRead::readStyledProperty(v, tag, e, ctx)) {
         } else if (!readProperties(v, e, ctx)) {
             e.unknown();

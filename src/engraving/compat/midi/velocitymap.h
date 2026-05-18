@@ -73,7 +73,7 @@ private:
 ///  List of changes in a value.
 //---------------------------------------------------------
 
-typedef std::vector<std::pair<Fraction, Fraction> > EndPointsVector;
+typedef muse::vector<std::pair<Fraction, Fraction> > EndPointsVector;
 
 class VelocityMap : public std::multimap<Fraction, VelocityEvent>
 {
@@ -81,7 +81,7 @@ class VelocityMap : public std::multimap<Fraction, VelocityEvent>
 public:
     VelocityMap() {}
     int val(Fraction tick) const;
-    std::vector<std::pair<Fraction, Fraction> > changesInRange(Fraction stick, Fraction etick) const;
+    muse::vector<std::pair<Fraction, Fraction> > changesInRange(Fraction stick, Fraction etick) const;
 
     void addDynamic(Fraction tick, int value);
     void addHairpin(Fraction stick, Fraction etick, int change, ChangeMethod method, ChangeDirection direction);
@@ -101,7 +101,7 @@ private:
     void sortHairpins();
     void resolveHairpinCollisions();
     void resolveDynamicInsideHairpinCollisions();
-    void adjustCollidingHairpinsLength(std::vector<bool>& startsInHairpin, EndPointsVector& endPoints);
+    void adjustCollidingHairpinsLength(muse::vector<bool>& startsInHairpin, EndPointsVector& endPoints);
     bool dynamicExistsOnTick(Fraction tick) const;
     VelocityEvent dynamicEventForTick(Fraction tick) const;
     void addMissingDynamicsAfterHairpins();

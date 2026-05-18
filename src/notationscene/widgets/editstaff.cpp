@@ -569,7 +569,7 @@ Instrument EditStaff::instrument() const
     return part ? *part->instrument(m_instrumentKey.tick) : Instrument();
 }
 
-std::vector<InstrumentKey> EditStaff::otherInstrumentsInSameGroup() const
+muse::vector<InstrumentKey> EditStaff::otherInstrumentsInSameGroup() const
 {
     Part* part = m_orgStaff->part();
     Score* score = m_orgStaff->score();
@@ -591,7 +591,7 @@ std::vector<InstrumentKey> EditStaff::otherInstrumentsInSameGroup() const
 
     InstrumentName* groupName = partsWithGroupName.at(part);
 
-    std::vector<InstrumentKey> result;
+    muse::vector<InstrumentKey> result;
     for (const auto& pair : partsWithGroupName) {
         Part* p = pair.first;
         if (p == part) {
@@ -746,7 +746,7 @@ void EditStaff::showReplaceInstrumentDialog()
 void EditStaff::editStringDataClicked()
 {
     int frets = m_instrument.stringData()->frets();
-    std::vector<mu::engraving::instrString> stringList = m_instrument.stringData()->stringList();
+    muse::vector<mu::engraving::instrString> stringList = m_instrument.stringData()->stringList();
 
     EditStringData* esd = new EditStringData(this, stringList, frets);
 

@@ -42,7 +42,7 @@ public:
     void setStartChord(Chord* c) { m_startChord = c; }
     void setEndChord(Chord* c) { m_endChord = c; }
 
-    std::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> dragAnchorLines() const override;
 
     bool isUserModified() const override;
     bool isValid() const { return m_isValid; }
@@ -85,7 +85,7 @@ public:
 
     void updateHopoText();
     void addHopoText(HammerOnPullOffText* t) { m_hopoText.push_back(t); }
-    const std::vector<HammerOnPullOffText*>& hopoText() const { return m_hopoText; }
+    const muse::vector<HammerOnPullOffText*>& hopoText() const { return m_hopoText; }
 
     bool isUserModified() const override;
     bool isValid() const;
@@ -100,10 +100,10 @@ private:
         bool isValid = true;
     };
 
-    std::vector<HopoTextRegion> computeHopoTextRegions(Chord* startChord, Chord* endChord);
+    muse::vector<HopoTextRegion> computeHopoTextRegions(Chord* startChord, Chord* endChord);
     void resolveStartEndNotes(Note** startNote, Note** endNote, Chord* startChord, Chord* endChord, bool isTabStaff);
 
-    std::vector<HammerOnPullOffText*> m_hopoText;
+    muse::vector<HammerOnPullOffText*> m_hopoText;
 };
 
 class HammerOnPullOff final : public Slur

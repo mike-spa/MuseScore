@@ -49,21 +49,21 @@ extern engraving::Err importMidi(engraving::MasterScore*, const QString& name);
 
 namespace MidiTuplet {
 bool isTupletAllowed(const TupletInfo& tupletInfo);
-std::vector<int> findTupletNumbers(const ReducedFraction& divLen, const ReducedFraction& barFraction);
+muse::vector<int> findTupletNumbers(const ReducedFraction& divLen, const ReducedFraction& barFraction);
 TupletInfo findTupletApproximation(const ReducedFraction& tupletLen, int tupletNumber, const ReducedFraction& quantValue,
                                    const ReducedFraction& startTupletTime, const std::multimap<ReducedFraction,
                                                                                                MidiChord>::iterator& startChordIt,
                                    const std::multimap<ReducedFraction,
                                                        MidiChord>::iterator& endChordIt);
-void splitFirstTupletChords(std::vector<TupletInfo>& tuplets, std::multimap<ReducedFraction, MidiChord>& chords);
-std::set<int> findLongestUncommonGroup(const std::vector<TupletInfo>& tuplets, const ReducedFraction& basicQuant);
+void splitFirstTupletChords(muse::vector<TupletInfo>& tuplets, std::multimap<ReducedFraction, MidiChord>& chords);
+std::set<int> findLongestUncommonGroup(const muse::vector<TupletInfo>& tuplets, const ReducedFraction& basicQuant);
 }
 
 namespace Meter {
 MaxLevel maxLevelBetween(const ReducedFraction& startTickInBar, const ReducedFraction& endTickInBar, const DivisionInfo& divInfo);
 
 MaxLevel findMaxLevelBetween(const ReducedFraction& startTickInBar, const ReducedFraction& endTickInBar,
-                             const std::vector<DivisionInfo>& divsInfo);
+                             const muse::vector<DivisionInfo>& divsInfo);
 } // namespace Meter
 }
 
@@ -1019,9 +1019,9 @@ static MidiNote noteFactory(const ReducedFraction& offTime, int pitch)
     return note;
 }
 
-static MidiChord chordFactory(const ReducedFraction& offTime, const std::vector<int>& pitches)
+static MidiChord chordFactory(const ReducedFraction& offTime, const muse::vector<int>& pitches)
 {
-    std::vector<MidiNote> notes;
+    muse::vector<MidiNote> notes;
     for (const auto& pitch: pitches) {
         notes.push_back(noteFactory(offTime, pitch));
     }
@@ -1049,7 +1049,7 @@ TEST_F(MidiImportTests, separateTupletVoices) {
     const MidiChord firstChord = chordFactory(tripletNoteLen, { 76, 71, 67 });
     chords.insert({ { 0, 1 }, firstChord });
 
-    std::vector<int> pitches = { 74, 77 };
+    muse::vector<int> pitches = { 74, 77 };
     for (int i = 1; i != tripletNumber; ++i) {
         chords.insert({ tripletNoteLen* i,
                         chordFactory(tripletNoteLen * (i + 1), { pitches[i - 1] }) });
@@ -1100,7 +1100,7 @@ TEST_F(MidiImportTests, separateTupletVoices) {
         septupletInfo.chords.insert({ onTime, chords.find(onTime) });
     }
 
-    std::vector<MidiTuplet::TupletInfo> tuplets;
+    muse::vector<MidiTuplet::TupletInfo> tuplets;
     tuplets.push_back(tripletInfo);
     tuplets.push_back(quintupletInfo);
     tuplets.push_back(septupletInfo);
@@ -1148,7 +1148,7 @@ TEST_F(MidiImportTests, separateTupletVoices) {
 }
 
 TEST_F(MidiImportTests, findLongestUncommonGroup) {
-    std::vector<MidiTuplet::TupletInfo> tuplets;
+    muse::vector<MidiTuplet::TupletInfo> tuplets;
     MidiTuplet::TupletInfo info;
     const ReducedFraction basicQuant = ReducedFraction::fromTicks(engraving::Constants::DIVISION) / 4;    // 1/16
     // 0
@@ -1274,7 +1274,7 @@ TEST_F(MidiImportTests, maxLevelBetween) {
     EXPECT_EQ(level.pos, tupletData.onTime + tupletData.len / tupletData.tupletNumber);
     EXPECT_EQ(level.levelCount, 2);
 
-    std::vector<Meter::DivisionInfo> divInfo;
+    muse::vector<Meter::DivisionInfo> divInfo;
     // first elements of vector - all tuplets division info
     // last element - whole bar (regular) division info
     divInfo.push_back(tupletDivInfo);

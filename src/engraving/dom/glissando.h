@@ -98,7 +98,7 @@ public:
 
     TranslatableString subtypeUserName() const override;
 
-    static bool pitchSteps(const Spanner* spanner, std::vector<int>& pitchOffsets);
+    static bool pitchSteps(const Spanner* spanner, muse::vector<int>& pitchOffsets);
 
 private:
 

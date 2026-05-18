@@ -1568,7 +1568,7 @@ void NotationActionController::selectAllSimilarElements()
     }
 
     FilterElementsOptions options = elementsFilterOptions(selectedElement);
-    std::vector<EngravingItem*> elements = notationElements->elements(options);
+    muse::vector<EngravingItem*> elements = notationElements->elements(options);
     if (elements.empty()) {
         return;
     }
@@ -1596,7 +1596,7 @@ void NotationActionController::selectAllSimilarElementsInStaff()
     options.staffStart = static_cast<int>(selectedElement->staffIdx());
     options.staffEnd = options.staffStart + 1;
 
-    std::vector<EngravingItem*> elements = notationElements->elements(options);
+    muse::vector<EngravingItem*> elements = notationElements->elements(options);
     if (elements.empty()) {
         return;
     }

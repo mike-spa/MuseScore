@@ -272,7 +272,7 @@ void SelectNoteDialog::apply() const
 
     FilterNotesOptions options = noteOptions();
 
-    std::vector<EngravingItem*> elements = notationElements->elements(options);
+    muse::vector<EngravingItem*> elements = notationElements->elements(options);
     if (elements.empty()) {
         return;
     }
@@ -287,7 +287,7 @@ void SelectNoteDialog::apply() const
         interaction->clearSelection();
         interaction->select(elements, SelectType::ADD);
     } else if (doSubtract()) {
-        std::vector<EngravingItem*> selectionElements = interaction->selection()->elements();
+        muse::vector<EngravingItem*> selectionElements = interaction->selection()->elements();
         for (EngravingItem* element: elements) {
             selectionElements.erase(std::remove(selectionElements.begin(), selectionElements.end(), element), selectionElements.end());
         }
@@ -295,7 +295,7 @@ void SelectNoteDialog::apply() const
         interaction->clearSelection();
         interaction->select(selectionElements, SelectType::ADD);
     } else if (doAdd()) {
-        std::vector<EngravingItem*> selectionElements = interaction->selection()->elements();
+        muse::vector<EngravingItem*> selectionElements = interaction->selection()->elements();
         std::copy(selectionElements.begin(), selectionElements.end(), back_inserter(elements));
         interaction->select(elements, SelectType::ADD);
     }

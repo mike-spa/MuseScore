@@ -452,7 +452,7 @@ bool MnxExporter::createNotes(mnx::sequence::Event& mnxEvent, ChordRest* chordRe
     };
 
     const Chord* chord = toChord(chordRest);
-    const std::vector<Note*>& chordNotes = chord->notes();
+    const muse::vector<Note*>& chordNotes = chord->notes();
     IF_ASSERT_FAILED(!chordNotes.empty()) {
         LOGW() << "Skipping chord event with no notes.";
         return false;
@@ -537,7 +537,7 @@ void MnxExporter::createBeam(ExportContext& ctx, ChordRest* chordRest)
     if (!beam) {
         return;
     }
-    const std::vector<ChordRest*>& elements = beam->elements();
+    const muse::vector<ChordRest*>& elements = beam->elements();
     if (elements.empty() || elements.front() != chordRest) {
         return;
     }
@@ -560,7 +560,7 @@ void MnxExporter::createBeam(ExportContext& ctx, ChordRest* chordRest)
 
     auto appendBeamLevel = [&](auto&& self,
                                mnx::Array<mnx::part::Beam>& mnxBeamArray,
-                               const std::vector<ChordRest*>& beamElements,
+                               const muse::vector<ChordRest*>& beamElements,
                                size_t startIdx, size_t endIdx, int level) -> void {
         auto beamActionForLevel = [&](size_t idx) -> std::optional<BeamAction> {
             int prevBeams = -1;
@@ -629,7 +629,7 @@ void MnxExporter::createBeam(ExportContext& ctx, ChordRest* chordRest)
 
         std::optional<size_t> currentStart;
         std::optional<mnx::part::Beam> currentBeam;
-        std::vector<BeamRange> ranges;
+        muse::vector<BeamRange> ranges;
 
         for (size_t idx = startIdx; idx <= endIdx; ++idx) {
             const auto action = beamActionForLevel(idx);
@@ -776,7 +776,7 @@ void MnxExporter::appendGrace(mnx::ContentArray content, ExportContext& ctx,
         mnxGrace.set_slash(slash);
         /// @todo Grace note playback type has no obvious mapping from MuseScore. Revisit as appropriate.
 
-        std::vector<ChordRest*> graceChordRests;
+        muse::vector<ChordRest*> graceChordRests;
         graceChordRests.reserve(end - start);
         for (size_t i = start; i < end; ++i) {
             graceChordRests.push_back(graceNotes[i]);
@@ -814,14 +814,14 @@ const Tuplet* MnxExporter::findTopTuplet(ChordRest* chordRest, const ExportConte
 //---------------------------------------------------------
 
 size_t MnxExporter::appendTuplet(mnx::ContentArray content, ExportContext& ctx,
-                                 const std::vector<ChordRest*>& chordRests, size_t idx,
+                                 const muse::vector<ChordRest*>& chordRests, size_t idx,
                                  ChordRest* chordRest, const Tuplet* tuplet)
 {
     IF_ASSERT_FAILED(tuplet) {
         return idx;
     }
 
-    std::vector<ChordRest*> tupletChordRests;
+    muse::vector<ChordRest*> tupletChordRests;
     size_t lastTupletIdx = idx;
     for (size_t scan = idx; scan < chordRests.size(); ++scan) {
         ChordRest* scanCR = chordRests[scan];
@@ -878,7 +878,7 @@ size_t MnxExporter::appendTuplet(mnx::ContentArray content, ExportContext& ctx,
 //---------------------------------------------------------
 
 size_t MnxExporter::appendTremolo(mnx::ContentArray content, ExportContext& ctx,
-                                  const std::vector<ChordRest*>& chordRests, size_t idx,
+                                  const muse::vector<ChordRest*>& chordRests, size_t idx,
                                   ChordRest* chordRest)
 {
     Chord* chord = chordRest->isChord() ? toChord(chordRest) : nullptr;
@@ -934,7 +934,7 @@ size_t MnxExporter::appendTremolo(mnx::ContentArray content, ExportContext& ctx,
     auto mnxTremolo = content.append<mnx::sequence::MultiNoteTremolo>(marks, outer);
     /// @todo Perhaps export tremolo individual duration if MNX provides clarity about it.
 
-    std::vector<ChordRest*> tremoloChordRests { chordRest, chord2 };
+    muse::vector<ChordRest*> tremoloChordRests { chordRest, chord2 };
     if (ctx.graceBeforeEmitted.insert(chordRest).second) {
         appendGrace(content, ctx, chord->graceNotesBefore());
     }
@@ -951,7 +951,7 @@ size_t MnxExporter::appendTremolo(mnx::ContentArray content, ExportContext& ctx,
 //---------------------------------------------------------
 
 void MnxExporter::appendContent(mnx::ContentArray content, ExportContext& ctx,
-                                const std::vector<ChordRest*>& chordRests,
+                                const muse::vector<ChordRest*>& chordRests,
                                 ContentContext context)
 {
     for (size_t idx = 0; idx < chordRests.size(); ++idx) {
@@ -1033,7 +1033,7 @@ void MnxExporter::createSequences(const Part* part, const Measure* measure, mnx:
     for (size_t staffIdx = 0; staffIdx < staves; ++staffIdx) {
         for (voice_idx_t voice = 0; voice < VOICES; ++voice) {
             const track_idx_t curTrackIdx = part->startTrack() + VOICES * staffIdx + voice;
-            std::vector<ChordRest*> chordRests;
+            muse::vector<ChordRest*> chordRests;
 
             for (Segment* segment = measure->first(SegmentType::ChordRest);
                  segment;

@@ -82,7 +82,7 @@ void PageLayout::getNextPage(LayoutContext& ctx)
         state.setPageOldMeasure(nullptr);
     } else {
         state.setPage(dom.pages()[state.pageIdx()]);
-        std::vector<System*>& systems = state.page()->systems();
+        muse::vector<System*>& systems = state.page()->systems();
         state.setPageOldMeasure(systems.empty() || systems.back()->measures().empty() ? nullptr : systems.back()->measures().back());
         const system_idx_t i = muse::indexOf(systems, state.curSystem());
         if ((i < systems.size()) && i > 0 && systems[i - 1]->page() == state.page()) {
@@ -533,7 +533,7 @@ void PageLayout::layoutPage(LayoutContext& ctx, Page* page, double restHeight, d
 
     int gaps = static_cast<int>(page->systems().size()) - 1;
 
-    std::vector<System*> sList;
+    muse::vector<System*> sList;
 
     // build list of systems (excluding last)
     // set initial distance for each to the unstretched minimum distance to next
@@ -817,7 +817,7 @@ void PageLayout::distributeStaves(LayoutContext& ctx, Page* page, double footerP
 
 void PageLayout::layoutSystemDividers(LayoutContext& ctx, Page* page)
 {
-    const std::vector<System*>& systems = page->systems();
+    const muse::vector<System*>& systems = page->systems();
     for (size_t i = 0; i < systems.size(); ++i) {
         System* system = systems[i];
         if (system->vbox()) {

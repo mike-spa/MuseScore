@@ -53,7 +53,7 @@ using namespace mu::engraving::read400;
 //   BarLineTable
 //---------------------------------------------------------
 
-const std::vector<BarLineTableItem> BarLine::barLineTable {
+const muse::vector<BarLineTableItem> BarLine::barLineTable {
     { BarLineType::NORMAL,           SymNames::userNameForSymId(SymId::barlineSingle) },
     { BarLineType::DOUBLE,           SymNames::userNameForSymId(SymId::barlineDouble) },
     { BarLineType::START_REPEAT,     SymNames::userNameForSymId(SymId::repeatLeft) },
@@ -529,7 +529,7 @@ void BarLine::setSelected(bool f)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> BarLine::gripsPositions(const EditData& ed) const
+muse::vector<PointF> BarLine::gripsPositions(const EditData& ed) const
 {
     const BarLineEditData* bed = static_cast<const BarLineEditData*>(ed.getData(this).get());
 

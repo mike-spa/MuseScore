@@ -129,7 +129,7 @@ static T findTypeByXmlTag(const C& cont, const AsciiStringView& tag, T def, bool
 }
 
 // ==========================================================
-String TConv::toXml(const std::vector<int>& v)
+String TConv::toXml(const muse::vector<int>& v)
 {
     StringList sl;
     for (int i : v) {
@@ -138,9 +138,9 @@ String TConv::toXml(const std::vector<int>& v)
     return sl.join(u",");
 }
 
-std::vector<int> TConv::fromXml(const String& tag, const std::vector<int>& def)
+muse::vector<int> TConv::fromXml(const String& tag, const muse::vector<int>& def)
 {
-    std::vector<int> list;
+    muse::vector<int> list;
     StringList sl = tag.split(u',', muse::SkipEmptyParts);
     for (const String& s : sl) {
         bool ok = false;
@@ -153,9 +153,9 @@ std::vector<int> TConv::fromXml(const String& tag, const std::vector<int>& def)
     return list;
 }
 
-String TConv::toXml(const std::vector<string_idx_t>& v)
+String TConv::toXml(const muse::vector<string_idx_t>& v)
 {
-    std::vector<int> _v;
+    muse::vector<int> _v;
     for (string_idx_t string : v) {
         _v.push_back(static_cast<int>(string));
     }
@@ -163,15 +163,15 @@ String TConv::toXml(const std::vector<string_idx_t>& v)
     return toXml(_v);
 }
 
-std::vector<string_idx_t> TConv::fromXml(const String& tag, const std::vector<string_idx_t>& def)
+muse::vector<string_idx_t> TConv::fromXml(const String& tag, const muse::vector<string_idx_t>& def)
 {
-    std::vector<int> _def;
+    muse::vector<int> _def;
     for (string_idx_t string : def) {
         _def.push_back(static_cast<int>(string));
     }
 
-    std::vector<string_idx_t> v;
-    std::vector<int> _v = fromXml(tag, _def);
+    muse::vector<string_idx_t> v;
+    muse::vector<int> _v = fromXml(tag, _def);
 
     for (int string : _v) {
         v.push_back(static_cast<string_idx_t>(string));
@@ -661,14 +661,14 @@ ElementType TConv::fromXml(const AsciiStringView& tag, ElementType def, bool sil
     return findTypeByXmlTag<ElementType>(ELEMENT_TYPES, tag, def, silent);
 }
 
-static const std::vector<Item<AlignH> > ALIGN_H = {
+static const muse::vector<Item<AlignH> > ALIGN_H = {
     { AlignH::LEFT,     "left" },
     { AlignH::RIGHT,    "right" },
     { AlignH::HCENTER,  "center" },
     { AlignH::JUSTIFY,  "justify" },
 };
 
-static const std::vector<Item<AlignV> > ALIGN_V = {
+static const muse::vector<Item<AlignV> > ALIGN_V = {
     { AlignV::TOP,      "top" },
     { AlignV::VCENTER,  "center" },
     { AlignV::BOTTOM,   "bottom" },
@@ -717,7 +717,7 @@ Align TConv::fromXml(const String& str, Align def)
     return a;
 }
 
-static const std::vector<Item<IntervalStep> > INTERVAL_STEP = {
+static const muse::vector<Item<IntervalStep> > INTERVAL_STEP = {
     { IntervalStep::UNISON, "unison" },
     { IntervalStep::SECOND, "second" },
     { IntervalStep::THIRD, "third" },
@@ -728,7 +728,7 @@ static const std::vector<Item<IntervalStep> > INTERVAL_STEP = {
     { IntervalStep::OCTAVE, "octave" }
 };
 
-static const std::vector<Item<IntervalType> > INTERVAL_TYPE = {
+static const muse::vector<Item<IntervalType> > INTERVAL_TYPE = {
     { IntervalType::AUTO, "auto" },
     { IntervalType::MINOR, "minor" },
     { IntervalType::MAJOR, "major" },
@@ -769,7 +769,7 @@ IntervalType TConv::fromXml(const AsciiStringView& tag, IntervalType def)
     return findTypeByXmlTag<IntervalType>(INTERVAL_TYPE, tag, def);
 }
 
-static const std::vector<Item<TiePlacement> > TIE_PLACEMENT = {
+static const muse::vector<Item<TiePlacement> > TIE_PLACEMENT = {
     { TiePlacement::AUTO, "auto" },
     { TiePlacement::INSIDE, "inside" },
     { TiePlacement::OUTSIDE, "outside" },
@@ -785,7 +785,7 @@ TiePlacement TConv::fromXml(const AsciiStringView& str, TiePlacement def)
     return findTypeByXmlTag<TiePlacement>(TIE_PLACEMENT, str, def);
 }
 
-static const std::vector<Item<TieDotsPlacement> > TIE_DOTS_PLACEMENT = {
+static const muse::vector<Item<TieDotsPlacement> > TIE_DOTS_PLACEMENT = {
     { TieDotsPlacement::AUTO, "auto" },
     { TieDotsPlacement::BEFORE_DOTS, "before" },
     { TieDotsPlacement::AFTER_DOTS, "after" },
@@ -801,17 +801,17 @@ TieDotsPlacement TConv::fromXml(const AsciiStringView& str, TieDotsPlacement def
     return findTypeByXmlTag<TieDotsPlacement>(TIE_DOTS_PLACEMENT, str, def);
 }
 
-static const std::vector<Item<TimeSigPlacement> > TIMESIG_PLACEMENT = {
+static const muse::vector<Item<TimeSigPlacement> > TIMESIG_PLACEMENT = {
     { TimeSigPlacement::NORMAL, "normal" },
     { TimeSigPlacement::ABOVE_STAVES, "aboveStaves" },
     { TimeSigPlacement::ACROSS_STAVES, "acrossStaves" }
 };
-static const std::vector<Item<TimeSigStyle> > TIMESIG_STYLE = {
+static const muse::vector<Item<TimeSigStyle> > TIMESIG_STYLE = {
     { TimeSigStyle::NORMAL, "normal" },
     { TimeSigStyle::NARROW, "narrow" },
     { TimeSigStyle::LARGE, "large" }
 };
-static const std::vector<Item<TimeSigVSMargin> > TIMESIG_MARGIN = {
+static const muse::vector<Item<TimeSigVSMargin> > TIMESIG_MARGIN = {
     { TimeSigVSMargin::HANG_INTO_MARGIN, "hangIntoMargin" },
     { TimeSigVSMargin::RIGHT_ALIGN_TO_BARLINE, "rightAlignToBarline" },
     { TimeSigVSMargin::CREATE_SPACE, "createSpace" },
@@ -847,7 +847,7 @@ TimeSigVSMargin TConv::fromXml(const AsciiStringView& str, TimeSigVSMargin def)
     return findTypeByXmlTag<TimeSigVSMargin>(TIMESIG_MARGIN, str, def);
 }
 
-static const std::vector<Item<NoteSpellingType> > NOTE_SPELLING_TYPE = {
+static const muse::vector<Item<NoteSpellingType> > NOTE_SPELLING_TYPE = {
     { NoteSpellingType::STANDARD, "standard" },
     { NoteSpellingType::GERMAN, "german" },
     { NoteSpellingType::GERMAN_PURE, "germanPure" },
@@ -865,7 +865,7 @@ NoteSpellingType TConv::fromXml(const AsciiStringView& str, NoteSpellingType def
     return findTypeByXmlTag<NoteSpellingType>(NOTE_SPELLING_TYPE, str, def);
 }
 
-static const std::vector<Item<ChordStylePreset> > CHORD_STYLE_PRESET = {
+static const muse::vector<Item<ChordStylePreset> > CHORD_STYLE_PRESET = {
     { ChordStylePreset::STANDARD, "std" },
     { ChordStylePreset::JAZZ, "jazz" },
     { ChordStylePreset::LEGACY, "legacy" },
@@ -882,7 +882,7 @@ ChordStylePreset TConv::fromXml(const AsciiStringView& str, ChordStylePreset def
     return findTypeByXmlTag<ChordStylePreset>(CHORD_STYLE_PRESET, str, def);
 }
 
-std::vector<Item<TappingHand> > TAPPING_HAND
+muse::vector<Item<TappingHand> > TAPPING_HAND
 {
     { TappingHand::INVALID, "invalid" },
     { TappingHand::LEFT, "left" },
@@ -899,7 +899,7 @@ TappingHand TConv::fromXml(const AsciiStringView& str, TappingHand def)
     return findTypeByXmlTag<TappingHand>(TAPPING_HAND, str, def);
 }
 
-std::vector<Item<LHTappingSymbol> > LH_TAPPING_SYMBOL
+muse::vector<Item<LHTappingSymbol> > LH_TAPPING_SYMBOL
 {
     { LHTappingSymbol::DOT, "dot" },
     { LHTappingSymbol::CIRCLED_T, "circledT" },
@@ -915,7 +915,7 @@ LHTappingSymbol TConv::fromXml(const AsciiStringView& str, LHTappingSymbol def)
     return findTypeByXmlTag<LHTappingSymbol>(LH_TAPPING_SYMBOL, str, def);
 }
 
-std::vector<Item<RHTappingSymbol> > RH_TAPPING_SYMBOL
+muse::vector<Item<RHTappingSymbol> > RH_TAPPING_SYMBOL
 {
     { RHTappingSymbol::T, "T" },
     { RHTappingSymbol::PLUS, "plus" },
@@ -931,7 +931,7 @@ RHTappingSymbol TConv::fromXml(const AsciiStringView& str, RHTappingSymbol def)
     return findTypeByXmlTag<RHTappingSymbol>(RH_TAPPING_SYMBOL, str, def);
 }
 
-std::vector<Item<ParenthesesMode> > PARENTHESES_MODE
+muse::vector<Item<ParenthesesMode> > PARENTHESES_MODE
 {
     { ParenthesesMode::NONE, "none" },
     { ParenthesesMode::BOTH, "both" },
@@ -949,7 +949,7 @@ ParenthesesMode TConv::fromXml(const AsciiStringView& str, ParenthesesMode def)
     return findTypeByXmlTag<ParenthesesMode>(PARENTHESES_MODE, str, def);
 }
 
-static const std::vector<Item<RepeatPlayCountPreset> > REPEAT_COUNT_PRESET = {
+static const muse::vector<Item<RepeatPlayCountPreset> > REPEAT_COUNT_PRESET = {
     { RepeatPlayCountPreset::X_N, "xn",                         muse::TranslatableString("engraving", "x%1") },
     { RepeatPlayCountPreset::N_X, "nx",                         muse::TranslatableString("engraving", "%1x") },
     { RepeatPlayCountPreset::PLAY_N_TIMES, "playntimes",        muse::TranslatableString("engraving", "Play %1 times") },
@@ -976,7 +976,7 @@ RepeatPlayCountPreset TConv::fromXml(const AsciiStringView& str, RepeatPlayCount
     return findTypeByXmlTag<RepeatPlayCountPreset>(REPEAT_COUNT_PRESET, str, def);
 }
 
-static const std::vector<Item<AutoCustomHide> > AUTO_CUSTOM_HIDE = {
+static const muse::vector<Item<AutoCustomHide> > AUTO_CUSTOM_HIDE = {
     { AutoCustomHide::AUTO, "auto" },
     { AutoCustomHide::CUSTOM, "custom" },
     { AutoCustomHide::HIDE, "hide" },
@@ -992,7 +992,7 @@ AutoCustomHide TConv::fromXml(const AsciiStringView& str, AutoCustomHide def)
     return findTypeByXmlTag<AutoCustomHide>(AUTO_CUSTOM_HIDE, str, def);
 }
 
-static const std::vector<Item<VoiceAssignment> > VOICE_ASSIGNMENT = {
+static const muse::vector<Item<VoiceAssignment> > VOICE_ASSIGNMENT = {
     { VoiceAssignment::ALL_VOICE_IN_INSTRUMENT, "allInInstrument" },
     { VoiceAssignment::ALL_VOICE_IN_STAFF,      "allInStaff" },
     { VoiceAssignment::CURRENT_VOICE_ONLY,      "currentVoiceOnly" }
@@ -1008,7 +1008,7 @@ VoiceAssignment TConv::fromXml(const AsciiStringView& str, VoiceAssignment def)
     return findTypeByXmlTag<VoiceAssignment>(VOICE_ASSIGNMENT, str, def);
 }
 
-static const std::vector<Item<AutoOnOff> > AUTO_ON_OFF = {
+static const muse::vector<Item<AutoOnOff> > AUTO_ON_OFF = {
     { AutoOnOff::AUTO, "auto" },
     { AutoOnOff::ON,   "on" },
     { AutoOnOff::OFF,  "off" },
@@ -1024,7 +1024,7 @@ AutoOnOff TConv::fromXml(const AsciiStringView& str, AutoOnOff def)
     return findTypeByXmlTag<AutoOnOff>(AUTO_ON_OFF, str, def);
 }
 
-static const std::vector<Item<CapoParams::TransposeMode> > CAPO_TRANSPOSE_MODE = {
+static const muse::vector<Item<CapoParams::TransposeMode> > CAPO_TRANSPOSE_MODE = {
     { CapoParams::TransposeMode::PLAYBACK_ONLY, "playback" },
     { CapoParams::TransposeMode::STANDARD_ONLY, "standard" },
     { CapoParams::TransposeMode::TAB_ONLY,      "tab" },
@@ -1040,7 +1040,7 @@ CapoParams::TransposeMode TConv::fromXml(const AsciiStringView& str, CapoParams:
     return findTypeByXmlTag<CapoParams::TransposeMode>(CAPO_TRANSPOSE_MODE, str, def);
 }
 
-static const std::vector<Item<PartialSpannerDirection> > PARTIAL_SPANNER_DIRECTION = {
+static const muse::vector<Item<PartialSpannerDirection> > PARTIAL_SPANNER_DIRECTION = {
     { PartialSpannerDirection::NONE,     "none" },
     { PartialSpannerDirection::OUTGOING, "outgoing" },
     { PartialSpannerDirection::INCOMING, "incoming" },
@@ -1116,7 +1116,7 @@ NoteHeadType TConv::fromXml(const AsciiStringView& tag, NoteHeadType def)
 }
 
 /* *INDENT-OFF* */
-static const std::vector<Item<NoteHeadScheme> > NOTEHEAD_SCHEMES = {
+static const muse::vector<Item<NoteHeadScheme> > NOTEHEAD_SCHEMES = {
     { NoteHeadScheme::HEAD_AUTO,                "auto",              muse::TranslatableString("engraving", "Auto") },
     { NoteHeadScheme::HEAD_NORMAL,              "normal",            muse::TranslatableString("engraving/noteheadscheme", "Normal") },
     { NoteHeadScheme::HEAD_PITCHNAME,           "name-pitch",        muse::TranslatableString("engraving/noteheadscheme", "Pitch names") },
@@ -1145,7 +1145,7 @@ NoteHeadScheme TConv::fromXml(const AsciiStringView& tag, NoteHeadScheme def)
     return findTypeByXmlTag<NoteHeadScheme>(NOTEHEAD_SCHEMES, tag, def);
 }
 
-static const std::vector<Item<NoteHeadGroup> > NOTEHEAD_GROUPS = {
+static const muse::vector<Item<NoteHeadGroup> > NOTEHEAD_GROUPS = {
     { NoteHeadGroup::HEAD_NORMAL,           "normal",         muse::TranslatableString("engraving/noteheadgroup", "Normal") },
     { NoteHeadGroup::HEAD_CROSS,            "cross",          muse::TranslatableString("engraving/noteheadgroup", "Cross") },
     { NoteHeadGroup::HEAD_PLUS,             "plus",           muse::TranslatableString("engraving/noteheadgroup", "Plus") },
@@ -1273,7 +1273,7 @@ NoteHeadGroup TConv::fromXml(const AsciiStringView& tag, NoteHeadGroup def)
 }
 
 // table must be in sync with enum ClefType in types.h
-static const std::vector<Item<ClefType> > CLEF_TYPES = {
+static const muse::vector<Item<ClefType> > CLEF_TYPES = {
     { ClefType::G,          "G",        muse::TranslatableString("engraving/cleftype", "Treble clef") },
     { ClefType::G15_MB,     "G15mb",    muse::TranslatableString("engraving/cleftype", "Treble clef 15ma bassa") },
     { ClefType::G8_VB,      "G8vb",     muse::TranslatableString("engraving/cleftype", "Treble clef 8va bassa") },
@@ -1359,7 +1359,7 @@ struct DynamicItem
     muse::TranslatableString userName;
 };
 
-static const std::vector<DynamicItem> DYNAMIC_TYPES = {
+static const muse::vector<DynamicItem> DYNAMIC_TYPES = {
     { DynamicType::OTHER,   "other-dynamics",   SymId::noSym,                      muse::TranslatableString("engraving/dynamictype",
                                                                                                             "Other dynamic") },
     { DynamicType::PPPPPP,  "pppppp",           SymId::dynamicPPPPPP,              muse::TranslatableString("engraving/dynamictype",
@@ -1588,7 +1588,7 @@ DynamicType TConv::fromXml(const AsciiStringView& tag, DynamicType def)
     return it->type;
 }
 
-static const std::vector<Item<DynamicSpeed> > DYNAMIC_SPEEDS = {
+static const muse::vector<Item<DynamicSpeed> > DYNAMIC_SPEEDS = {
     { DynamicSpeed::NORMAL, "normal" },
     { DynamicSpeed::SLOW,   "slow" },
     { DynamicSpeed::FAST,   "fast" },
@@ -1609,7 +1609,7 @@ DynamicSpeed TConv::fromXml(const AsciiStringView& tag, DynamicSpeed def)
     return findTypeByXmlTag<DynamicSpeed>(DYNAMIC_SPEEDS, tag, def);
 }
 
-static const std::vector<Item<HookType> > HOOK_TYPES = {
+static const muse::vector<Item<HookType> > HOOK_TYPES = {
     { HookType::NONE,       "hook_none" },
     { HookType::HOOK_90,    "hook_90" },
     { HookType::HOOK_45,    "hook_45" },
@@ -1633,7 +1633,7 @@ HookType TConv::fromXml(const AsciiStringView& tag, HookType def)
     return ok ? HookType(v) : def;
 }
 
-static const std::vector<Item<LineType> > LINE_TYPES = {
+static const muse::vector<Item<LineType> > LINE_TYPES = {
     { LineType::SOLID, "solid" },
     { LineType::DASHED, "dashed" },
     { LineType::DOTTED, "dotted" }
@@ -1668,7 +1668,7 @@ LineType TConv::fromXml(const AsciiStringView& tag, LineType def)
     return findTypeByXmlTag(LINE_TYPES, tag, def);
 }
 
-static const std::vector<Item<KeyMode> > KEY_MODES = {
+static const muse::vector<Item<KeyMode> > KEY_MODES = {
     { KeyMode::UNKNOWN,     "unknown" },
     { KeyMode::NONE,        "none" },
     { KeyMode::MAJOR,       "major" },
@@ -1697,7 +1697,7 @@ KeyMode TConv::fromXml(const AsciiStringView& tag, KeyMode def)
     return findTypeByXmlTag<KeyMode>(KEY_MODES, tag, def);
 }
 
-static const std::vector<Item<TextStyleType> > TEXTSTYLE_TYPES = {
+static const muse::vector<Item<TextStyleType> > TEXTSTYLE_TYPES = {
     { TextStyleType::DEFAULT,           "default",              muse::TranslatableString("engraving", "Default") },
     { TextStyleType::TITLE,             "title",                muse::TranslatableString("engraving", "Title") },
     { TextStyleType::SUBTITLE,          "subtitle",             muse::TranslatableString("engraving", "Subtitle") },
@@ -1895,7 +1895,7 @@ TextStyleType TConv::fromXml(const AsciiStringView& tag, TextStyleType def)
     return def;
 }
 
-static const std::vector<Item<ChangeMethod> > CHANGE_METHODS = {
+static const muse::vector<Item<ChangeMethod> > CHANGE_METHODS = {
     { ChangeMethod::NORMAL,           "normal" },
     { ChangeMethod::EASE_IN,          "ease-in" },
     { ChangeMethod::EASE_OUT,         "ease-out" },
@@ -1981,7 +1981,7 @@ struct AccidentalUnicodeItem {
     const char* fullName = nullptr;
 };
 
-static const std::vector<AccidentalUnicodeItem> ACCIDENTALS_NAMES = {
+static const muse::vector<AccidentalUnicodeItem> ACCIDENTALS_NAMES = {
     { AccidentalVal::SHARP3,
       //: Visible text in the UI. Please preserve the accidental symbol in the translation
       QT_TRANSLATE_NOOP("engraving", "triple ♯"),
@@ -2044,7 +2044,7 @@ AccidentalRole TConv::fromXml(const AsciiStringView& tag, AccidentalRole def)
     return ok ? static_cast<AccidentalRole>(r) : def;
 }
 
-static const std::vector<Item<GuitarBendType> > GUITAR_BEND_TYPES = {
+static const muse::vector<Item<GuitarBendType> > GUITAR_BEND_TYPES = {
     { GuitarBendType::BEND,            "bend" },
     { GuitarBendType::PRE_BEND,        "pre-bend" },
     { GuitarBendType::GRACE_NOTE_BEND, "grace-note-bend" },
@@ -2065,7 +2065,7 @@ GuitarBendType TConv::fromXml(const AsciiStringView& tag, GuitarBendType def)
     return findTypeByXmlTag(GUITAR_BEND_TYPES, tag, def);
 }
 
-static const std::vector<Item<NoteCaseType> > NOTE_CASE_TYPES = {
+static const muse::vector<Item<NoteCaseType> > NOTE_CASE_TYPES = {
     { NoteCaseType::AUTO,    "auto" },
     { NoteCaseType::CAPITAL, "capital" },
     { NoteCaseType::LOWER,   "lower" },
@@ -2094,7 +2094,7 @@ BeatsPerSecond TConv::fromXml(const AsciiStringView& tag, BeatsPerSecond def)
     return ok ? BeatsPerSecond(v) : def;
 }
 
-static const std::vector<Item<DurationType> > DURATION_TYPES = {
+static const muse::vector<Item<DurationType> > DURATION_TYPES = {
     { DurationType::V_QUARTER,  "quarter",  muse::TranslatableString("engraving", "Quarter") },
     { DurationType::V_EIGHTH,   "eighth",   muse::TranslatableString("engraving", "Eighth") },
     { DurationType::V_1024TH,   "1024th",   muse::TranslatableString("engraving", "1024th") },
@@ -2128,7 +2128,7 @@ DurationType TConv::fromXml(const AsciiStringView& tag, DurationType def)
     return findTypeByXmlTag<DurationType>(DURATION_TYPES, tag, def);
 }
 
-static const std::vector<Item<PlayingTechniqueType> > PLAY_TECH_TYPES = {
+static const muse::vector<Item<PlayingTechniqueType> > PLAY_TECH_TYPES = {
     { PlayingTechniqueType::Undefined,     "undefined",      muse::TranslatableString::untranslatable("Undefined") },
     { PlayingTechniqueType::Natural,       "natural",        muse::TranslatableString("engraving/playtechtype", "Normal") },
     { PlayingTechniqueType::Pizzicato,     "pizzicato",      muse::TranslatableString("engraving/playtechtype", "Pizzicato") },
@@ -2176,7 +2176,7 @@ PlayingTechniqueType TConv::fromXml(const AsciiStringView& tag, PlayingTechnique
     return findTypeByXmlTag<PlayingTechniqueType>(PLAY_TECH_TYPES, tag, def);
 }
 
-static const std::vector<Item<GradualTempoChangeType> > TEMPO_CHANGE_TYPES = {
+static const muse::vector<Item<GradualTempoChangeType> > TEMPO_CHANGE_TYPES = {
     { GradualTempoChangeType::Undefined, "undefined" },
     { GradualTempoChangeType::Accelerando, "accelerando", muse::TranslatableString("engraving/gradualtempochangetype", "accel.") },
     { GradualTempoChangeType::Allargando, "allargando", muse::TranslatableString("engraving/gradualtempochangetype", "allarg.") },
@@ -2206,7 +2206,7 @@ GradualTempoChangeType TConv::fromXml(const AsciiStringView& tag, GradualTempoCh
     return findTypeByXmlTag<GradualTempoChangeType>(TEMPO_CHANGE_TYPES, tag, def);
 }
 
-static const std::vector<Item<OrnamentStyle> > ORNAMENTSTYLE_TYPES = {
+static const muse::vector<Item<OrnamentStyle> > ORNAMENTSTYLE_TYPES = {
     { OrnamentStyle::BAROQUE, "baroque" },
     { OrnamentStyle::DEFAULT, "default" }
 };
@@ -2221,7 +2221,7 @@ OrnamentStyle TConv::fromXml(const AsciiStringView& tag, OrnamentStyle def)
     return findTypeByXmlTag<OrnamentStyle>(ORNAMENTSTYLE_TYPES, tag, def);
 }
 
-static const std::vector<Item<PlacementV> > PLACEMENTV_TYPES = {
+static const muse::vector<Item<PlacementV> > PLACEMENTV_TYPES = {
     { PlacementV::ABOVE, "above" },
     { PlacementV::BELOW, "below" }
 };
@@ -2236,7 +2236,7 @@ PlacementV TConv::fromXml(const AsciiStringView& tag, PlacementV def)
     return findTypeByXmlTag<PlacementV>(PLACEMENTV_TYPES, tag, def);
 }
 
-static const std::vector<Item<PlacementH> > PLACEMENTH_TYPES = {
+static const muse::vector<Item<PlacementH> > PLACEMENTH_TYPES = {
     { PlacementH::LEFT,   "left" },
     { PlacementH::RIGHT,  "center" },
     { PlacementH::CENTER, "right" }
@@ -2252,7 +2252,7 @@ PlacementH TConv::fromXml(const AsciiStringView& tag, PlacementH def)
     return findTypeByXmlTag<PlacementH>(PLACEMENTH_TYPES, tag, def);
 }
 
-static const std::vector<Item<TextPlace> > TEXTPLACE_TYPES = {
+static const muse::vector<Item<TextPlace> > TEXTPLACE_TYPES = {
     { TextPlace::AUTO,  "auto" },
     { TextPlace::ABOVE, "above" },
     { TextPlace::BELOW, "below" },
@@ -2275,7 +2275,7 @@ TextPlace TConv::fromXml(const AsciiStringView& tag, TextPlace def)
     }
 
     // compatibility
-    static const std::vector<Item<TextPlace> > OLD_TEXTPLACE_TYPES = {
+    static const muse::vector<Item<TextPlace> > OLD_TEXTPLACE_TYPES = {
         { TextPlace::AUTO,  "0" },
         { TextPlace::ABOVE, "1" },
         { TextPlace::BELOW, "2" },
@@ -2328,7 +2328,7 @@ DirectionV TConv::fromXml(const AsciiStringView& tag, DirectionV def)
     return def;
 }
 
-static const std::vector<Item<DirectionH> > DIRECTIONH_TYPES = {
+static const muse::vector<Item<DirectionH> > DIRECTIONH_TYPES = {
     { DirectionH::AUTO,  "auto",  muse::TranslatableString("engraving", "Auto") },
     { DirectionH::RIGHT, "right", muse::TranslatableString("engraving", "Right") },
     { DirectionH::LEFT,  "left",  muse::TranslatableString("engraving", "Left") },
@@ -2364,7 +2364,7 @@ DirectionH TConv::fromXml(const AsciiStringView& tag, DirectionH def)
     return def;
 }
 
-static const std::vector<Item<LayoutBreakType> > LAYOUTBREAK_TYPES = {
+static const muse::vector<Item<LayoutBreakType> > LAYOUTBREAK_TYPES = {
     { LayoutBreakType::LINE,    "line",    muse::TranslatableString("engraving/layoutbreaktype", "System break") },
     { LayoutBreakType::PAGE,    "page",    muse::TranslatableString("engraving/layoutbreaktype", "Page break") },
     { LayoutBreakType::SECTION, "section", muse::TranslatableString("engraving/layoutbreaktype", "Section break") },
@@ -2386,7 +2386,7 @@ LayoutBreakType TConv::fromXml(const AsciiStringView& tag, LayoutBreakType def)
     return findTypeByXmlTag<LayoutBreakType>(LAYOUTBREAK_TYPES, tag, def);
 }
 
-static const std::vector<Item<VeloType> > VELO_TYPES = {
+static const muse::vector<Item<VeloType> > VELO_TYPES = {
     { VeloType::OFFSET_VAL, "offset" },
     { VeloType::USER_VAL, "user" }
 };
@@ -2401,7 +2401,7 @@ VeloType TConv::fromXml(const AsciiStringView& tag, VeloType def)
     return findTypeByXmlTag<VeloType>(VELO_TYPES, tag, def);
 }
 
-static const std::vector<Item<BeamMode> > BEAMMODE_TYPES = {
+static const muse::vector<Item<BeamMode> > BEAMMODE_TYPES = {
     { BeamMode::AUTO, "auto" },
     { BeamMode::BEGIN, "begin" },
     { BeamMode::MID, "mid" },
@@ -2437,7 +2437,7 @@ BeamMode TConv::fromXml(const AsciiStringView& tag, BeamMode def)
     return def;
 }
 
-static const std::vector<Item<GlissandoStyle> > GLISSANDOSTYLE_TYPES = {
+static const muse::vector<Item<GlissandoStyle> > GLISSANDOSTYLE_TYPES = {
     { GlissandoStyle::BLACK_KEYS, "blackkeys" },
     { GlissandoStyle::WHITE_KEYS, "whitekeys" },
     { GlissandoStyle::DIATONIC, "diatonic" },
@@ -2468,7 +2468,7 @@ GlissandoStyle TConv::fromXml(const AsciiStringView& tag, GlissandoStyle def)
     return def;
 }
 
-static const std::vector<Item<BarLineType> > BARLINE_TYPES = {
+static const muse::vector<Item<BarLineType> > BARLINE_TYPES = {
     { BarLineType::NORMAL, "normal" },
     { BarLineType::DOUBLE, "double" },
     { BarLineType::START_REPEAT, "start-repeat" },
@@ -2535,7 +2535,7 @@ TremoloType TConv::fromXml(const AsciiStringView& tag, TremoloType def)
     return findTypeByXmlTag<TremoloType>(TREMOLO_TYPES, tag, def);
 }
 
-static const std::vector<Item<TremoloBarType> > TREMOLOBAR_TYPES = { {
+static const muse::vector<Item<TremoloBarType> > TREMOLOBAR_TYPES = { {
     { TremoloBarType::DIP, "dip" },
     { TremoloBarType::DIVE, "dive" },
     { TremoloBarType::RELEASE_UP, "release (up)" },
@@ -2555,7 +2555,7 @@ TremoloBarType TConv::fromXml(const AsciiStringView& tag, TremoloBarType def)
     return findTypeByXmlTag<TremoloBarType>(TREMOLOBAR_TYPES, tag, def);
 }
 
-static const std::vector<Item<BracketType> > BRACKET_TYPES = {
+static const muse::vector<Item<BracketType> > BRACKET_TYPES = {
     { BracketType::NORMAL,     "Normal",    muse::TranslatableString("engraving/brackettype", "Normal") },
     { BracketType::BRACE,      "Brace",     muse::TranslatableString("engraving/brackettype", "Brace") },
     { BracketType::SQUARE,     "Square",    muse::TranslatableString("engraving/brackettype", "Square") },
@@ -2629,7 +2629,7 @@ struct EmbelItem
 };
 
 // TODO: Can't use .arg, because Palettes use these strings and doesn't support TranslatableString
-static const std::vector<EmbelItem> EMBELLISHMENT_TYPES = {
+static const muse::vector<EmbelItem> EMBELLISHMENT_TYPES = {
     // Single Grace notes
     { muse::TranslatableString("engraving/bagpipeembellishment", "Single grace low G"), "LG" },
     { muse::TranslatableString("engraving/bagpipeembellishment", "Single grace low A"), "LA" },
@@ -2997,7 +2997,7 @@ struct DrumPitchItem {
 };
 
 // TODO: Can't use TranslatableString, because Drumset uses these strings and doesn't support TranslatableString
-static const std::vector<DrumPitchItem> DRUMPITCHS = {
+static const muse::vector<DrumPitchItem> DRUMPITCHS = {
     { DrumNum(27),       QT_TRANSLATE_NOOP_U16("engraving/drumset", "High Q") },
     { DrumNum(28),       QT_TRANSLATE_NOOP_U16("engraving/drumset", "Slap") },
     { DrumNum(29),       QT_TRANSLATE_NOOP_U16("engraving/drumset", "Scratch Push") },
@@ -3109,7 +3109,7 @@ GlissandoType TConv::fromXml(const AsciiStringView& tag, GlissandoType def)
     return findTypeByXmlTag<GlissandoType>(GLISSANDO_TYPES, tag, def);
 }
 
-static const std::vector<Item<JumpType> > JUMP_TYPES = {
+static const muse::vector<Item<JumpType> > JUMP_TYPES = {
     { JumpType::DC,             "dc",       muse::TranslatableString("engraving", "Da Capo") },
     { JumpType::DC_AL_FINE,     "dcalfine", muse::TranslatableString("engraving", "Da Capo al Fine") },
     { JumpType::DC_AL_CODA,     "dcalcoda", muse::TranslatableString("engraving", "Da Capo al Coda") },

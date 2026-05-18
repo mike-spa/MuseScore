@@ -173,7 +173,7 @@ void ChordLine::dragGrip(EditData& ed)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> ChordLine::gripsPositions(const EditData&) const
+muse::vector<PointF> ChordLine::gripsPositions(const EditData&) const
 {
     if (m_wavy) {
         NOT_IMPLEMENTED;
@@ -207,7 +207,7 @@ std::vector<PointF> ChordLine::gripsPositions(const EditData&) const
         p += (cp + PointF(path.elementAt(1).x, path.elementAt(1).y));
         return { p };
     } else {
-        std::vector<PointF> grips(n);
+        muse::vector<PointF> grips(n);
         for (size_t i = 0; i < n; ++i) {
             grips[i] = cp + PointF(path.elementAt(i).x, path.elementAt(i).y);
         }

@@ -263,7 +263,7 @@ public:
 
     // static functions for font config files
     static bool readConfigFile(const String& fileName);
-    static std::vector<String> fontNames();
+    static muse::vector<String> fontNames();
     static bool fontData(int nIdx, String* pFamily, String* pDisplayName, double* pSize, double* pLineHeight);
 
     // standard re-implemented virtual functions
@@ -295,17 +295,17 @@ public:
 
     size_t itemsCount() const { return m_items.size(); }
     void appendItem(FiguredBassItem* item) { m_items.push_back(item); }
-    const std::vector<FiguredBassItem*>& items() const { return m_items; }
+    const muse::vector<FiguredBassItem*>& items() const { return m_items; }
     void clearItems();
     void addItemToLinked(FiguredBassItem* item);
 
     // the array of configured fonts
-    static const std::vector<FiguredBassFont>& FBFonts();
+    static const muse::vector<FiguredBassFont>& FBFonts();
 
     bool parenthesesMode() const;       // read / write MusicXML support
 
     struct LayoutData : public TextBase::LayoutData {
-        std::vector<double> lineLengths;               // lengths of duration indicator lines (in raster units)
+        muse::vector<double> lineLengths;               // lengths of duration indicator lines (in raster units)
         double printedLineLength = 0.0;                // the length of lines actually printed (i.e. continuation lines)
 
         double lineLength(size_t idx) const
@@ -326,7 +326,7 @@ private:
 
     Sid getPropertyStyle(Pid) const override;
 
-    std::vector<FiguredBassItem*> m_items;       // the individual lines of the F.B.
+    muse::vector<FiguredBassItem*> m_items;       // the individual lines of the F.B.
 
     bool m_onNote = true;                        // true if this element is on a staff note | false if it is between notes
     Fraction m_ticks;                            // the duration (used for cont. lines and for multiple F.B.

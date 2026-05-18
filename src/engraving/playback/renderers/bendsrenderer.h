@@ -43,7 +43,7 @@ private:
         float endFactor = 1.f;
     };
 
-    using PitchOffsets = std::vector<std::pair<muse::mpe::timestamp_t, muse::mpe::pitch_level_t> >;
+    using PitchOffsets = muse::vector<std::pair<muse::mpe::timestamp_t, muse::mpe::pitch_level_t> >;
     using BendTimeFactorMap = std::map<muse::mpe::timestamp_t, BendTimeFactors>;
 
     static void renderMultibend(const Note* startNote, const RenderingContext& startNoteCtx, muse::mpe::PlaybackEventList& result);

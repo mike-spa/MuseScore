@@ -265,7 +265,7 @@ void TextLayout::justifyLine(const TextBase* item, TextBlock* textBlock, double 
         CharFormat format;
         double width;
     };
-    std::vector<SubFragment> subfrags;
+    muse::vector<SubFragment> subfrags;
     for (const TextFragment& f : textBlock->fragments()) {
         String current;
         FontMetrics fm(f.font(item));

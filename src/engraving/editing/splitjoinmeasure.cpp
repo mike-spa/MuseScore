@@ -71,7 +71,7 @@ void SplitJoinMeasure::splitMeasure(MasterScore* masterScore, const Fraction& ti
     Fraction stick = measure->tick();
     Fraction etick = measure->endTick();
 
-    std::vector<std::tuple<Spanner*, Fraction, Fraction> > spanners;
+    muse::vector<std::tuple<Spanner*, Fraction, Fraction> > spanners;
     for (auto i : masterScore->spanner()) {
         Spanner* s = i.second;
         EngravingItem* start = s->startElement();

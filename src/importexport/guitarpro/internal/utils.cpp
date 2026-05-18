@@ -66,9 +66,9 @@ int harmonicOvertone(Note* note, float harmonicValue, int harmonicType)
     return harmonicType == 1 ? result : (result + note->fret());
 }
 
-std::vector<int> standardTuningFor(int midiProgram, int stringsCount)
+muse::vector<int> standardTuningFor(int midiProgram, int stringsCount)
 {
-    static const std::map<std::pair<int, /* program */ int /* strings count */>, std::vector<int> > tunings {
+    static const std::map<std::pair<int, /* program */ int /* strings count */>, muse::vector<int> > tunings {
         // Guitars 6 strings
         { { 25, 6 }, { 40, 45, 50, 55, 59, 64 } },
         { { 26, 6 }, { 40, 45, 50, 55, 59, 64 } },
@@ -110,7 +110,7 @@ std::vector<int> standardTuningFor(int midiProgram, int stringsCount)
     return tunings.at(key);
 }
 
-bool isStandardTuning(int midiProgram, const std::vector<int>& tuning)
+bool isStandardTuning(int midiProgram, const muse::vector<int>& tuning)
 {
     const auto& standardTuning = standardTuningFor(midiProgram, (int)tuning.size());
 

@@ -450,7 +450,7 @@ PalettePtr PaletteCreator::newRepeatsPalette(bool defaultPalette)
         sp->appendElement(mk, TConv::userName(markerType));
     }
 
-    const std::vector<JumpTypeTableItem> defaultJumpTypeTable {
+    const muse::vector<JumpTypeTableItem> defaultJumpTypeTable {
         { JumpType::DC,         "D.C.",         "start", "end",  "" },
         { JumpType::DC_AL_FINE, "D.C. al Fine", "start", "fine", "" },
         { JumpType::DC_AL_CODA, "D.C. al Coda", "start", "coda", "codab" },
@@ -484,7 +484,7 @@ PalettePtr PaletteCreator::newRepeatsPalette(bool defaultPalette)
     auto volta = makeElement<Volta>(paletteScore());
     volta->setVoltaType(Volta::Type::CLOSED);
     volta->setText(u"1.");
-    std::vector<int> il;
+    muse::vector<int> il;
     il.push_back(1);
     volta->setEndings(il);
     sp->appendElement(volta, QT_TRANSLATE_NOOP("palette", "Prima volta"));
@@ -1161,7 +1161,7 @@ PalettePtr PaletteCreator::newLinesPalette(bool defaultPalette)
     auto volta = makeElement<Volta>(paletteScore());
     volta->setVoltaType(Volta::Type::CLOSED);
     volta->setText(u"1.");
-    std::vector<int> il;
+    muse::vector<int> il;
     il.push_back(1);
     volta->setEndings(il);
     sp->appendElement(volta, QT_TRANSLATE_NOOP("palette", "Prima volta"));

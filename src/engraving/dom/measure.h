@@ -189,8 +189,8 @@ public:
     MeasureNumber* measureNumber(staff_idx_t staffIdx) const { return m_mstaves[staffIdx]->measureNumber(); }
     void setMeasureNumber(staff_idx_t staffIdx, MeasureNumber* t) { m_mstaves[staffIdx]->setMeasureNumber(t); }
 
-    const std::vector<MStaff*>& mstaves() const { return m_mstaves; }
-    std::vector<MStaff*>& mstaves() { return m_mstaves; }
+    const muse::vector<MStaff*>& mstaves() const { return m_mstaves; }
+    muse::vector<MStaff*>& mstaves() { return m_mstaves; }
 
     void setMMRangeText(staff_idx_t staffIdx, MMRestRange*);
     MMRestRange* mmRangeText(staff_idx_t staffIdx) const;
@@ -279,7 +279,7 @@ public:
     double tick2pos(Fraction) const;
     Segment* tick2segment(const Fraction& tick, SegmentType st = SegmentType::ChordRest);
 
-    void sortStaves(std::vector<staff_idx_t>& dst);
+    void sortStaves(muse::vector<staff_idx_t>& dst);
 
     bool acceptDrop(EditData&) const override;
     EngravingItem* drop(EditData&) override;
@@ -423,7 +423,7 @@ private:
 
     MStaff* mstaff(staff_idx_t staffIndex) const;
 
-    std::vector<MStaff*> m_mstaves;
+    muse::vector<MStaff*> m_mstaves;
     SegmentList m_segments;
     Measure* m_mmRest = nullptr; // multi measure rest which replaces a measure range
 

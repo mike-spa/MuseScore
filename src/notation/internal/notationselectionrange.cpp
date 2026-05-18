@@ -70,7 +70,7 @@ NotationSelectionRange::MeasureRange NotationSelectionRange::measureRange() cons
     return range;
 }
 
-std::vector<muse::RectF> NotationSelectionRange::boundingArea() const
+muse::vector<muse::RectF> NotationSelectionRange::boundingArea() const
 {
     return ScoreRangeUtilities::boundingArea(score(),
                                              rangeStartSegment(), rangeEndSegment(),
@@ -120,9 +120,9 @@ bool NotationSelectionRange::containsMultiNoteChords() const
     return selection.rangeContainsMultiNoteChords();
 }
 
-std::vector<const Part*> NotationSelectionRange::selectedParts() const
+muse::vector<const Part*> NotationSelectionRange::selectedParts() const
 {
-    std::vector<const Part*> result;
+    muse::vector<const Part*> result;
 
     if (!score()->selection().isRange()) {
         return result;

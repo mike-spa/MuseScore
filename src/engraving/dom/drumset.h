@@ -65,7 +65,7 @@ struct DrumInstrument {
 
     int voice = 0;
     String shortcut;
-    std::vector<DrumInstrumentVariant> variants;
+    muse::vector<DrumInstrumentVariant> variants;
 
     DrumInstrument() {}
     DrumInstrument(const String& n, NoteHeadGroup nh, int l, DirectionV d,
@@ -109,7 +109,7 @@ public:
     const String& name(int pitch) const { return m_drums[pitch].name; }
     String translatedName(int pitch) const;
     String shortcut(int pitch) const { return m_drums[pitch].shortcut; }
-    const std::vector<DrumInstrumentVariant>& variants(int pitch) const { return m_drums[pitch].variants; }
+    const muse::vector<DrumInstrumentVariant>& variants(int pitch) const { return m_drums[pitch].variants; }
     int panelRow(int pitch) const { return m_drums[pitch].panelRow; }
     int panelColumn(int pitch) const { return m_drums[pitch].panelColumn; }
 
@@ -131,7 +131,7 @@ public:
     DrumInstrument& drum(int i) { return m_drums[i]; }
     const DrumInstrument& drum(int i) const { return m_drums[i]; }
     void setDrum(int pitch, const DrumInstrument& di) { m_drums[pitch] = di; }
-    DrumInstrumentVariant findVariant(int pitch, const std::vector<Articulation*>& articulations, TremoloType tremType) const;
+    DrumInstrumentVariant findVariant(int pitch, const muse::vector<Articulation*>& articulations, TremoloType tremType) const;
 
     static void initDrumset();
 

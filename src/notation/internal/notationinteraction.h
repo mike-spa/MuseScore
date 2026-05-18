@@ -88,14 +88,14 @@ public:
 
     // Hit
     EngravingItem* hitElement(const muse::PointF& pos, float width) const override;
-    std::vector<EngravingItem*> hitElements(const muse::PointF& pos, float width) const override;
+    muse::vector<EngravingItem*> hitElements(const muse::PointF& pos, float width) const override;
     Staff* hitStaff(const muse::PointF& pos) const override;
     const HitElementContext& hitElementContext() const override;
     void setHitElementContext(const HitElementContext& context) override;
 
     // Select
     void moveChordNoteSelection(MoveDirection d) override;
-    void select(const std::vector<EngravingItem*>& elements, SelectType type = SelectType::REPLACE,
+    void select(const muse::vector<EngravingItem*>& elements, SelectType type = SelectType::REPLACE,
                 engraving::staff_idx_t staffIndex = 0) override;
     void selectAndStartEditIfNeeded(EngravingItem* element) override;
     void selectAll() override;
@@ -116,7 +116,7 @@ public:
 
     // Drag
     bool isDragStarted() const override;
-    void startDrag(const std::vector<EngravingItem*>& elems, const muse::PointF& eoffset, const IsDraggable& isDraggable) override;
+    void startDrag(const muse::vector<EngravingItem*>& elems, const muse::PointF& eoffset, const IsDraggable& isDraggable) override;
     void drag(const muse::PointF& fromPos, const muse::PointF& toPos, DragMode mode) override;
     void endDrag() override;
     muse::async::Notification dragChanged() const override;
@@ -385,7 +385,7 @@ private:
 
     void onElementDestroyed(EngravingItem* element);
 
-    void doSelect(const std::vector<EngravingItem*>& elements, SelectType type, engraving::staff_idx_t staffIndex = 0);
+    void doSelect(const muse::vector<EngravingItem*>& elements, SelectType type, engraving::staff_idx_t staffIndex = 0);
     void selectElementsWithSameTypeOnSegment(mu::engraving::ElementType elementType, mu::engraving::Segment* segment);
 
     void notifyAboutDragChanged();
@@ -422,7 +422,7 @@ private:
     void pasteIntoTextEdit();
 
     mu::engraving::Page* point2page(const muse::PointF& p, bool useNearestPage = false) const;
-    std::vector<EngravingItem*> elementsAt(const muse::PointF& p) const;
+    muse::vector<EngravingItem*> elementsAt(const muse::PointF& p) const;
     EngravingItem* elementAt(const muse::PointF& p) const;
 
     // Sorting using this function will place the elements that are the most
@@ -431,7 +431,7 @@ private:
 
     void updateGripAnchorLines();
     void updateDragAnchorLines();
-    void setAnchorLines(const std::vector<muse::LineF>& anchorList);
+    void setAnchorLines(const muse::vector<muse::LineF>& anchorList);
     void resetAnchorLines();
 
     double getHRaster() const;
@@ -439,7 +439,7 @@ private:
 
     double currentScaling(muse::draw::Painter* painter) const;
 
-    std::vector<ShadowNoteParams> previewNotes() const;
+    muse::vector<ShadowNoteParams> previewNotes() const;
 
     bool shouldDrawInputPreview() const;
     void drawInputPreview(muse::draw::Painter* painter, const engraving::rendering::PaintOptions& opt);
@@ -475,10 +475,10 @@ private:
     void doAddSlur(EngravingItem* firstItem, EngravingItem* secondItem, const mu::engraving::Slur* slurTemplate);
 
     bool scoreHasMeasure() const;
-    bool notesHaveActiculation(const std::vector<Note*>& notes, SymbolId articulationSymbolId) const;
+    bool notesHaveActiculation(const muse::vector<Note*>& notes, SymbolId articulationSymbolId) const;
 
-    bool needEndTextEditing(const std::vector<EngravingItem*>& newSelectedElements) const;
-    bool needEndElementEditing(const std::vector<EngravingItem*>& newSelectedElements) const;
+    bool needEndTextEditing(const muse::vector<EngravingItem*>& newSelectedElements) const;
+    bool needEndElementEditing(const muse::vector<EngravingItem*>& newSelectedElements) const;
 
     void resetGripEdit();
     void resetHitElementContext();
@@ -499,8 +499,8 @@ private:
         muse::PointF beginMove;
         muse::PointF elementOffset;
         mu::engraving::EditData ed;
-        std::vector<EngravingItem*> elements;
-        std::vector<std::unique_ptr<mu::engraving::ElementGroup> > dragGroups;
+        muse::vector<EngravingItem*> elements;
+        muse::vector<std::unique_ptr<mu::engraving::ElementGroup> > dragGroups;
         void reset();
     };
 
@@ -525,7 +525,7 @@ private:
         engraving::Segment* targetSegment = nullptr;
         engraving::staff_idx_t targetStaffIdx = 0;
 
-        std::vector<muse::RectF> dropRects;
+        muse::vector<muse::RectF> dropRects;
     };
 
     struct DropData
@@ -552,7 +552,7 @@ private:
 
     DragData m_dragData;
     muse::async::Notification m_dragChanged;
-    std::vector<muse::LineF> m_anchorLines;
+    muse::vector<muse::LineF> m_anchorLines;
 
     QDrag* m_outgoingDrag = nullptr;
 

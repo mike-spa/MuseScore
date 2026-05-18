@@ -291,7 +291,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_Range_Start_Drag_From_Selec
     INotationInteraction::HitElementContext newContext = hitContext(score, { ElementType::NOTE, false /*last note*/ });
     newContext.element->setSelected(true);
 
-    std::vector<EngravingItem*> selectedElements {
+    muse::vector<EngravingItem*> selectedElements {
         newContext.element
     };
 
@@ -330,12 +330,12 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_Range_Start_Drag_From_Selec
         EXPECT_CALL(*m_playbackController, seekElement(newContext.element, FLUSH_SOUND))
         .Times(1);
 
-        std::vector<const EngravingItem*> elements = { newContext.element };
+        muse::vector<const EngravingItem*> elements = { newContext.element };
         EXPECT_CALL(*m_playbackController, playElements(elements, m_playParams, false))
         .Times(1);
     }
 
-    std::vector<EngravingItem*> selectElements = { newContext.element };
+    muse::vector<EngravingItem*> selectElements = { newContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(0);
 
@@ -360,7 +360,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Selected_Text_Element)
     INotationInteraction::HitElementContext newContext = oldContext;
     newContext.element->setSelected(true);
 
-    std::vector<EngravingItem*> selectedElements {
+    muse::vector<EngravingItem*> selectedElements {
         newContext.element
     };
 
@@ -392,11 +392,11 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Selected_Text_Element)
     EXPECT_CALL(*m_playbackController, seekElement(newContext.element, FLUSH_SOUND))
     .Times(1);
 
-    std::vector<const EngravingItem*> elements = { newContext.element };
+    muse::vector<const EngravingItem*> elements = { newContext.element };
     EXPECT_CALL(*m_playbackController, playElements(elements, m_playParams, false))
     .Times(0);
 
-    std::vector<EngravingItem*> selectElements = { newContext.element };
+    muse::vector<EngravingItem*> selectElements = { newContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(0);
 
@@ -431,7 +431,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Selected_Non_Text_Elemen
     INotationInteraction::HitElementContext newContext = oldContext;
     newContext.element->setSelected(true);
 
-    std::vector<EngravingItem*> selectedElements {
+    muse::vector<EngravingItem*> selectedElements {
         newContext.element
     };
 
@@ -463,11 +463,11 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Selected_Non_Text_Elemen
     EXPECT_CALL(*m_playbackController, seekElement(newContext.element, FLUSH_SOUND))
     .Times(1);
 
-    std::vector<const EngravingItem*> elements = { newContext.element };
+    muse::vector<const EngravingItem*> elements = { newContext.element };
     EXPECT_CALL(*m_playbackController, playElements(elements, m_playParams, false))
     .Times(0);
 
-    std::vector<EngravingItem*> selectElements = { newContext.element };
+    muse::vector<EngravingItem*> selectElements = { newContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(0);
 
@@ -525,7 +525,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_Range_Start_Play_From_First
     .WillByDefault(Return(false));
 
     //! [THEN] We will select and play selected note, but no seek
-    std::vector<EngravingItem*> selectElements = { newContext.element };
+    muse::vector<EngravingItem*> selectElements = { newContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(1)
     .WillOnce([newContext] { newContext.element->setSelected(true); });
@@ -538,7 +538,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_Range_Start_Play_From_First
         EXPECT_CALL(*m_playbackController, seekElement(oldContext.element, FLUSH_SOUND))
         .Times(1);
 
-        std::vector<const EngravingItem*> playElements = { newContext.element };
+        muse::vector<const EngravingItem*> playElements = { newContext.element };
         EXPECT_CALL(*m_playbackController, playElements(playElements, m_playParams, false))
         .Times(1);
     }
@@ -590,7 +590,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Already_Selected_Range)
     ON_CALL(*m_selectionRange, containsItem(context.element, _))
     .WillByDefault(Return(true));
 
-    std::vector<EngravingItem*> selectElements = { context.element };
+    muse::vector<EngravingItem*> selectElements = { context.element };
     EXPECT_CALL(*m_selection, elements())
     .WillOnce(ReturnRef(selectElements));
 
@@ -643,7 +643,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_Shift_On_Already_Selected_R
     .Times(1);
 
     //! [THEN] Selection is extended/diminished
-    std::vector<EngravingItem*> selectElements = { context.element };
+    muse::vector<EngravingItem*> selectElements = { context.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(1);
 
@@ -680,7 +680,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Already_Selected_Element
     EXPECT_CALL(*m_interaction, setHitElementContext(newContext))
     .Times(1);
 
-    std::vector<EngravingItem*> selectedElements = { oldContext.element };
+    muse::vector<EngravingItem*> selectedElements = { oldContext.element };
     ON_CALL(*m_selection, elements())
     .WillByDefault(ReturnRef(selectedElements));
 
@@ -702,7 +702,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Already_Selected_Element
         EXPECT_CALL(*m_playbackController, seekElement(newContext.element, FLUSH_SOUND))
         .Times(1);
 
-        std::vector<const EngravingItem*> playElements = { newContext.element };
+        muse::vector<const EngravingItem*> playElements = { newContext.element };
         EXPECT_CALL(*m_playbackController, playElements(playElements, m_playParams, false))
         .Times(1);
     }
@@ -751,7 +751,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Range)
     .WillByDefault(Return(false));
 
     //! [THEN] We will select new measure
-    std::vector<EngravingItem*> selectElements = { newContext.element };
+    muse::vector<EngravingItem*> selectElements = { newContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(1)
     .WillOnce([newContext] { newContext.element->setSelected(true); });
@@ -761,7 +761,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Range)
     .WillByDefault(Return(true));
 
     //! [THEN] No play measure
-    std::vector<const EngravingItem*> playElements = { newContext.element };
+    muse::vector<const EngravingItem*> playElements = { newContext.element };
     EXPECT_CALL(*m_playbackController, playElements(playElements, m_playParams, false))
     .Times(0);
 
@@ -817,7 +817,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Range_Context_Menu)
     .WillRepeatedly(Return(false));
 
     //! [THEN] We will select new measure only one time
-    std::vector<EngravingItem*> selectElements = { selectMeasureContext.element };
+    muse::vector<EngravingItem*> selectElements = { selectMeasureContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(1);
 
@@ -828,7 +828,7 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Range_Context_Menu)
     EXPECT_CALL(*m_selectionRange, containsItem(contextMenuOnMeasureContext.element, _))
     .WillOnce(Return(true));
 
-    std::vector<const EngravingItem*> playElements = { selectMeasureContext.element };
+    muse::vector<const EngravingItem*> playElements = { selectMeasureContext.element };
     EXPECT_CALL(*m_playbackController, playElements(playElements, m_playParams, false))
     .Times(0);
 
@@ -903,11 +903,11 @@ TEST_F(NotationViewInputControllerTests, Mouse_Press_On_Range_Context_Menu_New_S
     .WillRepeatedly(Return(true));
 
     //! [THEN] The selection should be changed
-    std::vector<EngravingItem*> selectElements = { selectMeasureContext.element };
+    muse::vector<EngravingItem*> selectElements = { selectMeasureContext.element };
     EXPECT_CALL(*m_interaction, select(selectElements, _, _))
     .Times(1);
 
-    std::vector<EngravingItem*> contextMenuSelectElements = { contextMenuOnMeasureContext.element };
+    muse::vector<EngravingItem*> contextMenuSelectElements = { contextMenuOnMeasureContext.element };
     EXPECT_CALL(*m_interaction, select(contextMenuSelectElements, _, _))
     .WillOnce(Return());
 

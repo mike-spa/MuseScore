@@ -52,10 +52,10 @@ using namespace mu::engraving;
 //    remember clefs at the end of previous measure
 //---------------------------------------------------------
 
-std::vector<Clef*> InsertRemoveMeasures::getCourtesyClefs(Measure* m)
+muse::vector<Clef*> InsertRemoveMeasures::getCourtesyClefs(Measure* m)
 {
     Score* score = m->score();
-    std::vector<Clef*> startClefs;
+    muse::vector<Clef*> startClefs;
     if (m->prev() && m->prev()->isMeasure()) {
         Measure* prevMeasure = toMeasure(m->prev());
         const Segment* clefSeg = prevMeasure->findSegmentR(SegmentType::Clef | SegmentType::HeaderClef, prevMeasure->ticks());
@@ -79,9 +79,9 @@ void InsertRemoveMeasures::insertMeasures()
 {
     Score* score = fm->score();
 
-    std::vector<Clef*> clefs;
-    std::vector<Clef*> prevMeasureClefs;
-    std::vector<KeySig*> keys;
+    muse::vector<Clef*> clefs;
+    muse::vector<Clef*> prevMeasureClefs;
+    muse::vector<KeySig*> keys;
     Segment* fs = nullptr;
     Segment* ls = nullptr;
     if (fm->isMeasure()) {
@@ -238,7 +238,7 @@ void InsertRemoveMeasures::removeMeasures()
         }
     }
 
-    std::vector<System*> systemList;
+    muse::vector<System*> systemList;
     for (MeasureBase* mb = lm;; mb = mb->prev()) {
         System* system = mb->system();
         if (system) {

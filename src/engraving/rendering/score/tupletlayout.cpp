@@ -93,7 +93,7 @@ void TupletLayout::layout(Tuplet* item, LayoutContext& ctx)
 
 void TupletLayout::layoutTupletAndNestedTuplets(Tuplet* t, LayoutContext& ctx)
 {
-    const std::vector<DurationElement*> elements = t->elements();
+    const muse::vector<DurationElement*> elements = t->elements();
     for (auto revIter = elements.rbegin(); revIter != elements.rend(); ++revIter) {
         DurationElement* d = *revIter;
         if (d == t) {
@@ -655,7 +655,7 @@ bool TupletLayout::isSymmetric(Tuplet* item, const ChordRest* cr1, const ChordRe
 {
     Fraction endTick = cr2->endTick();
 
-    std::vector<Segment*> tupletSegments;
+    muse::vector<Segment*> tupletSegments;
     tupletSegments.reserve(item->elements().size());
 
     for (Segment* segment = cr1->segment(); segment && segment->tick() < endTick; segment = segment->nextActive()) {

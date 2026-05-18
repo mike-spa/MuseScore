@@ -512,7 +512,7 @@ void MasterNotation::setExcerpts(const ExcerptNotationList& excerpts)
 
         auto it = std::find(m_excerpts.cbegin(), m_excerpts.cend(), excerptNotation);
         if (it != m_excerpts.end()) {
-            std::vector<Excerpt*>& msExcerpts = score->excerpts();
+            muse::vector<Excerpt*>& msExcerpts = score->excerpts();
             muse::moveItem(msExcerpts, muse::indexOf(msExcerpts, excerptNotationImpl->excerpt()), i);
             continue;
         }
@@ -559,7 +559,7 @@ void MasterNotation::sortExcerpts(ExcerptNotationList& excerpts)
 {
     TRACEFUNC;
 
-    std::vector<ID> partIdList;
+    muse::vector<ID> partIdList;
     for (const Part* part : masterScore()->parts()) {
         partIdList.push_back(part->id());
     }
@@ -620,7 +620,7 @@ void MasterNotation::updateExcerpts()
 
     ExcerptNotationList updatedExcerpts;
 
-    const std::vector<mu::engraving::Excerpt*>& excerpts = masterScore()->excerpts();
+    const muse::vector<mu::engraving::Excerpt*>& excerpts = masterScore()->excerpts();
 
     // exclude notations for old excerpts
     for (const IExcerptNotationPtr& excerptNotation : m_excerpts) {
@@ -665,7 +665,7 @@ void MasterNotation::updatePotentialExcerpts() const
     };
 
     ExcerptNotationList potentialExcerpts;
-    std::vector<Part*> partsWithoutExcerpt;
+    muse::vector<Part*> partsWithoutExcerpt;
 
     for (Part* part : score()->parts()) {
         if (findExcerptByPart(m_excerpts, part) != m_excerpts.end()) {
@@ -683,7 +683,7 @@ void MasterNotation::updatePotentialExcerpts() const
         partsWithoutExcerpt.push_back(part);
     }
 
-    std::vector<mu::engraving::Excerpt*> excerpts = mu::engraving::Excerpt::createExcerptsFromParts(partsWithoutExcerpt, masterScore());
+    muse::vector<mu::engraving::Excerpt*> excerpts = mu::engraving::Excerpt::createExcerptsFromParts(partsWithoutExcerpt, masterScore());
 
     for (mu::engraving::Excerpt* excerpt : excerpts) {
         auto excerptNotation = std::make_shared<ExcerptNotation>(const_cast<MasterNotation*>(this), excerpt, iocContext());
@@ -786,7 +786,7 @@ const ExcerptNotationList& MasterNotation::potentialExcerpts() const
     return m_potentialExcerpts;
 }
 
-void MasterNotation::initExcerptNotations(const std::vector<mu::engraving::Excerpt*>& excerpts)
+void MasterNotation::initExcerptNotations(const muse::vector<mu::engraving::Excerpt*>& excerpts)
 {
     TRACEFUNC;
 
@@ -806,7 +806,7 @@ void MasterNotation::initExcerptNotations(const std::vector<mu::engraving::Excer
     doSetExcerpts(notationExcerpts);
 }
 
-void MasterNotation::addExcerptsToMasterScore(const std::vector<mu::engraving::Excerpt*>& excerpts)
+void MasterNotation::addExcerptsToMasterScore(const muse::vector<mu::engraving::Excerpt*>& excerpts)
 {
     TRACEFUNC;
 

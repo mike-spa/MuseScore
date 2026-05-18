@@ -136,7 +136,7 @@ void DebugPaint::paintElementDebug(Painter& painter, const EngravingItem* item)
     painter.translate(-pos);
 }
 
-void DebugPaint::paintPageDebug(Painter& painter, const Page* page, const std::vector<EngravingItem*>& items)
+void DebugPaint::paintPageDebug(Painter& painter, const Page* page, const muse::vector<EngravingItem*>& items)
 {
     if (items.empty()) {
         return;

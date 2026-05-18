@@ -83,13 +83,13 @@ public:
     void undoAddTieToScore(TieJumpPoint* jumpPoint);
     void undoRemoveTieFromScore(TieJumpPoint* jumpPoint);
 
-    std::vector<TieJumpPoint*>::iterator begin() { return m_jumpPoints.begin(); }
-    std::vector<TieJumpPoint*>::const_iterator begin() const { return m_jumpPoints.begin(); }
-    std::vector<TieJumpPoint*>::iterator end() { return m_jumpPoints.end(); }
-    std::vector<TieJumpPoint*>::const_iterator end() const { return m_jumpPoints.end(); }
+    muse::vector<TieJumpPoint*>::iterator begin() { return m_jumpPoints.begin(); }
+    muse::vector<TieJumpPoint*>::const_iterator begin() const { return m_jumpPoints.begin(); }
+    muse::vector<TieJumpPoint*>::iterator end() { return m_jumpPoints.end(); }
+    muse::vector<TieJumpPoint*>::const_iterator end() const { return m_jumpPoints.end(); }
 
 private:
-    std::vector<TieJumpPoint*> m_jumpPoints;
+    muse::vector<TieJumpPoint*> m_jumpPoints;
     Note* m_note = nullptr;
 };
 }

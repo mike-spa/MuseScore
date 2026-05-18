@@ -67,7 +67,7 @@ protected:
     muse::PointF toLogical(const QPointF& point);
 
 private:
-    void drawElements(muse::draw::Painter& painter, const std::vector<EngravingItem*>& el);
+    void drawElements(muse::draw::Painter& painter, const muse::vector<EngravingItem *> &el);
     void paintEvent(QPaintEvent*) override;
     void wheelEvent(QWheelEvent*) override;
     void constraintCanvas(int* dxx);

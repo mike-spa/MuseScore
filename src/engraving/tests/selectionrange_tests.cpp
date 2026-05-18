@@ -333,9 +333,9 @@ TEST_F(Engraving_SelectionRangeTests, deleteSelectionListElements)
     MasterScore* score = ScoreRW::readScore(SELRANGE_DATA_DIR + u"list-delete-crash.mscx");
     EXPECT_TRUE(score);
 
-    std::vector<EngravingItem*> notes;
-    std::vector<EngravingItem*> harmonies;
-    std::vector<EngravingItem*> rests;
+    muse::vector<EngravingItem*> notes;
+    muse::vector<EngravingItem*> harmonies;
+    muse::vector<EngravingItem*> rests;
 
     auto collectAndCheckCount = [&](size_t noteCount, size_t harmonyCount, size_t restCount) {
         notes.clear();

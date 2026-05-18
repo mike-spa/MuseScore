@@ -143,10 +143,10 @@ Score* DomAccessor::score()
     return m_getScore->score();
 }
 
-const std::vector<Part*>& DomAccessor::parts() const
+const muse::vector<Part*>& DomAccessor::parts() const
 {
     IF_ASSERT_FAILED(score()) {
-        static const std::vector<Part*> dummy;
+        static const muse::vector<Part*> dummy;
         return dummy;
     }
     return score()->parts();
@@ -168,37 +168,37 @@ size_t DomAccessor::npages() const
     return score()->npages();
 }
 
-const std::vector<Page*>& DomAccessor::pages() const
+const muse::vector<Page*>& DomAccessor::pages() const
 {
     IF_ASSERT_FAILED(score()) {
-        static const std::vector<Page*> dummy;
+        static const muse::vector<Page*> dummy;
         return dummy;
     }
     return score()->pages();
 }
 
-std::vector<Page*>& DomAccessor::pages()
+muse::vector<Page*>& DomAccessor::pages()
 {
     IF_ASSERT_FAILED(score()) {
-        static std::vector<Page*> dummy;
+        static muse::vector<Page*> dummy;
         return dummy;
     }
     return score()->pages();
 }
 
-const std::vector<System*>& DomAccessor::systems() const
+const muse::vector<System*>& DomAccessor::systems() const
 {
     IF_ASSERT_FAILED(score()) {
-        static const std::vector<System*> dummy;
+        static const muse::vector<System*> dummy;
         return dummy;
     }
     return score()->systems();
 }
 
-std::vector<System*>& DomAccessor::systems()
+muse::vector<System*>& DomAccessor::systems()
 {
     IF_ASSERT_FAILED(score()) {
-        static std::vector<System*> dummy;
+        static muse::vector<System*> dummy;
         return dummy;
     }
     return score()->systems();
@@ -221,10 +221,10 @@ size_t DomAccessor::visibleStaffCount() const
     return score()->visibleStavesCount();
 }
 
-const std::vector<Staff*>& DomAccessor::staves() const
+const muse::vector<Staff*>& DomAccessor::staves() const
 {
     IF_ASSERT_FAILED(score()) {
-        static const std::vector<Staff*> dummy;
+        static const muse::vector<Staff*> dummy;
         return dummy;
     }
     return score()->staves();

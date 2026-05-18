@@ -115,7 +115,7 @@ void HammerOnPullOffSegment::updateHopoText()
         return;
     }
 
-    std::vector<HopoTextRegion> hopoTextRegions = computeHopoTextRegions(startChord, endChord);
+    muse::vector<HopoTextRegion> hopoTextRegions = computeHopoTextRegions(startChord, endChord);
     size_t regionCount = hopoTextRegions.size();
 
     size_t curRegionIdx = 0;
@@ -151,9 +151,9 @@ void HammerOnPullOffSegment::updateHopoText()
     }
 }
 
-std::vector<HammerOnPullOffSegment::HopoTextRegion> HammerOnPullOffSegment::computeHopoTextRegions(Chord* startChord, Chord* endChord)
+muse::vector<HammerOnPullOffSegment::HopoTextRegion> HammerOnPullOffSegment::computeHopoTextRegions(Chord* startChord, Chord* endChord)
 {
-    std::vector<HopoTextRegion> result;
+    muse::vector<HopoTextRegion> result;
     bool isTabStaff = staffType()->isTabStaff();
     if ((isTabStaff && !style().styleB(Sid::hopoShowOnTabStaves)) || (!isTabStaff && !style().styleB(Sid::hopoShowOnStandardStaves))) {
         return result;
@@ -202,8 +202,8 @@ void HammerOnPullOffSegment::resolveStartEndNotes(Note** startNote, Note** endNo
     // In future we need the ability to draw slurs between individual notes. For now, slurs are
     // attached to chords so we just try to guess which notes to consider for this HOPO
 
-    const std::vector<Note*>& startNotes = startChord->notes();
-    const std::vector<Note*>& endNotes = endChord->notes();
+    const muse::vector<Note*>& startNotes = startChord->notes();
+    const muse::vector<Note*>& endNotes = endChord->notes();
     int startNotesSize = static_cast<int>(startNotes.size());
     int endNotesSize = static_cast<int>(endNotes.size());
     int largerNoteCount = startNotesSize > endNotesSize ? startNotesSize : endNotesSize;
@@ -280,9 +280,9 @@ HammerOnPullOffText::HammerOnPullOffText(const HammerOnPullOffText& h)
 {
 }
 
-std::vector<LineF> HammerOnPullOffText::dragAnchorLines() const
+muse::vector<LineF> HammerOnPullOffText::dragAnchorLines() const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
 
     PointF p1 = canvasPos();
 

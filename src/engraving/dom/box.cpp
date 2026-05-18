@@ -128,13 +128,13 @@ void Box::dragGrip(EditData& ed)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> HBox::gripsPositions(const EditData&) const
+muse::vector<PointF> HBox::gripsPositions(const EditData&) const
 {
     RectF r(pageBoundingRect());
     return { PointF(r.right(), r.top() + r.height() * .5) };
 }
 
-std::vector<PointF> VBox::gripsPositions(const EditData&) const
+muse::vector<PointF> VBox::gripsPositions(const EditData&) const
 {
     RectF r(pageBoundingRect());
     return { PointF(r.x() + r.width() * .5, r.bottom()) };
@@ -719,7 +719,7 @@ FBox::FBox(System* parent)
 void FBox::init()
 {
     StringList oldDiagramsNames;
-    std::vector<FretDiagram*> oldDiagrams;
+    muse::vector<FretDiagram*> oldDiagrams;
     for (EngravingItem* element : el()) {
         FretDiagram* diagram = toFretDiagram(element);
         oldDiagrams.push_back(diagram);
@@ -727,7 +727,7 @@ void FBox::init()
     }
 
     StringList diagramsNamesInScore;
-    std::vector<EngravingItem*> harmonyOrDiagramsInScore;
+    muse::vector<EngravingItem*> harmonyOrDiagramsInScore;
     for (mu::engraving::Segment* segment = score()->firstSegment(mu::engraving::SegmentType::ChordRest); segment;
          segment = segment->next1(mu::engraving::SegmentType::ChordRest)) {
         for (EngravingItem* item : segment->annotations()) {
@@ -923,7 +923,7 @@ Grip FBox::defaultGrip() const
     return Grip::NO_GRIP;
 }
 
-std::vector<PointF> FBox::gripsPositions(const EditData&) const
+muse::vector<PointF> FBox::gripsPositions(const EditData&) const
 {
     return {};
 }

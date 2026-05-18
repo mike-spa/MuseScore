@@ -149,9 +149,9 @@ static void createPreBends(const BendDataContext& bendDataCtx, mu::engraving::Sc
     }
 }
 
-static std::vector<Chord*> createGraceChords(Chord* chord, const guitarpro::grace_bend_data_map_t& bendInfo)
+static muse::vector<Chord*> createGraceChords(Chord* chord, const guitarpro::grace_bend_data_map_t& bendInfo)
 {
-    std::vector<Chord*> graceChords;
+    muse::vector<Chord*> graceChords;
 
     size_t maxGraceAmount = 0;
     for (size_t noteIndex = 0; noteIndex < chord->notes().size(); noteIndex++) {
@@ -190,7 +190,7 @@ static void createGraceAfterBends(const BendDataContext& bendDataCtx, mu::engrav
     for (const auto& [track, trackInfo] : bendDataCtx.graceAfterBendData) {
         for (const auto& [tick, tickInfo] : trackInfo) {
             Chord* chord = utils::getLocatedChord(score, tick, track);
-            std::vector<Chord*> graceChords = createGraceChords(chord, tickInfo);
+            muse::vector<Chord*> graceChords = createGraceChords(chord, tickInfo);
             for (size_t noteIndex = 0; noteIndex < chord->notes().size(); noteIndex++) {
                 if (!muse::contains(tickInfo, noteIndex)) {
                     continue;

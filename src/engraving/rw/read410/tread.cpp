@@ -441,7 +441,7 @@ PropertyValue TRead::readPropertyValue(Pid id, XmlReader& e, ReadContext& ctx)
     }
     case P_TYPE::DURATION_TYPE_WITH_DOTS:
     case P_TYPE::INT_VEC:
-        return PropertyValue(TConv::fromXml(String(e.readText()), std::vector<int>()));
+        return PropertyValue(TConv::fromXml(String(e.readText()), muse::vector<int>()));
 
     case P_TYPE::PLAYTECH_TYPE:
         return PropertyValue(TConv::fromXml(e.readAsciiText(), PlayingTechniqueType::Natural));
@@ -1452,8 +1452,8 @@ void TRead::read(FiguredBassItem* i, XmlReader& e, ReadContext& ctx)
 
 void TRead::read(Excerpt* item, XmlReader& e, ReadContext&)
 {
-    const std::vector<Part*>& pl = item->masterScore()->parts();
-    std::vector<Part*> parts;
+    const muse::vector<Part*>& pl = item->masterScore()->parts();
+    muse::vector<Part*> parts;
     while (e.readNextStartElement()) {
         const AsciiStringView tag = e.name();
         if (tag == "name" || tag == "title") {
@@ -4086,7 +4086,7 @@ void TRead::read(StringTunings* s, XmlReader& xml, ReadContext& ctx)
             read(&sd, xml);
             s->setStringData(sd);
         } else if (tag == "visibleStrings") {
-            s->setVisibleStrings(TConv::fromXml(xml.readText(), std::vector<string_idx_t>()));
+            s->setVisibleStrings(TConv::fromXml(xml.readText(), muse::vector<string_idx_t>()));
         } else if (!readProperties(static_cast<StaffTextBase*>(s), xml, ctx)) {
             xml.unknown();
         }
@@ -4472,7 +4472,7 @@ void TRead::read(Volta* v, XmlReader& e, ReadContext& ctx)
     while (e.readNextStartElement()) {
         const AsciiStringView tag(e.name());
         if (tag == "endings") {
-            v->setEndings(TConv::fromXml(e.readText(), std::vector<int>()));
+            v->setEndings(TConv::fromXml(e.readText(), muse::vector<int>()));
         } else if (TRead::readStyledProperty(v, tag, e, ctx)) {
         } else if (!readProperties(v, e, ctx)) {
             e.unknown();

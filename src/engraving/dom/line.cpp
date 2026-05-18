@@ -71,9 +71,9 @@ LineSegment::LineSegment(const LineSegment& s)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> LineSegment::gripsPositions(const EditData&) const
+muse::vector<PointF> LineSegment::gripsPositions(const EditData&) const
 {
-    std::vector<PointF> grips(gripsCount());
+    muse::vector<PointF> grips(gripsCount());
     PointF pp(pagePos());
     grips[int(Grip::START)] = pp;
     grips[int(Grip::END)] = pos2() + pp;
@@ -146,9 +146,9 @@ PointF LineSegment::rightAnchorPosition(const double& systemPositionY) const
 //    return page coordinates
 //---------------------------------------------------------
 
-std::vector<LineF> LineSegment::gripAnchorLines(Grip grip) const
+muse::vector<LineF> LineSegment::gripAnchorLines(Grip grip) const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
 
     // Middle or aperture grip have no anchor
     if (!system() || grip == Grip::APERTURE) {
@@ -430,7 +430,7 @@ Segment* LineSegment::findSegmentForGrip(Grip grip, PointF pos) const
     const double spacingFactor = 0.5;   // defines the point where canvas is divided between segments, systems etc.
 
     System* sys = system();
-    const std::vector<System*> foundSystems = score()->searchSystem(pos, sys, spacingFactor);
+    const muse::vector<System*> foundSystems = score()->searchSystem(pos, sys, spacingFactor);
 
     if (!foundSystems.empty() && !muse::contains(foundSystems, sys) && foundSystems[0]->staves().size()) {
         sys = foundSystems[0];
@@ -802,7 +802,7 @@ EngravingObject* LineSegment::propertyDelegate(Pid pid) const
 //   dragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> LineSegment::dragAnchorLines() const
+muse::vector<LineF> LineSegment::dragAnchorLines() const
 {
     return gripAnchorLines(Grip::MIDDLE);
 }
@@ -1106,7 +1106,7 @@ Note* SLine::guessFinalNote(Note* startNote)
         }
         chord = toChord(chord->parent());
     } else {
-        std::vector<Chord*> graces = chord->graceNotesAfter();
+        muse::vector<Chord*> graces = chord->graceNotesAfter();
         if (graces.size() > 0) {
             return graces.front()->upNote();
         }
@@ -1141,7 +1141,7 @@ Note* SLine::guessFinalNote(Note* startNote)
     }
 
     if (target && target->notes().size() > 0) {
-        const std::vector<Chord*>& graces = target->graceNotesBefore();
+        const muse::vector<Chord*>& graces = target->graceNotesBefore();
         if (graces.size() > 0) {
             return graces.front()->upNote();
         }

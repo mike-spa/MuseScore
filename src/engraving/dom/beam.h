@@ -70,8 +70,8 @@ public:
 
     System* system() const { return toSystem(explicitParent()); }
 
-    const std::vector<ChordRest*>& elements() const { return m_elements; }
-    std::vector<ChordRest*>& elements() { return m_elements; }
+    const muse::vector<ChordRest*>& elements() const { return m_elements; }
+    muse::vector<ChordRest*>& elements() { return m_elements; }
     void clear() { m_elements.clear(); }
     bool empty() const { return m_elements.empty(); }
     bool contains(const ChordRest* cr) const
@@ -140,7 +140,7 @@ public:
     int gripsCount() const override { return 3; }
     Grip initialEditModeGrip() const override { return Grip::END; }
     Grip defaultGrip() const override { return Grip::MIDDLE; }
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
     static ActionIconType actionIconTypeForBeamMode(BeamMode);
 
@@ -150,11 +150,11 @@ public:
 
     bool hasAllRests();
 
-    const std::vector<TremAnchor>& tremAnchors() const { return m_tremAnchors; }
-    std::vector<TremAnchor>& tremAnchors() { return m_tremAnchors; }
+    const muse::vector<TremAnchor>& tremAnchors() const { return m_tremAnchors; }
+    muse::vector<TremAnchor>& tremAnchors() { return m_tremAnchors; }
 
-    const std::vector<BeamFragment*>& beamFragments() const { return m_fragments; }
-    std::vector<BeamFragment*>& beamFragments() { return m_fragments; }
+    const muse::vector<BeamFragment*>& beamFragments() const { return m_fragments; }
+    muse::vector<BeamFragment*>& beamFragments() { return m_fragments; }
     void addBeamFragment(BeamFragment* f) { m_fragments.push_back(f); }
 
     void clearBeamSegments() override;
@@ -164,8 +164,8 @@ public:
     bool isBesideTabStaff() const { return m_isBesideTabStaff; }
     void setIsBesideTabStaff(bool val) { m_isBesideTabStaff = val; }
 
-    const std::vector<NotePosition>& notePositions() const { return m_notePositions; }
-    std::vector<NotePosition>& notePositions() { return m_notePositions; }
+    const muse::vector<NotePosition>& notePositions() const { return m_notePositions; }
+    muse::vector<NotePosition>& notePositions() { return m_notePositions; }
 
     const Chord* findChordWithCustomStemDirection() const;
 
@@ -185,7 +185,7 @@ private:
     void addChordRest(ChordRest* a);
     void removeChordRest(ChordRest* a);
 
-    std::vector<ChordRest*> m_elements;          // must be sorted by tick
+    muse::vector<ChordRest*> m_elements;          // must be sorted by tick
 
     bool m_isGrace = false;
     bool m_cross = false;
@@ -201,7 +201,7 @@ private:
     bool m_isBesideTabStaff = false;
     const StaffType* m_tab = nullptr;
 
-    std::vector<BeamFragment*> m_fragments; // beam splits across systems
+    muse::vector<BeamFragment*> m_fragments; // beam splits across systems
 
     int m_minCRMove = 0;                   // set in layout1()
     int m_maxCRMove = 0;
@@ -210,7 +210,7 @@ private:
     bool m_noSlope = false;
     real_t m_slope = 0.0;
 
-    std::vector<NotePosition> m_notePositions;
-    std::vector<TremAnchor> m_tremAnchors;
+    muse::vector<NotePosition> m_notePositions;
+    muse::vector<TremAnchor> m_tremAnchors;
 };
 } // namespace mu::engraving

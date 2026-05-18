@@ -175,7 +175,7 @@ void TremoloLayout::calcIsUp(TremoloTwoChord* item)
         && item->chord2()->stemDirection() == DirectionV::AUTO
         && item->chord1()->staffMove() == item->chord2()->staffMove()
         && !hasVoices) {
-        std::vector<int> noteDistances;
+        muse::vector<int> noteDistances;
         for (int distance : item->chord1()->noteDistances()) {
             noteDistances.push_back(distance);
         }
@@ -259,8 +259,8 @@ void TremoloLayout::layoutTwoNotesTremolo(TremoloTwoChord* item, const LayoutCon
         return;
     }
     ldata->setPosY(0.);
-    std::vector<ChordRest*> chordRests{ item->chord1(), item->chord2() };
-    std::vector<BeamBase::NotePosition> notes;
+    muse::vector<ChordRest*> chordRests{ item->chord1(), item->chord2() };
+    muse::vector<BeamBase::NotePosition> notes;
     double mag = 0.0;
 
     notes.clear();

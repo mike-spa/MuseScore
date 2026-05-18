@@ -560,9 +560,9 @@ Note::~Note()
     muse::DeleteAll(m_dots);
 }
 
-std::vector<Note*> Note::compoundNotes() const
+muse::vector<Note*> Note::compoundNotes() const
 {
-    std::vector<Note*> elements;
+    muse::vector<Note*> elements;
     if (Note* note = firstTiedNote()) {
         elements.push_back(note);
     }
@@ -1510,7 +1510,7 @@ void Note::setVisible(bool v)
         return;
     }
 
-    const std::vector<Note*>& notes = noteParenInfo->notes();
+    const muse::vector<Note*>& notes = noteParenInfo->notes();
     bool visible = false;
     for (const Note* note : notes) {
         if (note->visible()) {
@@ -3660,7 +3660,7 @@ EngravingItem* Note::nextSegmentElement()
         return EngravingItem::nextSegmentElement();
     }
 
-    const std::vector<Note*>& notes = chord()->notes();
+    const muse::vector<Note*>& notes = chord()->notes();
     if (this == notes.front()) {
         return chord()->nextSegmentElement();
     }
@@ -3678,7 +3678,7 @@ EngravingItem* Note::prevSegmentElement()
         return EngravingItem::prevSegmentElement();
     }
 
-    const std::vector<Note*>& notes = chord()->notes();
+    const muse::vector<Note*>& notes = chord()->notes();
     if (this == notes.back()) {
         return chord()->prevSegmentElement();
     }
@@ -3692,7 +3692,7 @@ EngravingItem* Note::prevSegmentElement()
 
 Note* Note::lastTiedNote(bool ignorePlayback) const
 {
-    std::vector<const Note*> notes;
+    muse::vector<const Note*> notes;
     const Note* note = this;
     notes.push_back(note);
     while (note->tieFor() && (ignorePlayback || note->tieFor()->playSpanner())) {
@@ -3716,7 +3716,7 @@ Note* Note::lastTiedNote(bool ignorePlayback) const
 
 Note* Note::firstTiedNote(bool ignorePlayback) const
 {
-    std::vector<const Note*> notes;
+    muse::vector<const Note*> notes;
     const Note* note = this;
     notes.push_back(note);
     while (note->tieBack() && (ignorePlayback || note->tieBack()->playSpanner())) {
@@ -3736,12 +3736,12 @@ Note* Note::firstTiedNote(bool ignorePlayback) const
 //   tiedNotes
 //---------------------------------------------------------
 
-std::vector<Note*> Note::findTiedNotes(Note* startNote, bool followPartialTies)
+muse::vector<Note*> Note::findTiedNotes(Note* startNote, bool followPartialTies)
 {
     // Returns all notes ahead of startNote in a chain of ties
     // Follows partial tie paths recursively
     Note* note = startNote;
-    std::vector<Note*> notes;
+    muse::vector<Note*> notes;
     notes.push_back(note);
 
     while (note->tieFor()) {
@@ -3756,7 +3756,7 @@ std::vector<Note*> Note::findTiedNotes(Note* startNote, bool followPartialTies)
                 // ONLY backtrack when end point is a full tie eg. around a segno
                 const bool endTieIsFullTie = jumpPoint->endTie() && !jumpPoint->endTie()->isPartialTie();
                 Note* jumpPointNote = endTieIsFullTie ? jumpPoint->endTie()->startNote()->firstTiedNote() : jumpPoint->note();
-                std::vector<Note*> partialTieNotes = findTiedNotes(jumpPointNote, !endTieIsFullTie);
+                muse::vector<Note*> partialTieNotes = findTiedNotes(jumpPointNote, !endTieIsFullTie);
                 notes.insert(notes.end(), partialTieNotes.begin(), partialTieNotes.end());
             }
         }
@@ -3772,12 +3772,12 @@ std::vector<Note*> Note::findTiedNotes(Note* startNote, bool followPartialTies)
     return notes;
 }
 
-std::vector<Note*> Note::tiedNotes() const
+muse::vector<Note*> Note::tiedNotes() const
 {
     // Backtrack to the first tied note in a chain, then return all notes in the chain ahead of it
     Note* note = firstTiedNote();
 
-    std::vector<Note*> notes = findTiedNotes(note);
+    muse::vector<Note*> notes = findTiedNotes(note);
 
     return notes;
 }
@@ -4006,7 +4006,7 @@ bool Note::hasAnotherStraightAboveOrBelow(bool above) const
         return false;
     }
 
-    const std::vector<Note*>& notes = chord()->notes();
+    const muse::vector<Note*>& notes = chord()->notes();
 
     if ((above && this == notes.back()) || (!above && this == notes.front())) {
         return false;

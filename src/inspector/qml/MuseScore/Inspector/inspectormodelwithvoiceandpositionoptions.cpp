@@ -93,7 +93,7 @@ void InspectorModelWithVoiceAndPositionOptions::updateIsStaveCenteringAvailable(
     for (EngravingItem* item : m_elementList) {
         staff_idx_t thisStaffIdx = item->staffIdx();
         DirectionV itemDirection = item->getProperty(Pid::DIRECTION).value<DirectionV>();
-        const std::vector<Staff*>& partStaves = item->part()->staves();
+        const muse::vector<Staff*>& partStaves = item->part()->staves();
         staff_idx_t firstStaffOfPart = partStaves.front()->idx();
         staff_idx_t lastStaffOfPart = partStaves.back()->idx();
         if ((itemDirection == DirectionV::UP && thisStaffIdx == firstStaffOfPart)

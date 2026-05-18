@@ -84,7 +84,7 @@ public:
     bool hasClipping() const override;
 
     void setClipRect(const muse::RectF& rect) override;
-    void setMask(const muse::RectF& background, const std::vector<muse::RectF>& maskRects) override;
+    void setMask(const muse::RectF& background, const muse::vector<muse::RectF>& maskRects) override;
     void setClipping(bool enable) override;
 
 private:

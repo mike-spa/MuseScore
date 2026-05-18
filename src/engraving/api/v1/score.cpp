@@ -240,7 +240,7 @@ void Score::setStaffType(apiv1::Staff* staff, int staffTypeId)
 
 void Score::removeParts(QList<apiv1::Part*> parts)
 {
-    std::vector<mu::engraving::Part*> domParts;
+    muse::vector<mu::engraving::Part*> domParts;
     for (apiv1::Part* p : parts) {
         if (!p) {
             LOGW("removeParts: null part in list");
@@ -254,7 +254,7 @@ void Score::removeParts(QList<apiv1::Part*> parts)
 
 void Score::removeStaves(QList<apiv1::Staff*> staves)
 {
-    std::vector<mu::engraving::Staff*> domStaves;
+    muse::vector<mu::engraving::Staff*> domStaves;
     for (apiv1::Staff* s : staves) {
         if (!s) {
             LOGW("removeStaves: null staff in list");
@@ -273,7 +273,7 @@ void Score::moveParts(QList<apiv1::Part*> sourceParts, apiv1::Part* destinationP
         return;
     }
 
-    std::vector<mu::engraving::Part*> domParts;
+    muse::vector<mu::engraving::Part*> domParts;
     for (apiv1::Part* p : sourceParts) {
         if (!p) {
             LOGW("moveParts: null part in list");
@@ -292,7 +292,7 @@ void Score::moveStaves(QList<apiv1::Staff*> sourceStaves, apiv1::Staff* destinat
         return;
     }
 
-    std::vector<mu::engraving::Staff*> domStaves;
+    muse::vector<mu::engraving::Staff*> domStaves;
     for (apiv1::Staff* s : sourceStaves) {
         if (!s) {
             LOGW("moveStaves: null staff in list");
@@ -306,7 +306,7 @@ void Score::moveStaves(QList<apiv1::Staff*> sourceStaves, apiv1::Staff* destinat
 
 void Score::addSystemObjects(QList<apiv1::Staff*> staves)
 {
-    std::vector<mu::engraving::Staff*> domStaves;
+    muse::vector<mu::engraving::Staff*> domStaves;
     for (apiv1::Staff* s : staves) {
         if (!s) {
             LOGW("addSystemObjects: null staff in list");
@@ -320,7 +320,7 @@ void Score::addSystemObjects(QList<apiv1::Staff*> staves)
 
 void Score::removeSystemObjects(QList<apiv1::Staff*> staves)
 {
-    std::vector<mu::engraving::Staff*> domStaves;
+    muse::vector<mu::engraving::Staff*> domStaves;
     for (apiv1::Staff* s : staves) {
         if (!s) {
             LOGW("removeSystemObjects: null staff in list");
@@ -567,7 +567,7 @@ int Score::lyricCount() const
 
 QQmlListProperty<Lyrics> Score::lyrics() const
 {
-    static std::vector<engraving::Lyrics*> list;
+    static muse::vector<engraving::Lyrics*> list;
     list = score()->lyrics();
     return wrapContainerProperty<Lyrics>(this, list);
 }
@@ -579,7 +579,7 @@ QString Score::extractLyrics() const
 
 QQmlListProperty<Spanner> Score::spanners()
 {
-    static std::vector<mu::engraving::Spanner*> spannerList;
+    static muse::vector<mu::engraving::Spanner*> spannerList;
     spannerList = score()->spannerList();
     return wrapContainerProperty<Spanner>(this, spannerList);
 }

@@ -65,8 +65,8 @@ private:
     RectF rectForIndex(int index) const;
 
     unsigned int m_depth = 0;
-    std::vector<Node> m_nodes;
-    std::vector<std::vector<EngravingItem*> > m_leaves;
+    muse::vector<Node> m_nodes;
+    muse::vector<muse::vector<EngravingItem*> > m_leaves;
     int m_leafCnt = 0;
     RectF m_rect;
 
@@ -79,8 +79,8 @@ public:
     void insert(EngravingItem* item);
     void remove(EngravingItem* item);
 
-    std::vector<EngravingItem*> items(const RectF& rect);
-    std::vector<EngravingItem*> items(const PointF& pos);
+    muse::vector<EngravingItem*> items(const RectF& rect);
+    muse::vector<EngravingItem*> items(const PointF& pos);
 
     EngravingItem* nearestNeighbor(const PointF& pos);
 
@@ -106,6 +106,6 @@ class BspTreeVisitor
     OBJECT_ALLOCATOR(engraving, BspTreeVisitor)
 public:
     virtual ~BspTreeVisitor() {}
-    virtual void visit(std::vector<EngravingItem*>& items) = 0;
+    virtual void visit(muse::vector<EngravingItem*>& items) = 0;
 };
 }

@@ -92,12 +92,12 @@ EngravingItem* NotationSelection::element() const
     return score()->selection().element();
 }
 
-const std::vector<EngravingItem*>& NotationSelection::elements() const
+const muse::vector<EngravingItem*>& NotationSelection::elements() const
 {
     return score()->selection().elements();
 }
 
-std::vector<Note*> NotationSelection::notes(NoteFilter filter) const
+muse::vector<Note*> NotationSelection::notes(NoteFilter filter) const
 {
     switch (filter) {
     case NoteFilter::All: return score()->selection().noteList();
@@ -155,7 +155,7 @@ mu::engraving::MeasureBase* NotationSelection::endMeasureBase() const
     return score()->selection().endMeasureBase();
 }
 
-std::vector<mu::engraving::System*> NotationSelection::selectedSystems() const
+muse::vector<mu::engraving::System*> NotationSelection::selectedSystems() const
 {
     return score()->selection().selectedSystems();
 }

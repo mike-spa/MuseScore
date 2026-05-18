@@ -174,7 +174,7 @@ EngravingItem* NotationNoteInput::resolveNoteInputStartPosition() const
         RectF viewRect = m_getViewRectFunc();
         PointF topLeft = viewRect.topLeft();
 
-        std::vector<PointF> points;
+        muse::vector<PointF> points;
         points.push_back({ topLeft.x() + viewRect.width() * 0.25, topLeft.y() + viewRect.height() * 0.25 });
         points.push_back(topLeft);
         points.push_back(viewRect.bottomLeft());
@@ -195,7 +195,7 @@ EngravingItem* NotationNoteInput::resolveNoteInputStartPosition() const
             RectF pageRect  = page->ldata()->bbox().translated(page->x(), page->y());
             RectF intersect = viewRect & pageRect;
             intersect.translate(-page->x(), -page->y());
-            std::vector<EngravingItem*> el = page->items(intersect);
+            muse::vector<EngravingItem*> el = page->items(intersect);
 
             const ChordRest* lastSelected = score()->selection().currentCR();
 
@@ -382,7 +382,7 @@ void NotationNoteInput::endNoteInput(bool resetState)
     is.setNoteEntryMode(false);
 
     if (is.slur()) {
-        const std::vector<mu::engraving::SpannerSegment*>& el = is.slur()->spannerSegments();
+        const muse::vector<mu::engraving::SpannerSegment*>& el = is.slur()->spannerSegments();
         if (!el.empty()) {
             el.front()->setSelected(false);
         }
@@ -860,7 +860,7 @@ void NotationNoteInput::addSlur(mu::engraving::Slur* slur)
     inputState.setSlur(slur);
 
     if (slur) {
-        std::vector<mu::engraving::SpannerSegment*> slurSpannerSegments = slur->spannerSegments();
+        muse::vector<mu::engraving::SpannerSegment*> slurSpannerSegments = slur->spannerSegments();
         if (!slurSpannerSegments.empty()) {
             slurSpannerSegments.front()->setSelected(true);
         }

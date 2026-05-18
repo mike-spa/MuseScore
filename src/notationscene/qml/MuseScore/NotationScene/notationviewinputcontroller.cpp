@@ -837,7 +837,7 @@ void NotationViewInputController::mousePress_considerSelect(const ClickContext& 
 
     if (ctx.event->button() == Qt::LeftButton) {
         if (ctx.event->modifiers() & Qt::ControlModifier) {
-            const std::vector<EngravingItem*> overlappingHitElements = viewInteraction()->hitElements(ctx.logicClickPos, hitWidth());
+            const muse::vector<EngravingItem*> overlappingHitElements = viewInteraction()->hitElements(ctx.logicClickPos, hitWidth());
             if (overlappingHitElements.size() > 1) {
                 cycleOverlappingHitElements(overlappingHitElements, ctx.hitStaff);
                 return;
@@ -876,7 +876,7 @@ void NotationViewInputController::mousePress_considerSelect(const ClickContext& 
 void NotationViewInputController::mousePress_seekSelection(const ClickContext& ctx)
 {
     const INotationSelectionPtr selection = viewInteraction()->selection();
-    const std::vector<EngravingItem*>& elements = selection->elements();
+    const muse::vector<EngravingItem*>& elements = selection->elements();
     if (elements.empty()) {
         return;
     }
@@ -907,7 +907,7 @@ void NotationViewInputController::mousePress_seekSelection(const ClickContext& c
     playbackController()->seekElement(elementToSeek);
 }
 
-void NotationViewInputController::cycleOverlappingHitElements(const std::vector<EngravingItem*>& hitElements,
+void NotationViewInputController::cycleOverlappingHitElements(const muse::vector<EngravingItem*>& hitElements,
                                                               staff_idx_t hitStaffIndex)
 {
     const size_t numHitElements = hitElements.size();
@@ -1135,7 +1135,7 @@ void NotationViewInputController::mouseMoveEvent(QMouseEvent* event)
                 mode = DragMode::OnlyX;
             }
 
-            const std::vector<int> oldPitches = pitchesBeingDragged();
+            const muse::vector<int> oldPitches = pitchesBeingDragged();
             viewInteraction()->drag(m_mouseDownInfo.logicalBeginPoint, logicPos, mode);
 
             if (!oldPitches.empty() && oldPitches != pitchesBeingDragged()) {
@@ -1145,7 +1145,7 @@ void NotationViewInputController::mouseMoveEvent(QMouseEvent* event)
             return;
         } else if (hitElement == nullptr && (keyState & Qt::ShiftModifier)) {
             if (!viewInteraction()->isDragStarted()) {
-                viewInteraction()->startDrag(std::vector<EngravingItem*>(), PointF(), [](const EngravingItem*) { return false; });
+                viewInteraction()->startDrag(muse::vector<EngravingItem*>(), PointF(), [](const EngravingItem*) { return false; });
             }
             viewInteraction()->drag(m_mouseDownInfo.logicalBeginPoint, logicPos, DragMode::BothXY);
 
@@ -1168,7 +1168,7 @@ void NotationViewInputController::startDragElements(ElementType elementsType, co
         return;
     }
 
-    const std::vector<EngravingItem*>& elements = viewInteraction()->selection()->elements();
+    const muse::vector<EngravingItem*>& elements = viewInteraction()->selection()->elements();
     if (elements.empty()) {
         return;
     }
@@ -1376,7 +1376,7 @@ void NotationViewInputController::mouseDoubleClickEvent(QMouseEvent* event)
         IF_ASSERT_FAILED(chord) {
             break;
         }
-        const std::vector<Note*>& notes = chord->notes();
+        const muse::vector<Note*>& notes = chord->notes();
         if (selectType.value() == SelectType::ADD && std::all_of(notes.begin(), notes.end(), [](Note* n){ return n->selected(); })) {
             for (Note* n : notes) {
                 n->score()->deselect(n);
@@ -1703,9 +1703,9 @@ bool NotationViewInputController::dropEvent(const DragMoveEvent& event, const QM
     return isAccepted;
 }
 
-std::vector<int> NotationViewInputController::pitchesBeingDragged() const
+muse::vector<int> NotationViewInputController::pitchesBeingDragged() const
 {
-    std::vector<int> pitches;
+    muse::vector<int> pitches;
     pitches.reserve(m_notesBeingDragged.size());
 
     for (const EngravingItem* item : m_notesBeingDragged) {

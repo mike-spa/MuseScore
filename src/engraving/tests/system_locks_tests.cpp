@@ -42,7 +42,7 @@ TEST_F(Engraving_SystemLocksTests, readLocksFromFile)
     MasterScore* score = ScoreRW::readScore(SYSTEM_LOCKS_DATA_DIR + u"system_locks-1.mscx");
     EXPECT_TRUE(score);
 
-    std::vector<const SystemLock*> locks = score->systemLocks()->allLocks();
+    muse::vector<const SystemLock*> locks = score->systemLocks()->allLocks();
     EXPECT_FALSE(locks.empty());
 
     for (MeasureBase* mb = score->first(); mb; mb = mb->next()) {
@@ -70,7 +70,7 @@ TEST_F(Engraving_SystemLocksTests, lockMeasuresPerSystem)
     EXPECT_TRUE(score);
 
     const SystemLocks* systemLocks = score->systemLocks();
-    std::vector<const SystemLock*> allLocks = systemLocks->allLocks();
+    muse::vector<const SystemLock*> allLocks = systemLocks->allLocks();
     EXPECT_FALSE(allLocks.empty());
 
     score->startCmd(TranslatableString::untranslatable("Engraving system locks tests"));
@@ -84,8 +84,8 @@ TEST_F(Engraving_SystemLocksTests, lockMeasuresPerSystem)
     allLocks = systemLocks->allLocks();
     EXPECT_TRUE(allLocks.empty());
 
-    std::vector<MeasureBase*> measuresAtSystemStart;
-    std::vector<MeasureBase*> measuresAtSystemEnd;
+    muse::vector<MeasureBase*> measuresAtSystemStart;
+    muse::vector<MeasureBase*> measuresAtSystemEnd;
     for (System* sys : score->systems()) {
         measuresAtSystemStart.push_back(sys->first());
         measuresAtSystemEnd.push_back(sys->last());

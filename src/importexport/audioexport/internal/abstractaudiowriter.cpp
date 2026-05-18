@@ -36,14 +36,14 @@ using namespace mu::iex::audioexport;
 using namespace mu::project;
 using namespace mu::notation;
 
-std::vector<INotationWriter::UnitType> AbstractAudioWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> AbstractAudioWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool AbstractAudioWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 
@@ -194,7 +194,7 @@ void AbstractAudioWriter::doWrite(io::IODevice& dstDevice, const SoundTrackForma
 
 INotationWriter::UnitType AbstractAudioWriter::unitTypeFromOptions(const Options& options) const
 {
-    std::vector<UnitType> supported = supportedUnitTypes();
+    muse::vector<UnitType> supported = supportedUnitTypes();
     IF_ASSERT_FAILED(!supported.empty()) {
         return UnitType::PER_PART;
     }

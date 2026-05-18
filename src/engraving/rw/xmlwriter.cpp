@@ -318,7 +318,7 @@ void XmlWriter::tagProperty(const AsciiStringView& name, P_TYPE type, const Prop
         element(name, TConv::toXml(data.value<AutoCustomHide>()));
     } break;
     case P_TYPE::INT_VEC: {
-        element(name, TConv::toXml(data.value<std::vector<int> >()));
+        element(name, TConv::toXml(data.value<muse::vector<int> >()));
     } break;
     case P_TYPE::PARTIAL_SPANNER_DIRECTION: {
         element(name, TConv::toXml(data.value<PartialSpannerDirection>()));

@@ -1025,7 +1025,7 @@ void EditStyle::classBegin()
     // Figured Bass
     // ====================================================
 
-    const std::vector<String> fbFontNames = FiguredBass::fontNames();
+    const muse::vector<String> fbFontNames = FiguredBass::fontNames();
     for (const String& family : fbFontNames) {
         comboFBFont->addItem(family);
     }

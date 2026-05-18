@@ -588,7 +588,7 @@ void ExportDialogModel::setSvgIllustratorCompat(bool compat)
 
 QStringList ExportDialogModel::availableVideoResolutions() const
 {
-    const std::vector<std::string>& resolutions = videoExportConfiguration()->availableResolutions();
+    const muse::vector<std::string>& resolutions = videoExportConfiguration()->availableResolutions();
     QStringList result;
     for (const std::string& res : resolutions) {
         result << QString::fromStdString(res);
@@ -644,7 +644,7 @@ void ExportDialogModel::setFFmpegDir(const QString& dir)
 
 QList<int> ExportDialogModel::availableSampleRates() const
 {
-    const std::vector<int>& rates = audioExportConfiguration()->availableSampleRates();
+    const muse::vector<int>& rates = audioExportConfiguration()->availableSampleRates();
     return QList<int>(rates.cbegin(), rates.cend());
 }
 
@@ -665,7 +665,7 @@ void ExportDialogModel::setSampleRate(int rate)
 
 QList<int> ExportDialogModel::availableBitRates() const
 {
-    const std::vector<int>& rates = audioExportConfiguration()->availableMp3BitRates();
+    const muse::vector<int>& rates = audioExportConfiguration()->availableMp3BitRates();
     return QList<int>(rates.cbegin(), rates.cend());
 }
 

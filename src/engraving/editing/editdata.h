@@ -236,7 +236,7 @@ public:
 
     bool isEditMode = false; // refers to the legacy concept of "edit mode"
 
-    std::vector<RectF> grip;
+    muse::vector<RectF> grip;
     int grips = 0;                 // number of grips
     Grip curGrip = Grip::NO_GRIP;
 
@@ -278,7 +278,7 @@ public:
     bool hasCurrentGrip() const { return curGrip != Grip::NO_GRIP; }
 
 private:
-    std::vector<std::shared_ptr<ElementEditData> > m_data;
+    muse::vector<std::shared_ptr<ElementEditData> > m_data;
     MuseScoreView* m_view = nullptr;
 };
 }

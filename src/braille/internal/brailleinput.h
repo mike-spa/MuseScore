@@ -64,7 +64,7 @@ public:
     NoteGroup noteGroup();
 
     DurationType currentDuration();
-    std::vector<DurationType> noteDurations();
+    muse::vector<DurationType> noteDurations();
     bool isDurationMatch();
     DurationType getCloseDuration();
 
@@ -82,7 +82,7 @@ public:
     void setAccidental(const AccidentalType accidental);
     void setNoteName(const notation::NoteName notename, const bool chord_base = true);
     void setCurrentDuration(const DurationType duration);
-    void setNoteDurations(const std::vector<DurationType> durations);
+    void setNoteDurations(const muse::vector<DurationType> durations);
     void setArticulation(const notation::SymbolId articulation);
     void setOctave(const int octave, const bool chord_base = false);
     void setDots(const int dots);
@@ -91,7 +91,7 @@ public:
 
     void setNoteGroup(const NoteGroup g);
 
-    std::vector<int> intervals();
+    muse::vector<int> intervals();
     void clearIntervals();
     void removeLastInterval();
     int addInterval(int interval);
@@ -135,10 +135,10 @@ private:
     int _code_num = 0;
 
     DurationType _current_duration;
-    std::vector<DurationType> _note_durations;
+    muse::vector<DurationType> _note_durations;
     NoteGroup _note_group = NoteGroup::Undefined;
 
-    std::vector<int> _intervals;
+    muse::vector<int> _intervals;
 
     bool _tie;
     Note* _tie_start_note =  NULL;
@@ -156,8 +156,8 @@ private:
 QString parseBrailleKeyInput(QString keys);
 
 notation::NoteName getNoteName(const braille_code* code);
-std::vector<DurationType> getNoteDurations(const braille_code* code);
-std::vector<DurationType> getRestDurations(const braille_code* code);
+muse::vector<DurationType> getNoteDurations(const braille_code* code);
+muse::vector<DurationType> getRestDurations(const braille_code* code);
 int getInterval(const braille_code* code);
 bool isNoteName(const braille_code* code);
 QString fromNoteName(notation::NoteName);

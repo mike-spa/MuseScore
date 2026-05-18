@@ -72,7 +72,7 @@ void EmptyStavesVisibilitySettingsModel::hideEmptyStavesInSelection()
     Score* score = currentNotation()->elements()->msScore();
 
     const INotationSelectionPtr sel = selection();
-    const std::vector<System*> systems = sel->selectedSystems();
+    const muse::vector<System*> systems = sel->selectedSystems();
 
     const INotationSelectionRangePtr range = sel->range();
     const staff_idx_t staffStart = range->startStaffIndex();
@@ -102,7 +102,7 @@ void EmptyStavesVisibilitySettingsModel::showAllEmptyStaves()
     Score* score = currentNotation()->elements()->msScore();
 
     const INotationSelectionPtr sel = selection();
-    const std::vector<System*> systems = sel->selectedSystems();
+    const muse::vector<System*> systems = sel->selectedSystems();
 
     // avoid `beginCommand` because it sets `m_shouldUpdateOnScoreChange`
     undoStack()->prepareChanges(muse::TranslatableString("undoableAction", "Show empty staves"));
@@ -125,7 +125,7 @@ void EmptyStavesVisibilitySettingsModel::resetEmptyStavesVisibility()
     Score* score = currentNotation()->elements()->msScore();
 
     const INotationSelectionPtr sel = selection();
-    const std::vector<System*> systems = sel->selectedSystems();
+    const muse::vector<System*> systems = sel->selectedSystems();
 
     // avoid `beginCommand` because it sets `m_shouldUpdateOnScoreChange`
     undoStack()->prepareChanges(muse::TranslatableString("undoableAction", "Reset empty staves visibility"));
@@ -156,7 +156,7 @@ void EmptyStavesVisibilitySettingsModel::updateCanHideEmptyStavesInSelection()
     }
 
     const INotationSelectionPtr sel = selection();
-    const std::vector<System*> systems = sel->selectedSystems();
+    const muse::vector<System*> systems = sel->selectedSystems();
 
     const INotationSelectionRangePtr range = sel->range();
     const staff_idx_t staffStart = range->startStaffIndex();
@@ -193,7 +193,7 @@ void EmptyStavesVisibilitySettingsModel::updateCanShowAllEmptyStaves()
     Score* score = currentNotation()->elements()->msScore();
 
     const INotationSelectionPtr sel = selection();
-    const std::vector<System*> systems = sel->selectedSystems();
+    const muse::vector<System*> systems = sel->selectedSystems();
 
     for (const System* system : systems) {
         for (staff_idx_t staffIdx = 0; staffIdx < score->nstaves(); ++staffIdx) {
@@ -226,7 +226,7 @@ void EmptyStavesVisibilitySettingsModel::updateCanResetEmptyStavesVisibility()
     Score* score = currentNotation()->elements()->msScore();
 
     const INotationSelectionPtr sel = selection();
-    const std::vector<System*> systems = sel->selectedSystems();
+    const muse::vector<System*> systems = sel->selectedSystems();
 
     for (const System* system : systems) {
         for (const MeasureBase* mb : system->measures()) {

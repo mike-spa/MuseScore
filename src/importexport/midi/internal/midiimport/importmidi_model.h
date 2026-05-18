@@ -72,7 +72,7 @@ private:
     int _frozenColCount;
     QString _midiFile;
     class Column;
-    std::vector<std::unique_ptr<Column> > _columns;
+    muse::vector<std::unique_ptr<Column> > _columns;
     bool _isAllApplied;
 };
 } // namespace mu::iex::midi

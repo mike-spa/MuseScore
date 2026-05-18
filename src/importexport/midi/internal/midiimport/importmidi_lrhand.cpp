@@ -80,10 +80,10 @@ struct SplitTry {
 
 struct ChordSplitData {
     std::multimap<ReducedFraction, MidiChord>::iterator chord;
-    std::vector<SplitTry> possibleSplits;      // each index corresponds to the same note index
+    muse::vector<SplitTry> possibleSplits;      // each index corresponds to the same note index
 };
 
-int findLastSplitPoint(const std::vector<ChordSplitData>& splits)
+int findLastSplitPoint(const muse::vector<ChordSplitData>& splits)
 {
     int splitPoint = -1;
     int minPenalty = std::numeric_limits<int>::max();
@@ -105,7 +105,7 @@ int findLastSplitPoint(const std::vector<ChordSplitData>& splits)
 // backward dynamic programming step - collect optimal voice separations
 
 void splitChords(
-    const std::vector<ChordSplitData>& splits,
+    const muse::vector<ChordSplitData>& splits,
     std::multimap<ReducedFraction, MidiChord>& leftHandChords,
     std::multimap<ReducedFraction, MidiChord>& chords)
 {
@@ -270,7 +270,7 @@ int findIntersectionPenalty(
     int prevPos,
     int prevSplitPoint,
     const ReducedFraction& maxChordLen,
-    const std::vector<ChordSplitData>& splits,
+    const muse::vector<ChordSplitData>& splits,
     bool hasLowNotes,
     bool hasHighNotes)
 {
@@ -315,9 +315,9 @@ int findIntersectionPenalty(
     return penalty;
 }
 
-std::vector<ChordSplitData> findSplits(std::multimap<ReducedFraction, MidiChord>& chords)
+muse::vector<ChordSplitData> findSplits(std::multimap<ReducedFraction, MidiChord>& chords)
 {
-    std::vector<ChordSplitData> splits;
+    muse::vector<ChordSplitData> splits;
     int pos = 0;
     ReducedFraction maxChordLen;
 
@@ -403,7 +403,7 @@ void splitStaff(std::multimap<int, MTrack>& tracks, std::multimap<int, MTrack>::
         return;
     }
     MChord::sortNotesByPitch(chords);
-    std::vector<ChordSplitData> splits = findSplits(chords);
+    muse::vector<ChordSplitData> splits = findSplits(chords);
 
     Q_ASSERT_X(!splits.empty(), "LRHand::splitStaff", "Empty splits array");
 

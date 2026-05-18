@@ -81,7 +81,7 @@ TEST_F(Engraving_MsczFileTests, MsczFile_WriteRead)
         ByteArray thumbnailData = reader.readThumbnailFile();
         EXPECT_EQ(thumbnailData, originThumbnailData);
 
-        std::vector<String> images = reader.imageFileNames();
+        muse::vector<String> images = reader.imageFileNames();
         ByteArray imageData = reader.readImageFile(u"image1.png");
         EXPECT_EQ(images.size(), 1);
         EXPECT_EQ(images.at(0), u"image1.png");

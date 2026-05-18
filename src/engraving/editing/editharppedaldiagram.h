@@ -41,7 +41,7 @@ public:
 
     UNDO_NAME("ChangeHarpPedalState")
 //    UNDO_CHANGED_OBJECTS({ diagram })
-    std::vector<EngravingObject*> objectItems() const override;
+    muse::vector<EngravingObject*> objectItems() const override;
 };
 
 class ChangeSingleHarpPedal : public UndoCommand
@@ -64,6 +64,6 @@ public:
 
     UNDO_NAME("ChangeSingleHarpPedal")
 //    UNDO_CHANGED_OBJECTS({ diagram });
-    std::vector<EngravingObject*> objectItems() const override;
+    muse::vector<EngravingObject*> objectItems() const override;
 };
 }

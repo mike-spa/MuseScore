@@ -176,7 +176,7 @@ RectF BSymbol::drag(EditData& ed)
 //   dragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> BSymbol::dragAnchorLines() const
+muse::vector<LineF> BSymbol::dragAnchorLines() const
 {
     return genericDragAnchorLines();
 }

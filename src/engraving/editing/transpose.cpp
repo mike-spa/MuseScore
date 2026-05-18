@@ -151,7 +151,7 @@ bool Transpose::transpose(Score* score, TransposeMode mode, TransposeDirection d
     // process range selection
     //--------------------------
 
-    std::vector<Staff*> sl;
+    muse::vector<Staff*> sl;
     for (staff_idx_t staffIdx = selection.staffStart(); staffIdx < selection.staffEnd(); ++staffIdx) {
         Staff* s = score->staff(staffIdx);
         if (s->staffType(Fraction(0, 1))->group() == StaffGroup::PERCUSSION) {        // ignore percussion staff
@@ -174,7 +174,7 @@ bool Transpose::transpose(Score* score, TransposeMode mode, TransposeDirection d
             sl.push_back(s);
         }
     }
-    std::vector<track_idx_t> tracks;
+    muse::vector<track_idx_t> tracks;
     for (Staff* s : sl) {
         track_idx_t idx = s->idx() * VOICES;
         for (voice_idx_t i = 0; i < VOICES; ++i) {
@@ -214,7 +214,7 @@ bool Transpose::transpose(Score* score, TransposeMode mode, TransposeDirection d
 
             if (e->isChord()) {
                 Chord* chord = toChord(e);
-                const std::vector<Note*> nl = chord->notes();
+                const muse::vector<Note*> nl = chord->notes();
                 for (size_t noteIdx = 0; noteIdx < nl.size(); ++noteIdx) {
                     if (!score->selectionFilter().canSelectNoteIdx(noteIdx, nl.size(), selection.rangeContainsMultiNoteChords())) {
                         continue;
@@ -582,7 +582,7 @@ void Transpose::transposeFretDiagram(FretDiagram* diagram, Score* score, Interva
     if (harmony) {
         transposeHarmony(harmony, score, interval, mode, transposeInterval, trKeys, useDoubleSharpsFlats);
 
-        std::vector<DiagramInfo> availableDiagrams = diagram->patternsFromHarmony(harmony->plainText());
+        muse::vector<DiagramInfo> availableDiagrams = diagram->patternsFromHarmony(harmony->plainText());
         if (availableDiagrams.empty()) {
             diagram->undoFretClear();
             MScore::setError(MsError::TRANSPOSE_NO_FRET_DIAGRAM, true);
@@ -596,7 +596,7 @@ void Transpose::transposeFretDiagram(FretDiagram* diagram, Score* score, Interva
 
     // No chord symbol attached. Create harmony from diagram, transpose it, then use the new harmony to update the fret diagram
     String pattern = diagram->patternFromDiagram();
-    std::vector<String> names = diagram->harmoniesFromPattern(pattern);
+    muse::vector<String> names = diagram->harmoniesFromPattern(pattern);
     if (names.empty()) {
         diagram->undoFretClear();
         MScore::setError(MsError::TRANSPOSE_NO_FRET_DIAGRAM, true);
@@ -634,7 +634,7 @@ void Transpose::transposeFretDiagram(FretDiagram* diagram, Score* score, Interva
     }
     harmony->setXmlText(harmony->harmonyName());
 
-    std::vector<DiagramInfo> availableDiagrams = diagram->patternsFromHarmony(harmony->plainText());
+    muse::vector<DiagramInfo> availableDiagrams = diagram->patternsFromHarmony(harmony->plainText());
     if (availableDiagrams.empty()) {
         diagram->undoFretClear();
         MScore::setError(MsError::TRANSPOSE_NO_FRET_DIAGRAM, true);
@@ -650,9 +650,9 @@ void Transpose::transposeFretDiagram(FretDiagram* diagram, Score* score, Interva
     return;
 }
 
-String Transpose::findBestEnharmonicFit(const std::vector<String>& notes, Key key, const MStyle& style)
+String Transpose::findBestEnharmonicFit(const muse::vector<String>& notes, Key key, const MStyle& style)
 {
-    std::vector<int> tpcs;
+    muse::vector<int> tpcs;
     NoteSpellingType harmonySpelling = style.styleV(Sid::chordSymbolSpelling).value<NoteSpellingType>();
     NoteCaseType harmonyCase = NoteCaseType::AUTO;
     size_t idx = 0;

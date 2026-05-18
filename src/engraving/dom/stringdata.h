@@ -58,7 +58,7 @@ class StringData
 public:
     StringData() {}
     StringData(int numFrets, int numStrings, int strings[], bool useFlats = false);
-    StringData(int numFrets, std::vector<instrString>& strings);
+    StringData(int numFrets, muse::vector<instrString>& strings);
 
     bool isNull() const;
 
@@ -77,8 +77,8 @@ public:
     static int  pitchOffsetAt(const Staff* staff, const Fraction& tick, int string);
     size_t      strings() const { return m_stringTable.size(); }
     int         frettedStrings() const;
-    const std::vector<instrString>& stringList() const { return m_stringTable; }
-    std::vector<instrString>& stringList() { return m_stringTable; }
+    const muse::vector<instrString>& stringList() const { return m_stringTable; }
+    muse::vector<instrString>& stringList() { return m_stringTable; }
     int         frets() const { return m_frets; }
     void        setFrets(int val) { m_frets = val; }
     bool operator==(const StringData& d) const { return d.m_frets == m_frets && d.m_stringTable == m_stringTable; }
@@ -92,12 +92,12 @@ private:
     int         fret(int pitch, int string, int pitchOffset) const;
     void        sortChordNotes(std::map<int, Note*>& sortedNotes, const Chord* chord, int* count) const;
     void        sortChordNotesUseSameString(const Chord* chord) const;
-    bool        tryResolveStringConflictWithOutOfRangeFret(const Note* note, int numStrings, std::vector<int>& bUsed, int& nNewString,
+    bool        tryResolveStringConflictWithOutOfRangeFret(const Note* note, int numStrings, muse::vector<int>& bUsed, int& nNewString,
                                                            int& nNewFret) const;
 
-    //      std::vector<int>  stringTable { 40, 45, 50, 55, 59, 64 };   // guitar is default
+    //      muse::vector<int>  stringTable { 40, 45, 50, 55, 59, 64 };   // guitar is default
     //      int         _frets = 19;
-    std::vector<instrString> m_stringTable;                      // no strings by default
+    muse::vector<instrString> m_stringTable;                      // no strings by default
     int m_frets = 0;
 
     static bool bFretting;

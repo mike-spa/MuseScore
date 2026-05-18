@@ -165,7 +165,7 @@ static muse::draw::Color toColor(const voice_idx_t)
 
 // create a VoiceAllocator for every instrument
 
-void TablEdit::initializeVoiceAllocators(std::vector<VoiceAllocator>& allocators)
+void TablEdit::initializeVoiceAllocators(muse::vector<VoiceAllocator>& allocators)
 {
     for (size_t i = 0; i < tefInstruments.size(); ++i) {
         VoiceAllocator allocator;
@@ -173,9 +173,9 @@ void TablEdit::initializeVoiceAllocators(std::vector<VoiceAllocator>& allocators
     }
 }
 
-void TablEdit::allocateVoices(std::vector<VoiceAllocator>& allocators)
+void TablEdit::allocateVoices(muse::vector<VoiceAllocator>& allocators)
 {
-    std::vector<const TefNote*> column;
+    muse::vector<const TefNote*> column;
     int currentPosition { -1 };
     engraving::part_idx_t currentPart { 0 };
     for (const TefNote& tefNote : tefContents) {
@@ -254,7 +254,7 @@ static String fingeringTextRH(int rightFinger)
 }
 
 static void addNoteToChord(mu::engraving::Chord* chord, const TefNote* tefNote, int stringOffset, int pitch, muse::draw::Color color,
-                           std::vector<mu::engraving::Note*>& tiedNotes)
+                           muse::vector<mu::engraving::Note*>& tiedNotes)
 {
     LOGN("pitch %d", pitch);
     mu::engraving::Note* note = Factory::createNote(chord);
@@ -351,13 +351,13 @@ void TablEdit::createContents(const MeasureHandler& measureHandler)
         return;
     }
 
-    std::vector<VoiceAllocator> voiceAllocators;
+    muse::vector<VoiceAllocator> voiceAllocators;
     initializeVoiceAllocators(voiceAllocators);
     allocateVoices(voiceAllocators);
 
     for (size_t part = 0; part < tefInstruments.size(); ++part) {
         LOGN("part %zu", part);
-        std::vector<mu::engraving::Note*> tiedNotes;
+        muse::vector<mu::engraving::Note*> tiedNotes;
         for (voice_idx_t voice = 0; voice < mu::engraving::VOICES; ++voice) {
             LOGN("- voice %zu", voice);
             auto& voiceContent { voiceAllocators.at(part).voiceContent(voice) };
@@ -365,7 +365,7 @@ void TablEdit::createContents(const MeasureHandler& measureHandler)
             for (size_t k = 0; k < voiceContent.size(); ++k) {
                 LOGN("  - chord %zu", k);
                 // tefNotes is either a rest or a chord of one or more notes
-                const std::vector<const TefNote*>& tefNotes { voiceContent.at(k) };
+                const muse::vector<const TefNote*>& tefNotes { voiceContent.at(k) };
 
                 if (tefNotes.size() == 0) {
                     continue; // shouldn't happen
@@ -469,7 +469,7 @@ void TablEdit::createLinkedTabs()
         Staff* dstStaff = part->staff(1);
         Excerpt::cloneStaff(srcStaff, dstStaff, false);
 
-        static const std::vector<StaffTypes> types {
+        static const muse::vector<StaffTypes> types {
             StaffTypes::TAB_4SIMPLE,
             StaffTypes::TAB_5SIMPLE,
             StaffTypes::TAB_6SIMPLE,
@@ -657,7 +657,7 @@ void TablEdit::createRepeats()
     }
 }
 
-static void setInstrumentIDs(const std::vector<Part*>& parts)
+static void setInstrumentIDs(const muse::vector<Part*>& parts)
 {
     for (Part* part : parts) {
         for (const auto& pair : part->instruments()) {

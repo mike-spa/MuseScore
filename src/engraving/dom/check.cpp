@@ -271,7 +271,7 @@ void Measure::fillGap(const Fraction& rtickStart, const Fraction& len, track_idx
          track);
 
     // break the gap into shorter durations if necessary
-    std::vector<TDuration> durationList = toRhythmicDurationList(len, true, rtickStart, timesig(), this, 0, stretch);
+    muse::vector<TDuration> durationList = toRhythmicDurationList(len, true, rtickStart, timesig(), this, 0, stretch);
 
     Fraction curTick = tick() + actualTicks(rtickStart, nullptr, stretch);
     for (TDuration d : durationList) {

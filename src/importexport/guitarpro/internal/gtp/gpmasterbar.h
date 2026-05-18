@@ -76,8 +76,8 @@ public:
     void setKeySig(GPMasterBar::KeySig sig, bool useFlats = false) { _keySig = sig; _useFlats = useFlats; }
     KeySig keySig() const { return _keySig; }
 
-    void setFermatas(std::vector<Fermata>&& f) { _fermatas.swap(f); }
-    const std::vector<Fermata>& fermatas() const { return _fermatas; }
+    void setFermatas(muse::vector<Fermata>&& f) { _fermatas.swap(f); }
+    const muse::vector<Fermata>& fermatas() const { return _fermatas; }
 
     void setRepeat(Repeat r) { _repeat = r; }
     Repeat repeat() const { return _repeat; }
@@ -91,31 +91,31 @@ public:
     void setFreeTime(bool freeTime) { _freeTime = freeTime; }
     bool freeTime() const { return _freeTime; }
 
-    void setAlternativeEnding(std::vector<int>&& r) { _alternateEndings.swap(r); }
-    const std::vector<int>& alternateEnding() const { return _alternateEndings; }
+    void setAlternativeEnding(muse::vector<int>&& r) { _alternateEndings.swap(r); }
+    const muse::vector<int>& alternateEnding() const { return _alternateEndings; }
 
     void setSection(std::pair<muse::String, muse::String>&& s) { _section.swap(s); }
     const std::pair<muse::String, muse::String>& section() const { return _section; }
 
-    void setDirections(std::vector<Direction>&& d) { _directions.swap(d); }
-    const std::vector<Direction>& directions() const { return _directions; }
+    void setDirections(muse::vector<Direction>&& d) { _directions.swap(d); }
+    const muse::vector<Direction>& directions() const { return _directions; }
 
     void setId(int id) { _id = id; }
     int id() const { return _id; } //debug helper
 
-    const std::vector<std::unique_ptr<GPBar> >& bars() const { return _bars; }
+    const muse::vector<std::unique_ptr<GPBar> >& bars() const { return _bars; }
 
 private:
 
     int _id{ -1 };
-    std::vector<std::unique_ptr<GPBar> > _bars;
-    std::vector<Fermata> _fermatas;
-    std::vector<Direction> _directions;
+    muse::vector<std::unique_ptr<GPBar> > _bars;
+    muse::vector<Fermata> _fermatas;
+    muse::vector<Direction> _directions;
     TimeSig _timeSig;
     KeySig _keySig;
     bool _useFlats = false;
     Repeat _repeat;
-    std::vector<int> _alternateEndings;
+    muse::vector<int> _alternateEndings;
     TripletFeelType _tripletFeel = TripletFeelType::None;
     BarlineType _barlineType = BarlineType::NORMAL;
     bool _freeTime = false;

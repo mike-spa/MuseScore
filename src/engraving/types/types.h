@@ -1136,7 +1136,7 @@ enum class BracketType : signed char {
     NORMAL, BRACE, SQUARE, LINE, GROUP, NO_BRACKET = -1
 };
 
-using InstrumentTrackIdList = std::vector<InstrumentTrackId>;
+using InstrumentTrackIdList = muse::vector<InstrumentTrackId>;
 using InstrumentTrackIdSet = std::unordered_set<InstrumentTrackId>;
 
 enum EmbellishmentType : unsigned char {};

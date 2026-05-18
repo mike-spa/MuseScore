@@ -337,7 +337,7 @@ void PlaybackController::setTrackSoloMuteState(const InstrumentTrackId& trackId,
     m_notation->soloMuteState()->setTrackSoloMuteState(trackId, state);
 }
 
-void PlaybackController::playElements(const std::vector<const notation::EngravingItem*>& elements, const PlayParams& params, bool isMidi)
+void PlaybackController::playElements(const muse::vector<const notation::EngravingItem*>& elements, const PlayParams& params, bool isMidi)
 {
     IF_ASSERT_FAILED(notationPlayback()) {
         return;
@@ -351,7 +351,7 @@ void PlaybackController::playElements(const std::vector<const notation::Engravin
         START_INPUT_LAG_TIMER;
     }
 
-    std::vector<const notation::EngravingItem*> elementsForPlaying;
+    muse::vector<const notation::EngravingItem*> elementsForPlaying;
     elementsForPlaying.reserve(elements.size());
 
     bool playChordWhenEditing = configuration()->playChordWhenEditing();
@@ -389,7 +389,7 @@ void PlaybackController::playNotes(const NoteValList& notes, staff_idx_t staffId
     Chord* chord = engraving::Factory::createChord(seg);
     chord->setParent(seg);
 
-    std::vector<const EngravingItem*> elements;
+    muse::vector<const EngravingItem*> elements;
     elements.reserve(notes.size());
 
     for (const NoteVal& nval : notes) {
@@ -495,13 +495,13 @@ bool PlaybackController::shouldLoadDrumset(const engraving::InstrumentTrackId& i
     return oldMeta.type == AudioResourceType::MuseSamplerSoundPack || newMeta.type == AudioResourceType::MuseSamplerSoundPack;
 }
 
-void PlaybackController::addSoundFlagsIfNeed(const std::vector<EngravingItem*>& selection)
+void PlaybackController::addSoundFlagsIfNeed(const muse::vector<EngravingItem*>& selection)
 {
     if (selection.empty()) {
         return;
     }
 
-    std::vector<StaffText*> staffTextList;
+    muse::vector<StaffText*> staffTextList;
 
     for (EngravingItem* item : selection) {
         if (!item || !item->isStaffText()) {
@@ -823,7 +823,7 @@ secs_t PlaybackController::playbackStartSecs() const
 
 InstrumentTrackIdSet PlaybackController::instrumentTrackIdSetForRangePlayback() const
 {
-    std::vector<const Part*> selectedParts = selectionRange()->selectedParts();
+    muse::vector<const Part*> selectedParts = selectionRange()->selectedParts();
     Fraction startTick = selectionRange()->startTick();
     int startTicks = startTick.ticks();
 

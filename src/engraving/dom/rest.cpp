@@ -328,7 +328,7 @@ NoteDot* Rest::dot(int n)
     return m_dots[n];
 }
 
-const std::vector<NoteDot*>& Rest::dotList() const
+const muse::vector<NoteDot*>& Rest::dotList() const
 {
     return m_dots;
 }

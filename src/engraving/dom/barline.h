@@ -153,11 +153,11 @@ public:
     int gripsCount() const override { return 1; }
     Grip initialEditModeGrip() const override { return Grip::START; }
     Grip defaultGrip() const override { return Grip::START; }
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
     void styleChanged() override;
 
-    static const std::vector<BarLineTableItem> barLineTable;
+    static const muse::vector<BarLineTableItem> barLineTable;
 
     void calcY();
 

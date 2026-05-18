@@ -52,7 +52,7 @@ PropertyValue Capo::getProperty(Pid id) const
     } else if (id == Pid::CAPO_FRET_POSITION) {
         return m_params.fretPosition;
     } else if (id == Pid::CAPO_IGNORED_STRINGS) {
-        std::vector<int> ignoredStrings;
+        muse::vector<int> ignoredStrings;
         ignoredStrings.reserve(m_params.ignoredStrings.size());
         for (string_idx_t string : m_params.ignoredStrings) {
             ignoredStrings.push_back(static_cast<int>(string));
@@ -74,7 +74,7 @@ PropertyValue Capo::propertyDefault(Pid id) const
     } else if (id == Pid::CAPO_FRET_POSITION) {
         return 1;
     } else if (id == Pid::CAPO_IGNORED_STRINGS) {
-        return std::vector<int>();
+        return muse::vector<int>();
     } else if (id == Pid::CAPO_GENERATE_TEXT) {
         return true;
     } else if (id == Pid::CAPO_TRANSPOSE_MODE) {
@@ -92,7 +92,7 @@ bool Capo::setProperty(Pid id, const PropertyValue& val)
         m_params.fretPosition = val.toInt();
     } else if (id == Pid::CAPO_IGNORED_STRINGS) {
         m_params.ignoredStrings.clear();
-        auto ignoredStrings = val.value<std::vector<int> >();
+        auto ignoredStrings = val.value<muse::vector<int> >();
         for (int string : ignoredStrings) {
             m_params.ignoredStrings.insert(static_cast<string_idx_t>(string));
         }

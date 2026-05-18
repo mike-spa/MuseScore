@@ -125,7 +125,7 @@ Ret MscLoader::loadMscz(MasterScore* masterScore, const MscReader& mscReader, rw
         // Read images
         {
             if (!MScore::noImages) {
-                std::vector<String> images = mscReader.imageFileNames();
+                muse::vector<String> images = mscReader.imageFileNames();
                 for (const String& name : images) {
                     imageStore.add(name.toStdString(), mscReader.readImageFile(name));
                 }
@@ -155,7 +155,7 @@ Ret MscLoader::loadMscz(MasterScore* masterScore, const MscReader& mscReader, rw
 
     // Read excerpts
     if (ret && masterScore->mscVersion() >= 400 && mscReader.isContainer()) {
-        std::vector<String> excerptFileNames = mscReader.excerptFileNames();
+        muse::vector<String> excerptFileNames = mscReader.excerptFileNames();
         for (const String& excerptFileName : excerptFileNames) {
             Score* partScore = masterScore->createScore();
 

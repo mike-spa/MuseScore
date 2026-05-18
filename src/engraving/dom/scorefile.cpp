@@ -175,7 +175,7 @@ void Score::print(Painter* painter, int pageNo)
     Page* page = pages().at(pageNo);
     RectF fr  = page->pageBoundingRect();
 
-    std::vector<EngravingItem*> ell = page->items(fr);
+    muse::vector<EngravingItem*> ell = page->items(fr);
     std::sort(ell.begin(), ell.end(), elementLessThan);
     for (const EngravingItem* e : ell) {
         if (!e->visible()) {

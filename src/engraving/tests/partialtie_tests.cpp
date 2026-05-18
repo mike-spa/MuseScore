@@ -55,7 +55,7 @@ protected:
         return note;
     }
 
-    void testPartialTies(const String& score, const Fraction& startPointLocation, const std::vector<Fraction>& jumpPointLocations)
+    void testPartialTies(const String& score, const Fraction& startPointLocation, const muse::vector<Fraction>& jumpPointLocations)
     {
         openScore(score, startPointLocation, jumpPointLocations);
 
@@ -74,7 +74,7 @@ protected:
         deleteStartTie();
     }
 
-    void openScore(const String& score, const Fraction& startPointLocation, const std::vector<Fraction>& jumpPointLocations)
+    void openScore(const String& score, const Fraction& startPointLocation, const muse::vector<Fraction>& jumpPointLocations)
     {
         m_masterScore = ScoreRW::readScore(PARTIALTIE_DATA_DIR + score + u".mscx");
 
@@ -319,7 +319,7 @@ protected:
         EXPECT_FALSE(tieBeforeSegno->jumpPoint());
     }
 
-    void saveAndLoad(const String& score, const Fraction& startPointLocation, const std::vector<Fraction>& jumpPointLocations)
+    void saveAndLoad(const String& score, const Fraction& startPointLocation, const muse::vector<Fraction>& jumpPointLocations)
     {
         // Save score
         const String savePath = score + u".mscx";
@@ -349,7 +349,7 @@ protected:
     }
 
     void testPartialTieListSelection(const String& score, const Fraction& startPointLocation, const Fraction& secondNoteLocation,
-                                     const std::vector<Fraction>& jumpPointLocations)
+                                     const muse::vector<Fraction>& jumpPointLocations)
     {
         openScore(score, startPointLocation, jumpPointLocations);
 
@@ -385,7 +385,7 @@ protected:
 private:
     MasterScore* m_masterScore = nullptr;
     Note* m_startNote = nullptr;
-    std::vector<Note*> m_jumpPoints;
+    muse::vector<Note*> m_jumpPoints;
 };
 
 TEST_F(Engraving_PartialTieTests, repeatBarlines)
@@ -393,7 +393,7 @@ TEST_F(Engraving_PartialTieTests, repeatBarlines)
     const String test = u"repeat_barlines";
 
     const Fraction startPointTick = Fraction(7, 4);
-    const std::vector<Fraction> jumpPoints = { Fraction(8, 4), Fraction(0, 4) };
+    const muse::vector<Fraction> jumpPoints = { Fraction(8, 4), Fraction(0, 4) };
 
     testPartialTies(test, startPointTick, jumpPoints);
 }
@@ -403,7 +403,7 @@ TEST_F(Engraving_PartialTieTests, voltaCoda)
     const String test = u"volta_coda";
 
     const Fraction startPointTick = Fraction(3, 4);
-    const std::vector<Fraction> jumpPoints = { Fraction(4, 4), Fraction(8, 4), Fraction(12, 4), Fraction(16, 4) };
+    const muse::vector<Fraction> jumpPoints = { Fraction(4, 4), Fraction(8, 4), Fraction(12, 4), Fraction(16, 4) };
 
     testPartialTies(test, startPointTick, jumpPoints);
 }
@@ -413,7 +413,7 @@ TEST_F(Engraving_PartialTieTests, coda)
     const String test = u"coda";
 
     const Fraction startPointTick = Fraction(3, 4);
-    const std::vector<Fraction> jumpPoints = { Fraction(4, 4), Fraction(8, 4) };
+    const muse::vector<Fraction> jumpPoints = { Fraction(4, 4), Fraction(8, 4) };
 
     testPartialTies(test, startPointTick, jumpPoints);
 }
@@ -423,7 +423,7 @@ TEST_F(Engraving_PartialTieTests, segnoBefore)
     const String test = u"segno";
 
     const Fraction startPointTick = Fraction(11, 4);
-    const std::vector<Fraction> jumpPoints = { Fraction(4, 4) };
+    const muse::vector<Fraction> jumpPoints = { Fraction(4, 4) };
 
     openScore(test, startPointTick, jumpPoints);
 
@@ -436,7 +436,7 @@ TEST_F(Engraving_PartialTieTests, segnoAfter)
     const String test = u"segno";
 
     const Fraction startPointTick = Fraction(11, 4);
-    const std::vector<Fraction> jumpPoints = { Fraction(4, 4) };
+    const muse::vector<Fraction> jumpPoints = { Fraction(4, 4) };
 
     openScore(test, startPointTick, jumpPoints);
 
@@ -514,7 +514,7 @@ TEST_F(Engraving_PartialTieTests, partialTieListSelection)
 
     const Fraction startPointTick = Fraction(2, 4);
     const Fraction secondTieNoteTick = Fraction(5, 4);
-    const std::vector<Fraction> jumpPoints = { Fraction(5, 4), Fraction(2, 1) };
+    const muse::vector<Fraction> jumpPoints = { Fraction(5, 4), Fraction(2, 1) };
 
     testPartialTieListSelection(test, startPointTick, secondTieNoteTick, jumpPoints);
 }

@@ -366,7 +366,7 @@ std::list<EngravingObject*> SpannerSegment::linkListForPropertyPropagation() con
         if (linkedSpanner == m_spanner || toSpanner(linkedSpanner)->placement() != m_spanner->placement()) {
             continue;
         }
-        const std::vector<SpannerSegment*>& linkedSegments = toSpanner(linkedSpanner)->spannerSegments();
+        const muse::vector<SpannerSegment*>& linkedSegments = toSpanner(linkedSpanner)->spannerSegments();
         if (linkedSegments.empty()) {
             continue;
         }

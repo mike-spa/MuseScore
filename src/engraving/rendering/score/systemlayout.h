@@ -117,47 +117,47 @@ private:
     struct ElementsToLayout
     {
         System* system;
-        std::vector<Measure*> measures;
-        std::vector<Segment*> segments;
+        muse::vector<Measure*> measures;
+        muse::vector<Segment*> segments;
 
-        std::vector<ChordRest*> chordRests;
-        std::vector<Chord*> chords;
-        std::vector<BarLine*> barlines;
-        std::vector<TimeSig*> timeSigAboveStaves;
+        muse::vector<ChordRest*> chordRests;
+        muse::vector<Chord*> chords;
+        muse::vector<BarLine*> barlines;
+        muse::vector<TimeSig*> timeSigAboveStaves;
 
-        std::vector<MeasureNumber*> measureNumbers;
-        std::vector<MMRestRange*> mmrRanges;
-        std::vector<EngravingItem*> markersAndJumps;
+        muse::vector<MeasureNumber*> measureNumbers;
+        muse::vector<MMRestRange*> mmrRanges;
+        muse::vector<EngravingItem*> markersAndJumps;
 
-        std::vector<Sticking*> stickings;
-        std::vector<EngravingItem*> fermatasAndTremoloBars;
-        std::vector<FiguredBass*> figuredBass;
-        std::vector<Dynamic*> dynamics;
-        std::vector<Expression*> expressions;
-        std::vector<HarpPedalDiagram*> harpDiagrams;
-        std::vector<FretDiagram*> fretDiagrams;
-        std::vector<StaffText*> staffText;
-        std::vector<InstrumentChange*> instrChanges;
-        std::vector<SystemText*> systemText;
-        std::vector<EngravingItem*> playTechCapoStringTunTripletFeel;
-        std::vector<RehearsalMark*> rehMarks;
-        std::vector<TempoText*> tempoText;
-        std::vector<Image*> images;
-        std::vector<Parenthesis*> parenthesis;
-        std::vector<Harmony*> harmonies;
-        std::vector<PlayCountText*> playCountText;
+        muse::vector<Sticking*> stickings;
+        muse::vector<EngravingItem*> fermatasAndTremoloBars;
+        muse::vector<FiguredBass*> figuredBass;
+        muse::vector<Dynamic*> dynamics;
+        muse::vector<Expression*> expressions;
+        muse::vector<HarpPedalDiagram*> harpDiagrams;
+        muse::vector<FretDiagram*> fretDiagrams;
+        muse::vector<StaffText*> staffText;
+        muse::vector<InstrumentChange*> instrChanges;
+        muse::vector<SystemText*> systemText;
+        muse::vector<EngravingItem*> playTechCapoStringTunTripletFeel;
+        muse::vector<RehearsalMark*> rehMarks;
+        muse::vector<TempoText*> tempoText;
+        muse::vector<Image*> images;
+        muse::vector<Parenthesis*> parenthesis;
+        muse::vector<Harmony*> harmonies;
+        muse::vector<PlayCountText*> playCountText;
 
-        std::vector<Spanner*> slurs;
-        std::vector<Spanner*> trills;
-        std::vector<Spanner*> hairpins;
-        std::vector<Spanner*> ottavas;
-        std::vector<Spanner*> pedal;
-        std::vector<Spanner*> voltas;
-        std::vector<Spanner*> tempoChangeLines;
-        std::vector<Spanner*> partialLyricsLines;
-        std::vector<Spanner*> allOtherSpanners;
+        muse::vector<Spanner*> slurs;
+        muse::vector<Spanner*> trills;
+        muse::vector<Spanner*> hairpins;
+        muse::vector<Spanner*> ottavas;
+        muse::vector<Spanner*> pedal;
+        muse::vector<Spanner*> voltas;
+        muse::vector<Spanner*> tempoChangeLines;
+        muse::vector<Spanner*> partialLyricsLines;
+        muse::vector<Spanner*> allOtherSpanners;
 
-        std::vector<GuitarBend*> guitarBends;
+        muse::vector<GuitarBend*> guitarBends;
 
         ElementsToLayout(System* s)
             : system(s) {}
@@ -168,16 +168,16 @@ private:
 
     static System* getNextSystem(LayoutContext& lc);
     static void createSkylines(const ElementsToLayout& elementsToLayout, LayoutContext& ctx);
-    static void processLines(System* system, LayoutContext& ctx, const std::vector<Spanner*>& lines, bool align = false);
+    static void processLines(System* system, LayoutContext& ctx, const muse::vector<Spanner*>& lines, bool align = false);
     static void layoutTies(Chord* ch, System* system, const Fraction& stick, LayoutContext& ctx);
-    static void doLayoutTies(System* system, const std::vector<Segment*>& sl, const Fraction& stick, const Fraction& etick,
+    static void doLayoutTies(System* system, const muse::vector<Segment*>& sl, const Fraction& stick, const Fraction& etick,
                              LayoutContext& ctx);
     static void doLayoutNoteSpannersLinear(System* system, LayoutContext& ctx);
     static void layoutNoteAnchoredSpanners(System* system, Chord* chord);
     static void updateCrossBeams(System* system, LayoutContext& ctx);
     static bool measureHasCrossStuffOrModifiedBeams(const Measure* measure);
     static void restoreOldSystemLayout(System* system, LayoutContext& ctx);
-    static void layoutTuplets(const std::vector<ChordRest*>& chordRests, LayoutContext& ctx);
+    static void layoutTuplets(const muse::vector<ChordRest*>& chordRests, LayoutContext& ctx);
 
     static void layoutTiesAndBends(const ElementsToLayout& elementsToLayout, LayoutContext& ctx);
 
@@ -195,7 +195,7 @@ private:
     static void updateTimeSigAboveStavesXPos(System* system, LayoutContext& ctx);
     static void clearBigTimeSigNotShown(System* system, LayoutContext& ctx);
 
-    static void layoutSticking(const std::vector<Sticking*> stickings, System* system, LayoutContext& ctx);
+    static void layoutSticking(const muse::vector<Sticking*> stickings, System* system, LayoutContext& ctx);
 
     static void layoutLyrics(const ElementsToLayout& elements, LayoutContext& ctx);
 
@@ -205,7 +205,7 @@ private:
 
     static void layoutParenthesisAndBigTimeSigs(const ElementsToLayout& elementsToLayout);
 
-    static void layoutHarmonies(const std::vector<Harmony*> harmonies, System* system, LayoutContext& ctx);
+    static void layoutHarmonies(const muse::vector<Harmony*> harmonies, System* system, LayoutContext& ctx);
     static void layoutFretDiagrams(const ElementsToLayout& elements, System* system, LayoutContext& ctx);
 
     static void alignRests(const ElementsToLayout& elementsToLayout, LayoutContext& ctx);

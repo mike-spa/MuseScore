@@ -38,7 +38,7 @@ muse::String HtmlParser::parse(const muse::String& in_html)
     }
     std::string body = html.substr(body_b, body_e - body_b);
 
-    std::vector<std::string> blocks;
+    muse::vector<std::string> blocks;
 
     //! NOTE Split blocks
     std::string::size_type p_b = 0;

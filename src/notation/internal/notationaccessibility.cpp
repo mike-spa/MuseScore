@@ -78,7 +78,7 @@ void NotationAccessibility::setMapToScreenFunc(const AccessibleMapToScreenFunc& 
 void NotationAccessibility::setEnabled(bool enabled)
 {
 #ifndef ENGRAVING_NO_ACCESSIBILITY
-    std::vector<AccessibleRoot*> roots {
+    muse::vector<AccessibleRoot*> roots {
         score()->rootItem()->accessible()->accessibleRoot(),
         score()->dummy()->rootItem()->accessible()->accessibleRoot()
     };

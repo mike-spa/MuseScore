@@ -51,7 +51,7 @@ class Volta;
 //   TrackList
 //---------------------------------------------------------
 
-class TrackList : public std::vector<EngravingItem*>
+class TrackList : public muse::vector<EngravingItem*>
 {
     OBJECT_ALLOCATOR(engraving, TrackList)
 
@@ -114,8 +114,8 @@ public:
     bool truncate(const Fraction&);
 
 protected:
-    std::vector<Spanner*> m_spanner;
-    std::vector<Annotation> m_annotations;
+    muse::vector<Spanner*> m_spanner;
+    muse::vector<Annotation> m_annotations;
 
 private:
     struct BarLinesBackup
@@ -124,7 +124,7 @@ private:
         bool formerMeasureStartOrEnd;
         BarLine* bl = nullptr;
     };
-    std::vector<BarLinesBackup> m_barLines;
+    muse::vector<BarLinesBackup> m_barLines;
 
     void backupBarLines(Segment* first, Segment* last);
     bool insertBarLine(Measure* m, const BarLinesBackup& barLine) const;
@@ -136,7 +136,7 @@ private:
         Fraction sPosition;
         LayoutBreakType lBreakType;
     };
-    std::vector<BreaksBackup> m_breaks;
+    muse::vector<BreaksBackup> m_breaks;
 
     void backupBreaks(Segment* first, Segment* last);
     void restoreBreaks(Score* score, const Fraction& tick) const;
@@ -146,7 +146,7 @@ private:
         Fraction sPosition;
         bool isStartRepeat;
     };
-    std::vector<StartEndRepeatBackup> m_startEndRepeats;
+    muse::vector<StartEndRepeatBackup> m_startEndRepeats;
 
     void backupRepeats(Segment* first, Segment* last);
     void restoreRepeats(Score* score, const Fraction& tick) const;
@@ -177,10 +177,10 @@ private:
 
     friend class TrackList;
 
-    std::vector<TrackList*> m_tracks;
-    std::vector<Tie*> m_startTies;
-    std::vector<SpacerBackup> m_spacers;
-    std::vector<JumpsMarkersBackup> m_jumpsMarkers;
+    muse::vector<TrackList*> m_tracks;
+    muse::vector<Tie*> m_startTies;
+    muse::vector<SpacerBackup> m_spacers;
+    muse::vector<JumpsMarkersBackup> m_jumpsMarkers;
     Segment* m_first = nullptr;
     Segment* m_last = nullptr;
 };

@@ -38,7 +38,7 @@ class Engraving_StaveSharingTests : public ::testing::Test
 {
 };
 
-void collectSharedAndOriginParts(MasterScore* score, SharedPart** sharedPart, std::vector<Part*>& originParts)
+void collectSharedAndOriginParts(MasterScore* score, SharedPart** sharedPart, muse::vector<Part*>& originParts)
 {
     *sharedPart = nullptr;
     originParts.clear();
@@ -52,7 +52,7 @@ void collectSharedAndOriginParts(MasterScore* score, SharedPart** sharedPart, st
     }
 }
 
-bool checkSharedPartExist(SharedPart* sharedPart, const std::vector<Part*>& originParts)
+bool checkSharedPartExist(SharedPart* sharedPart, const muse::vector<Part*>& originParts)
 {
     if (!(sharedPart && sharedPart->originParts() == originParts)) {
         return false;
@@ -67,7 +67,7 @@ bool checkSharedPartExist(SharedPart* sharedPart, const std::vector<Part*>& orig
     return true;
 }
 
-bool checkSharedPartNotExist(SharedPart* sharedPart, const std::vector<Part*>& originParts)
+bool checkSharedPartNotExist(SharedPart* sharedPart, const muse::vector<Part*>& originParts)
 {
     if (sharedPart) {
         return false;
@@ -92,7 +92,7 @@ TEST_F(Engraving_StaveSharingTests, testCreateSharedPart)
     score->endCmd();
 
     SharedPart* sharedPart = nullptr;
-    std::vector<Part*> originParts;
+    muse::vector<Part*> originParts;
     collectSharedAndOriginParts(score, &sharedPart, originParts);
 
     EXPECT_TRUE(checkSharedPartExist(sharedPart, originParts));
@@ -112,7 +112,7 @@ TEST_F(Engraving_StaveSharingTests, testCreateSharedPartUndoRedo)
     score->undoRedo(true, nullptr);
 
     SharedPart* sharedPart = nullptr;
-    std::vector<Part*> originParts;
+    muse::vector<Part*> originParts;
     collectSharedAndOriginParts(score, &sharedPart, originParts);
 
     EXPECT_TRUE(checkSharedPartNotExist(sharedPart, originParts));
@@ -136,7 +136,7 @@ TEST_F(Engraving_StaveSharingTests, testDeleteSharedStaves)
     score->endCmd();
 
     SharedPart* sharedPart = nullptr;
-    std::vector<Part*> originParts;
+    muse::vector<Part*> originParts;
     collectSharedAndOriginParts(score, &sharedPart, originParts);
 
     EXPECT_TRUE(checkSharedPartExist(sharedPart, originParts));
@@ -191,7 +191,7 @@ TEST_F(Engraving_StaveSharingTests, testSaveReloadStaveSharing)
     score->doLayout();
 
     SharedPart* sharedPart = nullptr;
-    std::vector<Part*> originParts;
+    muse::vector<Part*> originParts;
     collectSharedAndOriginParts(score, &sharedPart, originParts);
 
     EXPECT_TRUE(checkSharedPartExist(sharedPart, originParts));

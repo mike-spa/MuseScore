@@ -56,18 +56,18 @@ private:
     static void createPlayEvents(const Score* score, const CompatMidiRendererInternal::Context& context, Chord* chord,
                                  Chord* prevChord = nullptr, Chord* nextChord = nullptr);
     static void createGraceNotesPlayEvents(const Score* score, const Fraction& tick, Chord* chord, int& ontime, int& trailtime);
-    static std::vector<NoteEventList> renderChord(const CompatMidiRendererInternal::Context& context, Chord* chord, Chord* prevChord,
+    static muse::vector<NoteEventList> renderChord(const CompatMidiRendererInternal::Context& context, Chord* chord, Chord* prevChord,
                                                   int gateTime, int ontime, int trailtime);
-    static void renderArpeggio(Chord* chord, std::vector<NoteEventList>& ell, int ontime);
-    static void renderTremolo(Chord* chord, std::vector<NoteEventList>& ell, int& ontime, double tremoloPartOfChord = 1.0);
-    static void renderChordArticulation(const CompatMidiRendererInternal::Context& context, Chord* chord, std::vector<NoteEventList>& ell,
+    static void renderArpeggio(Chord* chord, muse::vector<NoteEventList>& ell, int ontime);
+    static void renderTremolo(Chord* chord, muse::vector<NoteEventList>& ell, int& ontime, double tremoloPartOfChord = 1.0);
+    static void renderChordArticulation(const CompatMidiRendererInternal::Context& context, Chord* chord, muse::vector<NoteEventList>& ell,
                                         int& gateTime, double graceOnBeatProportion, bool tremoloBefore = false);
     static void updateGateTime(const Instrument* instr, int& gateTime, const String& articulationName,
                                const CompatMidiRendererInternal::Context& context);
     static void renderGlissando(NoteEventList* events, Note* notestart, double graceOnBeatProportion, bool tremoloBefore = false);
     static bool renderNoteArticulation(NoteEventList* events, Note* note, bool chromatic, int requestedTicksPerNote,
-                                       const std::vector<int>& prefix, const std::vector<int>& body, bool repeatp, bool sustainp,
-                                       const std::vector<int>& suffix, int fastestFreq = 64, int slowestFreq = 8, // 64 Hz and 8 Hz
+                                       const muse::vector<int>& prefix, const muse::vector<int>& body, bool repeatp, bool sustainp,
+                                       const muse::vector<int>& suffix, int fastestFreq = 64, int slowestFreq = 8, // 64 Hz and 8 Hz
                                        double graceOnBeatProportion = 0, bool tremoloBefore = false);
     static bool renderNoteArticulation(NoteEventList* events, Note* note, bool chromatic, SymId articulationType,
                                        OrnamentStyle ornamentStyle);

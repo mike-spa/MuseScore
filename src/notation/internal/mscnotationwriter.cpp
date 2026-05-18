@@ -41,14 +41,14 @@ MscNotationWriter::MscNotationWriter(engraving::MscIoMode mode)
 {
 }
 
-std::vector<INotationWriter::UnitType> MscNotationWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> MscNotationWriter::supportedUnitTypes() const
 {
     return { UnitType::MULTI_PART };
 }
 
 bool MscNotationWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

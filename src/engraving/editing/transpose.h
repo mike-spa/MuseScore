@@ -56,6 +56,6 @@ private:
     static void transposeFretDiagram(FretDiagram* diagram, Score* score, Interval interval, TransposeMode mode, int transposeInterval,
                                      bool trKeys, bool useDoubleSharpsFlats);
 
-    static String findBestEnharmonicFit(const std::vector<String>& notes, Key key, const MStyle& style);
+    static String findBestEnharmonicFit(const muse::vector<String>& notes, Key key, const MStyle& style);
 };
 }

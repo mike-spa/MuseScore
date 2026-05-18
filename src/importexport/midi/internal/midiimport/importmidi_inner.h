@@ -74,7 +74,7 @@ struct DivisionInfo
     ReducedFraction onTime;          // division start tick (tick is counted from the beginning of bar)
     ReducedFraction len;             // length of this whole division
     bool isTuplet = false;
-    std::vector<DivLengthInfo> divLengths;      // lengths of 'len' subdivisions
+    muse::vector<DivLengthInfo> divLengths;      // lengths of 'len' subdivisions
 };
 
 enum class DurationType : char;
@@ -145,7 +145,7 @@ struct TupletInfo
 bool haveIntersection(const std::pair<ReducedFraction, ReducedFraction>& interval1, const std::pair<ReducedFraction,
                                                                                                     ReducedFraction>& interval2,
                       bool strictComparison = true);
-bool haveIntersection(const std::pair<ReducedFraction, ReducedFraction>& interval, const std::vector<std::pair<ReducedFraction,
+bool haveIntersection(const std::pair<ReducedFraction, ReducedFraction>& interval, const muse::vector<std::pair<ReducedFraction,
                                                                                                                ReducedFraction> >& intervals, bool strictComparison = true);
 } // namespace MidiTuplet
 

@@ -30,14 +30,14 @@ using namespace mu::project;
 using namespace muse;
 
 namespace mu::engraving {
-std::vector<INotationWriter::UnitType> BrailleWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> BrailleWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool BrailleWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

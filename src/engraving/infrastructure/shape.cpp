@@ -34,7 +34,7 @@ using namespace muse;
 using namespace muse::draw;
 using namespace mu::engraving;
 
-Shape::Shape(const std::vector<RectF>& rects, const EngravingItem* p)
+Shape::Shape(const muse::vector<RectF>& rects, const EngravingItem* p)
 {
     m_type = Type::Composite;
     m_elements.reserve(rects.size());
@@ -571,9 +571,9 @@ void Shape::remove(const Shape& s)
     invalidateBBox();
 }
 
-std::vector<RectF> Shape::toRects() const
+muse::vector<RectF> Shape::toRects() const
 {
-    std::vector<RectF> rects;
+    muse::vector<RectF> rects;
     rects.reserve(m_elements.size());
 
     for (const RectF& shapeEl : m_elements) {

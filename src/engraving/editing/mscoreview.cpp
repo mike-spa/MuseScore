@@ -42,7 +42,7 @@ static bool elementLower(const EngravingItem* e1, const EngravingItem* e2)
 
 EngravingItem* MuseScoreView::elementAt(const PointF& p) const
 {
-    std::vector<EngravingItem*> el = elementsAt(p);
+    muse::vector<EngravingItem*> el = elementsAt(p);
     EngravingItem* e = el.front();
     if (e && e->isPage()) {
         e = *std::next(el.begin());
@@ -68,9 +68,9 @@ Page* MuseScoreView::point2page(const PointF& p) const
 //    p is in canvas coordinates
 //---------------------------------------------------------
 
-const std::vector<EngravingItem*> MuseScoreView::elementsAt(const PointF& p) const
+const muse::vector<EngravingItem*> MuseScoreView::elementsAt(const PointF& p) const
 {
-    std::vector<EngravingItem*> el;
+    muse::vector<EngravingItem*> el;
 
     Page* page = point2page(p);
     if (page) {
@@ -83,16 +83,16 @@ const std::vector<EngravingItem*> MuseScoreView::elementsAt(const PointF& p) con
 
 EngravingItem* MuseScoreView::elementNear(const PointF& pos) const
 {
-    std::vector<EngravingItem*> near = elementsNear(pos);
+    muse::vector<EngravingItem*> near = elementsNear(pos);
     if (near.empty()) {
         return nullptr;
     }
     return near.front();
 }
 
-const std::vector<EngravingItem*> MuseScoreView::elementsNear(const PointF& pos) const
+const muse::vector<EngravingItem*> MuseScoreView::elementsNear(const PointF& pos) const
 {
-    std::vector<EngravingItem*> ll;
+    muse::vector<EngravingItem*> ll;
     Page* page = point2page(pos);
     if (!page) {
         return ll;
@@ -102,7 +102,7 @@ const std::vector<EngravingItem*> MuseScoreView::elementsNear(const PointF& pos)
     double w = selectionProximity();
     RectF r(p.x() - w, p.y() - w, 3.0 * w, 3.0 * w);
 
-    std::vector<EngravingItem*> el = page->items(r);
+    muse::vector<EngravingItem*> el = page->items(r);
     for (EngravingItem* e : el) {
         e->itemDiscovered = 0;
         if (!e->selectable() || e->isPage()) {

@@ -44,9 +44,9 @@ using namespace muse::io;
 using namespace mu::engraving;
 
 namespace mu::engraving {
-static std::vector<FiguredBassFont> g_FBFonts;
+static muse::vector<FiguredBassFont> g_FBFonts;
 
-const std::vector<FiguredBassFont>& FiguredBass::FBFonts()
+const muse::vector<FiguredBassFont>& FiguredBass::FBFonts()
 {
     return g_FBFonts;
 }
@@ -1168,9 +1168,9 @@ bool FiguredBass::readConfigFile(const String& fileName)
 //    the index of a name in the list can be used to retrieve the font data with fontData()
 //---------------------------------------------------------
 
-std::vector<String> FiguredBass::fontNames()
+muse::vector<String> FiguredBass::fontNames()
 {
-    std::vector<String> names;
+    muse::vector<String> names;
     for (const FiguredBassFont& f : g_FBFonts) {
         names.push_back(f.displayName);
     }

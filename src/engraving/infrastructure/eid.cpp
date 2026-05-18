@@ -158,7 +158,7 @@ EID EID::fromStdString(const std::string& s)
 {
     std::stringstream ss(s);
     std::string str;
-    std::vector<std::string> strings;
+    muse::vector<std::string> strings;
 
     while (std::getline(ss, str, SEPARATOR)) {
         strings.push_back(str);

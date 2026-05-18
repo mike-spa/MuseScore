@@ -235,10 +235,10 @@ void MasterNotationParts::replaceDrumset(const InstrumentKey& instrumentKey, con
     endGlobalEdit();
 }
 
-void MasterNotationParts::onPartsRemoved(const std::vector<Part*>& parts)
+void MasterNotationParts::onPartsRemoved(const muse::vector<Part*>& parts)
 {
     mu::engraving::MasterScore* master = score()->masterScore();
-    std::vector<mu::engraving::Excerpt*> excerpts = master->excerpts();
+    muse::vector<mu::engraving::Excerpt*> excerpts = master->excerpts();
 
     for (mu::engraving::Excerpt* excerpt : excerpts) {
         const ID& initialPartId = excerpt->initialPartId();
@@ -321,9 +321,9 @@ void MasterNotationParts::moveSystemObjectLayerAboveBottomStaff()
     endGlobalEdit();
 }
 
-std::vector<INotationPartsPtr> MasterNotationParts::excerptsParts() const
+muse::vector<INotationPartsPtr> MasterNotationParts::excerptsParts() const
 {
-    std::vector<INotationPartsPtr> result;
+    muse::vector<INotationPartsPtr> result;
 
     for (const IExcerptNotationPtr& excerpt : m_excerpts) {
         result.push_back(excerpt->notation()->parts());
@@ -334,7 +334,7 @@ std::vector<INotationPartsPtr> MasterNotationParts::excerptsParts() const
 
 mu::engraving::Excerpt* MasterNotationParts::findExcerpt(const ID& initialPartId) const
 {
-    const std::vector<mu::engraving::Excerpt*>& excerpts = score()->masterScore()->excerpts();
+    const muse::vector<mu::engraving::Excerpt*>& excerpts = score()->masterScore()->excerpts();
     for (mu::engraving::Excerpt* excerpt : excerpts) {
         if (excerpt->initialPartId() == initialPartId) {
             return excerpt;

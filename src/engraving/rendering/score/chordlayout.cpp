@@ -127,7 +127,7 @@ void ChordLayout::layoutPitched(Chord* item, LayoutContext& ctx)
     // Used to remove excess space in front of arpeggios.
     // See GitHub issue #8970 for more details.
     // https://github.com/musescore/MuseScore/issues/8970
-    std::vector<Accidental*> chordAccidentals;
+    muse::vector<Accidental*> chordAccidentals;
 
     for (Note* note : item->notes()) {
         TLayout::layoutNote(note, note->mutldata());
@@ -310,7 +310,7 @@ void ChordLayout::layoutPitched(Chord* item, LayoutContext& ctx)
     }
 
     // align note-based fingerings
-    std::vector<Fingering*> alignNote;
+    muse::vector<Fingering*> alignNote;
     double xNote = DBL_MAX;
     for (Note* note : item->notes()) {
         bool leftFound = false;
@@ -630,7 +630,7 @@ void ChordLayout::layoutTablature(Chord* item, LayoutContext& ctx)
 
     double graceMag = ctx.conf().styleD(Sid::graceNoteMag);
 
-    std::vector<Chord*> graceNotesBefore = item->Chord::graceNotesBefore();
+    muse::vector<Chord*> graceNotesBefore = item->Chord::graceNotesBefore();
     size_t nb = graceNotesBefore.size();
     if (nb) {
         double xl = -(item->spaceLw() + minNoteDistance);
@@ -644,7 +644,7 @@ void ChordLayout::layoutTablature(Chord* item, LayoutContext& ctx)
             item->setSpaceLw(item->spaceLw() - xl);
         }
     }
-    std::vector<Chord*> gna = item->graceNotesAfter();
+    muse::vector<Chord*> gna = item->graceNotesAfter();
     size_t na = gna.size();
     if (na) {
         // get factor for start distance after main note. Values found by testing.
@@ -1325,7 +1325,7 @@ void ChordLayout::updateLedgerLines(Chord* item, LayoutContext& ctx)
         bool visible;
         bool accidental;
     };
-    std::vector<LedgerLineData> ledgerLineData;
+    muse::vector<LedgerLineData> ledgerLineData;
 
     // scan chord notes, collecting visibility and x and y extrema
     // NOTE: notes are sorted from bottom to top (line no. decreasing)
@@ -1336,7 +1336,7 @@ void ChordLayout::updateLedgerLines(Chord* item, LayoutContext& ctx)
     for (const bool topToBottom : { false, true }) {
         const int from = topToBottom ? n - 1 : 0;
         const int delta = topToBottom ? -1 : 1;
-        std::vector<LedgerLineData> vecLines;
+        muse::vector<LedgerLineData> vecLines;
         double hw = 0.0;
         double minX = std::numeric_limits<double>::max();
         double maxX = std::numeric_limits<double>::min();
@@ -1600,7 +1600,7 @@ void ChordLayout::computeUp(const Chord* item, Chord::LayoutData* ldata, const L
         return;
     }
 
-    std::vector<int> distances = item->noteDistances();
+    muse::vector<int> distances = item->noteDistances();
     int direction = ChordLayout::computeAutoStemDirection(distances);
     ldata->up = direction > 0;
 }
@@ -1623,7 +1623,7 @@ void ChordLayout::computeUp(ChordRest* item, const LayoutContext& ctx)
 }
 
 // return 1 means up, 0 means in the middle, -1 means down
-int ChordLayout::computeAutoStemDirection(const std::vector<int>& noteDistances)
+int ChordLayout::computeAutoStemDirection(const muse::vector<int>& noteDistances)
 {
     int left = 0;
     int right = static_cast<int>(noteDistances.size()) - 1;
@@ -1800,7 +1800,7 @@ void ChordLayout::applyChordOffsets(Segment* segment, staff_idx_t staffIdx, trac
     }
 
     // layout chords
-    std::vector<Note*> notes;
+    muse::vector<Note*> notes;
     if (posInfo.upVoices) {
         notes.insert(notes.end(), posInfo.upStemNotes.begin(), posInfo.upStemNotes.end());
     }
@@ -1899,7 +1899,7 @@ void ChordLayout::calculateChordOffsets(Segment* segment, staff_idx_t staffIdx, 
     Note* topDownNote  = posInfo.downStemNotes.back();
     int separation = topDownNote->stringOrLine() - bottomUpNote->stringOrLine();
 
-    std::vector<Note*> overlapNotes;
+    muse::vector<Note*> overlapNotes;
     overlapNotes.reserve(8);
 
     if (separation == 1) {
@@ -2313,7 +2313,7 @@ void ChordLayout::layoutChords1(LayoutContext& ctx, Segment* segment, staff_idx_
 //    - return maximum non-mirrored notehead width
 //---------------------------------------------------------
 
-double ChordLayout::layoutChords2(std::vector<Note*>& notes, bool up, LayoutContext& ctx)
+double ChordLayout::layoutChords2(muse::vector<Note*>& notes, bool up, LayoutContext& ctx)
 {
     int startIdx, endIdx, incIdx;
     double maxWidth = 0.0;
@@ -2465,7 +2465,7 @@ double ChordLayout::centerX(const Chord* chord)
 //   placeDots
 //---------------------------------------------------------
 
-void ChordLayout::placeDots(const std::vector<Chord*>& chords, const std::vector<Note*>& notes, LayoutContext& ctx)
+void ChordLayout::placeDots(const muse::vector<Chord*>& chords, const muse::vector<Note*>& notes, LayoutContext& ctx)
 {
     Chord* chord = nullptr;
     for (Chord* c : chords) {
@@ -2481,9 +2481,9 @@ void ChordLayout::placeDots(const std::vector<Chord*>& chords, const std::vector
     if (!chord || (chord->staff()->isTabStaff(chord->tick()) && !chord->staff()->staffType(chord->tick())->stemThrough())) {
         return;
     }
-    std::vector<Note*> topDownNotes;
-    std::vector<Note*> bottomUpNotes;
-    std::vector<int> anchoredDots;
+    muse::vector<Note*> topDownNotes;
+    muse::vector<Note*> bottomUpNotes;
+    muse::vector<int> anchoredDots;
     // construct combined chords using the notes from overlapping chords
     getNoteListForDots(chord, topDownNotes, bottomUpNotes, anchoredDots);
 
@@ -2615,7 +2615,7 @@ void ChordLayout::setDotRelativeLine(Note* note, int dotMove, LayoutContext& ctx
     }
 }
 
-void ChordLayout::setDotX(const std::vector<Chord*>& chords, const std::array<double, 3 * VOICES>& dotPos, const Staff* staff,
+void ChordLayout::setDotX(const muse::vector<Chord*>& chords, const std::array<double, 3 * VOICES>& dotPos, const Staff* staff,
                           const double upDotPosX, const double downDotPosX)
 {
     // Look for conflicts in up-stem and down-stemmed chords. If conflicts, all dots are aligned
@@ -2683,8 +2683,8 @@ void ChordLayout::setDotX(const std::vector<Chord*>& chords, const std::array<do
 //    - calculate positions of dots
 //---------------------------------------------------------
 
-void ChordLayout::layoutChords3(const std::vector<Chord*>& chords,
-                                const std::vector<Note*>& notes, const Staff* staff, LayoutContext& ctx)
+void ChordLayout::layoutChords3(const muse::vector<Chord*>& chords,
+                                const muse::vector<Note*>& notes, const Staff* staff, LayoutContext& ctx)
 {
     Fraction tick      =  notes.front()->chord()->segment()->tick();
     const MStyle& style = ctx.conf().style();
@@ -2777,7 +2777,7 @@ void ChordLayout::layoutChords3(const std::vector<Chord*>& chords,
 
         double minDotPosX = 0.0;
 
-        std::vector<Note*> chordNotes = chord->notes();
+        muse::vector<Note*> chordNotes = chord->notes();
         std::sort(chordNotes.begin(), chordNotes.end(),
                   [](Note* n1, const Note* n2) ->bool { return n1->line() < n2->line(); });
         for (Note* note : chordNotes) {
@@ -2832,7 +2832,7 @@ void ChordLayout::layoutChords3(const std::vector<Chord*>& chords,
     setDotX(chords, dotPos, staff, upDotPosX, downDotPosX);
 }
 
-void ChordLayout::layoutLedgerLines(const std::vector<Chord*>& chords, LayoutContext& ctx)
+void ChordLayout::layoutLedgerLines(const muse::vector<Chord*>& chords, LayoutContext& ctx)
 {
     for (Chord* item : chords) {
         updateLedgerLines(item, ctx);
@@ -2848,8 +2848,8 @@ void ChordLayout::layoutLedgerLines(const std::vector<Chord*>& chords, LayoutCon
 //      one for chords from the bottom up, and one for spaces (where the dot will be in that space)
 //---------------------------------------------------------
 
-void ChordLayout::getNoteListForDots(Chord* c, std::vector<Note*>& topDownNotes, std::vector<Note*>& bottomUpNotes,
-                                     std::vector<int>& anchoredDots)
+void ChordLayout::getNoteListForDots(Chord* c, muse::vector<Note*>& topDownNotes, muse::vector<Note*>& bottomUpNotes,
+                                     muse::vector<int>& anchoredDots)
 {
     Measure* measure = c->measure();
     bool hasVoices = measure->hasVoices(c->vStaffIdx(), c->tick(), c->ticks(), true);
@@ -3080,7 +3080,7 @@ void ChordLayout::updateLineAttachPoints(Chord* chord, bool isFirstInMeasure, La
 void ChordLayout::layoutChordBaseFingering(Chord* chord, System* system, LayoutContext&)
 {
     std::set<staff_idx_t> shapesToRecreate;
-    std::vector<Note*> notes;
+    muse::vector<Note*> notes;
     Segment* segment = chord->segment();
     for (auto gc : chord->graceNotes()) {
         for (auto n : gc->notes()) {
@@ -3090,7 +3090,7 @@ void ChordLayout::layoutChordBaseFingering(Chord* chord, System* system, LayoutC
     for (auto n : chord->notes()) {
         notes.push_back(n);
     }
-    std::vector<Fingering*> fingerings;
+    muse::vector<Fingering*> fingerings;
     for (Note* note : notes) {
         for (EngravingItem* el : note->el()) {
             if (el->isFingering()) {
@@ -3138,7 +3138,7 @@ void ChordLayout::crossMeasureSetup(Chord* chord, bool on, LayoutContext& ctx)
             // if tied note belongs to another measure and to a single-note chord
             if (tiedChord->measure() != chord->measure() && tiedChord->notes().size() == 1) {
                 // get total duration
-                std::vector<TDuration> durList = toDurationList(
+                muse::vector<TDuration> durList = toDurationList(
                     chord->actualDurationType().fraction()
                     + tiedChord->actualDurationType().fraction(), true);
                 // if duration can be expressed as a single duration
@@ -3273,8 +3273,8 @@ void ChordLayout::layoutNote2(Note* item, LayoutContext& ctx)
 
 void ChordLayout::createParenGroups(Chord* chord)
 {
-    std::vector<Note*> addParens;
-    std::vector<Note*> removeParens;
+    muse::vector<Note*> addParens;
+    muse::vector<Note*> removeParens;
 
     for (Note* note : chord->notes()) {
         const NoteParenthesisInfo* noteParenInfo = note->parenthesisInfo();

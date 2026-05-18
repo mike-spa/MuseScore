@@ -86,9 +86,9 @@ static const std::unordered_map<CommandType, CommandType> COMMAND_TYPE_INVERSION
     { CommandType::DisconnectSharedPart, CommandType::ConnectSharedPart },
 };
 
-std::vector<EngravingObject*> compoundObjects(EngravingObject* object)
+muse::vector<EngravingObject*> compoundObjects(EngravingObject* object)
 {
-    std::vector<EngravingObject*> objects;
+    muse::vector<EngravingObject*> objects;
 
     if (object->isChord()) {
         const Chord* chord = toChord(object);
@@ -204,7 +204,7 @@ bool UndoCommand::hasFilteredChildren(UndoCommand::Filter f, const EngravingItem
 //   hasUnfilteredChildren
 //---------------------------------------------------------
 
-bool UndoCommand::hasUnfilteredChildren(const std::vector<UndoCommand::Filter>& filters, const EngravingItem* target) const
+bool UndoCommand::hasUnfilteredChildren(const muse::vector<UndoCommand::Filter>& filters, const EngravingItem* target) const
 {
     for (UndoCommand* cmd : m_childCommands) {
         bool filtered = false;
@@ -227,7 +227,7 @@ bool UndoCommand::hasUnfilteredChildren(const std::vector<UndoCommand::Filter>& 
 
 void UndoCommand::filterChildren(UndoCommand::Filter f, EngravingItem* target)
 {
-    std::vector<UndoCommand*> acceptedList;
+    muse::vector<UndoCommand*> acceptedList;
     for (UndoCommand* cmd : m_childCommands) {
         if (cmd->isFiltered(f, target)) {
             delete cmd;

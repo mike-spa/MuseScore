@@ -136,7 +136,7 @@ constexpr int MAX_LYRICS       = 16;
 //---------------------------------------------------------
 
 static void addTie(const Notation& notation, Note* note, const track_idx_t track, MusicXmlTieMap& tie,
-                   std::vector<Note*>& unstartedTieNotes, std::vector<Note*>& unendedTieNotes, MusicXmlLogger* logger,
+                   muse::vector<Note*>& unstartedTieNotes, muse::vector<Note*>& unendedTieNotes, MusicXmlLogger* logger,
                    const XmlStreamReader* const xmlreader);
 
 //---------------------------------------------------------
@@ -201,7 +201,7 @@ static Fraction lastChordTicks(const Segment* s, const Fraction& tick, const tra
     return Fraction(0, 1);
 }
 
-static bool spannerExists(const std::vector<MusicXmlSpannerDesc>& spanners, int number, engraving::ElementType elementType)
+static bool spannerExists(const muse::vector<MusicXmlSpannerDesc>& spanners, int number, engraving::ElementType elementType)
 {
     for (const MusicXmlSpannerDesc& desc : spanners) {
         if (desc.nr == number && desc.tp == elementType) {
@@ -223,7 +223,7 @@ static bool spannerExists(const std::vector<MusicXmlSpannerDesc>& spanners, int 
 void MusicXmlLyricsExtend::setExtend(const int verse, const track_idx_t track, const Fraction& tick,
                                      const Lyrics* prevAddedLyrics = nullptr)
 {
-    std::vector<Lyrics*> list;
+    muse::vector<Lyrics*> list;
     for (Lyrics* l : m_lyrics) {
         const EngravingItem* el = l->parentItem();
         if (el->isChordRest()) {
@@ -969,7 +969,7 @@ static void addLyrics(MusicXmlLogger* logger, const XmlStreamReader* const xmlre
 }
 
 static void addGraceNoteLyrics(const std::map<int, Lyrics*>& numberedLyrics, std::set<Lyrics*> extendedLyrics,
-                               std::vector<GraceNoteLyrics>& gnLyrics)
+                               muse::vector<GraceNoteLyrics>& gnLyrics)
 {
     for (const auto& [lyricNo, lyric] : numberedLyrics) {
         if (lyric) {
@@ -980,7 +980,7 @@ static void addGraceNoteLyrics(const std::map<int, Lyrics*>& numberedLyrics, std
     }
 }
 
-static void addInferredStickings(ChordRest* cr, const std::vector<Sticking*>& numberedStickings)
+static void addInferredStickings(ChordRest* cr, const muse::vector<Sticking*>& numberedStickings)
 {
     for (Sticking* sticking : numberedStickings) {
         sticking->setParent(cr->segment());
@@ -2128,7 +2128,7 @@ void MusicXmlParserPass2::scorePartwise()
             continue;
         }
         const String sysElText = sysEl->isTextBase() ? toTextBase(sysEl)->plainText() : toTextLineBase(sysEl)->beginText();
-        std::vector<EngravingItem*> annotations = seg->annotations();
+        muse::vector<EngravingItem*> annotations = seg->annotations();
         for (EngravingItem* existingEl : annotations) {
             const bool bothText = (existingEl->isTextBase() || existingEl->isTextLineBase()) && elIsText;
             if (existingEl && existingEl != sysEl && bothText) {
@@ -2639,7 +2639,7 @@ static void addGraceChordsAfter(Chord* c, GraceChordList& gcl, size_t& gac)
     while (gac > 0) {
         if (gcl.size() > 0) {
             Chord* graceChord = muse::takeFirst(gcl);
-            std::vector<EngravingItem*> el = graceChord->el(); // copy, because modified during loop
+            muse::vector<EngravingItem*> el = graceChord->el(); // copy, because modified during loop
             for (EngravingItem* e : el) {
                 if (e->isFermata()) {
                     e->setParent(c->segment());
@@ -2669,7 +2669,7 @@ static void addGraceChordsBefore(Chord* c, GraceChordList& gcl)
 {
     for (int i = static_cast<int>(gcl.size()) - 1; i >= 0; i--) {
         Chord* gc = gcl.at(i);
-        std::vector<EngravingItem*> el = gc->el(); // copy, because modified during loop
+        muse::vector<EngravingItem*> el = gc->el(); // copy, because modified during loop
         for (EngravingItem* e : el) {
             if (e->isFermata()) {
                 e->setParent(c->segment());
@@ -3179,7 +3179,7 @@ void MusicXmlParserPass2::staffDetails(const String& partId, Measure* measure)
             staffLines = m_e.readInt();
             // for a TAB staff also resize the string table and init with zeroes
             if (0 < staffLines) {
-                stringData.stringList() = std::vector<instrString>(staffLines);
+                stringData.stringList() = muse::vector<instrString>(staffLines);
             } else {
                 m_logger->logError(String(u"illegal staff-lines %1").arg(staffLines), &m_e);
             }
@@ -3393,7 +3393,7 @@ static GradualTempoChangeType getTempoChangeTypeFromString(String txt)
     }
 }
 
-static void terminateInferredLine(const std::vector<TextLineBase*> lines, const Fraction& tick, const track_idx_t track)
+static void terminateInferredLine(const muse::vector<TextLineBase*> lines, const Fraction& tick, const track_idx_t track)
 {
     // Check staff and end any lines which are waiting
     if (configuration()->inferTextType()) {
@@ -3439,8 +3439,8 @@ void MusicXmlParserDirection::direction(const String& partId,
     bool delayOttava = m_pass1.exporterSoftware() == MusicXmlExporterSoftware::SIBELIUS;
     m_systemDirection = m_e.attribute("system") == "only-top";
     //LOGD("direction track %d", track);
-    std::vector<MusicXmlSpannerDesc> starts;
-    std::vector<MusicXmlSpannerDesc> stops;
+    muse::vector<MusicXmlSpannerDesc> starts;
+    muse::vector<MusicXmlSpannerDesc> stops;
     bool isDynamicRange = false;
     bool tempoTextAdded = false;
 
@@ -3693,7 +3693,7 @@ void MusicXmlParserDirection::direction(const String& partId,
 
     if (tempoTextAdded) {
         const InferredTempoLineStack& lines = m_pass2.getInferredTempoLine();
-        terminateInferredLine(std::vector<TextLineBase*>(lines.begin(), lines.end()), tick + m_offset, m_track);
+        terminateInferredLine(muse::vector<TextLineBase*>(lines.begin(), lines.end()), tick + m_offset, m_track);
     }
     addInferredTempoLine(tick + m_offset);
 
@@ -3745,7 +3745,7 @@ void MusicXmlParserDirection::direction(const String& partId,
         }
 
         const InferredHairpinsStack& hairpins = m_pass2.getInferredHairpins();
-        terminateInferredLine(std::vector<TextLineBase*>(hairpins.begin(), hairpins.end()), tick + m_offset, m_track);
+        terminateInferredLine(muse::vector<TextLineBase*>(hairpins.begin(), hairpins.end()), tick + m_offset, m_track);
 
         // Add element to score later, after collecting all the others and sorting by default-y
         // This allows default-y to be at least respected by the order of elements
@@ -3977,7 +3977,7 @@ Text* MusicXmlParserDirection::addTextToHeader(const TextStyleType textStyleType
 //    the contents of the eligible metaTags
 //---------------------------------------------------------
 
-void MusicXmlParserDirection::hideRedundantHeaderText(const Text* inferredText, const std::vector<String> metaTags)
+void MusicXmlParserDirection::hideRedundantHeaderText(const Text* inferredText, const muse::vector<String> metaTags)
 {
     if (!inferredText->parent()->isVBox()) {
         return;
@@ -4006,8 +4006,8 @@ void MusicXmlParserDirection::hideRedundantHeaderText(const Text* inferredText, 
  Parse the /score-partwise/part/measure/direction/direction-type node.
  */
 
-void MusicXmlParserDirection::directionType(std::vector<MusicXmlSpannerDesc>& starts,
-                                            std::vector<MusicXmlSpannerDesc>& stops)
+void MusicXmlParserDirection::directionType(muse::vector<MusicXmlSpannerDesc>& starts,
+                                            muse::vector<MusicXmlSpannerDesc>& stops)
 {
     while (m_e.readNextStartElement()) {
         m_defaultY = m_e.asciiAttribute("default-y").toDouble(&m_hasDefaultY) * -0.1;
@@ -4229,7 +4229,7 @@ void MusicXmlParserDirection::dynamics()
 
 void MusicXmlParserDirection::harpPedal()
 {
-    const std::vector <String> pedalSteps = { u"D", u"C", u"B", u"E", u"F", u"G", u"A" };
+    const muse::vector <String> pedalSteps = { u"D", u"C", u"B", u"E", u"F", u"G", u"A" };
     const Color color = Color::fromString(m_e.attribute("color"));
 
     HarpPedalDiagram* hpd = Factory::createHarpPedalDiagram(m_score->dummy()->segment());
@@ -4443,7 +4443,7 @@ void MusicXmlInferredFingering::roundTick(Measure* measure)
 bool MusicXmlInferredFingering::findAndAddToNotes(Measure* measure)
 {
     roundTick(measure);
-    std::vector<Note*> collectedNotes;
+    muse::vector<Note*> collectedNotes;
     for (track_idx_t track = m_track; track < m_track + 4; ++track) {
         Chord* candidateChord = measure->findChord(tick(), track);
         if (candidateChord) {
@@ -4471,7 +4471,7 @@ bool MusicXmlInferredFingering::findAndAddToNotes(Measure* measure)
 /**
  Add the n fingerings to the first n collected notes
  */
-void MusicXmlInferredFingering::addToNotes(std::vector<Note*>& notes) const
+void MusicXmlInferredFingering::addToNotes(muse::vector<Note*>& notes) const
 {
     assert(notes.size() >= m_fingerings.size());
     for (size_t i = 0; i < m_fingerings.size(); ++i) {
@@ -5078,8 +5078,8 @@ void MusicXmlParserDirection::handleDrumInstrument(bool isPerc, Fraction tick) c
  */
 
 void MusicXmlParserDirection::bracket(const String& type, const int number,
-                                      std::vector<MusicXmlSpannerDesc>& starts,
-                                      std::vector<MusicXmlSpannerDesc>& stops)
+                                      muse::vector<MusicXmlSpannerDesc>& starts,
+                                      muse::vector<MusicXmlSpannerDesc>& stops)
 {
     const AsciiStringView lineEnd = m_e.asciiAttribute("line-end");
     const AsciiStringView lineType = m_e.asciiAttribute("line-type");
@@ -5206,8 +5206,8 @@ void MusicXmlParserDirection::bracket(const String& type, const int number,
  */
 
 void MusicXmlParserDirection::dashes(const String& type, const int number,
-                                     std::vector<MusicXmlSpannerDesc>& starts,
-                                     std::vector<MusicXmlSpannerDesc>& stops)
+                                     muse::vector<MusicXmlSpannerDesc>& starts,
+                                     muse::vector<MusicXmlSpannerDesc>& stops)
 {
     const MusicXmlExtendedSpannerDesc& spdesc = m_pass2.getSpanner({ ElementType::HAIRPIN, number });
     if (type == u"start") {
@@ -5260,8 +5260,8 @@ void MusicXmlParserDirection::dashes(const String& type, const int number,
  */
 
 void MusicXmlParserDirection::octaveShift(const String& type, const int number,
-                                          std::vector<MusicXmlSpannerDesc>& starts,
-                                          std::vector<MusicXmlSpannerDesc>& stops)
+                                          muse::vector<MusicXmlSpannerDesc>& starts,
+                                          muse::vector<MusicXmlSpannerDesc>& stops)
 {
     const MusicXmlExtendedSpannerDesc& spdesc = m_pass2.getSpanner({ ElementType::OTTAVA, number });
     if (type == u"up" || type == u"down") {
@@ -5317,8 +5317,8 @@ void MusicXmlParserDirection::octaveShift(const String& type, const int number,
  */
 
 void MusicXmlParserDirection::pedal(const String& type, const int /* number */,
-                                    std::vector<MusicXmlSpannerDesc>& starts,
-                                    std::vector<MusicXmlSpannerDesc>& stops)
+                                    muse::vector<MusicXmlSpannerDesc>& starts,
+                                    muse::vector<MusicXmlSpannerDesc>& stops)
 {
     const int number { 0 };
     AsciiStringView line = m_e.asciiAttribute("line");
@@ -5447,8 +5447,8 @@ void MusicXmlParserDirection::pedal(const String& type, const int /* number */,
  */
 
 void MusicXmlParserDirection::wedge(const String& type, const int number,
-                                    std::vector<MusicXmlSpannerDesc>& starts,
-                                    std::vector<MusicXmlSpannerDesc>& stops)
+                                    muse::vector<MusicXmlSpannerDesc>& starts,
+                                    muse::vector<MusicXmlSpannerDesc>& stops)
 {
     AsciiStringView niente = m_e.asciiAttribute("niente");
     const MusicXmlExtendedSpannerDesc& spdesc = m_pass2.getSpanner({ ElementType::HAIRPIN, number });
@@ -5785,7 +5785,7 @@ void MusicXmlParserPass2::barline(const String& partId, Measure* measure, const 
 
             // Terminate tempo lines
             const InferredTempoLineStack& lines = getInferredTempoLine();
-            terminateInferredLine(std::vector<TextLineBase*>(lines.begin(), lines.end()), locTick, track);
+            terminateInferredLine(muse::vector<TextLineBase*>(lines.begin(), lines.end()), locTick, track);
         } else if (m_e.name() == "repeat") {
             repeat = m_e.attribute("direction");
             count = m_e.attribute("times");
@@ -5859,7 +5859,7 @@ void MusicXmlParserPass2::doEnding(const String& partId, Measure* measure, const
             m_logger->logError(u"empty ending type", &m_e);
         } else {
             StringList sl = number.split(u',', SkipEmptyParts);
-            std::vector<int> iEndingNumbers;
+            muse::vector<int> iEndingNumbers;
             bool unsupported = false;
             for (const String& s : sl) {
                 int iEndingNumber = s.toInt();
@@ -7028,7 +7028,7 @@ Note* MusicXmlParserPass2::note(const String& partId,
                 const bool isGerman = noteheadText == u"H" || (noteheadText == u"B" && mnp.alter());
                 headScheme = isGerman ? NoteHeadScheme::HEAD_PITCHNAME_GERMAN : NoteHeadScheme::HEAD_PITCHNAME;
             } else {
-                const std::vector<String> names = { u"Do", u"Re", u"Mi", u"Fa", u"Sol", u"La", u"Si" };
+                const muse::vector<String> names = { u"Do", u"Re", u"Mi", u"Fa", u"Sol", u"La", u"Si" };
                 const bool isFixed = names.at(mnp.step()) == noteheadText;
                 headScheme = isFixed ? NoteHeadScheme::HEAD_SOLFEGE_FIXED : NoteHeadScheme::HEAD_SOLFEGE;
             }
@@ -7788,7 +7788,7 @@ void MusicXmlParserPass2::harmony(const String& partId, Measure* measure, const 
     const bool printObject = m_e.asciiAttribute("print-object") != "no";
 
     String kind, kindText, functionText, inversionText, symbols, parens;
-    std::vector<HDegree> degreeList;
+    muse::vector<HDegree> degreeList;
 
     FretDiagram* fd = nullptr;
     Harmony* ha = Factory::createHarmony(m_score->dummy()->segment());
@@ -8469,7 +8469,7 @@ void MusicXmlParserNotations::articulations()
             }
             m_e.skipCurrentElement();  // skip but don't log
         } else if (m_e.name() == "breath-mark") {
-            std::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
+            muse::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
             String value = m_e.readText();
             engraving::SymId breath = SymId::noSym;
             if (value == "tick") {
@@ -8486,7 +8486,7 @@ void MusicXmlParserNotations::articulations()
             notation.setVisible(m_visible);
             m_notations.push_back(notation);
         } else if (m_e.name() == "caesura") {
-            std::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
+            muse::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
             String value = m_e.readText();
             engraving::SymId caesura = SymId::noSym;
             if (value == "curved") {
@@ -8636,7 +8636,7 @@ void MusicXmlParserNotations::technical()
         } else if (m_e.name() == "harmonic") {
             harmonic();
         } else if (m_e.name() == "handbell") {
-            const std::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
+            const muse::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
             convertArticulationToSymId(m_e.readText(), id);
             Notation notation = Notation::notationWithAttributes(String::fromAscii(m_e.name().ascii()),
                                                                  attributes, u"technical", id);
@@ -8717,7 +8717,7 @@ void MusicXmlParserNotations::harmonic()
 void MusicXmlParserNotations::harmonMute()
 {
     engraving::SymId mute = SymId::brassHarmonMuteClosed;
-    const std::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
+    const muse::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
     while (m_e.readNextStartElement()) {
         String name = String::fromAscii(m_e.name().ascii());
         if (name == "harmon-closed") {
@@ -8757,7 +8757,7 @@ void MusicXmlParserNotations::harmonMute()
 void MusicXmlParserNotations::hole()
 {
     engraving::SymId hole = SymId::noSym;
-    const std::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
+    const muse::vector<XmlStreamReader::Attribute> attributes = m_e.attributes();
     while (m_e.readNextStartElement()) {
         if (m_e.name() == "hole-closed") {
             const String location = m_e.attribute("location");
@@ -8990,7 +8990,7 @@ static void addArpeggio(ChordRest* cr, String& arpeggioType, int arpeggioNo, Col
     // If no current arpeggio with same number add new
     // If not, expand span
     // no support for arpeggio on rest
-    const std::vector<MusicXmlArpeggioDesc> arps = muse::values(arpMap, cr->tick().ticks());
+    const muse::vector<MusicXmlArpeggioDesc> arps = muse::values(arpMap, cr->tick().ticks());
     Arpeggio* curArp = nullptr;
     for (const MusicXmlArpeggioDesc arp : arps) {
         if (arp.no == arpeggioNo) {
@@ -9033,7 +9033,7 @@ static void addArpeggio(ChordRest* cr, String& arpeggioType, int arpeggioNo, Col
 //---------------------------------------------------------
 
 static void addTie(const Notation& notation, Note* note, const track_idx_t track, MusicXmlTieMap& ties,
-                   std::vector<Note*>& unstartedTieNotes, std::vector<Note*>& unendedTieNotes, MusicXmlLogger* logger,
+                   muse::vector<Note*>& unstartedTieNotes, muse::vector<Note*>& unendedTieNotes, MusicXmlLogger* logger,
                    const XmlStreamReader* const xmlreader)
 {
     IF_ASSERT_FAILED(note) {
@@ -9248,7 +9248,7 @@ static void addChordLine(const Notation& notation, Note* note,
  Helper function to create Notation with initial attributes.
  */
 
-Notation Notation::notationWithAttributes(const String& name, const std::vector<XmlStreamReader::Attribute>& attributes,
+Notation Notation::notationWithAttributes(const String& name, const muse::vector<XmlStreamReader::Attribute>& attributes,
                                           const String& parent, const SymId& symId)
 {
     Notation notation = Notation(name, parent, symId);
@@ -9409,7 +9409,7 @@ void MusicXmlParserNotations::addNotation(const Notation& notation, ChordRest* c
 
             // Terminate tempo line
             const InferredTempoLineStack& lines = m_pass2.getInferredTempoLine();
-            terminateInferredLine(std::vector<TextLineBase*>(lines.begin(), lines.end()), cr->tick(), cr->track());
+            terminateInferredLine(muse::vector<TextLineBase*>(lines.begin(), lines.end()), cr->tick(), cr->track());
         } else if (notation.parent() == u"ornaments") {
             addTurnToChord(notation, cr);
         } else {
@@ -9443,8 +9443,8 @@ void MusicXmlParserNotations::addNotation(const Notation& notation, ChordRest* c
 
 void MusicXmlParserNotations::addToScore(ChordRest* const cr, Note* const note, const Fraction& tick, SlurStack& slurs,
                                          Glissando* glissandi[MAX_NUMBER_LEVEL][2], MusicXmlSpannerMap& spanners,
-                                         TrillStack& trills, MusicXmlTieMap& ties, std::vector<Note*>& unstartedTieNotes,
-                                         std::vector<Note*>& unendedTieNotes, ArpeggioMap& arpMap,
+                                         TrillStack& trills, MusicXmlTieMap& ties, muse::vector<Note*>& unstartedTieNotes,
+                                         muse::vector<Note*>& unendedTieNotes, ArpeggioMap& arpMap,
                                          DelayedArpMap& delayedArps)
 {
     addArpeggio(cr, m_arpeggioType, m_arpeggioNo, m_arpeggioColor, arpMap, delayedArps);

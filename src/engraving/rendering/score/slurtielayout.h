@@ -56,7 +56,7 @@ public:
 
     static TieSegment* layoutTieFor(Tie* item, System* system);
     static TieSegment* layoutTieBack(Tie* item, System* system, LayoutContext& ctx);
-    static void resolveVerticalTieCollisions(const std::vector<TieSegment*>& stackedTies);
+    static void resolveVerticalTieCollisions(const muse::vector<TieSegment*>& stackedTies);
 
     static void computeUp(Slur* slur, LayoutContext& ctx);
     static void calculateDirection(Tie* item);

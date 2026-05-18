@@ -199,7 +199,7 @@ void VelocityMap::sortHairpins()
 {
     for (auto& tick : muse::uniqueKeys(*this)) {
         // hairpinEvents will contain all the hairpins at this tick
-        std::vector<VelocityEvent> hairpinEvents;
+        muse::vector<VelocityEvent> hairpinEvents;
         auto values = this->equal_range(tick);
         for (auto it = values.first; it != values.second; ++it) {
             auto& event = it->second;
@@ -233,7 +233,7 @@ void VelocityMap::resolveHairpinCollisions()
 
     // Keep a record of the endpoints
     EndPointsVector endPoints;
-    std::vector<bool> startsInHairpin;
+    muse::vector<bool> startsInHairpin;
 
     auto i = begin();
     while (i != end()) {
@@ -277,7 +277,7 @@ void VelocityMap::resolveHairpinCollisions()
 ///   readjust lengths of any colliding hairpins
 //---------------------------------------------------------
 
-void VelocityMap::adjustCollidingHairpinsLength(std::vector<bool>& startsInHairpin, EndPointsVector& endPoints)
+void VelocityMap::adjustCollidingHairpinsLength(muse::vector<bool>& startsInHairpin, EndPointsVector& endPoints)
 {
     // moveTo stores the events that need to be moved to a Fraction position
     std::map<Fraction, VelocityEvent> moveTo;
@@ -533,9 +533,9 @@ void VelocityMap::setup()
 ///   returns a list of changes in a range, and their start and end points
 //---------------------------------------------------------
 
-std::vector<std::pair<Fraction, Fraction> > VelocityMap::changesInRange(Fraction stick, Fraction etick) const
+muse::vector<std::pair<Fraction, Fraction> > VelocityMap::changesInRange(Fraction stick, Fraction etick) const
 {
-    std::vector<std::pair<Fraction, Fraction> > tempChanges;
+    muse::vector<std::pair<Fraction, Fraction> > tempChanges;
 
     // Force a new event on every noteon, in case the velocity has changed
     tempChanges.push_back(std::make_pair(stick, stick));

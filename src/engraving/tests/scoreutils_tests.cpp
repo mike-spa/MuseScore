@@ -42,7 +42,7 @@ TEST_F(Engraving_ScoreUtilsTests, StaffIdxSetFromRange)
         score->appendPart(new Part(score));
     }
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     score->appendStaff(Factory::createStaff(parts.at(0)));
     score->appendStaff(Factory::createStaff(parts.at(0)));
 

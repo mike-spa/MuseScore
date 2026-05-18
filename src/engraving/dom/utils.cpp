@@ -123,7 +123,7 @@ Measure* Score::tick2measureMM(const Fraction& t) const
 
 MeasureBase* Score::tick2measureBase(const Fraction& tick) const
 {
-    std::vector<MeasureBase*> mbList = m_measures.measureBasesAtTick(tick.ticks());
+    muse::vector<MeasureBase*> mbList = m_measures.measureBasesAtTick(tick.ticks());
     for (MeasureBase* mb : mbList) {
         Fraction st = mb->tick();
         Fraction l  = mb->ticks();
@@ -626,7 +626,7 @@ Note* searchTieNote(const Note* note, const Segment* nextSegment, const bool dis
     } else {
         // normal chord
         // try to tie to grace note after if present
-        std::vector<Chord*> gna = chord->graceNotesAfter();
+        muse::vector<Chord*> gna = chord->graceNotesAfter();
         if (!gna.empty()) {
             Chord* gc = gna.front();
             note2 = gc->findNote(note->pitch());
@@ -651,7 +651,7 @@ Note* searchTieNote(const Note* note, const Segment* nextSegment, const bool dis
             continue;
         }
         // if there are grace notes before, try to tie to first one
-        std::vector<Chord*> gnb = c->graceNotesBefore();
+        muse::vector<Chord*> gnb = c->graceNotesBefore();
         if (!gnb.empty()) {
             Chord* gc = gnb.front();
             Note* gn2 = gc->findNote(note->pitch());
@@ -1197,7 +1197,7 @@ bool moveDownWhenAddingStaves(EngravingItem* item, staff_idx_t startStaff, staff
     return true;
 }
 
-void collectChordsAndRest(Segment* segment, staff_idx_t staffIdx, std::vector<Chord*>& chords, std::vector<Rest*>& rests)
+void collectChordsAndRest(Segment* segment, staff_idx_t staffIdx, muse::vector<Chord*>& chords, muse::vector<Rest*>& rests)
 {
     if (!segment) {
         return;
@@ -1219,7 +1219,7 @@ void collectChordsAndRest(Segment* segment, staff_idx_t staffIdx, std::vector<Ch
     }
 }
 
-void collectChordsOverlappingRests(Segment* segment, staff_idx_t staffIdx, std::vector<Chord*>& chords)
+void collectChordsOverlappingRests(Segment* segment, staff_idx_t staffIdx, muse::vector<Chord*>& chords)
 {
     // Check if previous segments contain chords in other voices
     // whose duration overlaps with rests on this segment
@@ -1257,11 +1257,11 @@ void collectChordsOverlappingRests(Segment* segment, staff_idx_t staffIdx, std::
     }
 }
 
-std::vector<EngravingItem*> collectSystemObjects(const Score* score, const std::vector<Staff*>& staves)
+muse::vector<EngravingItem*> collectSystemObjects(const Score* score, const muse::vector<Staff*>& staves)
 {
     TRACEFUNC;
 
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
 
     const TimeSigPlacement timeSigPlacement = score->style().styleV(Sid::timeSigPlacement).value<TimeSigPlacement>();
     const bool isOnStaffTimeSig = timeSigPlacement != TimeSigPlacement::NORMAL;
@@ -1525,7 +1525,7 @@ InstrumentTrackId makeInstrumentTrackId(const EngravingItem* item)
     return trackId;
 }
 
-std::vector<Measure*> findFollowingRepeatMeasures(const Measure* measure)
+muse::vector<Measure*> findFollowingRepeatMeasures(const Measure* measure)
 {
     const MasterScore* master = measure->masterScore();
     const Score* score = measure->score();
@@ -1534,7 +1534,7 @@ std::vector<Measure*> findFollowingRepeatMeasures(const Measure* measure)
 
     const RepeatList& repeatList = master->repeatList(true, false);
 
-    std::vector<Measure*> measures;
+    muse::vector<Measure*> measures;
 
     for (auto it = repeatList.begin(); it != repeatList.end(); it++) {
         const RepeatSegment* rs = *it;
@@ -1557,7 +1557,7 @@ std::vector<Measure*> findFollowingRepeatMeasures(const Measure* measure)
     return measures;
 }
 
-std::vector<Measure*> findPreviousRepeatMeasures(const Measure* measure)
+muse::vector<Measure*> findPreviousRepeatMeasures(const Measure* measure)
 {
     const MasterScore* master = measure->masterScore();
     const Score* score = measure->score();
@@ -1566,7 +1566,7 @@ std::vector<Measure*> findPreviousRepeatMeasures(const Measure* measure)
 
     const RepeatList& repeatList = master->repeatList(true, false);
 
-    std::vector<Measure*> measures;
+    muse::vector<Measure*> measures;
 
     if (repeatList.empty()) {
         return measures;
@@ -1595,7 +1595,7 @@ std::vector<Measure*> findPreviousRepeatMeasures(const Measure* measure)
 
 bool repeatHasPartialLyricLine(const Measure* endRepeatMeasure)
 {
-    const std::vector<Measure*> measures = findFollowingRepeatMeasures(endRepeatMeasure);
+    const muse::vector<Measure*> measures = findFollowingRepeatMeasures(endRepeatMeasure);
     const Score* score = endRepeatMeasure->score();
 
     for (const Measure* measure : measures) {
@@ -1632,7 +1632,7 @@ bool segmentsAreAdjacent(const Segment* firstSeg, const Segment* secondSeg)
 
     const RepeatList& repeatList = score->repeatList(true, false);
 
-    std::vector<const Measure*> measures;
+    muse::vector<const Measure*> measures;
 
     bool firstMeasureSegmentFound = false;
     bool secondMeasureSegmentFound = false;
@@ -1702,7 +1702,7 @@ bool segmentsAreInDifferentRepeatSegments(const Segment* firstSeg, const Segment
 
     const RepeatList& repeatList = score->repeatList(true, false);
 
-    std::vector<const Measure*> measures;
+    muse::vector<const Measure*> measures;
 
     for (auto it = repeatList.begin(); it != repeatList.end(); it++) {
         const RepeatSegment* rs = *it;
@@ -1737,7 +1737,7 @@ bool isValidBarLineForRepeatSection(const Segment* firstSeg, const Segment* seco
 
     const RepeatList& repeatList = score->repeatList(true, false);
 
-    std::vector<const Measure*> measures;
+    muse::vector<const Measure*> measures;
 
     bool segEndsWithBl = false;
     bool adjacentAndSecondShareSegment = false;
@@ -1805,7 +1805,7 @@ bool isElementInFretBox(const EngravingItem* item)
     return false;
 }
 
-std::vector<EngravingItem*> filterTargetElements(const Selection& sel, EngravingItem* dropElement, bool& unique)
+muse::vector<EngravingItem*> filterTargetElements(const Selection& sel, EngravingItem* dropElement, bool& unique)
 {
     bool uniqueMeasures =  false;
     bool uniqueStaves = false;
@@ -1888,9 +1888,9 @@ std::vector<EngravingItem*> filterTargetElements(const Selection& sel, Engraving
         return sel.elements();
     }
 
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
     if (uniqueStaves && uniqueMeasures) {
-        std::vector<MStaff*> foundMStaves;
+        muse::vector<MStaff*> foundMStaves;
         for (EngravingItem* e : sel.elements()) {
             if (Measure* m = e->findMeasure()) {
                 if (!muse::contains(foundMStaves, m->mstaves().at(e->staffIdx()))) {
@@ -1900,7 +1900,7 @@ std::vector<EngravingItem*> filterTargetElements(const Selection& sel, Engraving
             }
         }
     } else if (uniqueStaves) {
-        std::vector<staff_idx_t> foundStaves;
+        muse::vector<staff_idx_t> foundStaves;
         for (EngravingItem* e : sel.elements()) {
             if (!muse::contains(foundStaves, e->staffIdx())) {
                 result.emplace_back(e);
@@ -1908,7 +1908,7 @@ std::vector<EngravingItem*> filterTargetElements(const Selection& sel, Engraving
             }
         }
     } else {
-        std::vector<MeasureBase*> foundMeasures;
+        muse::vector<MeasureBase*> foundMeasures;
         for (EngravingItem* e : sel.elements()) {
             if (MeasureBase* mb = e->findMeasureBase()) {
                 if (!muse::contains(foundMeasures, mb)) {

@@ -74,7 +74,7 @@ EditStaffType::EditStaffType(const muse::modularity::ContextPtr& ctx, QWidget* p
     }
     textStyleComboBox->setCurrentIndex(0);
 
-    std::vector<String> fontNames = mu::engraving::StaffType::tabFontNames(false);
+    muse::vector<String> fontNames = mu::engraving::StaffType::tabFontNames(false);
     for (const String& fn : fontNames) {   // fill fret font name combo
         fretFontName->addItem(fn.toQString());
     }

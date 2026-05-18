@@ -98,9 +98,9 @@ bool SlurTieSegment::edit(EditData& ed)
 //   gripAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> SlurTieSegment::gripAnchorLines(Grip grip) const
+muse::vector<LineF> SlurTieSegment::gripAnchorLines(Grip grip) const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
 
     if (!system() || (grip != Grip::START && grip != Grip::END)) {
         return result;
@@ -168,10 +168,10 @@ void SlurTieSegment::spatiumChanged(double oldValue, double newValue)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> SlurTieSegment::gripsPositions(const EditData&) const
+muse::vector<PointF> SlurTieSegment::gripsPositions(const EditData&) const
 {
     const int ngrips = gripsCount();
-    std::vector<PointF> grips(ngrips);
+    muse::vector<PointF> grips(ngrips);
 
     const PointF p(pagePos());
     for (int i = 0; i < ngrips; ++i) {

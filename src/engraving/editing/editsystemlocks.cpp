@@ -66,7 +66,7 @@ public:
 
     UNDO_NAME("AddSystemLock")
 
-    std::vector<EngravingObject*> objectItems() const override
+    muse::vector<EngravingObject*> objectItems() const override
     {
         return { m_systemLock->startMB(), m_systemLock->endMB() };
     }
@@ -106,7 +106,7 @@ public:
     }
 
     UNDO_NAME("RemoveSystemLock")
-    std::vector<EngravingObject*> objectItems() const override
+    muse::vector<EngravingObject*> objectItems() const override
     {
         return { m_systemLock->startMB(), m_systemLock->endMB() };
     }
@@ -129,13 +129,13 @@ void EditSystemLocks::undoRemoveSystemLock(Score* score, const SystemLock* lock)
 
 void EditSystemLocks::undoRemoveAllLocks(Score* score)
 {
-    std::vector<const SystemLock*> allLocks = score->systemLocks()->allLocks(); // copy
+    muse::vector<const SystemLock*> allLocks = score->systemLocks()->allLocks(); // copy
     for (const SystemLock* lock : allLocks) {
         undoRemoveSystemLock(score, lock);
     }
 }
 
-void EditSystemLocks::toggleSystemLock(Score* score, const std::vector<System*>& systems)
+void EditSystemLocks::toggleSystemLock(Score* score, const muse::vector<System*>& systems)
 {
     bool unlockAll = true;
     for (const System* system : systems) {
@@ -217,7 +217,7 @@ void EditSystemLocks::addRemoveSystemLocks(Score* score, int interval, bool lock
         return;
     }
 
-    std::vector<const SystemLock*> currentLocks = score->systemLocks()->locksContainedInRange(startMeasure, endMeasure);
+    muse::vector<const SystemLock*> currentLocks = score->systemLocks()->locksContainedInRange(startMeasure, endMeasure);
     for (const SystemLock* l : currentLocks) {
         undoRemoveSystemLock(score, l);
     }
@@ -271,7 +271,7 @@ void EditSystemLocks::makeIntoSystem(Score* score, MeasureBase* first, MeasureBa
         }
     }
 
-    std::vector<const SystemLock*> locksContainedInRange = score->systemLocks()->locksContainedInRange(first, last);
+    muse::vector<const SystemLock*> locksContainedInRange = score->systemLocks()->locksContainedInRange(first, last);
     for (const SystemLock* lock : locksContainedInRange) {
         if (lock != lockContainingfirst && lock != lockContaininglast) {
             undoRemoveSystemLock(score, lock);
@@ -416,7 +416,7 @@ void EditSystemLocks::removeLayoutBreaksOnAddSystemLock(Score* score, const Syst
 
 void EditSystemLocks::removeSystemLocksOnRemoveMeasures(Score* score, const MeasureBase* m1, const MeasureBase* m2)
 {
-    std::vector<const SystemLock*> allSysLocks = score->systemLocks()->allLocks();
+    muse::vector<const SystemLock*> allSysLocks = score->systemLocks()->allLocks();
     for (const SystemLock* lock : allSysLocks) {
         MeasureBase* lockStart = lock->startMB();
         MeasureBase* lockEnd = lock->endMB();
@@ -441,7 +441,7 @@ void EditSystemLocks::removeSystemLocksOnRemoveMeasures(Score* score, const Meas
 
 void EditSystemLocks::removeSystemLocksContainingMMRests(Score* score)
 {
-    std::vector<const SystemLock*> allLocks = score->systemLocks()->allLocks(); // copy
+    muse::vector<const SystemLock*> allLocks = score->systemLocks()->allLocks(); // copy
     for (const SystemLock* lock : allLocks) {
         for (MeasureBase* mb = lock->startMB(); mb; mb = mb->next()) {
             if (mb->isMeasure() && toMeasure(mb)->mmRest()) {

@@ -48,7 +48,7 @@ static const ElementStyle markerStyle {
 //   MarkerTypeTable
 //---------------------------------------------------------
 
-const std::vector<MarkerTypeTableItem> markerTypeTable {
+const muse::vector<MarkerTypeTableItem> markerTypeTable {
     { MarkerType::SEGNO,      "<sym>segno</sym>",               "segno", false },
     { MarkerType::VARSEGNO,   "<sym>segnoSerpent1</sym>",       "varsegno", false },
     { MarkerType::CODA,       "<sym>coda</sym>",                "codab", false },
@@ -225,11 +225,11 @@ String Marker::accessibleInfo() const
     return String(u"%1: %2").arg(EngravingItem::accessibleInfo(), markerTypeUserName());
 }
 
-std::vector<LineF> Marker::dragAnchorLines() const
+muse::vector<LineF> Marker::dragAnchorLines() const
 {
     Measure* measure = parentItem() ? toMeasure(parentItem()) : nullptr;
 
-    std::vector<LineF> lines(TextBase::dragAnchorLines());
+    muse::vector<LineF> lines(TextBase::dragAnchorLines());
 
     if (!measure || !isRightMarker()) {
         return lines;

@@ -45,9 +45,9 @@ public:
     virtual QMimeData* qMimeData() const = 0;
 
     virtual EngravingItem* element() const = 0;
-    virtual const std::vector<EngravingItem*>& elements() const = 0;
+    virtual const muse::vector<EngravingItem*>& elements() const = 0;
 
-    virtual std::vector<Note*> notes(NoteFilter filter = NoteFilter::All) const = 0;
+    virtual muse::vector<Note*> notes(NoteFilter filter = NoteFilter::All) const = 0;
 
     virtual muse::RectF canvasBoundingRect() const = 0;
 
@@ -57,7 +57,7 @@ public:
 
     virtual mu::engraving::MeasureBase* startMeasureBase() const = 0;
     virtual mu::engraving::MeasureBase* endMeasureBase() const = 0;
-    virtual std::vector<mu::engraving::System*> selectedSystems() const = 0;
+    virtual muse::vector<mu::engraving::System*> selectedSystems() const = 0;
 
     virtual bool elementsSelected(const mu::engraving::ElementTypeSet& types) const = 0;
 };

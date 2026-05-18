@@ -288,7 +288,7 @@ void HChord::print() const
 //   add
 //---------------------------------------------------------
 
-void HChord::add(const std::vector<HDegree>& degreeList)
+void HChord::add(const muse::vector<HDegree>& degreeList)
 {
 // LOGD("HChord::add   ");print();
     // convert degrees to semitones
@@ -341,7 +341,7 @@ void HChord::add(const std::vector<HDegree>& degreeList)
 //   readRenderList
 //---------------------------------------------------------
 
-static void readRenderList(String val, std::vector<RenderActionPtr>& renderList, int mscVersion)
+static void readRenderList(String val, muse::vector<RenderActionPtr>& renderList, int mscVersion)
 {
     renderList.clear();
     StringList sl = val.split(u' ', muse::SkipEmptyParts);
@@ -405,7 +405,7 @@ static void readRenderList(String val, std::vector<RenderActionPtr>& renderList,
 //   writeRenderList
 //---------------------------------------------------------
 
-static void writeRenderList(XmlWriter& xml, const std::vector<RenderActionPtr>& al, const AsciiStringView& name)
+static void writeRenderList(XmlWriter& xml, const muse::vector<RenderActionPtr>& al, const AsciiStringView& name)
 {
     String s;
 
@@ -590,7 +590,7 @@ bool ParsedChord::parse(const String& s, const ChordList* cl, bool syntaxOnly, b
     size_t i = 0;
     int thirdKey = 0, seventhKey = 0;
     bool susChord = false;
-    std::vector<HDegree> hdl;
+    muse::vector<HDegree> hdl;
     int key[] = { 0, 0, 2, 4, 5, 7, 9, 11, 0, 2, 4, 5, 7, 9, 11 };
 
     configure(cl);
@@ -1330,7 +1330,7 @@ bool ParsedChord::parse(const String& s, const ChordList* cl, bool syntaxOnly, b
 //---------------------------------------------------------
 
 String ParsedChord::fromXml(const String& rawKind, const String& rawKindText, const String& useSymbols, const String& useParens,
-                            const std::vector<HDegree>& dl, const ChordList* cl)
+                            const muse::vector<HDegree>& dl, const ChordList* cl)
 {
     String kind = rawKind;
     String kindText = rawKindText;
@@ -1605,7 +1605,7 @@ double ChordList::position(const StringList& names, bool stackModifiers, bool su
 //   renderList
 //---------------------------------------------------------
 
-const std::vector<RenderActionPtr >& ParsedChord::renderList(const ChordList* cl, bool stacked)
+const muse::vector<RenderActionPtr >& ParsedChord::renderList(const ChordList* cl, bool stacked)
 {
     // generate anew on each call,
     // in case chord list has changed since last time
@@ -1659,8 +1659,8 @@ const std::vector<RenderActionPtr >& ParsedChord::renderList(const ChordList* cl
         }
         const bool modifierEnd = curMod.endsWith(n) && modIdx != finalModIdx;
 
-        std::vector<RenderActionPtr > rl;
-        std::vector<ChordToken> definedTokens;
+        muse::vector<RenderActionPtr > rl;
+        muse::vector<ChordToken> definedTokens;
         bool found = false;
         // potential definitions for token
         if (cl) {

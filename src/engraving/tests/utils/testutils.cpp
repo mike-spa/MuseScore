@@ -32,7 +32,7 @@ using namespace mu::engraving;
 
 Score* TestUtils::createPart(MasterScore* masterScore, size_t partNumber)
 {
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(masterScore->parts().at(partNumber));
     Score* nscore = masterScore->createScore();
 

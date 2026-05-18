@@ -67,8 +67,8 @@ constexpr int NUM_OF_BASSSTRINGS_WITH_NUMBER = 2;     // the max number of bass 
 
 constexpr double TAB_DEFAULT_DUR_YOFFS = -1.0;
 
-std::vector<TablatureFretFont> StaffType::m_fretFonts = {};
-std::vector<TablatureDurationFont> StaffType::m_durationFonts = {};
+muse::vector<TablatureFretFont> StaffType::m_fretFonts = {};
+muse::vector<TablatureDurationFont> StaffType::m_durationFonts = {};
 
 //---------------------------------------------------------
 //   StaffType
@@ -1010,9 +1010,9 @@ bool StaffType::readTabConfigFile(const String& fileName)
 //    the index of a name in the list can be used to retrieve the font data with fontData()
 //---------------------------------------------------------
 
-std::vector<String> StaffType::tabFontNames(bool bDuration)
+muse::vector<String> StaffType::tabFontNames(bool bDuration)
 {
-    std::vector<String> names;
+    muse::vector<String> names;
     if (bDuration) {
         for (const TablatureDurationFont& f : m_durationFonts) {
             names.push_back(f.displayName);
@@ -1114,7 +1114,7 @@ const StaffType* StaffType::getDefaultPreset(StaffGroup grp)
 //   initStaffTypes
 //---------------------------------------------------------
 
-std::vector<StaffType> StaffType::m_presets;
+muse::vector<StaffType> StaffType::m_presets;
 /* *INDENT-OFF* */
 void StaffType::initStaffTypes(const Color& defaultColor)
 {

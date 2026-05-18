@@ -100,8 +100,8 @@ public:
 
     inline int directionIdx() const { return (m_direction == DirectionV::AUTO || m_direction == DirectionV::DOWN) ? 0 : 1; }
 
-    const std::vector<BeamSegment*>& beamSegments() const { return m_beamSegments; }
-    std::vector<BeamSegment*>& beamSegments() { return m_beamSegments; }
+    const muse::vector<BeamSegment*>& beamSegments() const { return m_beamSegments; }
+    muse::vector<BeamSegment*>& beamSegments() { return m_beamSegments; }
     virtual void clearBeamSegments();
 
     const PointF& startAnchor() const { return m_startAnchor; }
@@ -173,8 +173,8 @@ public:
         int beamSpacing = 0;
         double beamDist = 0.0;
         double beamWidth = 0.0;
-        std::vector<ChordRest*> elements;
-        std::vector<NotePosition> notePositions;
+        muse::vector<ChordRest*> elements;
+        muse::vector<NotePosition> notePositions;
         const StaffType* tab = nullptr;
         bool isBesideTabStaff = false;
         CrossStaffBeamPosition crossStaffBeamPos = CrossStaffBeamPosition::INVALID;
@@ -189,7 +189,7 @@ public:
 protected:
     BeamBase(const ElementType& type, EngravingItem* parent, ElementFlags flags = ElementFlag::ON_STAFF);
     BeamBase(const BeamBase&);
-    std::vector<BeamSegment*> m_beamSegments;
+    muse::vector<BeamSegment*> m_beamSegments;
     PointF m_startAnchor;
     PointF m_endAnchor;
 

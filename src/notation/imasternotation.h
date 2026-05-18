@@ -34,7 +34,7 @@ class INotationProject;
 }
 
 namespace mu::notation {
-using ExcerptNotationList = std::vector<IExcerptNotationPtr>;
+using ExcerptNotationList = muse::vector<IExcerptNotationPtr>;
 
 class IMasterNotation
 {

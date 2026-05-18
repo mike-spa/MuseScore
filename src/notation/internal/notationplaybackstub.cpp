@@ -75,7 +75,7 @@ const muse::mpe::PlaybackData& NotationPlaybackStub::trackPlaybackData(const eng
     return dummy;
 }
 
-void NotationPlaybackStub::triggerEventsForItems(const std::vector<const EngravingItem*>&, muse::mpe::duration_t, bool)
+void NotationPlaybackStub::triggerEventsForItems(const muse::vector<const EngravingItem*>&, muse::mpe::duration_t, bool)
 {
 }
 
@@ -190,7 +190,7 @@ void NotationPlaybackStub::setTempoMultiplier(double)
 {
 }
 
-void NotationPlaybackStub::addSoundFlags(const std::vector<StaffText*>&)
+void NotationPlaybackStub::addSoundFlags(const muse::vector<StaffText*>&)
 {
 }
 

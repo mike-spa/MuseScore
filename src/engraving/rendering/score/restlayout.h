@@ -32,8 +32,8 @@ class MMRest;
 }
 
 namespace mu::engraving::rendering::score {
-using RestGroup = std::vector<Rest*>;
-using RestGroups = std::vector<RestGroup>;
+using RestGroup = muse::vector<Rest*>;
+using RestGroups = muse::vector<RestGroup>;
 using InterruptionPoints = std::array<std::list<Fraction>, VOICES>;
 
 class RestLayout
@@ -43,8 +43,8 @@ public:
     static void fillShape(const Rest* item, Rest::LayoutData* ldata, const LayoutConfiguration& conf);
 
     static void resolveVerticalRestConflicts(LayoutContext& ctx, Segment* segment, staff_idx_t staffIdx);
-    static void resolveRestVSChord(std::vector<Rest*>& rests, std::vector<Chord*>& chords, const Staff* staff, Segment* segment);
-    static void resolveRestVSRest(std::vector<Rest*>& rests, const Staff* staff, Segment* segment, LayoutContext& ctx,
+    static void resolveRestVSChord(muse::vector<Rest*>& rests, muse::vector<Chord*>& chords, const Staff* staff, Segment* segment);
+    static void resolveRestVSRest(muse::vector<Rest*>& rests, const Staff* staff, Segment* segment, LayoutContext& ctx,
                                   bool considerBeams = false);
 
     static void alignRests(const System* system, LayoutContext& ctx);

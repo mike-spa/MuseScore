@@ -209,10 +209,10 @@ PointF HarmonyLayout::calculateBoundingRect(const Harmony* item, Harmony::Layout
 void HarmonyLayout::layoutModifierParentheses(const Harmony* item, const LayoutContext& ctx)
 {
     const double spatium = item->spatium();
-    const std::vector<HarmonyRenderItem*>& itemList = item->ldata()->renderItemList();
+    const muse::vector<HarmonyRenderItem*>& itemList = item->ldata()->renderItemList();
     const double smuflParens = ctx.conf().styleB(Sid::harmonyParenUseSmuflSym);
     // Layout parentheses
-    std::vector<ChordSymbolParen*> openingParenStack;
+    muse::vector<ChordSymbolParen*> openingParenStack;
     double lastTextSegHeight = 0.0;
     double lastTextSegTop = 0.0;
     double rootRefHeight = 0.0;
@@ -419,13 +419,13 @@ void HarmonyLayout::render(Harmony* item, Harmony::LayoutData* ldata, const Layo
     HarmonyRenderCtx harmonyCtx;
 
     // Map of text segments and their final width
-    std::multimap<double, std::vector<HarmonyRenderItem*> > chordTextSegments;
+    std::multimap<double, muse::vector<HarmonyRenderItem*> > chordTextSegments;
 
     for (size_t i = item->chords().size(); i > 0; i--) {
         harmonyCtx.info = item->chords().at(i - 1);
         renderSingleHarmony(item, ldata, harmonyCtx, ctx);
 
-        chordTextSegments.emplace(std::pair<double, std::vector<HarmonyRenderItem*> > { harmonyCtx.x(), harmonyCtx.renderItemList });
+        chordTextSegments.emplace(std::pair<double, muse::vector<HarmonyRenderItem*> > { harmonyCtx.x(), harmonyCtx.renderItemList });
         ldata->renderItemList.mut_value().insert(ldata->renderItemList.mut_value().end(),
                                                  harmonyCtx.renderItemList.begin(), harmonyCtx.renderItemList.end());
 
@@ -493,7 +493,7 @@ void HarmonyLayout::render(Harmony* item, Harmony::LayoutData* ldata, const Layo
 
     for (auto& textSegs : chordTextSegments) {
         double width = textSegs.first;
-        std::vector<HarmonyRenderItem*>& segs = textSegs.second;
+        muse::vector<HarmonyRenderItem*>& segs = textSegs.second;
 
         double diff = longestLine - width;
 
@@ -567,7 +567,7 @@ void HarmonyLayout::doRenderSingleHarmony(Harmony* item, Harmony::LayoutData* ld
 
     // render bass
     if (tpcIsValid(bassTpc)) {
-        const std::vector<RenderActionPtr>& bassNoteChordList
+        const muse::vector<RenderActionPtr>& bassNoteChordList
             = style.styleB(Sid::chordBassNoteStagger) ? chordList->renderListBassOffset : chordList->renderListBass;
 
         static const std::wregex PATTERN_69 = std::wregex(L"6[,/]?9");
@@ -680,7 +680,7 @@ void HarmonyLayout::render(Harmony* item, Harmony::LayoutData* ldata, SymId sym,
     harmonyCtx.movex(ts->width());
 }
 
-void HarmonyLayout::render(Harmony* item, Harmony::LayoutData* ldata, const std::vector<RenderActionPtr>& renderList,
+void HarmonyLayout::render(Harmony* item, Harmony::LayoutData* ldata, const muse::vector<RenderActionPtr>& renderList,
                            HarmonyRenderCtx& harmonyCtx, const LayoutContext& ctx,
                            int tpc,
                            NoteSpellingType noteSpelling,

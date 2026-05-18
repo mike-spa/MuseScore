@@ -29,7 +29,7 @@ namespace mu::engraving {
 class BrailleWriter : public project::INotationWriter
 {
 public:
-    std::vector<UnitType> supportedUnitTypes() const override;
+    muse::vector<UnitType> supportedUnitTypes() const override;
     bool supportsUnitType(UnitType unitType) const override;
 
     muse::Ret write(notation::INotationPtr notation, muse::io::IODevice& dstDevice, const Options& options = Options()) override;

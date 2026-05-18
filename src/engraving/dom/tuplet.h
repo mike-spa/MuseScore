@@ -94,7 +94,7 @@ public:
     void setUserPoint1(PointF p) { m_userP1 = p; }
     void setUserPoint2(PointF p) { m_userP2 = p; }
 
-    const std::vector<DurationElement*>& elements() const { return m_currentElements; }
+    const muse::vector<DurationElement*>& elements() const { return m_currentElements; }
     void clear() { m_currentElements.clear(); }
     bool contains(const DurationElement* el) const
     {
@@ -146,7 +146,7 @@ public:
     int gripsCount() const override;
     Grip initialEditModeGrip() const override { return Grip::MIDDLE; }
     Grip defaultGrip() const override { return Grip::MIDDLE; }
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
     void sanitizeTuplet();
     void addMissingElements();
@@ -174,7 +174,7 @@ private:
     std::set<DurationElement*> m_allElements;
 
     // Those DurationElements that are currently really part of this tuplet
-    std::vector<DurationElement*> m_currentElements;
+    muse::vector<DurationElement*> m_currentElements;
 
     bool m_beingDestructed = false;
 

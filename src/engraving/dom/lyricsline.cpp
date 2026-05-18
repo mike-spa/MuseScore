@@ -379,7 +379,7 @@ EngravingObject* PartialLyricsLineSegment::propertyDelegate(Pid pid) const
 
 Lyrics* PartialLyricsLine::findLyricsInPreviousRepeatSeg() const
 {
-    const std::vector<Measure*> measures = findPreviousRepeatMeasures(findStartMeasure());
+    const muse::vector<Measure*> measures = findPreviousRepeatMeasures(findStartMeasure());
 
     for (const Measure* measure : measures) {
         Lyrics* prev = lastLyricsInMeasure(measure->last(SegmentType::ChordRest), staffIdx(), verse(), placement());

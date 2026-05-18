@@ -500,7 +500,7 @@ void sortNotesByLength(std::multimap<ReducedFraction, MidiChord>& chords)
 void splitUnequalChords(std::multimap<int, MTrack>& tracks)
 {
     for (auto& track: tracks) {
-        std::vector<std::pair<ReducedFraction, MidiChord> > newChordEvents;
+        muse::vector<std::pair<ReducedFraction, MidiChord> > newChordEvents;
         auto& chords = track.second.chords;
         if (chords.empty()) {
             continue;
@@ -617,7 +617,7 @@ ReducedFraction findMaxChordLength(const std::multimap<ReducedFraction, MidiChor
     return maxChordLength;
 }
 
-std::vector<std::multimap<ReducedFraction, MidiChord>::const_iterator>
+muse::vector<std::multimap<ReducedFraction, MidiChord>::const_iterator>
 findChordsForTimeRange(
     int voice,
     const ReducedFraction& onTime,
@@ -625,7 +625,7 @@ findChordsForTimeRange(
     const std::multimap<ReducedFraction, MidiChord>& chords,
     const ReducedFraction& maxChordLength)
 {
-    std::vector<std::multimap<ReducedFraction, MidiChord>::const_iterator> result;
+    muse::vector<std::multimap<ReducedFraction, MidiChord>::const_iterator> result;
 
     if (chords.empty()) {
         return result;

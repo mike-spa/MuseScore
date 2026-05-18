@@ -123,8 +123,8 @@ public:
 
     void setTrack(track_idx_t val) override;
 
-    const std::vector<Lyrics*>& lyrics() const { return m_lyrics; }
-    std::vector<Lyrics*>& lyrics() { return m_lyrics; }
+    const muse::vector<Lyrics*>& lyrics() const { return m_lyrics; }
+    muse::vector<Lyrics*>& lyrics() { return m_lyrics; }
     Lyrics* lyrics(int verse) const;
     Lyrics* lyrics(int verse, PlacementV) const;
     int lastVerse(PlacementV) const;
@@ -209,7 +209,7 @@ protected:
     bool removeEl(EngravingItem* e) { return m_el.remove(e); }
     void clearEls() { m_el.clear(); }
 
-    std::vector<Lyrics*> m_lyrics;
+    muse::vector<Lyrics*> m_lyrics;
     TabDurationSymbol* m_tabDur = nullptr;  // stores a duration symbol in tablature staves
 
     Beam* m_beam = nullptr;

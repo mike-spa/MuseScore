@@ -28,8 +28,8 @@ class Instrument;
 class KeyList;
 class SharedPart;
 
-using StaveSharingGroup = std::vector<Part*>;
-using StaveSharingGroups = std::vector<StaveSharingGroup>;
+using StaveSharingGroup = muse::vector<Part*>;
+using StaveSharingGroups = muse::vector<StaveSharingGroup>;
 
 class EditStaveSharing
 {

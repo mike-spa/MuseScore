@@ -60,7 +60,7 @@ public:
 
     using Options = std::map<OptionKey, muse::Val>;
 
-    virtual std::vector<UnitType> supportedUnitTypes() const = 0;
+    virtual muse::vector<UnitType> supportedUnitTypes() const = 0;
     virtual bool supportsUnitType(UnitType unitType) const = 0;
 
     virtual muse::Ret write(notation::INotationPtr notation, muse::io::IODevice& device, const Options& options = Options()) = 0;

@@ -169,7 +169,7 @@ track_idx_t Staff::getLinkedTrackInStaff(const Staff* linkedStaff, const track_i
 
     if (thisScore->isMaster()) {
         const TracksMap& tracksMap = linkedStaffScore->excerpt()->tracksMapping();
-        std::vector<track_idx_t> linkedTracks = muse::values(tracksMap, refTrack);
+        muse::vector<track_idx_t> linkedTracks = muse::values(tracksMap, refTrack);
         for (track_idx_t track : linkedTracks) {
             if (track2staff(track) == linkedStaffIdx) {
                 return track;
@@ -183,7 +183,7 @@ track_idx_t Staff::getLinkedTrackInStaff(const Staff* linkedStaff, const track_i
     track_idx_t linkedTrackInScore = muse::nidx;
     for (auto pair : thisTracksMap) {
         track_idx_t trackInScore = pair.first;
-        std::vector<track_idx_t> tracksInPart = muse::values(thisTracksMap, trackInScore);
+        muse::vector<track_idx_t> tracksInPart = muse::values(thisTracksMap, trackInScore);
         for (track_idx_t trackInPart : tracksInPart) {
             if (trackInPart == refTrack) {
                 linkedTrackInScore = trackInScore;
@@ -200,7 +200,7 @@ track_idx_t Staff::getLinkedTrackInStaff(const Staff* linkedStaff, const track_i
     }
 
     const TracksMap& linkedTracksMap = linkedStaffScore->excerpt()->tracksMapping();
-    std::vector<track_idx_t> linkedTracks = muse::values(linkedTracksMap, linkedTrackInScore);
+    muse::vector<track_idx_t> linkedTracks = muse::values(linkedTracksMap, linkedTrackInScore);
     for (track_idx_t track : linkedTracks) {
         if (track2staff(track) == linkedStaffIdx) {
             return track;
@@ -531,7 +531,7 @@ void Staff::updateVisibilityVoices(const Staff* masterStaff, const TracksMap& tr
 
     voice_idx_t voiceIndex = 0;
     for (voice_idx_t voice = 0; voice < VOICES; voice++) {
-        std::vector<track_idx_t> masterStaffTracks = muse::values(tracks, masterStaffIdx * VOICES + voice % VOICES);
+        muse::vector<track_idx_t> masterStaffTracks = muse::values(tracks, masterStaffIdx * VOICES + voice % VOICES);
         bool isVoiceVisible = muse::contains(masterStaffTracks, staffIdx * VOICES + voiceIndex % VOICES);
         if (isVoiceVisible) {
             voices[voice] = true;
@@ -1239,8 +1239,8 @@ bool Staff::isPrimaryStaff() const
         return true;
     }
 
-    std::vector<const Staff*> linkedStavesInThisScore;
-    std::vector<const Staff*> linkedNonTabStavesInThisScore;
+    muse::vector<const Staff*> linkedStavesInThisScore;
+    muse::vector<const Staff*> linkedNonTabStavesInThisScore;
 
     for (const EngravingObject* linked : *m_links) {
         const Staff* staff = toStaff(linked);
@@ -1602,9 +1602,9 @@ void Staff::insertTime(const Fraction& tick, const Fraction& len)
 //    return list of linked staves
 //---------------------------------------------------------
 
-std::vector<Staff*> Staff::staffList() const
+muse::vector<Staff*> Staff::staffList() const
 {
-    std::vector<Staff*> staffList;
+    muse::vector<Staff*> staffList;
     if (m_links) {
         for (EngravingObject* e : *m_links) {
             staffList.push_back(toStaff(e));
@@ -1756,7 +1756,7 @@ bool Staff::setProperty(Pid id, const PropertyValue& v)
         setBarLineSpan(v.toBool());
         // update non-generated barlines
         track_idx_t track = idx() * VOICES;
-        std::vector<EngravingItem*> blList;
+        muse::vector<EngravingItem*> blList;
         for (Measure* m = score()->firstMeasure(); m; m = m->nextMeasure()) {
             Segment* s = m->getSegmentR(SegmentType::EndBarLine, m->ticks());
             if (s && s->element(track)) {

@@ -1101,7 +1101,7 @@ void SingleLayout::layout(HammerOnPullOff* item, const Context& ctx)
 
 void SingleLayout::layout(HammerOnPullOffSegment* item, const Context& ctx)
 {
-    const std::vector<HammerOnPullOffText*>& hopoTexts = item->hopoText();
+    const muse::vector<HammerOnPullOffText*>& hopoTexts = item->hopoText();
     if (item->hopoText().empty()) {
         item->addHopoText(new HammerOnPullOffText(item));
     }

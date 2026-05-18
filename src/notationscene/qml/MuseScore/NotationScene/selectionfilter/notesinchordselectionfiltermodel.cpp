@@ -225,7 +225,7 @@ void NotesInChordSelectionFilterModel::updateTopNoteIdx()
             if (!seg->enabled() || !e || !e->isChord()) {
                 continue;
             }
-            const std::vector<Note*> notes = toChord(e)->notes();
+            const muse::vector<Note*> notes = toChord(e)->notes();
             const size_t currIdx = notes.size() - 1;
             if (m_topNoteIdx == muse::nidx || currIdx > m_topNoteIdx) {
                 m_topNoteIdx = currIdx;

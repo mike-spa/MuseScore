@@ -52,7 +52,7 @@ private:
     INotationPtr currentNotation() const;
 
     void onNotationChanged();
-    void updateNotesKeys(const std::vector<const Note*>& receivedNotes);
+    void updateNotesKeys(const muse::vector<const Note *> &receivedNotes);
 
     void sendNoteOn(piano_key_t key);
     void sendNoteOff(piano_key_t key);

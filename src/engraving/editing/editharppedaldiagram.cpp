@@ -47,10 +47,10 @@ void ChangeHarpPedalState::flip(EditData*)
     diagram->triggerLayout();
 }
 
-std::vector<EngravingObject*> ChangeHarpPedalState::objectItems() const
+muse::vector<EngravingObject*> ChangeHarpPedalState::objectItems() const
 {
     Part* part = diagram->part();
-    std::vector<EngravingObject*> objs{ diagram };
+    muse::vector<EngravingObject*> objs{ diagram };
     if (!part) {
         return objs;
     }
@@ -83,10 +83,10 @@ void ChangeSingleHarpPedal::flip(EditData*)
     diagram->triggerLayout();
 }
 
-std::vector<EngravingObject*> ChangeSingleHarpPedal::objectItems() const
+muse::vector<EngravingObject*> ChangeSingleHarpPedal::objectItems() const
 {
     Part* part = diagram->part();
-    std::vector<EngravingObject*> objs{ diagram };
+    muse::vector<EngravingObject*> objs{ diagram };
     if (!part) {
         return objs;
     }

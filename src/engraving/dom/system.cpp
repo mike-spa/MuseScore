@@ -1207,9 +1207,9 @@ staff_idx_t System::lastVisibleSysStaffOfPart(const Part* part) const
     return muse::nidx;    // No visible staves on this part.
 }
 
-std::vector<staff_idx_t> System::visibleStavesOfPart(const Part* part) const
+muse::vector<staff_idx_t> System::visibleStavesOfPart(const Part* part) const
 {
-    std::vector<staff_idx_t> result;
+    muse::vector<staff_idx_t> result;
     result.reserve(part->nstaves());
 
     staff_idx_t startIdx = firstSysStaffOfPart(part);
@@ -1223,9 +1223,9 @@ std::vector<staff_idx_t> System::visibleStavesOfPart(const Part* part) const
     return result;
 }
 
-std::vector<Part*> System::visiblePartsOfGroup(staff_idx_t start, staff_idx_t end) const
+muse::vector<Part*> System::visiblePartsOfGroup(staff_idx_t start, staff_idx_t end) const
 {
-    std::vector<Part*> result;
+    muse::vector<Part*> result;
 
     for (staff_idx_t idx = start; idx < end;) {
         Part* part = score()->staff(idx)->part();

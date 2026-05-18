@@ -35,7 +35,7 @@ public:
     XmlWriter(muse::io::IODevice* dev);
     ~XmlWriter();
 
-    const std::vector<std::pair<const EngravingObject*, AsciiStringView> >& elements() const { return _elements; }
+    const muse::vector<std::pair<const EngravingObject*, AsciiStringView> >& elements() const { return _elements; }
     void setRecordElements(bool record) { _recordElements = record; }
 
     void startElementRaw(const String& name);
@@ -64,7 +64,7 @@ public:
 private:
     void tagProperty(const AsciiStringView& name, P_TYPE type, const PropertyValue& data);
 
-    std::vector<std::pair<const EngravingObject*, AsciiStringView> > _elements;
+    muse::vector<std::pair<const EngravingObject*, AsciiStringView> > _elements;
     bool _recordElements = false;
 };
 }

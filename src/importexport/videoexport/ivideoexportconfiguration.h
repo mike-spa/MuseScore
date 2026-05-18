@@ -48,7 +48,7 @@ public:
 
     virtual std::string resolution() const = 0;
     virtual void setResolution(std::optional<std::string> resolution) = 0;
-    virtual const std::vector<std::string>& availableResolutions() const = 0;
+    virtual const muse::vector<std::string>& availableResolutions() const = 0;
 
     virtual int fps() const = 0;
     virtual void setFps(std::optional<int> fps) = 0;

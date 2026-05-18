@@ -171,8 +171,8 @@ void RestLayout::fillShape(const Rest* item, Rest::LayoutData* ldata, const Layo
 
 void RestLayout::resolveVerticalRestConflicts(LayoutContext& ctx, Segment* segment, staff_idx_t staffIdx)
 {
-    std::vector<Rest*> rests;
-    std::vector<Chord*> chords;
+    muse::vector<Rest*> rests;
+    muse::vector<Chord*> chords;
 
     collectChordsAndRest(segment, staffIdx, chords, rests);
 
@@ -198,7 +198,7 @@ void RestLayout::resolveVerticalRestConflicts(LayoutContext& ctx, Segment* segme
     resolveRestVSRest(rests, staff, segment, ctx);
 }
 
-void RestLayout::resolveRestVSChord(std::vector<Rest*>& rests, std::vector<Chord*>& chords, const Staff* staff, Segment* segment)
+void RestLayout::resolveRestVSChord(muse::vector<Rest*>& rests, muse::vector<Chord*>& chords, const Staff* staff, Segment* segment)
 {
     Fraction tick = segment->tick();
     int lines = staff->lines(tick);
@@ -278,7 +278,7 @@ void RestLayout::resolveRestVSChord(std::vector<Rest*>& rests, std::vector<Chord
     }
 }
 
-void RestLayout::resolveRestVSRest(std::vector<Rest*>& rests, const Staff* staff,
+void RestLayout::resolveRestVSRest(muse::vector<Rest*>& rests, const Staff* staff,
                                    Segment* segment, LayoutContext& ctx,
                                    bool considerBeams)
 {

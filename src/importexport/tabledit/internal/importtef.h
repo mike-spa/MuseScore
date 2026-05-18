@@ -145,7 +145,7 @@ class TablEdit
         int index { 0 };
     };
 
-    void allocateVoices(std::vector<VoiceAllocator>& allocator);
+    void allocateVoices(muse::vector<VoiceAllocator>& allocator);
     void createContents(const MeasureHandler& measureHandler);
     void createLinkedTabs();
     void createMeasures(const MeasureHandler& measureHandler);
@@ -157,7 +157,7 @@ class TablEdit
     void createTempo();
     void createTexts();
     void createTitleFrame();
-    void initializeVoiceAllocators(std::vector<VoiceAllocator>& allocators);
+    void initializeVoiceAllocators(muse::vector<VoiceAllocator>& allocators);
     engraving::part_idx_t partIdx(size_t stringIdx, bool& ok) const;
     int stringNumberPreviousParts(engraving::part_idx_t partIdx) const;
     void readTefContents();
@@ -168,12 +168,12 @@ class TablEdit
     void readTefTexts();
 
     TefHeader tefHeader;
-    std::vector<TefTextMarker> tefTextMarkers;
-    std::vector<TefNote> tefContents; // notes (and rests) only
-    std::vector<TefInstrument> tefInstruments;
-    std::vector<TefMeasure> tefMeasures;
-    std::vector<TefReadingListItem> tefReadingList;
-    std::vector<std::string> tefTexts;
+    muse::vector<TefTextMarker> tefTextMarkers;
+    muse::vector<TefNote> tefContents; // notes (and rests) only
+    muse::vector<TefInstrument> tefInstruments;
+    muse::vector<TefMeasure> tefMeasures;
+    muse::vector<TefReadingListItem> tefReadingList;
+    muse::vector<std::string> tefTexts;
 
 public:
     TablEdit(muse::io::IODevice* f, mu::engraving::MasterScore* s)

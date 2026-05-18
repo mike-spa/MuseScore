@@ -190,7 +190,7 @@ private:
     }
 
     TextStream m_textOut;
-    std::stack<Node, std::vector<Node> > m_currentNodes;
+    std::stack<Node, muse::vector<Node> > m_currentNodes;
 };
 
 std::optional<std::string_view> getEventTypeName(const int type)

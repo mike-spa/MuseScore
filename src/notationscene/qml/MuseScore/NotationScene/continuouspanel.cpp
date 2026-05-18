@@ -176,7 +176,7 @@ void ContinuousPanel::paint(Painter& painter, const NotationViewContext& ctx, co
     m_rect = RectF(offsetPanel + m_width, y, 1, height);
 
     mu::engraving::Page* page = score->pages().front();
-    std::vector<mu::engraving::EngravingItem*> el = page->items(m_rect);
+    muse::vector<mu::engraving::EngravingItem*> el = page->items(m_rect);
     if (el.empty()) {
         return;
     }

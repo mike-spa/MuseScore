@@ -157,8 +157,8 @@ static void createSplitDurationBendsForChord(const BendDataContextSplitChord& be
         return;
     }
 
-    std::vector<Note*> startChordNotes = startChord->notes();
-    std::vector<Note*> endChordNotes = chord->notes();
+    muse::vector<Note*> startChordNotes = startChord->notes();
+    muse::vector<Note*> endChordNotes = chord->notes();
 
     IF_ASSERT_FAILED(startChordNotes.size() == endChordNotes.size()) {
         LOGE() << "bend import error: start and end chord sizes don't match for track " << chord->track() << ", tick " <<

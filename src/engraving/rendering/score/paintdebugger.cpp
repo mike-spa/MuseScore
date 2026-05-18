@@ -224,7 +224,7 @@ void PaintDebugger::setClipRect(const RectF& rect)
     m_real->setClipRect(rect);
 }
 
-void PaintDebugger::setMask(const RectF& background, const std::vector<RectF>& maskRects)
+void PaintDebugger::setMask(const RectF& background, const muse::vector<RectF>& maskRects)
 {
     m_real->setMask(background, maskRects);
 }

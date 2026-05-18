@@ -142,8 +142,8 @@ private:
     bool _pasteMode = false;  // modifies read behaviour on paste operation
     bool m_forcePageMode = false;
 
-    std::vector<std::shared_ptr<ConnectorInfoReader> > _connectors;
-    std::vector<std::shared_ptr<ConnectorInfoReader> > _pendingConnectors;  // connectors that are pending to be updated and added to _connectors. That will happen when checkConnectors() is called.
+    muse::vector<std::shared_ptr<ConnectorInfoReader> > _connectors;
+    muse::vector<std::shared_ptr<ConnectorInfoReader> > _pendingConnectors;  // connectors that are pending to be updated and added to _connectors. That will happen when checkConnectors() is called.
 
     Fraction _tick             { Fraction(0, 1) };
     Fraction _tickOffset       { Fraction(0, 1) };

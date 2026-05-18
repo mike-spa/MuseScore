@@ -42,7 +42,7 @@ private:
 
     struct HarmonyRenderCtx {
         PointF pos = PointF(0.0, 0.0);
-        std::vector<HarmonyRenderItem*> renderItemList;
+        muse::vector<HarmonyRenderItem*> renderItemList;
 
         // Reset every single chord
         bool hAlign = true;
@@ -74,7 +74,7 @@ private:
     static void renderRomanNumeral(Harmony* item, Harmony::LayoutData* ldata);
     static void render(Harmony* item, Harmony::LayoutData* ldata, const String& str, HarmonyRenderCtx& harmonyCtx);
     static void render(Harmony* item, Harmony::LayoutData* ldata, SymId sym, HarmonyRenderCtx& harmonyCtx, const LayoutContext& ctx);
-    static void render(Harmony* item, Harmony::LayoutData* ldata, const std::vector<RenderActionPtr>& renderList,
+    static void render(Harmony* item, Harmony::LayoutData* ldata, const muse::vector<RenderActionPtr>& renderList,
                        HarmonyRenderCtx& harmonyCtx, const LayoutContext& ctx, int tpc,
                        NoteSpellingType noteSpelling = NoteSpellingType::STANDARD, NoteCaseType noteCase = NoteCaseType::AUTO,
                        double noteMag = 1.0);

@@ -31,7 +31,7 @@ static const int DEFAULT_FPS = 24;
 static const double DEFAULT_LEADING_SEC = 3.0;
 static const double DEFAULT_TRAILING_SECONDS = 3.0;
 
-static const std::vector<std::string> AVAILABLE_RESOLUTIONS = { "2160p", "1440p", "1080p" };
+static const muse::vector<std::string> AVAILABLE_RESOLUTIONS = { "2160p", "1440p", "1080p" };
 
 ViewMode VideoExportConfiguration::viewMode() const
 {
@@ -73,7 +73,7 @@ void VideoExportConfiguration::setResolution(std::optional<std::string> resoluti
     m_resolution = resolution;
 }
 
-const std::vector<std::string>& VideoExportConfiguration::availableResolutions() const
+const muse::vector<std::string>& VideoExportConfiguration::availableResolutions() const
 {
     return AVAILABLE_RESOLUTIONS;
 }

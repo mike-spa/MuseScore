@@ -89,8 +89,8 @@ public:
     void changeBracketColumn(size_t oldColumn, size_t newColumn);
     void addBracket(BracketItem*);
     void insertBracket(BracketItem* b);
-    const std::vector<BracketItem*>& brackets() const { return m_brackets; }
-    std::vector<BracketItem*>& brackets() { return m_brackets; }
+    const muse::vector<BracketItem*>& brackets() const { return m_brackets; }
+    muse::vector<BracketItem*>& brackets() { return m_brackets; }
     void cleanupBrackets();
     size_t bracketLevels() const;
 
@@ -206,7 +206,7 @@ public:
     int pitchOffset(const Fraction& tick) const;
     void updateOttava();
 
-    std::vector<Staff*> staffList() const;
+    muse::vector<Staff*> staffList() const;
     Staff* primaryStaff() const;
     bool isPrimaryStaff() const;
 
@@ -291,7 +291,7 @@ private:
     KeyList m_keys;
     std::map<int, TimeSig*> m_timesigs;
 
-    std::vector<BracketItem*> m_brackets;
+    muse::vector<BracketItem*> m_brackets;
     bool m_barLineSpan = false;          // true - span barline to next staff
     int m_barLineFrom = 0;              // line of start staff to draw the barline from (0 = staff top line, ...)
     int m_barLineTo = 0;                // line of end staff to draw the bar line to (0= staff bottom line, ...)

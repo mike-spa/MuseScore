@@ -43,7 +43,7 @@ public:
     bool wasSwingApplied() const { return swingApplied; }
 
 private:
-    std::vector<ChordRest*> elements;
+    muse::vector<ChordRest*> elements;
     ReducedFraction sumLen;
     const ReducedFraction FULL_LEN = { 1, 4 };
     MidiOperations::Swing swingType;

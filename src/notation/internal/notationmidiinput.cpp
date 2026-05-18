@@ -102,7 +102,7 @@ void NotationMidiInput::onMidiEventReceived(const muse::midi::Event& event)
     }
 }
 
-muse::async::Channel<std::vector<const Note*> > NotationMidiInput::notesReceived() const
+muse::async::Channel<muse::vector<const Note*> > NotationMidiInput::notesReceived() const
 {
     return m_notesReceivedChannel;
 }
@@ -154,8 +154,8 @@ void NotationMidiInput::doProcessEvents()
         return;
     }
 
-    std::vector<const Note*> notesOn;
-    std::vector<int> notesOff;
+    muse::vector<const Note*> notesOn;
+    muse::vector<int> notesOff;
     ControllerEventMap controllers;
 
     startNoteInputIfNeed();
@@ -210,7 +210,7 @@ void NotationMidiInput::doProcessEvents()
             playbackController()->seekElement(notesOn.front(), !useDurationAndVelocity /*flushSound*/);
         }
 
-        const std::vector<const EngravingItem*> elements(notesOn.begin(), notesOn.end());
+        const muse::vector<const EngravingItem*> elements(notesOn.begin(), notesOn.end());
         playbackController()->playElements(elements, makeNoteOnParams(useDurationAndVelocity), true);
         m_notesReceivedChannel.send(notesOn);
     }
@@ -424,10 +424,10 @@ void NotationMidiInput::triggerControllers(const ControllerEventMap& events)
     playbackController()->triggerControllers(controllers, is.staffIdx(), is.tick().ticks());
 }
 
-void NotationMidiInput::releasePlayingNotes(const std::vector<int>& pitches)
+void NotationMidiInput::releasePlayingNotes(const muse::vector<int>& pitches)
 {
-    std::vector<const EngravingItem*> notesOff;
-    std::vector<Note*> notesToDelete;
+    muse::vector<const EngravingItem*> notesOff;
+    muse::vector<Note*> notesToDelete;
 
     const staff_idx_t staffIdx = score()->inputState().staffIdx();
     const bool useWrittenPitch = configuration()->midiUseWrittenPitch().val;

@@ -147,17 +147,17 @@ public:
     DomAccessor(IGetScoreInternal* s);
 
     // Const access
-    const std::vector<Part*>& parts() const;
+    const muse::vector<Part*>& parts() const;
     size_t visiblePartCount() const;
 
     size_t npages() const;
-    const std::vector<Page*>& pages() const;
+    const muse::vector<Page*>& pages() const;
 
-    const std::vector<System*>& systems() const;
+    const muse::vector<System*>& systems() const;
 
     size_t nstaves() const;
     size_t visibleStaffCount() const;
-    const std::vector<Staff*>& staves() const;
+    const muse::vector<Staff*>& staves() const;
     const Staff* staff(staff_idx_t idx) const;
     bool allStavesInvisible() const;
 
@@ -182,8 +182,8 @@ public:
     const PaddingTable& paddingTable() const;
 
     // Mutable access
-    std::vector<Page*>& pages();
-    std::vector<System*>& systems();
+    muse::vector<Page*>& pages();
+    muse::vector<System*>& systems();
 
     MeasureBase* first();
     Measure* firstMeasure();
@@ -233,7 +233,7 @@ public:
     const Page* page() const { return m_page; }
     page_idx_t pageIdx() const { return m_pageIdx; }
 
-    const std::vector<System*>& systemList() const { return m_systemList; }
+    const muse::vector<System*>& systemList() const { return m_systemList; }
     const System* prevSystem() const { return m_prevSystem; }
     const System* curSystem() const { return m_curSystem; }
 
@@ -262,8 +262,8 @@ public:
     void setPage(Page* p) { m_page = p; }
     void setPageIdx(page_idx_t idx) { m_pageIdx = idx; }
 
-    std::vector<System*>& systemList() { return m_systemList; }
-    void setSystemList(const std::vector<System*>& l) { m_systemList = l; }
+    muse::vector<System*>& systemList() { return m_systemList; }
+    void setSystemList(const muse::vector<System*>& l) { m_systemList = l; }
     System* prevSystem() { return m_prevSystem; }
     void setPrevSystem(System* s) { m_prevSystem = s; }
     System* curSystem() { return m_curSystem; }
@@ -299,7 +299,7 @@ private:
     Page* m_page = nullptr;
     page_idx_t m_pageIdx = 0;               // index in Score->page()s
 
-    std::vector<System*> m_systemList;      // reusable systems
+    muse::vector<System*> m_systemList;      // reusable systems
     System* m_prevSystem = nullptr;         // used during page layout
     System* m_curSystem = nullptr;
 
@@ -373,7 +373,7 @@ private:
     static void callDump(const LayoutDebug::Call& c, std::stringstream& ss, int& indent);
 
     Call* m_currentCall;
-    std::vector<Call> m_calls;
+    muse::vector<Call> m_calls;
 };
 
 class LayoutContext : public IGetScoreInternal

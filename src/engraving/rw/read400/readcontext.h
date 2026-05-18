@@ -200,11 +200,11 @@ private:
     std::unordered_map<staff_idx_t, size_t> m_staffBarLineSpanValues;
     std::unordered_map<const BarLine*, size_t> m_barLineSpanValues;
 
-    std::map<int /*staffIndex*/, std::vector<std::pair<LinkedObjects*, Location> > > m_staffLinkedElements; // one list per staff
+    std::map<int /*staffIndex*/, muse::vector<std::pair<LinkedObjects*, Location> > > m_staffLinkedElements; // one list per staff
     LinksIndexer m_linksIndexer;
 
-    std::vector<std::shared_ptr<read400::ConnectorInfoReader> > _connectors;
-    std::vector<std::shared_ptr<read400::ConnectorInfoReader> > _pendingConnectors;  // connectors that are pending to be updated and added to _connectors. That will happen when checkConnectors() is called.
+    muse::vector<std::shared_ptr<read400::ConnectorInfoReader> > _connectors;
+    muse::vector<std::shared_ptr<read400::ConnectorInfoReader> > _pendingConnectors;  // connectors that are pending to be updated and added to _connectors. That will happen when checkConnectors() is called.
 
     Fraction _tick             { Fraction(0, 1) };
     Fraction _tickOffset       { Fraction(0, 1) };
@@ -220,13 +220,13 @@ private:
     std::unordered_map<int, Beam*> _beams;
     std::unordered_map<int, Tuplet*> _tuplets;
 
-    std::vector<SpannerValues> _spannerValues;
-    std::vector<std::pair<int, Spanner*> > _spanner;
+    muse::vector<SpannerValues> _spannerValues;
+    muse::vector<std::pair<int, Spanner*> > _spanner;
 
     Interval _transpose;
     TracksMap _tracks;
 
-    std::vector<TextStyleMap> userTextStyles;
+    muse::vector<TextStyleMap> userTextStyles;
 
     SettingsCompat _settingsCompat;
 

@@ -147,10 +147,10 @@ ReducedFraction beatLength(const ReducedFraction& barFraction)
     return beatLen;
 }
 
-std::vector<ReducedFraction> divisionsOfBarForTuplets(const ReducedFraction& barFraction)
+muse::vector<ReducedFraction> divisionsOfBarForTuplets(const ReducedFraction& barFraction)
 {
     const DivisionInfo info = metricDivisionsOfBar(barFraction);
-    std::vector<ReducedFraction> divLengths;
+    muse::vector<ReducedFraction> divLengths;
     const auto beatLen = beatLength(barFraction);
     for (const auto& i: info.divLengths) {
         // in compound or complex meter
@@ -165,10 +165,10 @@ std::vector<ReducedFraction> divisionsOfBarForTuplets(const ReducedFraction& bar
 
 // result in vector: first elements - all tuplets info, one at the end - bar division info
 
-std::vector<DivisionInfo> divisionInfo(const ReducedFraction& barFraction,
-                                       const std::vector<MidiTuplet::TupletData>& tupletsInBar)
+muse::vector<DivisionInfo> divisionInfo(const ReducedFraction& barFraction,
+                                       const muse::vector<MidiTuplet::TupletData>& tupletsInBar)
 {
-    std::vector<DivisionInfo> divsInfo;
+    muse::vector<DivisionInfo> divsInfo;
 
     const auto barDivisionInfo = metricDivisionsOfBar(barFraction);
     for (const auto& tuplet: tupletsInBar) {
@@ -188,7 +188,7 @@ std::vector<DivisionInfo> divisionInfo(const ReducedFraction& barFraction,
 
 // tick is counted from the beginning of bar
 
-int levelOfTick(const ReducedFraction& tick, const std::vector<DivisionInfo>& divsInfo)
+int levelOfTick(const ReducedFraction& tick, const muse::vector<DivisionInfo>& divsInfo)
 {
     for (const auto& divInfo: divsInfo) {
         if (tick < divInfo.onTime || tick > divInfo.onTime + divInfo.len) {
@@ -204,11 +204,11 @@ int levelOfTick(const ReducedFraction& tick, const std::vector<DivisionInfo>& di
     return 0;
 }
 
-std::vector<int> metricLevelsOfBar(const ReducedFraction& barFraction,
-                                   const std::vector<DivisionInfo>& divsInfo,
+muse::vector<int> metricLevelsOfBar(const ReducedFraction& barFraction,
+                                   const muse::vector<DivisionInfo>& divsInfo,
                                    const ReducedFraction& minDuration)
 {
-    std::vector<int> levels;
+    muse::vector<int> levels;
     for (ReducedFraction tick(0, 1); tick < barFraction; tick += minDuration) {
         levels.push_back(levelOfTick(tick, divsInfo));
     }
@@ -259,7 +259,7 @@ Meter::MaxLevel maxLevelBetween(const ReducedFraction& startTickInBar,
 
 Meter::MaxLevel findMaxLevelBetween(const ReducedFraction& startTickInBar,
                                     const ReducedFraction& endTickInBar,
-                                    const std::vector<DivisionInfo>& divsInfo)
+                                    const muse::vector<DivisionInfo>& divsInfo)
 {
     MaxLevel level;
 
@@ -295,7 +295,7 @@ Meter::MaxLevel findMaxLevelBetween(const ReducedFraction& startTickInBar,
 
 int tupletNumberForDuration(const ReducedFraction& startTick,
                             const ReducedFraction& endTick,
-                            const std::vector<MidiTuplet::TupletData>& tupletsInBar)
+                            const muse::vector<MidiTuplet::TupletData>& tupletsInBar)
 {
     for (const auto& tupletData: tupletsInBar) {
         if (startTick >= tupletData.onTime
@@ -389,7 +389,7 @@ struct Node
 
 ReducedFraction findTupletRatio(const ReducedFraction& startPos,
                                 const ReducedFraction& endPos,
-                                const std::vector<MidiTuplet::TupletData>& tupletsInBar)
+                                const muse::vector<MidiTuplet::TupletData>& tupletsInBar)
 {
     ReducedFraction tupletRatio = { 2, 2 };
     int tupletNumber = tupletNumberForDuration(startPos, endPos, tupletsInBar);
@@ -402,7 +402,7 @@ ReducedFraction findTupletRatio(const ReducedFraction& startPos,
 
 QList<std::pair<ReducedFraction, engraving::TDuration> >
 collectDurations(const std::map<ReducedFraction, Node>& nodes,
-                 const std::vector<MidiTuplet::TupletData>& tupletsInBar,
+                 const muse::vector<MidiTuplet::TupletData>& tupletsInBar,
                  bool useDots,
                  bool printRestRemains)
 {
@@ -487,11 +487,11 @@ void excludeNodes(std::map<ReducedFraction, Node>& nodes,
 // and such big level may confuse the estimation algorithm
 
 int adjustEdgeLevelIfTuplet(const Meter::MaxLevel& splitPoint,
-                            const std::vector<DivisionInfo>& divInfo)
+                            const muse::vector<DivisionInfo>& divInfo)
 {
     int tupletLevel = splitPoint.level;
     if (splitPoint.level == TUPLET_BOUNDARY_LEVEL) {
-        std::vector<DivisionInfo> nonTupletDivs({ divInfo.back() });
+        muse::vector<DivisionInfo> nonTupletDivs({ divInfo.back() });
         tupletLevel = levelOfTick(splitPoint.pos, nonTupletDivs);
     }
 
@@ -509,7 +509,7 @@ QList<std::pair<ReducedFraction, engraving::TDuration> >
 toDurationList(const ReducedFraction& startTickInBar,
                const ReducedFraction& endTickInBar,
                const ReducedFraction& barFraction,
-               const std::vector<MidiTuplet::TupletData>& tupletsInBar,
+               const muse::vector<MidiTuplet::TupletData>& tupletsInBar,
                DurationType durationType,
                bool useDots,
                bool printRestRemains)

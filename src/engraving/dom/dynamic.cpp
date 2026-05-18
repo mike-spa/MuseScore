@@ -46,7 +46,7 @@ namespace mu::engraving {
 //-----------------------------------------------------------------------------
 
 // variant with ligatures, works for both emmentaler and bravura:
-const std::vector<Dyn> Dynamic::DYN_LIST = {
+const muse::vector<Dyn> Dynamic::DYN_LIST = {
     // dynamic:
     { DynamicType::OTHER,  -1, 0,   true, "" },
     { DynamicType::PPPPPP,  1, 0,   false,
@@ -680,7 +680,7 @@ int Dynamic::gripsCount() const
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> Dynamic::gripsPositions(const EditData&) const
+muse::vector<PointF> Dynamic::gripsPositions(const EditData&) const
 {
     const RectF bbox = ldata()->bbox();
     const PointF pagePos = this->pagePos();

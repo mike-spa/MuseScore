@@ -819,7 +819,7 @@ TEST_F(Engraving_CopyPasteTests, repeatListSelection)
     EXPECT_TRUE(cr1 && cr1->isChord());
 
     //! 1.1 [GIVEN] The parenthesized note...
-    std::vector<Note*> notes = toChord(cr1)->notes();
+    muse::vector<Note*> notes = toChord(cr1)->notes();
 
     //! 1.2 [WHEN] The note is selected and repeated...
     score->deselectAll();

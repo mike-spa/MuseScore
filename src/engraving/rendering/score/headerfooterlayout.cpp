@@ -169,7 +169,7 @@ bool HeaderFooterLayout::updateHeaderFooterText(const LayoutContext& ctx, Page* 
 
     // second formatting pass - replace macros and apply their unique formatting (if any)
     int emptyBlocks = 0;
-    std::vector<TextBlock> newBlocks;
+    muse::vector<TextBlock> newBlocks;
     for (const TextBlock& oldBlock : text->ldata()->blocks) {
         Text* dummyText = Factory::createText(ctx.dom().dummyParent(), text->textStyleType());
         dummyText->mutldata()->blocks = { replaceTextMacros(ctx, page, oldBlock) };

@@ -92,7 +92,7 @@ public:
     void checkDots();
 
     NoteDot* dot(int n);
-    const std::vector<NoteDot*>& dotList() const;
+    const muse::vector<NoteDot*>& dotList() const;
     int dotLine() const { return m_dotline; }
     void setDotLine(int l) { m_dotline = l; }
 
@@ -129,7 +129,7 @@ public:
     RestVerticalClearance& verticalClearance() { return m_verticalClearance; }
 
     struct LayoutData : public ChordRest::LayoutData {
-        std::vector<Rest*> mergedRests;     // Rests from other voices that may be merged with this
+        muse::vector<Rest*> mergedRests;     // Rests from other voices that may be merged with this
         ld_field<SymId> sym = { "[Rest] sym", SymId::restQuarter };
     };
     DECLARE_LAYOUTDATA_METHODS(Rest)
@@ -160,7 +160,7 @@ private:
 
     int m_dotline = -1;             // depends on rest symbol
     bool m_gap = false;             // invisible and not selectable for user
-    std::vector<NoteDot*> m_dots;
+    muse::vector<NoteDot*> m_dots;
     DeadSlapped* m_deadSlapped = nullptr;
 
     RestVerticalClearance m_verticalClearance;

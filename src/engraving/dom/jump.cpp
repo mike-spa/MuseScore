@@ -46,7 +46,7 @@ static const ElementStyle jumpStyle {
 //   JumpTypeTable
 //---------------------------------------------------------
 
-const std::vector<JumpTypeTableItem> jumpTypeTable {
+const muse::vector<JumpTypeTableItem> jumpTypeTable {
     { JumpType::DC,         "D.C.",         "start", "end",  "" },
     { JumpType::DC_AL_FINE, "D.C. al Fine", "start", "fine", "" },
     { JumpType::DC_AL_CODA, "D.C. al Coda", "start", "coda", "codab" },

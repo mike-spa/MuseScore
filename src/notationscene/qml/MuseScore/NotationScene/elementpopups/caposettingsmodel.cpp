@@ -121,7 +121,7 @@ void CapoSettingsModel::toggleCapoForString(int stringIndex)
     StringItem* item = m_strings.at(stringIndex);
     item->setApplyCapo(!item->applyCapo());
 
-    std::vector<int> ignoredStrings;
+    muse::vector<int> ignoredStrings;
     for (int i = 0; i < m_strings.size(); ++i) {
         const StringItem* item2 = m_strings.at(i);
 

@@ -77,7 +77,7 @@ PointF Stem::flagPosition() const
     return pos() + PointF(ldata()->bbox().left(), up() ? -length() : length());
 }
 
-std::vector<PointF> Stem::gripsPositions(const EditData&) const
+muse::vector<PointF> Stem::gripsPositions(const EditData&) const
 {
     return { pagePos() + ldata()->line.p2() };
 }

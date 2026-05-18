@@ -37,7 +37,7 @@ public:
 
     static double insetDistance(const Arpeggio* item, const LayoutContext& ctx, double mag_, const Chord* _chord);
     static double insetDistance(const Arpeggio* item, const LayoutContext& ctx, double mag_, const Chord* _chord,
-                                const std::vector<Accidental*>& accidentals);
+                                const muse::vector<Accidental*>& accidentals);
     static double insetTop(const Arpeggio* item, const Chord* c);
     static double insetBottom(const Arpeggio* item, const Chord* c);
     static double insetWidth(const Arpeggio* item);

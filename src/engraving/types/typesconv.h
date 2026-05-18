@@ -34,11 +34,11 @@ class TConv
 public:
     TConv() = default;
 
-    static String toXml(const std::vector<int>& v);
-    static std::vector<int> fromXml(const String& tag, const std::vector<int>& def);
+    static String toXml(const muse::vector<int>& v);
+    static muse::vector<int> fromXml(const String& tag, const muse::vector<int>& def);
 
-    static String toXml(const std::vector<string_idx_t>& v);
-    static std::vector<string_idx_t> fromXml(const String& tag, const std::vector<string_idx_t>& def);
+    static String toXml(const muse::vector<string_idx_t>& v);
+    static muse::vector<string_idx_t> fromXml(const String& tag, const muse::vector<string_idx_t>& def);
 
     static const TranslatableString& userName(ElementType v);
     static const TranslatableString& capitalizedUserName(ElementType v);

@@ -205,7 +205,7 @@ void BoxLayout::layoutFBox(const FBox* item, FBox::LayoutData* ldata, const Layo
 
     ldata->setPos(PointF());
 
-    std::vector<FretDiagram*> fretDiagrams;
+    muse::vector<FretDiagram*> fretDiagrams;
     for (EngravingItem* element : item->el()) {
         if (!element || !element->isFretDiagram() || !element->visible()) {
             continue;
@@ -244,9 +244,9 @@ void BoxLayout::layoutFBox(const FBox* item, FBox::LayoutData* ldata, const Layo
     const double columnGap = item->columnGap().val() * spatium;
 
     //! The height of each row is determined by the height of the tallest cell in that row
-    std::vector<double> rowHeights;
-    std::vector<double> harmonyHeights;
-    std::vector<double> harmonyBaselines;
+    muse::vector<double> rowHeights;
+    muse::vector<double> harmonyHeights;
+    muse::vector<double> harmonyBaselines;
     for (size_t i = 0; i < totalDiagrams; i += chordsPerRow) {
         size_t itemsInRow = std::min(chordsPerRow, totalDiagrams - i);
         double maxRowHeight = 0.0;

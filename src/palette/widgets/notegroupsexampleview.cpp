@@ -95,7 +95,7 @@ void NoteGroupsExampleView::dragMoveEvent(QDragMoveEvent* event)
     EngravingItem* newDropTarget = nullptr;
 
     PointF position = toLogical(event->position());
-    std::vector<EngravingItem*> el = elementsAt(position);
+    muse::vector<EngravingItem*> el = elementsAt(position);
 
     for (EngravingItem* e : el) {
         if (e->isNote()) {

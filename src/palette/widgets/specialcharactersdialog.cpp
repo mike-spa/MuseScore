@@ -705,7 +705,7 @@ void SpecialCharactersDialog::populateSmufl()
     m_pSmufl->clear();
 
     int row = m_lws->currentRow();
-    std::vector<SymId> symIds = std::next(Smufl::smuflRanges().begin(), row)->second;
+    muse::vector<SymId> symIds = std::next(Smufl::smuflRanges().begin(), row)->second;
 
     auto paletteScore = paletteScoreProvider()->paletteScore();
     for (SymId symId : symIds) {

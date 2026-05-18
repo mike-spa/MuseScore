@@ -707,7 +707,7 @@ StringList harmonyXmlDegrees(const engraving::HarmonyInfo* h)
 
 const ChordDescription* harmonyFromXml(engraving::HarmonyInfo* info, engraving::Score* score, const muse::String& kind,
                                        const muse::String& kindText, const muse::String& symbols, const muse::String& parens,
-                                       const std::vector<engraving::HDegree>& dl)
+                                       const muse::vector<engraving::HDegree>& dl)
 {
     if (!info) {
         return nullptr;

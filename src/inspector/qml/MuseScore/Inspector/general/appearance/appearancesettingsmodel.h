@@ -89,8 +89,8 @@ private:
     void updateIsVerticalOffsetAvailable();
 
     mu::engraving::Page* page() const;
-    std::vector<mu::engraving::EngravingItem*> allElementsInPage() const;
-    std::vector<mu::engraving::EngravingItem*> allOverlappingElements() const;
+    muse::vector<mu::engraving::EngravingItem*> allElementsInPage() const;
+    muse::vector<mu::engraving::EngravingItem*> allOverlappingElements() const;
 
     PropertyItem* m_leadingSpace = nullptr;
     PropertyItem* m_measureWidth = nullptr;

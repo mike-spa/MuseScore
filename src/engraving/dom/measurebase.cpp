@@ -486,7 +486,7 @@ void MeasureBase::undoSetBreak(bool v, LayoutBreakType type)
 void MeasureBase::cleanupLayoutBreaks(bool undo)
 {
     // remove unneeded layout breaks
-    std::vector<EngravingItem*> toDelete;
+    muse::vector<EngravingItem*> toDelete;
     for (EngravingItem* e : el()) {
         if (e->isLayoutBreak()) {
             switch (toLayoutBreak(e)->layoutBreakType()) {
@@ -902,9 +902,9 @@ Measure* MeasureBaseList::measureByTick(int tick) const
     return nullptr;
 }
 
-std::vector<MeasureBase*> MeasureBaseList::measureBasesAtTick(int tick) const
+muse::vector<MeasureBase*> MeasureBaseList::measureBasesAtTick(int tick) const
 {
-    std::vector<MeasureBase*> result;
+    muse::vector<MeasureBase*> result;
     if (empty() || tick > m_last->endTick().ticks()) {
         return result;
     }

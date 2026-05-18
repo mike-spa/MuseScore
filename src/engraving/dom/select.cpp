@@ -406,7 +406,7 @@ MeasureBase* Selection::endMeasureBase() const
     return mmrests ? m_score->tick2measureMM(refTick) : m_score->tick2measure(refTick);
 }
 
-std::vector<System*> Selection::selectedSystems() const
+muse::vector<System*> Selection::selectedSystems() const
 {
     EngravingItem* el = element();
     if (el && (el->isSystemLockIndicator() /*TODO: || el->isStaffVisibilityIndicator*/)) {
@@ -420,7 +420,7 @@ std::vector<System*> Selection::selectedSystems() const
     }
 
     bool mmrests = score()->style().styleB(Sid::createMultiMeasureRests);
-    std::vector<System*> systems;
+    muse::vector<System*> systems;
     for (const MeasureBase* mb = startMB; mb && mb->isBeforeOrEqual(endMB); mb = mmrests ? mb->nextMM() : mb->next()) {
         System* sys = mb->system();
         if ((mb->isMeasure() || mb->isHBox()) && (systems.empty() || sys != systems.back())) {
@@ -741,7 +741,7 @@ void Selection::updateSelectedElements()
 
     //! NOTE: See appendChord/appendChordRest - we should include single notes if the selection consists solely of
     //! single notes, even if the "include single notes" filter flag is false...
-    std::vector<Chord*> singleNoteChords;
+    muse::vector<Chord*> singleNoteChords;
     size_t totalChordsFound = 0;
 
     //! NOTE: We also need to delay the appending of tuplets. We should only display tuplets as selected
@@ -786,7 +786,7 @@ void Selection::updateSelectedElements()
             }
 
             Chord* chord = toChord(cr);
-            const std::vector<Note*> notes = chord->notes();
+            const muse::vector<Note*> notes = chord->notes();
             if (notes.size() == 1) {
                 singleNoteChords.emplace_back(chord);
             } else {
@@ -924,7 +924,7 @@ void Selection::update()
     EngravingItem* toSelectAgain = nullptr;
     if (cr->isChord()) {
         // Use the top selected note in the chord...
-        const std::vector<Note*> notes = toChord(cr)->notes();
+        const muse::vector<Note*> notes = toChord(cr)->notes();
         const size_t noteCount = notes.size();
         for (size_t noteIdx = noteCount - 1; noteIdx < noteCount; --noteIdx) {
             Note* note = notes.at(noteIdx);
@@ -1329,9 +1329,9 @@ muse::ByteArray Selection::symbolListMimeData() const
     return buffer.data();
 }
 
-std::vector<EngravingItem*> Selection::elements(ElementType type) const
+muse::vector<EngravingItem*> Selection::elements(ElementType type) const
 {
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
 
     for (EngravingItem* element : m_el) {
         if (element->type() == type) {
@@ -1342,9 +1342,9 @@ std::vector<EngravingItem*> Selection::elements(ElementType type) const
     return result;
 }
 
-std::vector<Note*> Selection::noteList(track_idx_t selTrack) const
+muse::vector<Note*> Selection::noteList(track_idx_t selTrack) const
 {
-    std::vector<Note*> nl;
+    muse::vector<Note*> nl;
 
     if (m_state == SelState::LIST) {
         for (EngravingItem* e : m_el) {
@@ -1370,7 +1370,7 @@ std::vector<Note*> Selection::noteList(track_idx_t selTrack) const
                         continue;
                     }
                     Chord* c = toChord(e);
-                    const std::vector<Note*> notes = c->notes();
+                    const muse::vector<Note*> notes = c->notes();
                     for (size_t noteIdx = 0; noteIdx < notes.size(); ++noteIdx) {
                         Note* note = notes.at(noteIdx);
                         if (selectionFilter().canSelectNoteIdx(noteIdx, notes.size(), rangeContainsMultiNoteChords())) {

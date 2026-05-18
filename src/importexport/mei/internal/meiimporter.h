@@ -199,7 +199,7 @@ private:
     ControlElementPosition findEnd(pugi::xml_node controlNode, engraving::Spanner* spanner);
     engraving::Note* findStartNote(const libmei::Element& meiElement);
     engraving::Note* findEndNote(pugi::xml_node controlNode);
-    const std::vector<engraving::ChordRest*> findPlistChordRests(pugi::xml_node controlNode);
+    const muse::vector<engraving::ChordRest*> findPlistChordRests(pugi::xml_node controlNode);
     void clearGraceNotes();
     bool hasLyricsToExtend(engraving::track_idx_t track, int no);
     const std::pair<engraving::Lyrics*, engraving::ChordRest*>& getLyricsToExtend(engraving::track_idx_t track, int no);

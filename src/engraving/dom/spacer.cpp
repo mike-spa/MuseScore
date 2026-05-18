@@ -97,7 +97,7 @@ void Spacer::dragGrip(EditData& ed)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> Spacer::gripsPositions(const EditData&) const
+muse::vector<PointF> Spacer::gripsPositions(const EditData&) const
 {
     double _spatium = spatium();
     PointF p;

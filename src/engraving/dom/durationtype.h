@@ -92,8 +92,8 @@ private:
     int m_dots = 0;
 };
 
-std::vector<TDuration> toDurationList(Fraction l, bool useDots, int maxDots = 4, bool printRestRemains = true);
-std::vector<TDuration> toRhythmicDurationList(const Fraction& l, bool isRest, Fraction rtickStart, const TimeSigFrac& nominal, Measure* msr,
+muse::vector<TDuration> toDurationList(Fraction l, bool useDots, int maxDots = 4, bool printRestRemains = true);
+muse::vector<TDuration> toRhythmicDurationList(const Fraction& l, bool isRest, Fraction rtickStart, const TimeSigFrac& nominal, Measure* msr,
                                               int maxDots, const Fraction& timeStretch = Fraction(1, 1));
 
 bool forceRhythmicSplit(bool isRest, BeatType startBeat, BeatType endBeat, int beatsCrossed, BeatType strongestBeatCrossed,
@@ -101,9 +101,9 @@ bool forceRhythmicSplit(bool isRest, BeatType startBeat, BeatType endBeat, int b
 bool forceRhythmicSplitSimple(bool isRest, BeatType startBeat, BeatType endBeat, int beatsCrossed, BeatType strongestBeatCrossed);
 bool forceRhythmicSplitCompound(bool isRest, BeatType startBeat, BeatType endBeat, int beatsCrossed, BeatType strongestBeatCrossed);
 
-void populateRhythmicList(std::vector<TDuration>* dList, const Fraction& l, bool isRest, const Fraction& rtickStart,
+void populateRhythmicList(muse::vector<TDuration>* dList, const Fraction& l, bool isRest, const Fraction& rtickStart,
                           const TimeSigFrac& nominal, int maxDots);
-void splitCompoundBeatsForList(std::vector<TDuration>* dList, const Fraction& l, bool isRest, const Fraction& rtickStart,
+void splitCompoundBeatsForList(muse::vector<TDuration>* dList, const Fraction& l, bool isRest, const Fraction& rtickStart,
                                const TimeSigFrac& nominal, int maxDots);
 } // namespace mu::engraving
 

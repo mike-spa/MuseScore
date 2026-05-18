@@ -49,9 +49,9 @@ struct TabNote {
     bool dead = false;
 };
 
-static std::vector<TabNote> collectTabNotes(MasterScore* score)
+static muse::vector<TabNote> collectTabNotes(MasterScore* score)
 {
-    std::vector<TabNote> result;
+    muse::vector<TabNote> result;
     Measure* m = score->firstMeasure();
     if (!m) {
         return result;
@@ -137,7 +137,7 @@ protected:
 
 // Helpers for same-string / negative-fret tests
 
-static const TabNote* findNoteByString(const std::vector<TabNote>& notes, int string)
+static const TabNote* findNoteByString(const muse::vector<TabNote>& notes, int string)
 {
     for (const auto& n : notes) {
         if (n.string == string) {
@@ -155,8 +155,8 @@ static void assertDeadNotesUnchangedByTransposeImpl(MasterScore* score)
     ASSERT_EQ(notesBefore.size(), 4u);
 
     // Snapshot all dead notes before transpose.
-    std::vector<TabNote> deadBefore;
-    std::vector<TabNote> liveBefore;
+    muse::vector<TabNote> deadBefore;
+    muse::vector<TabNote> liveBefore;
     for (const auto& n : notesBefore) {
         if (n.dead) {
             deadBefore.push_back(n);
@@ -174,8 +174,8 @@ static void assertDeadNotesUnchangedByTransposeImpl(MasterScore* score)
     ASSERT_EQ(notesAfter.size(), 4u);
 
     // All dead notes must still exist and remain unchanged.
-    std::vector<TabNote> deadAfter;
-    std::vector<TabNote> liveAfter;
+    muse::vector<TabNote> deadAfter;
+    muse::vector<TabNote> liveAfter;
     for (const auto& n : notesAfter) {
         if (n.dead) {
             deadAfter.push_back(n);
@@ -186,7 +186,7 @@ static void assertDeadNotesUnchangedByTransposeImpl(MasterScore* score)
     ASSERT_EQ(deadAfter.size(), deadBefore.size()) << "dead notes count changed after transpose";
     ASSERT_EQ(liveAfter.size(), liveBefore.size()) << "live notes count changed after transpose";
 
-    std::vector<TabNote> deadAfterRemaining = deadAfter;
+    muse::vector<TabNote> deadAfterRemaining = deadAfter;
     for (const auto& db : deadBefore) {
         auto it = std::find_if(deadAfterRemaining.begin(), deadAfterRemaining.end(), [&](const TabNote& da) {
             return da.string == db.string && da.fret == db.fret && da.pitch == db.pitch && da.dead == db.dead;
@@ -200,7 +200,7 @@ static void assertDeadNotesUnchangedByTransposeImpl(MasterScore* score)
     }
 
     // Live notes must all be transposed by the expected interval.
-    std::vector<int> livePitchesBefore, livePitchesAfter;
+    muse::vector<int> livePitchesBefore, livePitchesAfter;
     for (const auto& n : liveBefore) {
         livePitchesBefore.push_back(n.pitch);
     }
@@ -248,7 +248,7 @@ TEST_F(Engraving_TabTransposeTests, deadNotesTransposedWithNormalFlow)
     ASSERT_TRUE(score);
 
     auto notesBefore = collectTabNotes(score);
-    std::vector<int> deadPitchesBefore;
+    muse::vector<int> deadPitchesBefore;
     for (const auto& n : notesBefore) {
         if (n.dead) {
             deadPitchesBefore.push_back(n.pitch);
@@ -260,7 +260,7 @@ TEST_F(Engraving_TabTransposeTests, deadNotesTransposedWithNormalFlow)
     transposeScore(score, kSemitones);
 
     auto notesAfter = collectTabNotes(score);
-    std::vector<int> deadPitchesAfter;
+    muse::vector<int> deadPitchesAfter;
     for (const auto& n : notesAfter) {
         if (n.dead) {
             deadPitchesAfter.push_back(n.pitch);

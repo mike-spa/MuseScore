@@ -22,7 +22,7 @@ public:
     struct StaffProperties {
         int fretCount{ 24 };
         int capoFret{ 0 };
-        std::vector<int> tuning;
+        muse::vector<int> tuning;
         bool useFlats{ false };
         bool ignoreFlats{ false };
     };
@@ -100,9 +100,9 @@ public:
     const std::unordered_map<muse::String, Sound>& sounds() { return _sounds; }
     const std::map<SoundAutomationPos, SoundAutomation>& soundAutomations() { return _automations; }
 
-    std::vector<InstrumentString> strings() const
+    muse::vector<InstrumentString> strings() const
     {
-        std::vector<InstrumentString> ss;
+        muse::vector<InstrumentString> ss;
         for (size_t i = 0; i < _staffProperties.tuning.size(); ++i) {
             ss.push_back({ static_cast<int>(i + 1), _staffProperties.tuning.at(i) });
         }

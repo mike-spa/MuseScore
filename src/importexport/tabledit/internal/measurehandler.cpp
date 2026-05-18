@@ -36,11 +36,11 @@ namespace mu::iex::tabledit {
 //   that must be removed. Also the measure's actual size must be calculated.
 //---------------------------------------------------------
 
-static int nominalSize(const std::vector<TefMeasure>& tefMeasures, const size_t idx);
+static int nominalSize(const muse::vector<TefMeasure>& tefMeasures, const size_t idx);
 
 // debug support
 
-static void dumpIntVec(const char* name, const std::vector<int>& gaps)
+static void dumpIntVec(const char* name, const muse::vector<int>& gaps)
 {
     std::string s { name };
     for (const auto gap : gaps) {
@@ -50,33 +50,33 @@ static void dumpIntVec(const char* name, const std::vector<int>& gaps)
     LOGN("%s", s.c_str());
 }
 
-void MeasureHandler::dumpActualsAndSumGaps(const std::vector<TefMeasure>& tefMeasures) const
+void MeasureHandler::dumpActualsAndSumGaps(const muse::vector<TefMeasure>& tefMeasures) const
 {
-    std::vector<int> actuals;
+    muse::vector<int> actuals;
     for (unsigned int i = 0; i < tefMeasures.size(); ++i) {
         actuals.push_back(actualSize(tefMeasures, i));
     }
     dumpIntVec("actuals", actuals);
 
-    std::vector<int> sumGaps;
+    muse::vector<int> sumGaps;
     for (unsigned int i = 0; i < tefMeasures.size(); ++i) {
         sumGaps.push_back(sumPreviousGaps(i));
     }
     dumpIntVec("sumGaps", sumGaps);
 }
 
-static void dumpNominals(const std::vector<TefMeasure>& tefMeasures)
+static void dumpNominals(const muse::vector<TefMeasure>& tefMeasures)
 {
-    std::vector<int> nominals;
+    muse::vector<int> nominals;
     for (unsigned int i = 0; i < tefMeasures.size(); ++i) {
         nominals.push_back(nominalSize(tefMeasures, i));
     }
     dumpIntVec("nominals", nominals);
 }
 
-static void dumpPickups(const std::vector<TefMeasure>& tefMeasures)
+static void dumpPickups(const muse::vector<TefMeasure>& tefMeasures)
 {
-    std::vector<int> pickups;
+    muse::vector<int> pickups;
     for (unsigned int i = 0; i < tefMeasures.size(); ++i) {
         pickups.push_back(tefMeasures.at(i).isPickup ? 1 : 0);
     }
@@ -85,7 +85,7 @@ static void dumpPickups(const std::vector<TefMeasure>& tefMeasures)
 
 // return the nominal size of measure idx, based on time signature
 
-static int nominalSize(const std::vector<TefMeasure>& tefMeasures, const size_t idx)
+static int nominalSize(const muse::vector<TefMeasure>& tefMeasures, const size_t idx)
 {
     return 64 * tefMeasures.at(idx).numerator / tefMeasures.at(idx).denominator;
 }
@@ -94,7 +94,7 @@ static int nominalSize(const std::vector<TefMeasure>& tefMeasures, const size_t 
 // normal measure: based on time signature
 // pickup measure: based on time signature and left and right gaps
 
-int MeasureHandler::actualSize(const std::vector<TefMeasure>& tefMeasures, const size_t idx) const
+int MeasureHandler::actualSize(const muse::vector<TefMeasure>& tefMeasures, const size_t idx) const
 {
     int size { nominalSize(tefMeasures, idx) };
     if (tefMeasures.at(idx).isPickup) {
@@ -104,7 +104,7 @@ int MeasureHandler::actualSize(const std::vector<TefMeasure>& tefMeasures, const
     return size;
 }
 
-void MeasureHandler::initializeMeasureStartsAndGaps(const std::vector<TefMeasure>& tefMeasures)
+void MeasureHandler::initializeMeasureStartsAndGaps(const muse::vector<TefMeasure>& tefMeasures)
 {
     int measureStart { 0 };
     for (size_t i = 0; i < tefMeasures.size(); ++i) {
@@ -123,7 +123,7 @@ void MeasureHandler::initializeMeasureStartsAndGaps(const std::vector<TefMeasure
 // return the index of the measure containing tstart
 // note O2 behaviour in score size
 
-size_t MeasureHandler::measureIndex(int tstart, const std::vector<TefMeasure>& tefMeasures) const
+size_t MeasureHandler::measureIndex(int tstart, const muse::vector<TefMeasure>& tefMeasures) const
 {
     for (size_t i = 0; i < tefMeasures.size(); ++i) {
         auto start { nominalMeasureStarts.at(i) };
@@ -137,7 +137,7 @@ size_t MeasureHandler::measureIndex(int tstart, const std::vector<TefMeasure>& t
 
 // return the offset of tstart (distance from its measure's start)
 
-int MeasureHandler::offsetInMeasure(int tstart, const std::vector<TefMeasure>& tefMeasures)
+int MeasureHandler::offsetInMeasure(int tstart, const muse::vector<TefMeasure>& tefMeasures)
 {
     size_t index { measureIndex(tstart, tefMeasures) };
     if (index >= tefMeasures.size()) {
@@ -148,7 +148,7 @@ int MeasureHandler::offsetInMeasure(int tstart, const std::vector<TefMeasure>& t
 
 // find the smallest offset of any note in a pickup measure
 
-void MeasureHandler::updateGapLeft(std::vector<int>& gapLeft, const int position, const std::vector<TefMeasure>& tefMeasures)
+void MeasureHandler::updateGapLeft(muse::vector<int>& gapLeft, const int position, const muse::vector<TefMeasure>& tefMeasures)
 {
     size_t index { measureIndex(position, tefMeasures) };
     if (index >= tefMeasures.size()) {
@@ -166,7 +166,7 @@ void MeasureHandler::updateGapLeft(std::vector<int>& gapLeft, const int position
 
 // find the largest end time of any note in a pickup measure
 
-void MeasureHandler::updateGapRight(std::vector<int>& gapRight, const TefNote& note, const std::vector<TefMeasure>& tefMeasures)
+void MeasureHandler::updateGapRight(muse::vector<int>& gapRight, const TefNote& note, const muse::vector<TefMeasure>& tefMeasures)
 {
     auto pos { note.position };
     size_t index { measureIndex(pos, tefMeasures) };
@@ -204,7 +204,7 @@ int MeasureHandler::sumPreviousGaps(const size_t idx) const
     return corr;
 }
 
-void MeasureHandler::updateGaps(const std::vector<TefNote>& tefContents, const std::vector<TefMeasure>& tefMeasures)
+void MeasureHandler::updateGaps(const muse::vector<TefNote>& tefContents, const muse::vector<TefMeasure>& tefMeasures)
 {
     for (const TefNote& note : tefContents) {
         updateGapLeft(gapsLeft, note.position, tefMeasures);
@@ -212,7 +212,7 @@ void MeasureHandler::updateGaps(const std::vector<TefNote>& tefContents, const s
     }
 }
 
-void MeasureHandler::calculate(const std::vector<TefNote>& tefContents, const std::vector<TefMeasure>& tefMeasures)
+void MeasureHandler::calculate(const muse::vector<TefNote>& tefContents, const muse::vector<TefMeasure>& tefMeasures)
 {
     initializeMeasureStartsAndGaps(tefMeasures);
     updateGaps(tefContents, tefMeasures);

@@ -46,7 +46,7 @@ void EditStaveSharing::toggleStaveSharing(Score* score, bool on)
 
 void EditStaveSharing::cmdRemoveSharedStaves(Score* score)
 {
-    std::vector<Part*> parts = score->parts(); // COPY because we're about to remove elements
+    muse::vector<Part*> parts = score->parts(); // COPY because we're about to remove elements
 
     for (Part* part : parts) {
         if (part->isSharedPart()) {
@@ -64,7 +64,7 @@ void EditStaveSharing::cmdCreateSharedStaves(Score* score)
 
 StaveSharingGroups EditStaveSharing::computeGroups(Score* score)
 {
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
 
     StaveSharingGroups staveSharingGroups;
 
@@ -212,7 +212,7 @@ void EditStaveSharing::handleRemovePart(Part* part)
         }
     } else if (part->isSharedPart()) {
         sharedPart = toSharedPart(part);
-        std::vector<Part*> originParts = sharedPart->originParts();
+        muse::vector<Part*> originParts = sharedPart->originParts();
         for (Part* originPart : originParts) {
             score->undo(new DisconnectSharedPart(sharedPart, originPart));
         }

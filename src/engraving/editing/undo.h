@@ -161,7 +161,7 @@ enum class CommandType : signed char {
 
 #define UNDO_TYPE(t) CommandType type() const override { return t; }
 #define UNDO_NAME(a) const char* name() const override { return a; }
-#define UNDO_CHANGED_OBJECTS(...) std::vector<EngravingObject*> objectItems() const override { return __VA_ARGS__; }
+#define UNDO_CHANGED_OBJECTS(...) muse::vector<EngravingObject*> objectItems() const override { return __VA_ARGS__; }
 
 class UndoCommand
 {
@@ -183,15 +183,15 @@ public:
     UndoCommand* removeChild() { return muse::takeLast(m_childCommands); }
     size_t childCount() const { return m_childCommands.size(); }
     void unwind();
-    const std::vector<UndoCommand*>& commands() const { return m_childCommands; }
-    virtual std::vector<EngravingObject*> objectItems() const { return {}; }
+    const muse::vector<UndoCommand*>& commands() const { return m_childCommands; }
+    virtual muse::vector<EngravingObject*> objectItems() const { return {}; }
     virtual void cleanup(bool undo);
     virtual const char* name() const { return "UndoCommand"; }
     virtual CommandType type() const { return CommandType::Unknown; }
 
     virtual bool isFiltered(Filter, const EngravingItem* /* target */) const { return false; }
     bool hasFilteredChildren(Filter, const EngravingItem* target) const;
-    bool hasUnfilteredChildren(const std::vector<Filter>& filters, const EngravingItem* target) const;
+    bool hasUnfilteredChildren(const muse::vector<Filter>& filters, const EngravingItem* target) const;
     void filterChildren(UndoCommand::Filter f, EngravingItem* target);
 
 protected:
@@ -199,7 +199,7 @@ protected:
     void appendChildren(UndoCommand& other);
 
 private:
-    std::vector<UndoCommand*> m_childCommands;
+    muse::vector<UndoCommand*> m_childCommands;
 };
 
 //---------------------------------------------------------
@@ -212,7 +212,7 @@ class UndoMacro : public UndoCommand
 {
 public:
     struct SelectionInfo {
-        std::vector<EngravingItem*> elements;
+        muse::vector<EngravingItem*> elements;
         Fraction tickStart;
         Fraction tickEnd;
         staff_idx_t staffStart = muse::nidx;
@@ -313,15 +313,15 @@ private:
     void remove(size_t idx);
 
     UndoMacro* m_activeCommand = nullptr;
-    std::vector<UndoMacro*> m_macroList;
-    std::vector<int> m_stateList;
+    muse::vector<UndoMacro*> m_macroList;
+    muse::vector<int> m_stateList;
     int m_nextState = 0;
     int m_cleanState = 0;
     size_t m_currentIndex = 0;
     bool m_isLocked = false;
 };
 
-std::vector<EngravingObject*> compoundObjects(EngravingObject* object);
+muse::vector<EngravingObject*> compoundObjects(EngravingObject* object);
 
 class StaffTextBase;
 void updateStaffTextCache(const StaffTextBase* text, Score* score);

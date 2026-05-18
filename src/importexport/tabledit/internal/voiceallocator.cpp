@@ -77,7 +77,7 @@ void VoiceAllocator::appendNoteToVoice(const TefNote* const note, int voice)
     LOGN("voice %d nChords %zu", voice, nChords);
     if (nChords == 0) {
         LOGN("create first chord");
-        std::vector<const TefNote*> chord;
+        muse::vector<const TefNote*> chord;
         chord.push_back(note);
         voiceContents[voice].push_back(chord);
     } else {
@@ -88,7 +88,7 @@ void VoiceAllocator::appendNoteToVoice(const TefNote* const note, int voice)
             voiceContents[voice].at(nChords - 1).push_back(note);
         } else {
             LOGN("create next chord at position %d", note->position);
-            std::vector<const TefNote*> chord;
+            muse::vector<const TefNote*> chord;
             chord.push_back(note);
             voiceContents[voice].push_back(chord);
         }
@@ -128,7 +128,7 @@ void VoiceAllocator::allocateVoice(const TefNote* const note, int voice)
     }
 }
 
-void VoiceAllocator::addColumn(const std::vector<const TefNote*>& column)
+void VoiceAllocator::addColumn(const muse::vector<const TefNote*>& column)
 {
     if (column.empty()) {
         return;

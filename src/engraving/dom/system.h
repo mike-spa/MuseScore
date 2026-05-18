@@ -119,8 +119,8 @@ public:
 
     void clear(); ///< Clear measure list.
 
-    std::vector<SysStaff*>& staves() { return m_staves; }
-    const std::vector<SysStaff*>& staves() const { return m_staves; }
+    muse::vector<SysStaff*>& staves() { return m_staves; }
+    const muse::vector<SysStaff*>& staves() const { return m_staves; }
     double staffYpage(staff_idx_t staffIdx) const;
     double staffCanvasYpage(staff_idx_t staffIdx) const;
     SysStaff* staff(size_t staffIdx) const;
@@ -135,8 +135,8 @@ public:
     Fraction snap(const Fraction& tick, const PointF p) const;
     Fraction snapNote(const Fraction& tick, const PointF p, int staff) const;
 
-    const std::vector<MeasureBase*>& measures() const { return m_ml; }
-    std::vector<MeasureBase*>& measures() { return m_ml; }
+    const muse::vector<MeasureBase*>& measures() const { return m_ml; }
+    muse::vector<MeasureBase*>& measures() { return m_ml; }
 
     MeasureBase* measure(int idx) { return m_ml[idx]; }
     MeasureBase* first() const { return m_ml.front(); }
@@ -155,8 +155,8 @@ public:
 
     Box* vbox() const;
 
-    const std::vector<Bracket*>& brackets() const { return m_brackets; }
-    std::vector<Bracket*>& brackets() { return m_brackets; }
+    const muse::vector<Bracket*>& brackets() const { return m_brackets; }
+    muse::vector<Bracket*>& brackets() { return m_brackets; }
 
     std::list<SpannerSegment*>& spannerSegments() { return m_spannerSegments; }
     const std::list<SpannerSegment*>& spannerSegments() const { return m_spannerSegments; }
@@ -196,8 +196,8 @@ public:
     staff_idx_t firstVisibleSysStaffWithInstrument(const String& instrumentId, staff_idx_t startFrom);
     staff_idx_t lastSysStaffOfPart(const Part* part) const;
     staff_idx_t lastVisibleSysStaffOfPart(const Part* part) const;
-    std::vector<staff_idx_t> visibleStavesOfPart(const Part* part) const;
-    std::vector<Part*> visiblePartsOfGroup(staff_idx_t start, staff_idx_t end) const;
+    muse::vector<staff_idx_t> visibleStavesOfPart(const Part* part) const;
+    muse::vector<Part*> visiblePartsOfGroup(staff_idx_t start, staff_idx_t end) const;
 
 #ifndef ENGRAVING_NO_ACCESSIBILITY
     AccessibleItemPtr createAccessible() override;
@@ -213,7 +213,7 @@ public:
     bool isLocked() const;
     const SystemLock* systemLock() const;
 
-    const std::vector<SystemLockIndicator*> lockIndicators() const { return m_lockIndicators; }
+    const muse::vector<SystemLockIndicator*> lockIndicators() const { return m_lockIndicators; }
     void addLockIndicator(SystemLockIndicator* sli);
     void deleteLockIndicators();
 
@@ -271,11 +271,11 @@ private:
     SystemDivider* m_systemDividerLeft = nullptr;       // to the next system
     SystemDivider* m_systemDividerRight = nullptr;
 
-    std::vector<MeasureBase*> m_ml;
-    std::vector<SysStaff*> m_staves;
-    std::vector<Bracket*> m_brackets;
+    muse::vector<MeasureBase*> m_ml;
+    muse::vector<SysStaff*> m_staves;
+    muse::vector<Bracket*> m_brackets;
     std::list<SpannerSegment*> m_spannerSegments;
-    std::vector<SystemLockIndicator*> m_lockIndicators;
+    muse::vector<SystemLockIndicator*> m_lockIndicators;
 
     StaffVisibilityIndicator* m_staffVisibilityIndicator = nullptr;
 
@@ -285,6 +285,6 @@ private:
     double m_systemHeight = 0.0;
 };
 
-typedef std::vector<System*>::iterator iSystem;
-typedef std::vector<System*>::const_iterator ciSystem;
+typedef muse::vector<System*>::iterator iSystem;
+typedef muse::vector<System*>::const_iterator ciSystem;
 } // namespace mu::engraving

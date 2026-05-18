@@ -313,11 +313,11 @@ public:
     void styleChanged();
 
     // static functions for font config files
-    static std::vector<String> tabFontNames(bool bDuration);
+    static muse::vector<String> tabFontNames(bool bDuration);
     static bool tabFontData(bool bDuration, size_t nIdx, double& pSize, double& pYOff);
 
     static void initStaffTypes(const Color& defaultColor);
-    static const std::vector<StaffType>& presets() { return m_presets; }
+    static const muse::vector<StaffType>& presets() { return m_presets; }
 
 private:
 
@@ -409,9 +409,9 @@ private:
     // and the metrics of the fret font
 
     // the array of configured fonts
-    static std::vector<TablatureFretFont> m_fretFonts;
-    static std::vector<TablatureDurationFont> m_durationFonts;
-    static std::vector<StaffType> m_presets;
+    static muse::vector<TablatureFretFont> m_fretFonts;
+    static muse::vector<TablatureDurationFont> m_durationFonts;
+    static muse::vector<StaffType> m_presets;
 };
 
 //---------------------------------------------------------

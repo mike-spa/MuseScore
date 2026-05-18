@@ -109,7 +109,7 @@ double EaseInOut::tFromY(const double y) const
 // Given a number of note to place within the given duration, return the list of on-times for each
 // note given the current ease-in and ease-out parameters. The first note is at time 0 while the
 //-------------------------------------------------------------------------------------------------
-void EaseInOut::timeList(const int nbNotes, const int duration, std::vector<int>* times) const
+void EaseInOut::timeList(const int nbNotes, const int duration, muse::vector<int>* times) const
 {
     double nNotes = double(nbNotes);
     double space = double(duration);

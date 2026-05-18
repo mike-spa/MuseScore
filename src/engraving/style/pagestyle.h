@@ -26,7 +26,7 @@
 #include "styledef.h"
 
 namespace mu::engraving {
-const std::vector<Sid>& pageStyles();
+const muse::vector<Sid>& pageStyles();
 
 class MStyle;
 class PageSizeGetAccessor

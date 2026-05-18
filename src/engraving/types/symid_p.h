@@ -3112,4 +3112,4 @@ enum class SymId {
 
     lastSym
 };
-using SymIdList = std::vector<SymId>;
+using SymIdList = muse::vector<SymId>;

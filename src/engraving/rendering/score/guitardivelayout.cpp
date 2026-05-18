@@ -36,9 +36,9 @@ using namespace mu::engraving;
 using namespace muse::draw;
 using namespace mu::engraving::rendering::score;
 
-void GuitarDiveLayout::updateDiveSequences(const std::vector<GuitarBend*>& bends, const LayoutContext& ctx)
+void GuitarDiveLayout::updateDiveSequences(const muse::vector<GuitarBend*>& bends, const LayoutContext& ctx)
 {
-    std::vector<GuitarBend*> dives;
+    muse::vector<GuitarBend*> dives;
     for (GuitarBend* bend : bends) {
         if ((bend->bendType() == GuitarBendType::DIVE || bend->bendType() == GuitarBendType::PRE_DIVE) && bend->staffType()->isTabStaff()) {
             dives.push_back(bend);

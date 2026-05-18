@@ -134,7 +134,7 @@ void BendDataCollectorSplitChord::fillBendData(BendDataContextSplitChord& bendDa
 
 void BendDataCollectorSplitChord::fillBendsDurations(BendDataContextSplitChord& bendDataCtx)
 {
-    std::unordered_map<mu::engraving::track_idx_t, std::map<Fraction, std::vector<const Chord*> > > tiedNotesAfterBend;
+    std::unordered_map<mu::engraving::track_idx_t, std::map<Fraction, muse::vector<const Chord*> > > tiedNotesAfterBend;
     for (const auto& [track, trackInfo] : m_bendInfoForNote) {
         for (const auto& [mainTick, tickInfo] : trackInfo) {
             // now using the top note of chord to fill durations
@@ -225,11 +225,11 @@ static int getMaxDenominatorForSplit(const Fraction& duration)
     return denominator * 2;
 }
 
-static std::vector<Fraction> splittedDurations(const ImportedBendInfo& importedInfo, Fraction totalDuration)
+static muse::vector<Fraction> splittedDurations(const ImportedBendInfo& importedInfo, Fraction totalDuration)
 {
     const auto& bendSegments = importedInfo.segments;
 
-    std::vector<Fraction> proportions;
+    muse::vector<Fraction> proportions;
 
     const int maxDenominator = getMaxDenominatorForSplit(totalDuration / 4);
 

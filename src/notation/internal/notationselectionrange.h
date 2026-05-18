@@ -46,9 +46,9 @@ public:
 
     MeasureRange measureRange() const override;
 
-    std::vector<const Part*> selectedParts() const override;
+    muse::vector<const Part*> selectedParts() const override;
 
-    std::vector<muse::RectF> boundingArea() const override;
+    muse::vector<muse::RectF> boundingArea() const override;
     bool containsPoint(const muse::PointF& point) const override;
     bool containsItem(const EngravingItem* item, engraving::staff_idx_t staffIdx = muse::nidx) const override;
 

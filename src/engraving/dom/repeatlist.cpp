@@ -129,7 +129,7 @@ void RepeatSegment::popMeasure()
     }
 }
 
-const std::vector<const Measure*>& RepeatSegment::measureList() const
+const muse::vector<const Measure*>& RepeatSegment::measureList() const
 {
     return m_measureList;
 }
@@ -195,7 +195,7 @@ void RepeatList::update(bool expand, bool updateTies)
         return;
     }
 
-    std::vector<RepeatSegment> oldSegments;
+    muse::vector<RepeatSegment> oldSegments;
     for (RepeatSegment* rs : *this) {
         oldSegments.push_back(*rs);
     }
@@ -334,7 +334,7 @@ int RepeatList::utime2utick(double secs) const
 ///
 /// \brief Lookup the RepeatSegment containing the given utick
 ///
-std::vector<RepeatSegment*>::const_iterator RepeatList::findRepeatSegmentFromUTick(int utick) const
+muse::vector<RepeatSegment*>::const_iterator RepeatList::findRepeatSegmentFromUTick(int utick) const
 {
     for (auto it = cbegin(); it != cend(); ++it) {
         const RepeatSegment* seg = *it;
@@ -496,7 +496,7 @@ void RepeatList::collectRepeatListElements()
                     remainder = swap;
                 }
                 // Cross-section of the repeatList
-                std::vector<int> endings = remainder->endings();
+                muse::vector<int> endings = remainder->endings();
                 muse::remove_if(endings, [&volta](const int& ending) {
                     return !(volta->hasEnding(ending));
                 });
@@ -687,12 +687,12 @@ void RepeatList::collectRepeatListElements()
 ///         "start" will result in start of current section
 ///         "end" will result in end of current section
 ///
-std::pair<std::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> RepeatList::findMarker(
-    muse::String label, std::vector<RepeatListElementList>::const_iterator referenceSectionIt,
+std::pair<muse::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> RepeatList::findMarker(
+    muse::String label, muse::vector<RepeatListElementList>::const_iterator referenceSectionIt,
     RepeatListElementList::const_iterator referenceRepeatListElementIt) const
 {
     bool found = false;
-    std::vector<RepeatListElementList>::const_iterator foundSectionIt;
+    muse::vector<RepeatListElementList>::const_iterator foundSectionIt;
     RepeatListElementList::const_iterator foundRepeatListElementIt;
 
     // Start in the current section
@@ -781,7 +781,7 @@ std::pair<std::vector<RepeatListElementList>::const_iterator, RepeatListElementL
 /// \param activeVolta               [out]  Contains a reference to the active Volta for jump target
 /// \param startRepeatReference      [out]  Reference point to return to and compare against for jump target
 ///
-void RepeatList::performJump(std::vector<RepeatListElementList>::const_iterator sectionIt,
+void RepeatList::performJump(muse::vector<RepeatListElementList>::const_iterator sectionIt,
                              RepeatListElementList::const_iterator repeatListElementTargetIt,
                              bool withRepeats, int* const playbackCount,
                              Volta const** const activeVolta, RepeatListElement const** const startRepeatReference) const
@@ -850,15 +850,15 @@ void RepeatList::unwind()
     RepeatSegment* rs = nullptr;
     int playbackCount;
     Volta const* activeVolta = nullptr;
-    std::pair<std::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> playUntil
+    std::pair<muse::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> playUntil
         = std::make_pair(m_rlElements.cend(), m_rlElements[0].cend());
-    std::pair<std::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> continueAt
+    std::pair<muse::vector<RepeatListElementList>::const_iterator, RepeatListElementList::const_iterator> continueAt
         = std::make_pair(m_rlElements.cend(), m_rlElements[0].cend());
     Jump const* activeJump = nullptr;
     bool forceFinalRepeat = false;   // Used during jump processing
     RepeatListElementList::const_iterator repeatListElementIt;
 
-    for (std::vector<RepeatListElementList>::const_iterator sectionIt = m_rlElements.cbegin(); sectionIt != m_rlElements.cend();
+    for (muse::vector<RepeatListElementList>::const_iterator sectionIt = m_rlElements.cbegin(); sectionIt != m_rlElements.cend();
          ++sectionIt) {
         // Unwind this section
         RepeatListElement const* startRepeatReference;
@@ -972,7 +972,7 @@ void RepeatList::unwind()
                         // Processing it now
                         m_jumpsTaken.insert(jumpOccurrence);
                         // Find the jump targets
-                        std::pair<std::vector<RepeatListElementList>::const_iterator,
+                        std::pair<muse::vector<RepeatListElementList>::const_iterator,
                                   RepeatListElementList::const_iterator> jumpTo = findMarker(
                             jumpOccurrence.first->jumpTo(), sectionIt, repeatListElementIt);
                         playUntil = findMarker(jumpOccurrence.first->playUntil(), sectionIt, repeatListElementIt);

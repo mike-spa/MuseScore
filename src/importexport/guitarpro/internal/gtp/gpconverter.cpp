@@ -330,7 +330,7 @@ void GPConverter::fillTuplet()
     m_nextTupletInfo.lowestBase = NextTupletInfo::LOWEST_BASE;
 }
 
-void GPConverter::convert(const std::vector<std::unique_ptr<GPMasterBar> >& masterBars)
+void GPConverter::convert(const muse::vector<std::unique_ptr<GPMasterBar> >& masterBars)
 {
     for (uint32_t mi = 0; mi < masterBars.size(); ++mi) {
         Context ctx;
@@ -371,7 +371,7 @@ void GPConverter::fixEmptyMeasures()
 {
     // Get all ChordRest elems and sort them by staves
     // Also store root Segment ptr will need it later to delete some rest elems
-    std::map<track_idx_t, std::vector<std::pair<Segment*, EngravingItem*> > > elems;
+    std::map<track_idx_t, muse::vector<std::pair<Segment*, EngravingItem*> > > elems;
 
     size_t ntracks = _score->ntracks();
     SegmentType type = SegmentType::ChordRest;
@@ -429,7 +429,7 @@ void GPConverter::fixEmptyMeasures()
     }
 }
 
-void GPConverter::convertBars(const std::vector<std::unique_ptr<GPBar> >& bars, Context ctx)
+void GPConverter::convertBars(const muse::vector<std::unique_ptr<GPBar> >& bars, Context ctx)
 {
     ctx.curTrack = 0;
     for (const auto& bar : bars) {
@@ -509,7 +509,7 @@ void GPConverter::addBarline(const GPMasterBar* mB, Measure* measure, int32_t ma
     _lastTimeSig.denominator = sig.denominator;
 }
 
-void GPConverter::convertVoices(const std::vector<std::unique_ptr<GPVoice> >& voices, Context ctx)
+void GPConverter::convertVoices(const muse::vector<std::unique_ptr<GPVoice> >& voices, Context ctx)
 {
     if (voices.empty()) {
         ctx.curTick = _score->lastMeasure()->tick();
@@ -537,7 +537,7 @@ void GPConverter::convertVoice(const GPVoice* voice, Context ctx)
     convertBeats(voice->beats(), ctx);
 }
 
-void GPConverter::convertBeats(const std::vector<std::shared_ptr<GPBeat> >& beats, Context ctx)
+void GPConverter::convertBeats(const muse::vector<std::shared_ptr<GPBeat> >& beats, Context ctx)
 {
     ChordRestContainer graceChords;
     for (const auto& beat : beats) {
@@ -654,7 +654,7 @@ Fraction GPConverter::convertBeat(const GPBeat* beat, ChordRestContainer& graceC
     return ctx.curTick;
 }
 
-void GPConverter::convertNotes(const std::vector<std::shared_ptr<GPNote> >& notes, ChordRest* cr)
+void GPConverter::convertNotes(const muse::vector<std::shared_ptr<GPNote> >& notes, ChordRest* cr)
 {
     for (const auto& note : notes) {
         convertNote(note.get(), cr);
@@ -996,7 +996,7 @@ void GPConverter::setUpGPScore(const GPScore* gpscore)
 {
     engravingConfiguration()->setGuitarProMultivoiceEnabled(gpscore->multiVoice());
 
-    std::vector<String> fieldNames = { gpscore->title(), gpscore->subTitle(), gpscore->artist(),
+    muse::vector<String> fieldNames = { gpscore->title(), gpscore->subTitle(), gpscore->artist(),
                                        gpscore->album(), gpscore->composer(), gpscore->poet() };
 
     bool createTitleField
@@ -2998,7 +2998,7 @@ void GPConverter::addTuning()
             }
 
             const StringData sd = stringDatas.at(p->id().toUint64());
-            std::vector<int> tuning(sd.strings());
+            muse::vector<int> tuning(sd.strings());
             for (size_t i = 0; i < tuning.size(); ++i) {
                 tuning[i] = sd.stringList().at(i).pitch + p->instrument()->transpose().chromatic;
             }

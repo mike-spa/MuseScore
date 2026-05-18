@@ -31,13 +31,13 @@ public:
     GPMasterTracks& operator=(const GPMasterTracks& mT) = default;
     GPMasterTracks& operator=(GPMasterTracks&& mT) = default;
 
-    void setTempoMap(std::vector<Automation>&& tM) { _tempoMap.swap(tM); }
-    const std::vector<Automation>& tempoMap() const { return _tempoMap; }
+    void setTempoMap(muse::vector<Automation>&& tM) { _tempoMap.swap(tM); }
+    const muse::vector<Automation>& tempoMap() const { return _tempoMap; }
     void setTracksCount(size_t tc) { _tracksCount = tc; }
     size_t tracksCount() { return _tracksCount; }
 
 private:
-    std::vector<Automation> _tempoMap;
+    muse::vector<Automation> _tempoMap;
     size_t _tracksCount;
 };
 } // namespace mu::iex::guitarpro

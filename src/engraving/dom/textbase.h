@@ -378,7 +378,7 @@ public:
 
     const Shape& highResShape() const { return ldata()->highResShape.value(); }
 
-    std::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> dragAnchorLines() const override;
 
     virtual bool acceptDrop(EditData&) const override;
     virtual EngravingItem* drop(EditData&) override;
@@ -475,7 +475,7 @@ public:
     void setFrameRound(Spatium val) { m_frameRound = val; }
 
     struct LayoutData : public EngravingItem::LayoutData {
-        std::vector<TextBlock> blocks;
+        muse::vector<TextBlock> blocks;
         bool layoutInvalid = true;
 
         RectF frame;

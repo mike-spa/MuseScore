@@ -48,11 +48,11 @@ using namespace muse::io;
 using namespace mu::engraving;
 
 namespace mu::engraving {
-std::vector<const InstrumentGroup*> instrumentGroups;
-std::vector<const InstrumentGenre*> instrumentGenres;
-std::vector<const InstrumentFamily*> instrumentFamilies;
-std::vector<MidiArticulation> midiArticulations;            // global articulations
-std::vector<ScoreOrder> instrumentOrders;
+muse::vector<const InstrumentGroup*> instrumentGroups;
+muse::vector<const InstrumentGenre*> instrumentGenres;
+muse::vector<const InstrumentFamily*> instrumentFamilies;
+muse::vector<MidiArticulation> midiArticulations;            // global articulations
+muse::vector<ScoreOrder> instrumentOrders;
 
 InstrumentIndex::InstrumentIndex(int g, int i, const InstrumentTemplate* it)
     : groupIndex{g}, instrIndex{i}, instrTemplate{it}
@@ -877,7 +877,7 @@ const InstrumentTemplate* searchTemplateForMusicXmlId(const String& mxmlId)
     return 0;
 }
 
-const InstrumentTemplate* searchTemplateForInstrNameList(const std::vector<String>& nameList, bool useDrumset, bool caseSensitive)
+const InstrumentTemplate* searchTemplateForInstrNameList(const muse::vector<String>& nameList, bool useDrumset, bool caseSensitive)
 {
     const InstrumentTemplate* bestMatch = nullptr; // default if no matches
     int bestMatchStrength = 0; // higher for better matches

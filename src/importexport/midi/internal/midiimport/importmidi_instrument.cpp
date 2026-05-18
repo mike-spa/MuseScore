@@ -47,7 +47,7 @@ using namespace std::literals;
 using namespace mu::engraving;
 
 namespace mu::engraving {
-extern std::vector<const InstrumentGroup*> instrumentGroups;
+extern muse::vector<const InstrumentGroup*> instrumentGroups;
 }
 
 namespace mu::iex::midi {
@@ -345,7 +345,7 @@ static const InstrumentTemplate* findInstrument(const String& groupId, const Str
 // returns number of pitches which are present in p1, but missing in p2
 static int countMissingPitches(const std::set<int>& p1, const std::set<int>& p2)
 {
-    std::vector<int> missingPitches = {};
+    muse::vector<int> missingPitches = {};
     missingPitches.reserve(p1.size());
 
     std::set_difference(p1.begin(), p1.end(), p2.begin(), p2.end(), std::back_inserter(missingPitches));
@@ -405,9 +405,9 @@ static const InstrumentTemplate* findClosestInstrument(const GM1Program program,
     return closestTemplate;
 }
 
-static std::vector<const InstrumentTemplate*> findInstrumentsForProgram(const MTrack& track)
+static muse::vector<const InstrumentTemplate*> findInstrumentsForProgram(const MTrack& track)
 {
-    std::vector<const InstrumentTemplate*> suitableTemplates;
+    muse::vector<const InstrumentTemplate*> suitableTemplates;
     const GM1Program program = track.program;
     const bool isDrumTrack = track.mtrack->drumTrack();
 
@@ -521,7 +521,7 @@ static int findMaxPitchDiff(const std::pair<int, int>& minMaxPitch, const Instru
     return diff;
 }
 
-static bool hasCommonGenre(const std::vector<const InstrumentGenre*>& genres)
+static bool hasCommonGenre(const muse::vector<const InstrumentGenre*>& genres)
 {
     for (const InstrumentGenre* genre : genres) {
         if (genre->id == "common") {
@@ -532,7 +532,7 @@ static bool hasCommonGenre(const std::vector<const InstrumentGenre*>& genres)
 }
 
 void sortInstrumentTemplates(
-    std::vector<const InstrumentTemplate*>& templates,
+    muse::vector<const InstrumentTemplate*>& templates,
     const std::pair<int, int>& minMaxPitch)
 {
     std::stable_sort(templates.begin(), templates.end(),
@@ -565,9 +565,9 @@ void sortInstrumentTemplates(
     });
 }
 
-std::vector<const InstrumentTemplate*> findSuitableInstruments(const MTrack& track)
+muse::vector<const InstrumentTemplate*> findSuitableInstruments(const MTrack& track)
 {
-    std::vector<const InstrumentTemplate*> templates = findInstrumentsForProgram(track);
+    muse::vector<const InstrumentTemplate*> templates = findInstrumentsForProgram(track);
     if (templates.empty()) {
         return templates;
     }

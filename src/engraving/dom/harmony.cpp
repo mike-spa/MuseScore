@@ -470,7 +470,7 @@ bool Harmony::hasModifiers() const
 //    return true if chord is recognized
 //---------------------------------------------------------
 
-const std::vector<const ChordDescription*> Harmony::parseHarmony(const String& ss, bool syntaxOnly)
+const muse::vector<const ChordDescription*> Harmony::parseHarmony(const String& ss, bool syntaxOnly)
 {
     // pre-process for parentheses
     String s = ss.simplified();
@@ -495,7 +495,7 @@ const std::vector<const ChordDescription*> Harmony::parseHarmony(const String& s
     muse::DeleteAll(m_chords);
     m_chords.clear();
 
-    std::vector<const ChordDescription*> descriptions;
+    muse::vector<const ChordDescription*> descriptions;
     if (s.isEmpty()) {
         return descriptions;
     }
@@ -756,7 +756,7 @@ bool Harmony::edit(EditData& ed)
     // check spelling
     String str = xmlText();
 
-    std::vector<const ChordDescription*> descriptions = parseHarmony(str, true);
+    muse::vector<const ChordDescription*> descriptions = parseHarmony(str, true);
     bool descriptionsValid = true;
     for (const ChordDescription* cd : descriptions) {
         if (!cd) {
@@ -872,7 +872,7 @@ void Harmony::setHarmony(const String& s)
 {
     m_realizedHarmony.setDirty(true);
 
-    std::vector<const ChordDescription*> descriptions = parseHarmony(s);
+    muse::vector<const ChordDescription*> descriptions = parseHarmony(s);
     for (size_t i = 0; i < m_chords.size(); i++) {
         HarmonyInfo* info = m_chords.at(i);
         const ChordDescription* cd = i < descriptions.size() ? descriptions.at(i) : nullptr;
@@ -1258,7 +1258,7 @@ void Harmony::addDegree(const HDegree& d)
 //   degreeList
 //---------------------------------------------------------
 
-const std::vector<HDegree>& Harmony::degreeList() const
+const muse::vector<HDegree>& Harmony::degreeList() const
 {
     return m_degreeList;
 }
@@ -1348,7 +1348,7 @@ String Harmony::generateScreenReaderInfo() const
                 rez = String(u"%1 %2").arg(rez, muse::mtrc("engraving", "lower case"));
             }
             aux = aux.toLower();
-            static const std::vector<std::pair<String, String> > rnaReplacements {
+            static const muse::vector<std::pair<String, String> > rnaReplacements {
                 { u"vii", u"7" },
                 { u"vi", u"6" },
                 { u"iv", u"4" },
@@ -1357,7 +1357,7 @@ String Harmony::generateScreenReaderInfo() const
                 { u"ii", u"2" },
                 { u"i", u"1" },
             };
-            static const std::vector<std::pair<String, String> > symbolReplacements {
+            static const muse::vector<std::pair<String, String> > symbolReplacements {
                 { u"bb", u"𝄫" },
                 { u"##", u"𝄪" },
                 { u"h", u"♮" },

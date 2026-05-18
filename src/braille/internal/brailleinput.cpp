@@ -36,7 +36,7 @@ QString parseBrailleKeyInput(QString keys)
 
     QStringList lst = keys.split(QString::fromStdString("+"));
 
-    std::vector<std::string> nlst;
+    muse::vector<std::string> nlst;
     for (int i = 0; i < lst.size(); i++) {
         std::string key = lst.at(i).toStdString();
 
@@ -77,7 +77,7 @@ NoteName getNoteName(const braille_code* code)
     return NoteName::C;
 }
 
-std::vector<DurationType> getNoteDurations(const braille_code* code)
+muse::vector<DurationType> getNoteDurations(const braille_code* code)
 {
     for (int i=0; i < 7; i++) {
         if (code->code == Braille_wholeNotes[i]->code) {
@@ -109,7 +109,7 @@ std::vector<DurationType> getNoteDurations(const braille_code* code)
     return {};
 }
 
-std::vector<DurationType> getRestDurations(const braille_code* code)
+muse::vector<DurationType> getRestDurations(const braille_code* code)
 {
     if (code->code == Braille_RestWhole.code) {
         return { DurationType::V_WHOLE, DurationType::V_16TH };
@@ -143,7 +143,7 @@ int getInterval(const braille_code* code)
 
 bool isNoteName(const braille_code* code)
 {
-    static const std::vector<std::string> note_names = {
+    static const muse::vector<std::string> note_names = {
         "aMaxima", "aLonga", "aBreve", "aWhole", "aHalf",
         "aQuarter", "a8th", "a16th", "a32nd", "a64th", "a128th",
         "a256th", "a512th", "a128th", "a2048th", "aBreveAlt",
@@ -525,7 +525,7 @@ DurationType BrailleInputState::currentDuration()
     return _current_duration;
 }
 
-std::vector<DurationType> BrailleInputState::noteDurations()
+muse::vector<DurationType> BrailleInputState::noteDurations()
 {
     return _note_durations;
 }
@@ -619,7 +619,7 @@ void BrailleInputState::setCurrentDuration(const DurationType duration)
     _current_duration = duration;
 }
 
-void BrailleInputState::setNoteDurations(const std::vector<DurationType> durations)
+void BrailleInputState::setNoteDurations(const muse::vector<DurationType> durations)
 {
     _note_durations = durations;
 }
@@ -654,7 +654,7 @@ void BrailleInputState::setVoice(const voice_idx_t voice)
     _voice = voice;
 }
 
-std::vector<int> BrailleInputState::intervals()
+muse::vector<int> BrailleInputState::intervals()
 {
     return _intervals;
 }

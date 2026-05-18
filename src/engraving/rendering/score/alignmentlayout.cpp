@@ -34,7 +34,7 @@
 #include "dom/text.h"
 
 namespace mu::engraving::rendering::score {
-void AlignmentLayout::alignItemsGroup(const std::vector<EngravingItem*>& elements, const System* system)
+void AlignmentLayout::alignItemsGroup(const muse::vector<EngravingItem*>& elements, const System* system)
 {
     if (elements.empty()) {
         return;
@@ -57,7 +57,7 @@ void AlignmentLayout::alignHopoLetters(const HammerOnPullOff* hopo, const System
         return;
     }
 
-    std::vector<EngravingItem*> itemsToAlign;
+    muse::vector<EngravingItem*> itemsToAlign;
     for (SpannerSegment* seg : hopo->spannerSegments()) {
         if (seg->system() == system) {
             HammerOnPullOffSegment* hopoSegment = toHammerOnPullOffSegment(seg);
@@ -91,7 +91,7 @@ void AlignmentLayout::alignHopoLetters(const HammerOnPullOff* hopo, const System
     alignItemsGroup(itemsToAlign, system);
 }
 
-void AlignmentLayout::alignItemsWithTheirSnappingChain(const std::vector<EngravingItem*>& elements, const System* system)
+void AlignmentLayout::alignItemsWithTheirSnappingChain(const muse::vector<EngravingItem*>& elements, const System* system)
 {
     std::set<EngravingItem*> alignedItems;
 
@@ -122,9 +122,9 @@ void AlignmentLayout::alignItemsWithTheirSnappingChain(const std::vector<Engravi
     }
 }
 
-void AlignmentLayout::alignStaffCenteredItems(const std::vector<EngravingItem*>& elements, const System* system)
+void AlignmentLayout::alignStaffCenteredItems(const muse::vector<EngravingItem*>& elements, const System* system)
 {
-    std::vector<double> vecOfCurrentY;
+    muse::vector<double> vecOfCurrentY;
 
     auto collectCurrentYandComputeEdges = [&vecOfCurrentY](EngravingItem* item) {
         vecOfCurrentY.push_back(yOpticalCenter(item));
@@ -161,11 +161,11 @@ void AlignmentLayout::alignStaffCenteredItems(const std::vector<EngravingItem*>&
     }
 }
 
-void AlignmentLayout::alignItemsForSystem(const std::vector<EngravingItem*>& elements, const System* system)
+void AlignmentLayout::alignItemsForSystem(const muse::vector<EngravingItem*>& elements, const System* system)
 {
     struct StaffItemGroups {
-        std::vector<EngravingItem*> itemsAbove;
-        std::vector<EngravingItem*> itemsBelow;
+        muse::vector<EngravingItem*> itemsAbove;
+        muse::vector<EngravingItem*> itemsBelow;
     };
 
     std::map<staff_idx_t, StaffItemGroups> staffItems;
@@ -270,7 +270,7 @@ void AlignmentLayout::scanConnectedItems(EngravingItem* item, const System* syst
     }
 }
 
-double AlignmentLayout::computeAverageY(const std::vector<double>& vecOfY)
+double AlignmentLayout::computeAverageY(const muse::vector<double>& vecOfY)
 {
     double sum = std::accumulate(vecOfY.begin(), vecOfY.end(), 0.0);
     return sum / static_cast<double>(vecOfY.size());

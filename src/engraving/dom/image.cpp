@@ -341,7 +341,7 @@ void Image::dragGrip(EditData& ed)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> Image::gripsPositions(const EditData&) const
+muse::vector<PointF> Image::gripsPositions(const EditData&) const
 {
     RectF r(pageBoundingRect());
     return {

@@ -140,7 +140,7 @@ enum class KerningType : unsigned char
     ALLOW_COLLISION,
 };
 
-using EngravingItemList = std::vector<EngravingItem*>;
+using EngravingItemList = muse::vector<EngravingItem*>;
 
 //-------------------------------------------------------------------
 //    @@ EngravingItem
@@ -283,7 +283,7 @@ public:
     virtual RectF drag(EditData&);
     virtual void endDrag(EditData&);
     /** muse::Returns anchor lines displayed while dragging element in canvas coordinates. */
-    virtual std::vector<LineF> dragAnchorLines() const { return std::vector<LineF>(); }
+    virtual muse::vector<LineF> dragAnchorLines() const { return muse::vector<LineF>(); }
     /**
      * A generic \ref dragAnchorLines() implementation which can be used in
      * dragAnchorLines() overrides in descendants. It is not made its default
@@ -293,7 +293,7 @@ public:
      * class of various annotation types and which would have this
      * dragAnchorLines() implementation by default.
      */
-    std::vector<LineF> genericDragAnchorLines() const;
+    muse::vector<LineF> genericDragAnchorLines() const;
 
     virtual bool isEditable() const { return !flag(ElementFlag::GENERATED); }
     virtual bool needStartEditingAfterSelecting() const { return false; }
@@ -313,13 +313,13 @@ public:
     virtual bool nextGrip(EditData&) const;
     virtual bool prevGrip(EditData&) const;
     /** muse::Returns anchor lines displayed while dragging element's grip in canvas coordinates. */
-    virtual std::vector<LineF> gripAnchorLines(Grip) const { return std::vector<LineF>(); }
+    virtual muse::vector<LineF> gripAnchorLines(Grip) const { return muse::vector<LineF>(); }
 
     virtual int gripsCount() const { return 0; }
     virtual Grip initialEditModeGrip() const { return Grip::NO_GRIP; }
     virtual Grip defaultGrip() const { return Grip::NO_GRIP; }
     /** muse::Returns grips positions in page coordinates. */
-    virtual std::vector<PointF> gripsPositions(const EditData& = EditData()) const { return std::vector<PointF>(); }
+    virtual muse::vector<PointF> gripsPositions(const EditData& = EditData()) const { return muse::vector<PointF>(); }
 
     bool hasGrips() const;
 
@@ -755,7 +755,7 @@ using ElementPtr = std::shared_ptr<EngravingItem>;
 //   ElementList
 //---------------------------------------------------------
 
-class ElementList : public std::vector<EngravingItem*>
+class ElementList : public muse::vector<EngravingItem*>
 {
     OBJECT_ALLOCATOR(engraving, ElementList)
 public:

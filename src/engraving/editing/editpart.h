@@ -266,13 +266,13 @@ public:
     static void setInstrumentCustomGroupAbbreviature(Score* score, Part* part, const Fraction& tick, const String& abbreviature);
     static void setStaffType(Score* score, Staff* staff, StaffTypes typeId);
 
-    static void removeParts(Score* score, const std::vector<Part*>& parts);
-    static void removeStaves(Score* score, const std::vector<Staff*>& staves);
-    static void moveParts(Score* score, const std::vector<Part*>& sourceParts, Part* destinationPart, bool insertAfter);
-    static void moveStaves(Score* score, const std::vector<Staff*>& sourceStaves, Staff* destinationStaff, bool insertAfter);
+    static void removeParts(Score* score, const muse::vector<Part*>& parts);
+    static void removeStaves(Score* score, const muse::vector<Staff*>& staves);
+    static void moveParts(Score* score, const muse::vector<Part*>& sourceParts, Part* destinationPart, bool insertAfter);
+    static void moveStaves(Score* score, const muse::vector<Staff*>& sourceStaves, Staff* destinationStaff, bool insertAfter);
 
-    static void addSystemObjects(Score* score, const std::vector<Staff*>& staves);
-    static void removeSystemObjects(Score* score, const std::vector<Staff*>& staves);
+    static void addSystemObjects(Score* score, const muse::vector<Staff*>& staves);
+    static void removeSystemObjects(Score* score, const muse::vector<Staff*>& staves);
     static void moveSystemObjects(Score* score, Staff* sourceStaff, Staff* destinationStaff);
 
     static Staff* appendStaff(Score* score, Part* destinationPart);

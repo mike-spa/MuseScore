@@ -378,15 +378,15 @@ private:
     int findHairpin(const Hairpin* tl) const;
     int findOttava(const Ottava* tl) const;
     int findTrill(const Trill* tl) const;
-    void chord(Chord* chord, staff_idx_t staff, const std::vector<Lyrics*>& ll, bool useDrumset);
-    void rest(Rest* chord, staff_idx_t staff, const std::vector<Lyrics*>& ll);
+    void chord(Chord* chord, staff_idx_t staff, const muse::vector<Lyrics*>& ll, bool useDrumset);
+    void rest(Rest* chord, staff_idx_t staff, const muse::vector<Lyrics*>& ll);
     void clef(staff_idx_t staff, const ClefType ct, const String& extraAttributes = u"");
     void timesig(const TimeSig* tsig, staff_idx_t staff);
     void keysig(const KeySig* ks, ClefType ct, staff_idx_t staff = 0, bool visible = true);
     void barlineLeft(const Measure* const m, const track_idx_t track);
     void barlineMiddle(const BarLine* bl);
     void barlineRight(const Measure* const m, const track_idx_t strack, const track_idx_t etrack);
-    void lyrics(const std::vector<Lyrics*>& ll, const track_idx_t trk);
+    void lyrics(const muse::vector<Lyrics*>& ll, const track_idx_t trk);
     void work(const MeasureBase* measure);
     void calcDivMoveToTick(const Fraction& t, const Fraction& stretch = { 1, 1 });
     void calcDivisions();
@@ -426,14 +426,14 @@ private:
     const Hairpin* m_hairpins[MAX_NUMBER_LEVEL];
     const Ottava* m_ottavas[MAX_NUMBER_LEVEL];
     const Trill* m_trills[MAX_NUMBER_LEVEL];
-    std::vector<const Jump*> m_jumpElements;
+    muse::vector<const Jump*> m_jumpElements;
     ArpeggioMap m_measArpeggios;
     int m_div = 0;
     double m_millimeters = 0.0;
     int m_tenths = 0;
     bool m_tboxesAboveWritten = false;
     bool m_tboxesBelowWritten = false;
-    std::vector<size_t> m_hiddenStaves;
+    muse::vector<size_t> m_hiddenStaves;
     TrillHash m_trillStart;
     TrillHash m_trillStop;
     MusicXmlInstrumentMap m_instrMap;
@@ -1238,7 +1238,7 @@ void ExportMusicXml::calcDivisions()
     // init
     fractions.clear();
 
-    const std::vector<Part*>& il = m_score->parts();
+    const muse::vector<Part*>& il = m_score->parts();
 
     for (size_t idx = 0; idx < il.size(); ++idx) {
         Part* part = il.at(idx);
@@ -2449,7 +2449,7 @@ void ExportMusicXml::keysig(const KeySig* ks, ClefType ct, staff_idx_t staff, bo
     //! NOTE It looks like there is some kind of problem here,
     //! layout data should not be used to write to a file or export
     const KeySig::LayoutData* ldata = ks->ldata();
-    const std::vector<KeySym>& keysyms = ldata->keySymbols;
+    const muse::vector<KeySym>& keysyms = ldata->keySymbols;
     if (ks->isCustom() && !ks->isAtonal() && keysyms.size() > 0) {
         // non-traditional key signature
         // MusicXML order is left-to-right order, while KeySims in keySymbols()
@@ -2518,7 +2518,7 @@ struct MusicXmlClefInfo
 };
 
 // table must be in sync with enum ClefType in types.h
-static const std::vector<MusicXmlClefInfo> CLEF_INFOS = {
+static const muse::vector<MusicXmlClefInfo> CLEF_INFOS = {
     { ClefType::G,          "G", 0 },
     { ClefType::G15_MB,     "G", -2 },
     { ClefType::G8_VB,      "G", -1 },
@@ -3105,7 +3105,7 @@ static void tremoloSingleStartStop(Chord* chord, Notations& notations, XmlWriter
 //   fermatas
 //---------------------------------------------------------
 
-static void fermatas(const std::vector<EngravingItem*>& cra, XmlWriter& xml, Notations& notations)
+static void fermatas(const muse::vector<EngravingItem*>& cra, XmlWriter& xml, Notations& notations)
 {
     for (const EngravingItem* e : cra) {
         if (!e->isFermata()) {
@@ -3120,7 +3120,7 @@ static void fermatas(const std::vector<EngravingItem*>& cra, XmlWriter& xml, Not
 //   symIdToArtic
 //---------------------------------------------------------
 
-static std::vector<String> symIdToArtic(const SymId sid)
+static muse::vector<String> symIdToArtic(const SymId sid)
 {
     switch (sid) {
     case SymId::articAccentAbove:
@@ -3454,7 +3454,7 @@ static void writeBreathMark(const Breath* const breath, XmlWriter& xml, Notation
 void ExportMusicXml::chordAttributes(Chord* chord, Notations& notations, TrillHash& trillStart, TrillHash& trillStop)
 {
     if (!chord->isGrace()) {
-        std::vector<EngravingItem*> fl;
+        muse::vector<EngravingItem*> fl;
         for (EngravingItem* e : chord->segment()->annotations()) {
             if (e->track() == chord->track() && e->isFermata()) {
                 fl.push_back(e);
@@ -3463,11 +3463,11 @@ void ExportMusicXml::chordAttributes(Chord* chord, Notations& notations, TrillHa
         fermatas(fl, m_xml, notations);
     }
 
-    const std::vector<Articulation*> na = chord->articulations();
+    const muse::vector<Articulation*> na = chord->articulations();
     // first the attributes whose elements are children of <articulations>
     for (const Articulation* a : na) {
         SymId sid = a->symId();
-        std::vector<String> mxmlArtics = symIdToArtic(sid);
+        muse::vector<String> mxmlArtics = symIdToArtic(sid);
 
         for (String mxmlArtic : mxmlArtics) {
             if (mxmlArtic == u"strong-accent") {
@@ -3668,7 +3668,7 @@ static void arpeggiate(Arpeggio* arp, bool front, bool back, XmlWriter& xml, Not
     int arpNo = 1;
 
     // Number arpeggios spanning multiple voices correctly
-    const std::vector<MusicXmlArpeggioDesc> foundArps = muse::values(arps, arp->tick().ticks());
+    const muse::vector<MusicXmlArpeggioDesc> foundArps = muse::values(arps, arp->tick().ticks());
     for (const MusicXmlArpeggioDesc arpDesc : foundArps) {
         if (arpDesc.arp == arp) {
             found = true;
@@ -4347,7 +4347,7 @@ String ExportMusicXml::elementPosition(const ExportMusicXml* const expMxml, cons
  For a single-staff part, \a staff equals zero, suppressing the <staff> element.
  */
 
-void ExportMusicXml::chord(Chord* chord, staff_idx_t staff, const std::vector<Lyrics*>& ll, bool useDrumset)
+void ExportMusicXml::chord(Chord* chord, staff_idx_t staff, const muse::vector<Lyrics*>& ll, bool useDrumset)
 {
     Part* part = chord->score()->staff(chord->track() / VOICES)->part();
     size_t partNr = muse::indexOf(m_score->parts(), part);
@@ -4360,7 +4360,7 @@ void ExportMusicXml::chord(Chord* chord, staff_idx_t staff, const std::vector<Ly
     for (EngravingItem* e : chord->el())
           LOGD("chord %p el %p", chord, e);
      */
-    std::vector<Note*> nl = chord->notes();
+    muse::vector<Note*> nl = chord->notes();
     bool grace = chord->isGrace();
 #ifdef DEBUG_TICK
     LOGD() << "oldtick " << fractionToStdString(tick())
@@ -4563,7 +4563,7 @@ void ExportMusicXml::chord(Chord* chord, staff_idx_t staff, const std::vector<Ly
  For a single-staff part, \a staff equals zero, suppressing the <staff> element.
  */
 
-void ExportMusicXml::rest(Rest* rest, staff_idx_t staff, const std::vector<Lyrics*>& ll)
+void ExportMusicXml::rest(Rest* rest, staff_idx_t staff, const muse::vector<Lyrics*>& ll)
 {
     static char16_t table2[]  = u"CDEFGAB";
 #ifdef DEBUG_TICK
@@ -4676,7 +4676,7 @@ void ExportMusicXml::rest(Rest* rest, staff_idx_t staff, const std::vector<Lyric
     }
 
     Notations notations;
-    std::vector<EngravingItem*> fl;
+    muse::vector<EngravingItem*> fl;
     for (EngravingItem* e : rest->segment()->annotations()) {
         if (e->isFermata() && e->track() == rest->track()) {
             fl.push_back(e);
@@ -5254,7 +5254,7 @@ void ExportMusicXml::harpPedals(HarpPedalDiagram const* const hpd, staff_idx_t s
     addColorAttr(hpd, harpPedalAttrs);
     if (hpd->isDiagram()) {
         m_xml.startElement("harp-pedals", harpPedalAttrs);
-        const std::vector <String> pedalSteps = { u"D", u"C", u"B", u"E", u"F", u"G", u"A" };
+        const muse::vector <String> pedalSteps = { u"D", u"C", u"B", u"E", u"F", u"G", u"A" };
         for (size_t idx = 0; idx < pedalSteps.size(); idx++) {
             m_xml.startElement("pedal-tuning");
             m_xml.tag("pedal-step", pedalSteps.at(idx));
@@ -5977,7 +5977,7 @@ void ExportMusicXml::dynamic(Dynamic const* const dyn, staff_idx_t staff)
 //   lyrics
 //---------------------------------------------------------
 
-void ExportMusicXml::lyrics(const std::vector<Lyrics*>& ll, const track_idx_t trk)
+void ExportMusicXml::lyrics(const muse::vector<Lyrics*>& ll, const track_idx_t trk)
 {
     for (const Lyrics* l : ll) {
         if (l && !l->xmlText().isEmpty()) {
@@ -6117,7 +6117,7 @@ static void directionJump(XmlWriter& xml, const Jump* const jp)
 //   getEffectiveMarkerType
 //---------------------------------------------------------
 
-static MarkerType getEffectiveMarkerType(const Marker* const m, const std::vector<const Jump*>& jumps)
+static MarkerType getEffectiveMarkerType(const Marker* const m, const muse::vector<const Jump*>& jumps)
 {
     MarkerType mtp = m->markerType();
 
@@ -6156,7 +6156,7 @@ static MarkerType getEffectiveMarkerType(const Marker* const m, const std::vecto
 //   findCodaLabel
 //---------------------------------------------------------
 
-static String findCodaLabel(const std::vector<const Jump*>& jumps, const String& toCodaLabel)
+static String findCodaLabel(const muse::vector<const Jump*>& jumps, const String& toCodaLabel)
 {
     for (const Jump* j : jumps) {
         if (j->playUntil() == toCodaLabel) {
@@ -6171,7 +6171,7 @@ static String findCodaLabel(const std::vector<const Jump*>& jumps, const String&
 //   directionMarker -- write marker
 //---------------------------------------------------------
 
-static void directionMarker(XmlWriter& xml, const Marker* const m, const std::vector<const Jump*>& jumps)
+static void directionMarker(XmlWriter& xml, const Marker* const m, const muse::vector<const Jump*>& jumps)
 {
     const MarkerType mtp = getEffectiveMarkerType(m, jumps);
     String words;
@@ -6563,8 +6563,8 @@ static void annotations(ExportMusicXml* exp, track_idx_t strack, track_idx_t etr
 
 static void segmentHarmonies(ExportMusicXml* exp, track_idx_t track, Segment* seg, Fraction offset)
 {
-    const std::vector<EngravingItem*> diagrams = seg->findAnnotations(ElementType::FRET_DIAGRAM, track, track);
-    std::vector<EngravingItem*> harmonies = seg->findAnnotations(ElementType::HARMONY, track, track);
+    const muse::vector<EngravingItem*> diagrams = seg->findAnnotations(ElementType::FRET_DIAGRAM, track, track);
+    muse::vector<EngravingItem*> harmonies = seg->findAnnotations(ElementType::HARMONY, track, track);
 
     for (const EngravingItem* d : diagrams) {
         const FretDiagram* diagram = toFretDiagram(d);
@@ -7902,7 +7902,7 @@ static void clampMusicXmlOctave(int& octave)
  Write the staff details for \a part to \a xml.
  */
 
-static void writeStaffDetails(XmlWriter& xml, const Part* part, const std::vector<size_t> hiddenStaves)
+static void writeStaffDetails(XmlWriter& xml, const Part* part, const muse::vector<size_t> hiddenStaves)
 {
     const Instrument* instrument = part->instrument();
     const size_t staves = part->nstaves();
@@ -7958,7 +7958,7 @@ static void writeStaffDetails(XmlWriter& xml, const Part* part, const std::vecto
             }
 
             if (st->isTabStaff(Fraction(0, 1)) && instrument->stringData()) {
-                std::vector<instrString> l = instrument->stringData()->stringList();
+                muse::vector<instrString> l = instrument->stringData()->stringList();
                 for (size_t ii = 0; ii < l.size(); ii++) {
                     char16_t step  = u' ';
                     int alter  = 0;
@@ -8221,12 +8221,12 @@ static bool systemHasMeasures(const System* const system)
 //  findTextFramesToWriteAsWordsAbove
 //---------------------------------------------------------
 
-static std::vector<TBox*> findTextFramesToWriteAsWordsAbove(const Measure* const measure)
+static muse::vector<TBox*> findTextFramesToWriteAsWordsAbove(const Measure* const measure)
 {
     const System* system = measure->coveringMMRestOrThis()->system();
     const Page* page = system->page();
     const size_t systemIndex = muse::indexOf(page->systems(), system);
-    std::vector<TBox*> tboxes;
+    muse::vector<TBox*> tboxes;
     if (isFirstMeasureInSystem(measure)) {
         for (int idx = static_cast<int>(systemIndex - 1); idx >= 0 && !systemHasMeasures(page->system(idx)); --idx) {
             const System* sys = page->system(idx);
@@ -8245,12 +8245,12 @@ static std::vector<TBox*> findTextFramesToWriteAsWordsAbove(const Measure* const
 //  findTextFramesToWriteAsWordsBelow
 //---------------------------------------------------------
 
-static std::vector<TBox*> findTextFramesToWriteAsWordsBelow(const Measure* const measure)
+static muse::vector<TBox*> findTextFramesToWriteAsWordsBelow(const Measure* const measure)
 {
     const System* system = measure->coveringMMRestOrThis()->system();
     const Page* page = system->page();
     const size_t systemIndex = static_cast<int>(muse::indexOf(page->systems(), system));
-    std::vector<TBox*> tboxes;
+    muse::vector<TBox*> tboxes;
     if (isFirstMeasureInLastSystem(measure)) {
         for (size_t idx = systemIndex + 1; idx < page->systems().size() /* && !systemHasMeasures(page->system(idx))*/;
              ++idx) {
@@ -8713,9 +8713,9 @@ void ExportMusicXml::writeParts()
 //  findJumpElements
 //---------------------------------------------------------
 
-static std::vector<const Jump*> findJumpElements(const Score* score)
+static muse::vector<const Jump*> findJumpElements(const Score* score)
 {
-    std::vector<const Jump*> jumps;
+    muse::vector<const Jump*> jumps;
 
     for (const MeasureBase* m = score->first(); m; m = m->next()) {
         for (const EngravingItem* e : m->el()) {
@@ -8900,8 +8900,8 @@ static void writeMusicXml(const FretDiagram* item, XmlWriter& xml)
     for (int i = 0; i < item->strings(); ++i) {
         const int mxmlString = item->strings() - i;
 
-        std::vector<int> bStarts;
-        std::vector<int> bEnds;
+        muse::vector<int> bStarts;
+        muse::vector<int> bEnds;
         for (auto const& j : item->barres()) {
             FretItem::Barre b = j.second;
             const int fret = j.first;

@@ -28,7 +28,7 @@
 #include "log.h"
 
 namespace mu::engraving {
-std::vector<braille_code*> master_braille_code_list;
+muse::vector<braille_code*> master_braille_code_list;
 
 braille_code::braille_code(std::string t, std::string c)
 {
@@ -969,7 +969,7 @@ std::string translate2Braille(std::string codes)
 {
     std::stringstream test(codes);
     std::string segment;
-    std::vector<std::string> seglist;
+    muse::vector<std::string> seglist;
 
     std::string txt = "";
     while (std::getline(test, segment, '-')) {
@@ -1010,13 +1010,13 @@ std::string intToBrailleLowerNumbers(std::string txt, bool indicator)
     return braille;
 }
 
-std::vector<std::string> splitCodes(std::string code)
+muse::vector<std::string> splitCodes(std::string code)
 {
     std::stringstream test(code);
     std::string segment;
-    std::vector<std::string> seglist;
+    muse::vector<std::string> seglist;
 
-    std::vector<std::string> lst;
+    muse::vector<std::string> lst;
     while (std::getline(test, segment, '-')) {
         lst.push_back(segment);
     }

@@ -50,7 +50,7 @@ class Synthesizer;
 struct NamedEventList {
     String name;
     String descr;
-    std::vector<MidiCoreEvent> events;
+    muse::vector<MidiCoreEvent> events;
 
     bool operator==(const NamedEventList& i) const { return i.name == name && i.events == events; }
 };
@@ -95,7 +95,7 @@ public:
         SYNTI, CHANNEL, USER_BANK_CONTROL
     };
 
-    std::vector<MidiCoreEvent>& initList() const;
+    muse::vector<MidiCoreEvent>& initList() const;
 
     String name() const { return m_name; }
     void setName(const String& value);
@@ -129,8 +129,8 @@ public:
 
     bool isHarmonyChannel() const { return m_name == String::fromUtf8(InstrChannel::HARMONY_NAME); }
 
-    std::vector<NamedEventList> midiActions;
-    std::vector<MidiArticulation> articulation;
+    muse::vector<NamedEventList> midiActions;
+    muse::vector<MidiArticulation> articulation;
 
     InstrChannel();
 
@@ -179,7 +179,7 @@ private:
     bool m_userBankController = false;     // if the user has changed the bank controller as opposed to switchExpressive
     //bool _switchedToExpressive = false;   // if the patch has been automatically switched to an expr variant
 
-    mutable std::vector<MidiCoreEvent> m_init;
+    mutable muse::vector<MidiCoreEvent> m_init;
     mutable bool m_mustUpdateInit = true;
 };
 
@@ -310,19 +310,19 @@ public:
     ClefTypeList clefType(size_t staffIdx) const;
     void setClefType(size_t staffIdx, const ClefTypeList& c);
 
-    const std::vector<NamedEventList>& midiActions() const { return m_midiActions; }
+    const muse::vector<NamedEventList>& midiActions() const { return m_midiActions; }
     void addMidiAction(const NamedEventList& l) { m_midiActions.push_back(l); }
 
-    const std::vector<MidiArticulation>& articulation() const { return m_articulation; }
+    const muse::vector<MidiArticulation>& articulation() const { return m_articulation; }
     void addMidiArticulation(const MidiArticulation& a) { m_articulation.push_back(a); }
 
-    const std::vector<InstrChannel*>& channel() const { return m_channel; }
+    const muse::vector<InstrChannel*>& channel() const { return m_channel; }
     void appendChannel(InstrChannel* c) { m_channel.push_back(c); }
     void removeChannel(InstrChannel* c) { muse::remove(m_channel, c); }
     void clearChannels() { m_channel.clear(); }
 
-    void setMidiActions(const std::vector<NamedEventList>& l) { m_midiActions = l; }
-    void setArticulation(const std::vector<MidiArticulation>& l) { m_articulation = l; }
+    void setMidiActions(const muse::vector<NamedEventList>& l) { m_midiActions = l; }
+    void setArticulation(const muse::vector<MidiArticulation>& l) { m_articulation = l; }
     const StringData* stringData() const { return &m_stringData; }
     void setStringData(const StringData& d) { m_stringData.set(d); }
     bool hasStrings() const { return m_stringData.strings() > 0; }
@@ -394,10 +394,10 @@ private:
     Drumset* m_drumset = nullptr;
     StringData m_stringData;
 
-    std::vector<NamedEventList> m_midiActions;
-    std::vector<MidiArticulation> m_articulation;
-    std::vector<InstrChannel*> m_channel;        // at least one entry
-    std::vector<ClefTypeList> m_clefType;
+    muse::vector<NamedEventList> m_midiActions;
+    muse::vector<MidiArticulation> m_articulation;
+    muse::vector<InstrChannel*> m_channel;        // at least one entry
+    muse::vector<ClefTypeList> m_clefType;
 
     bool m_singleNoteDynamics = false;
 

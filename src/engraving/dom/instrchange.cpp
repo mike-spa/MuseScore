@@ -160,9 +160,9 @@ void InstrumentChange::setupInstrument(const Instrument* instrument)
 //   keySigs
 //---------------------------------------------------------
 
-std::vector<KeySig*> InstrumentChange::keySigs(bool all) const
+muse::vector<KeySig*> InstrumentChange::keySigs(bool all) const
 {
-    std::vector<KeySig*> keysigs;
+    muse::vector<KeySig*> keysigs;
     Segment* seg = segment()->prev1(SegmentType::KeySig);
     if (seg) {
         voice_idx_t startVoice = part()->staff(0)->idx() * VOICES;
@@ -182,9 +182,9 @@ std::vector<KeySig*> InstrumentChange::keySigs(bool all) const
 //   clefs
 //---------------------------------------------------------
 
-std::vector<Clef*> InstrumentChange::clefs() const
+muse::vector<Clef*> InstrumentChange::clefs() const
 {
-    std::vector<Clef*> clefs;
+    muse::vector<Clef*> clefs;
     Segment* seg = segment()->prev1(SegmentType::Clef);
     if (seg) {
         voice_idx_t startVoice = part()->staff(0)->idx() * VOICES;

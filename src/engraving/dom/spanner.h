@@ -183,8 +183,8 @@ public:
     Anchor anchor() const { return m_anchor; }
     void setAnchor(Anchor a) { m_anchor = a; }
 
-    const std::vector<SpannerSegment*>& spannerSegments() const { return m_segments; }
-    void setSpannerSegments(const std::vector<SpannerSegment*>& s) { m_segments = s; }
+    const muse::vector<SpannerSegment*>& spannerSegments() const { return m_segments; }
+    void setSpannerSegments(const muse::vector<SpannerSegment*>& s) { m_segments = s; }
     SpannerSegment* frontSegment() { return m_segments.front(); }
     const SpannerSegment* frontSegment() const { return m_segments.front(); }
     SpannerSegment* backSegment() { return m_segments.back(); }
@@ -290,7 +290,7 @@ private:
     track_idx_t m_track2 = muse::nidx;
     bool m_broken = false;
 
-    std::vector<SpannerSegment*> m_segments;
+    muse::vector<SpannerSegment*> m_segments;
     std::deque<SpannerSegment*> m_unusedSegments;   // Currently unused segments which can be reused later.
                                                     // We cannot just delete them as they can be referenced
                                                     // in undo stack or other places already.

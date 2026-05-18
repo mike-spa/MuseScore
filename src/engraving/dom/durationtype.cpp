@@ -481,9 +481,9 @@ TDuration& TDuration::operator+=(const TDuration& t)
 //    - returned durations are in local time
 //---------------------------------------------------------
 
-std::vector<TDuration> toDurationList(Fraction l, bool useDots, int maxDots, bool printRestRemains)
+muse::vector<TDuration> toDurationList(Fraction l, bool useDots, int maxDots, bool printRestRemains)
 {
-    std::vector<TDuration> dList;
+    muse::vector<TDuration> dList;
     dList.reserve(8);
 
     if (!useDots) {
@@ -508,7 +508,7 @@ std::vector<TDuration> toDurationList(Fraction l, bool useDots, int maxDots, boo
 //    - returned durations are in local time
 //---------------------------------------------------------
 
-std::vector<TDuration> toRhythmicDurationList(const Fraction& l, bool isRest, Fraction rtickStart,
+muse::vector<TDuration> toRhythmicDurationList(const Fraction& l, bool isRest, Fraction rtickStart,
                                               const TimeSigFrac& nominal, Measure* msr, int maxDots,
                                               const Fraction& timeStretch)
 {
@@ -516,7 +516,7 @@ std::vector<TDuration> toRhythmicDurationList(const Fraction& l, bool isRest, Fr
         return {};
     }
 
-    std::vector<TDuration> dList;
+    muse::vector<TDuration> dList;
     dList.reserve(8);
 
     if (msr->isAnacrusis()) {
@@ -540,7 +540,7 @@ std::vector<TDuration> toRhythmicDurationList(const Fraction& l, bool isRest, Fr
 //   populateRhythmicList
 //---------------------------------------------------------
 
-void populateRhythmicList(std::vector<TDuration>* dList, const Fraction& l, bool isRest, const Fraction& rtickStart,
+void populateRhythmicList(muse::vector<TDuration>* dList, const Fraction& l, bool isRest, const Fraction& rtickStart,
                           const TimeSigFrac& nominal, int maxDots)
 {
     Fraction rtickEnd = rtickStart + l;
@@ -556,7 +556,7 @@ void populateRhythmicList(std::vector<TDuration>* dList, const Fraction& l, bool
 
     if ((startLevel < 0) || (endLevel < 0) || (strongestLevelCrossed < 0)) {
         // Beyond maximum subbeat level so just split into largest possible durations.
-        std::vector<TDuration> dList2 = toDurationList(l, maxDots > 0, maxDots, false);
+        muse::vector<TDuration> dList2 = toDurationList(l, maxDots > 0, maxDots, false);
         dList->insert(dList->end(), dList2.begin(), dList2.end());
         return;
     }
@@ -606,7 +606,7 @@ void populateRhythmicList(std::vector<TDuration>* dList, const Fraction& l, bool
 
     // Prevent infinite recursion if there is no splitting point other than the start and end ticks
     IF_ASSERT_FAILED(rtickStart.ticks() < rtickSplit && rtickSplit < rtickEnd.ticks()) {
-        std::vector<TDuration> dList2 = toDurationList(l, maxDots > 0, maxDots, false);
+        muse::vector<TDuration> dList2 = toDurationList(l, maxDots > 0, maxDots, false);
         dList->insert(dList->end(), dList2.begin(), dList2.end());
         return;
     }
@@ -625,7 +625,7 @@ void populateRhythmicList(std::vector<TDuration>* dList, const Fraction& l, bool
 //    Split compound notes/rests where they enter a compound beat.
 //---------------------------------------------------------
 
-void splitCompoundBeatsForList(std::vector<TDuration>* dList, const Fraction& l, bool isRest,
+void splitCompoundBeatsForList(muse::vector<TDuration>* dList, const Fraction& l, bool isRest,
                                const Fraction& rtickStart, const TimeSigFrac& nominal, int maxDots)
 {
     Fraction rtickEnd = rtickStart + l;

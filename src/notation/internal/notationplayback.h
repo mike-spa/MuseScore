@@ -56,7 +56,7 @@ public:
 
     const muse::mpe::PlaybackData& trackPlaybackData(const engraving::InstrumentTrackId& trackId) const override;
 
-    void triggerEventsForItems(const std::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound) override;
+    void triggerEventsForItems(const muse::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound) override;
     void triggerMetronome(muse::midi::tick_t tick) override;
     void triggerCountIn(muse::midi::tick_t tick, muse::secs_t& countInDuration) override;
     void triggerControllers(const muse::mpe::ControllerChangeEventList& list, notation::staff_idx_t staffIdx, int tick) override;
@@ -88,7 +88,7 @@ public:
     double tempoMultiplier() const override;
     void setTempoMultiplier(double multiplier) override;
 
-    void addSoundFlags(const std::vector<mu::engraving::StaffText*>& staffTextList) override;
+    void addSoundFlags(const muse::vector<mu::engraving::StaffText*>& staffTextList) override;
     void removeSoundFlags(const engraving::InstrumentTrackIdSet& trackIdSet) override;
     bool hasSoundFlags(const engraving::InstrumentTrackIdSet& trackIdSet) override;
 
@@ -102,7 +102,7 @@ private:
 
     bool doAddSoundFlag(mu::engraving::StaffText* staffText);
 
-    std::vector<mu::engraving::StaffText*> collectStaffText(const mu::engraving::InstrumentTrackIdSet& trackIdSet,
+    muse::vector<mu::engraving::StaffText*> collectStaffText(const mu::engraving::InstrumentTrackIdSet& trackIdSet,
                                                             bool withSoundFlags) const;
 
     IGetScore* m_getScore = nullptr;

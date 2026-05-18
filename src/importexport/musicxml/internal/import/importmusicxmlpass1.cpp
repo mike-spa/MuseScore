@@ -98,7 +98,7 @@ public:
     bool stavesOverlap(const int staff1, const int staff2) const;
     bool anyStaffOverlaps() const;
 private:
-    std::vector<StartStopList> _staffNoteLists;   // The note start/stop times in all staves
+    muse::vector<StartStopList> _staffNoteLists;   // The note start/stop times in all staves
     bool notesOverlap(const StartStop& n1, const StartStop& n2) const;
 };
 
@@ -450,7 +450,7 @@ void MusicXmlParserPass1::initPartState(const String& /* partId */)
  Return false on error.
  */
 
-bool MusicXmlParserPass1::determineMeasureLength(std::vector<Fraction>& ml) const
+bool MusicXmlParserPass1::determineMeasureLength(muse::vector<Fraction>& ml) const
 {
     ml.clear();
 
@@ -788,7 +788,7 @@ static void addText2(VBox* vbx, Score* score, const String& strTxt, const TextSt
 //   findYMinYMaxInWords
 //---------------------------------------------------------
 
-static void findYMinYMaxInWords(const std::vector<const CreditWords*>& words, int& miny, int& maxy)
+static void findYMinYMaxInWords(const muse::vector<const CreditWords*>& words, int& miny, int& maxy)
 {
     miny = 0;
     maxy = 0;
@@ -859,7 +859,7 @@ static TextStyleType creditWordTypeToTid(const String& type)
 //   creditWordTypeGuess
 //---------------------------------------------------------
 
-static TextStyleType creditWordTypeGuess(const CreditWords* const word, std::vector<const CreditWords*>& words, const int pageWidth)
+static TextStyleType creditWordTypeGuess(const CreditWords* const word, muse::vector<const CreditWords*>& words, const int pageWidth)
 {
     const double pw1 = pageWidth / 3;
     const double pw2 = pageWidth * 2 / 3;
@@ -896,7 +896,7 @@ static TextStyleType creditWordTypeGuess(const CreditWords* const word, std::vec
 //   tidForCreditWords
 //---------------------------------------------------------
 
-static TextStyleType tidForCreditWords(const CreditWords* const word, std::vector<const CreditWords*>& words, const int pageWidth)
+static TextStyleType tidForCreditWords(const CreditWords* const word, muse::vector<const CreditWords*>& words, const int pageWidth)
 {
     const TextStyleType tid = creditWordTypeToTid(word->type);
     if (tid != TextStyleType::DEFAULT) {
@@ -980,10 +980,10 @@ static void inferFromTitle(String& title, String& inferredSubtitle, String& infe
     for (size_t i = nrOfTitleLines; i > 0; --i) {
         String line = titleLines[i - 1];
         if (isLikelyCreditText(line, true)) {
-            creditLines.insert(0, line);
+            creditLines.insert(creditLines.begin(), line);
             titleLines.erase(titleLines.begin() + i - 1);
         } else if (isLikelySubtitleText(line, true)) {
-            subtitleLines.insert(0, line);
+            subtitleLines.insert(creditLines.begin(), line);
             titleLines.erase(titleLines.begin() + i - 1);
         }
     }
@@ -1033,8 +1033,8 @@ static VBox* addCreditWords(Score* score, const CreditWordsList& crWords, const 
     VBox* vbox = nullptr;
     const bool top = tick.isZero();
 
-    std::vector<const CreditWords*> headerWords;
-    std::vector<const CreditWords*> footerWords;
+    muse::vector<const CreditWords*> headerWords;
+    muse::vector<const CreditWords*> footerWords;
     for (const CreditWords* w : crWords) {
         if (w->page == 1) {
             if (w->defaultY > (pageSize.height() / 2)) {
@@ -1045,7 +1045,7 @@ static VBox* addCreditWords(Score* score, const CreditWordsList& crWords, const 
         }
     }
 
-    std::vector<const CreditWords*> words;
+    muse::vector<const CreditWords*> words;
     // if there are more credit words in the footer than in header,
     // swap header and footer, assuming this will result in a vertical
     // frame with the title on top of the page.
@@ -1157,8 +1157,8 @@ void MusicXmlParserPass1::createDefaultHeader(Score* score)
  */
 
 void MusicXmlParserPass1::createMeasuresAndVboxes(Score* score,
-                                                  const std::vector<Fraction>& ml,
-                                                  const std::vector<Fraction>& ms,
+                                                  const muse::vector<Fraction>& ml,
+                                                  const muse::vector<Fraction>& ms,
                                                   const std::set<int>& systemStartMeasureNrs,
                                                   const std::set<int>& pageStartMeasureNrs,
                                                   const CreditWordsList& crWords,
@@ -1229,7 +1229,7 @@ bool MusicXmlParserPass1::dolet() const
  or start tick measure equals start tick previous measure plus length previous measure
  */
 
-static void determineMeasureStart(const std::vector<Fraction>& ml, std::vector<Fraction>& ms)
+static void determineMeasureStart(const muse::vector<Fraction>& ml, muse::vector<Fraction>& ms)
 {
     ms.resize(ml.size());
     if (!(ms.size() > 0)) {
@@ -1252,7 +1252,7 @@ static void determineMeasureStart(const std::vector<Fraction>& ml, std::vector<F
  Required by TimeSigMap::tickValues(), called (indirectly) by Segment::add().
  */
 
-static void fixupSigmap(MusicXmlLogger* logger, Score* score, const std::vector<Fraction>& measureLength)
+static void fixupSigmap(MusicXmlLogger* logger, Score* score, const muse::vector<Fraction>& measureLength)
 {
     auto it = score->sigmap()->find(0);
 
@@ -1433,7 +1433,7 @@ void MusicXmlParserPass1::scorePartwise()
     std::set<const Part*> partSet;
 
     // handle the explicit brackets
-    const std::vector<Part*>& il = m_score->parts();
+    const muse::vector<Part*>& il = m_score->parts();
     for (size_t i = 0; i < partGroupList.size(); i++) {
         MusicXmlPartGroup* pg = partGroupList[i];
         // determine span in staves
@@ -3168,8 +3168,8 @@ void MusicXmlParserPass1::direction(const String& partId, const Fraction& cTime)
     // note: file order is direction-type first, then staff
     // this means staff is still unknown when direction-type is handled
 
-    std::vector<MusicXmlOctaveShiftDesc> starts;
-    std::vector<MusicXmlOctaveShiftDesc> stops;
+    muse::vector<MusicXmlOctaveShiftDesc> starts;
+    muse::vector<MusicXmlOctaveShiftDesc> stops;
     int staff = 0;
 
     while (m_e.readNextStartElement()) {
@@ -3235,8 +3235,8 @@ void MusicXmlParserPass1::direction(const String& partId, const Fraction& cTime)
  */
 
 void MusicXmlParserPass1::directionType(const Fraction cTime,
-                                        std::vector<MusicXmlOctaveShiftDesc>& starts,
-                                        std::vector<MusicXmlOctaveShiftDesc>& stops)
+                                        muse::vector<MusicXmlOctaveShiftDesc>& starts,
+                                        muse::vector<MusicXmlOctaveShiftDesc>& stops)
 {
     while (m_e.readNextStartElement()) {
         if (m_e.name() == "octave-shift") {

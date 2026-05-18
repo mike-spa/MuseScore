@@ -106,10 +106,10 @@ public:
     void clear();
 
     void join(BrailleEngravingItemList*, bool newline = true, bool del = true);
-    void join(std::vector<BrailleEngravingItemList*>, bool newline = true, bool del = true);
+    void join(muse::vector<BrailleEngravingItemList*>, bool newline = true, bool del = true);
 
     QString brailleStr();
-    std::vector<BrailleEngravingItem>* items();
+    muse::vector<BrailleEngravingItem>* items();
 
     void setBrailleStr(QString str);
     void insert(int pos, BrailleEngravingItem bei);
@@ -125,7 +125,7 @@ public:
     void log();
 private:
     QString m_braille_str;
-    std::vector<BrailleEngravingItem> m_items;
+    muse::vector<BrailleEngravingItem> m_items;
 };
 
 //This class currently supports just a limited conversion from text to braille
@@ -149,9 +149,9 @@ private:
 };
 
 struct BrailleContext {
-    std::vector<Note*> previousNote;
-    std::vector<ClefType> currentClefType;
-    std::vector<Key> currentKey;
+    muse::vector<Note*> previousNote;
+    muse::vector<ClefType> currentClefType;
+    muse::vector<Key> currentKey;
 };
 
 // Braille export is implemented according to Music Braille Code 2015
@@ -180,13 +180,13 @@ private:
 
     /* --------------- Utils. Move these to engraving? --------------- */
     int computeInterval(Note* rootNote, Note* note, bool ignoreOctaves);
-    std::vector<Slur*> slurs(ChordRest* chordRest);
-    std::vector<Hairpin*> hairpins(ChordRest* chordRest);
+    muse::vector<Slur*> slurs(ChordRest* chordRest);
+    muse::vector<Hairpin*> hairpins(ChordRest* chordRest);
     int notesInSlur(Slur* slur);
     bool isShortSlur(Slur* slur);
     bool isLongSlur(Slur* slur);
-    bool isShortShortSlurConvergence(const std::vector<Slur*>& slurs);
-    bool isLongLongSlurConvergence(const std::vector<Slur*>& slurs);
+    bool isShortShortSlurConvergence(const muse::vector<Slur*>& slurs);
+    bool isLongLongSlurConvergence(const muse::vector<Slur*>& slurs);
     bool hasTies(ChordRest* chordRest);
     bool ascendingChords(ClefType clefType);
     BarLine* firstBarline(Measure* measure, track_idx_t track);
@@ -204,7 +204,7 @@ private:
     QString brailleBarline(BarLine* barline);
     QString brailleBreath(Breath* breath);
     QString brailleChord(Chord* chord);
-    QString brailleChordInterval(Note* rootNote, const std::vector<Note*>& notes, Note* note);
+    QString brailleChordInterval(Note* rootNote, const muse::vector<Note*>& notes, Note* note);
     QString brailleChordRootNote(Chord* chord, Note* rootNote);
     QString brailleClef(Clef* clef);
     QString brailleDynamic(Dynamic* dynamic);
@@ -230,9 +230,9 @@ private:
     QString brailleTuplet(Tuplet* tuplet, DurationElement* el);
     QString brailleVolta(Measure* measure, Volta* volta, int staffCount);
 
-    QString brailleHairpinBefore(ChordRest* chordRest, const std::vector<Hairpin*>& hairpin);
-    QString brailleHairpinAfter(ChordRest* chordRest, const std::vector<Hairpin*>& hairpin);
-    QString brailleSlurBefore(ChordRest* chordRest, const std::vector<Slur*>& slur);
-    QString brailleSlurAfter(ChordRest* chordRest, const std::vector<Slur*>& slur);
+    QString brailleHairpinBefore(ChordRest* chordRest, const muse::vector<Hairpin*>& hairpin);
+    QString brailleHairpinAfter(ChordRest* chordRest, const muse::vector<Hairpin*>& hairpin);
+    QString brailleSlurBefore(ChordRest* chordRest, const muse::vector<Slur*>& slur);
+    QString brailleSlurAfter(ChordRest* chordRest, const muse::vector<Slur*>& slur);
 };
 }

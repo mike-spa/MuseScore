@@ -281,7 +281,7 @@ TEST_F(Engraving_SpannersTests, DISABLED_spanners05)
 
     // create parts
     // (copied and adapted from void TestParts::createParts() in mtest/libmscore/parts/tst_parts.cpp)
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(score->parts().at(0));
 
     Excerpt* ex = new Excerpt(score);
@@ -543,7 +543,7 @@ TEST_F(Engraving_SpannersTests, DISABLED_spanners14)
 
     // create parts
     // (copied and adapted from void TestParts::createParts() in mtest/libmscore/parts/tst_parts.cpp)
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(score->parts().at(0));
 
     Excerpt* ex = new Excerpt(score);

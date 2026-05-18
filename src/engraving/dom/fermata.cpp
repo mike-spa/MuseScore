@@ -119,9 +119,9 @@ Page* Fermata::page() const
 //   dragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> Fermata::dragAnchorLines() const
+muse::vector<LineF> Fermata::dragAnchorLines() const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
     result.push_back(LineF(canvasPos(), parentItem()->canvasPos()));
     return result;
 }

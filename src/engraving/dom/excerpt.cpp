@@ -351,8 +351,8 @@ void Excerpt::createExcerpt(Excerpt* excerpt)
     MasterScore* masterScore = excerpt->masterScore();
     Score* score = excerpt->excerptScore();
 
-    std::vector<Part*>& parts = excerpt->parts();
-    std::vector<staff_idx_t> srcStaves;
+    muse::vector<Part*>& parts = excerpt->parts();
+    muse::vector<staff_idx_t> srcStaves;
 
     score->setPageNumberOffset(masterScore->pageNumberOffset());
 
@@ -870,7 +870,7 @@ static void collectTieEndPoints(TieMap& tieMap)
 }
 
 static MeasureBase* cloneMeasure(MeasureBase* mb, Score* score, const Score* oscore,
-                                 const std::vector<staff_idx_t>& sourceStavesIndexes,
+                                 const muse::vector<staff_idx_t>& sourceStavesIndexes,
                                  const TracksMap& trackList, TieMap& tieMap)
 {
     MeasureBase* nmb = nullptr;
@@ -968,7 +968,7 @@ static MeasureBase* cloneMeasure(MeasureBase* mb, Score* score, const Score* osc
                 }
 
                 //There are probably more destination tracks for the same source
-                std::vector<track_idx_t> t = muse::values(trackList, srcTrack);
+                muse::vector<track_idx_t> t = muse::values(trackList, srcTrack);
 
                 for (track_idx_t track : t) {
                     //Clone KeySig TimeSig and Clefs if voice 1 of source staff is not mapped to a track
@@ -1134,7 +1134,7 @@ static MeasureBase* cloneMeasure(MeasureBase* mb, Score* score, const Score* osc
     return nmb;
 }
 
-void Excerpt::cloneStaves(Score* sourceScore, Score* dstScore, const std::vector<staff_idx_t>& sourceStavesIndexes,
+void Excerpt::cloneStaves(Score* sourceScore, Score* dstScore, const muse::vector<staff_idx_t>& sourceStavesIndexes,
                           const TracksMap& trackList)
 {
     MeasureBaseList* measures = dstScore->measures();
@@ -1194,8 +1194,8 @@ void Excerpt::cloneStaves(Score* sourceScore, Score* dstScore, const std::vector
                 || muse::value(trackList, s->track2(), muse::nidx) == muse::nidx) {
                 continue;
             }
-            std::vector<track_idx_t> track1 = muse::values(trackList, s->track());
-            std::vector<track_idx_t> track2 = muse::values(trackList, s->track2());
+            muse::vector<track_idx_t> track1 = muse::values(trackList, s->track());
+            muse::vector<track_idx_t> track2 = muse::values(trackList, s->track2());
 
             if (track1.size() != track2.size()) {
                 continue;
@@ -1297,7 +1297,7 @@ void Excerpt::cloneStaff(Staff* srcStaff, Staff* dstStaff, bool cloneSpanners)
 
                     ncr->checkStaffMoveValidity();
                     // creating copy for iteration, cause seg->annotations() may change during loop
-                    const std::vector<EngravingItem*> iterableAnnotations = seg->annotations();
+                    const muse::vector<EngravingItem*> iterableAnnotations = seg->annotations();
 
                     for (EngravingItem* e : iterableAnnotations) {
                         if (!e) {
@@ -1630,7 +1630,7 @@ void Excerpt::cloneStaff2(Staff* srcStaff, Staff* dstStaff, const Fraction& star
                 addTremoloTwoChord(och, nch, prevTremolo);
             }
         }
-        std::vector<Segment*> emptySegments;
+        muse::vector<Segment*> emptySegments;
         for (Segment& seg : nm->segments()) {
             seg.checkEmpty();
             if (seg.empty()) {
@@ -1728,14 +1728,14 @@ void Excerpt::promoteGapRestsToRealRests(const Measure* measure, staff_idx_t sta
     }
 }
 
-std::vector<Excerpt*> Excerpt::createExcerptsFromParts(const std::vector<Part*>& parts, MasterScore* score)
+muse::vector<Excerpt*> Excerpt::createExcerptsFromParts(const muse::vector<Part*>& parts, MasterScore* score)
 {
     StringList allExcerptLowerNames;
     for (const Excerpt* e : score->excerpts()) {
         allExcerptLowerNames.push_back(e->name().toLower());
     }
 
-    std::vector<Excerpt*> result;
+    muse::vector<Excerpt*> result;
 
     for (Part* part : parts) {
         Excerpt* excerpt = new Excerpt(score);
@@ -1766,7 +1766,7 @@ std::vector<Excerpt*> Excerpt::createExcerptsFromParts(const std::vector<Part*>&
 void Excerpt::createLinkedTabs(MasterScore* score)
 {
     // store map of all initial spanners
-    std::unordered_map<staff_idx_t, std::vector<Spanner*> > spanners;
+    std::unordered_map<staff_idx_t, muse::vector<Spanner*> > spanners;
     // for moving initial spanner to new index
     std::unordered_map<staff_idx_t, staff_idx_t> indexMapping;
     std::set<staff_idx_t> staffIndexesToCopy;
@@ -1806,7 +1806,7 @@ void Excerpt::createLinkedTabs(MasterScore* score)
             Staff* dstStaff = part->staff(1);
             cloneStaff(srcStaff, dstStaff, false);
 
-            static const std::vector<StaffTypes> types {
+            static const muse::vector<StaffTypes> types {
                 StaffTypes::TAB_4SIMPLE,
                 StaffTypes::TAB_5SIMPLE,
                 StaffTypes::TAB_6SIMPLE,

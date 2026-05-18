@@ -79,9 +79,9 @@ IEngravingFontPtr EngravingFontsProvider::fontByName(const std::string& name) co
     return font;
 }
 
-std::vector<IEngravingFontPtr> EngravingFontsProvider::fonts() const
+muse::vector<IEngravingFontPtr> EngravingFontsProvider::fonts() const
 {
-    std::vector<IEngravingFontPtr> fs;
+    muse::vector<IEngravingFontPtr> fs;
     for (const std::shared_ptr<EngravingFont>& f : m_symbolFonts) {
         std::string name_lo = muse::strings::toLower(f->name());
         if (m_externalSymbolFonts.find(name_lo) == m_externalSymbolFonts.end()) {

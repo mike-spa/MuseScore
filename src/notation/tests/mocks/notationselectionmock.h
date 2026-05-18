@@ -39,9 +39,9 @@ public:
     MOCK_METHOD(QMimeData*, qMimeData, (), (const, override));
 
     MOCK_METHOD(EngravingItem*, element, (), (const, override));
-    MOCK_METHOD(const std::vector<EngravingItem*>&, elements, (), (const, override));
+    MOCK_METHOD(const muse::vector<EngravingItem*>&, elements, (), (const, override));
 
-    MOCK_METHOD(std::vector<Note*>, notes, (NoteFilter filter), (const, override));
+    MOCK_METHOD(muse::vector<Note*>, notes, (NoteFilter filter), (const, override));
 
     MOCK_METHOD(muse::RectF, canvasBoundingRect, (), (const, override));
 
@@ -51,7 +51,7 @@ public:
 
     MOCK_METHOD(mu::engraving::MeasureBase*, startMeasureBase, (), (const, override));
     MOCK_METHOD(mu::engraving::MeasureBase*, endMeasureBase, (), (const, override));
-    MOCK_METHOD(std::vector<System*>, selectedSystems, (), (const, override));
+    MOCK_METHOD(muse::vector<System*>, selectedSystems, (), (const, override));
 
     MOCK_METHOD(bool, elementsSelected, (const mu::engraving::ElementTypeSet&), (const, override));
 };

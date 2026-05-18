@@ -85,7 +85,7 @@ public:
     muse::mpe::PlaybackData& resolveTrackPlaybackData(const InstrumentTrackId& trackId);
     muse::mpe::PlaybackData& resolveTrackPlaybackData(const ID& partId, const String& instrumentId);
 
-    void triggerEventsForItems(const std::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound);
+    void triggerEventsForItems(const muse::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound);
     void triggerMetronome(int tick);
     void triggerCountIn(int tick, muse::mpe::duration_t& countInDuration);
 
@@ -112,7 +112,7 @@ private:
     };
 
     InstrumentTrackId idKey(const EngravingItem* item) const;
-    InstrumentTrackId idKey(const std::vector<const EngravingItem*>& items) const;
+    InstrumentTrackId idKey(const muse::vector<const EngravingItem*>& items) const;
     InstrumentTrackId idKey(const ID& partId, const String& instrumentId) const;
 
     void update(const int tickFrom, const int tickTo, const track_idx_t trackFrom, const track_idx_t trackTo,

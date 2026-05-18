@@ -74,9 +74,9 @@ private:
     bool m_printName = true;
     muse::String m_abbr;
     bool m_printAbbr = true;
-    std::vector<muse::String> m_measureNumbers;               // MusicXML measure number attribute
-    std::vector<engraving::Fraction> m_measureDurations;         // duration in fraction for every measure
-    std::vector<MusicXmlOctaveShiftList> m_octaveShifts;   // octave shift list for every staff
+    muse::vector<muse::String> m_measureNumbers;               // MusicXML measure number attribute
+    muse::vector<engraving::Fraction> m_measureDurations;         // duration in fraction for every measure
+    muse::vector<MusicXmlOctaveShiftList> m_octaveShifts;   // octave shift list for every staff
     LyricNumberHandler m_lyricNumberHandler;
     int m_maxStaff = -1;                      // maximum staff value found (0 based), -1 = none
     bool m_hasLyrics = false;

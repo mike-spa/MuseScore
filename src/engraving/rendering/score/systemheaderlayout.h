@@ -52,10 +52,10 @@ public:
 
 private:
     static Bracket* createBracket(System* system, LayoutContext& ctx, BracketItem* bi, size_t column, staff_idx_t staffIdx,
-                                  std::vector<Bracket*>& bl, Measure* measure);
+                                  muse::vector<Bracket*>& bl, Measure* measure);
     static void computeGroupBracketsWidths(System* system, LayoutContext& ctx);
-    static void computeStackedBracketsWidth(Bracket* first, const std::vector<Bracket*>& allGroupBracketsOrderedByColumn, double& width,
-                                            std::vector<Bracket*>& stack);
+    static void computeStackedBracketsWidth(Bracket* first, const muse::vector<Bracket*>& allGroupBracketsOrderedByColumn, double& width,
+                                            muse::vector<Bracket*>& stack);
 
     static void updateGroupNames(System* system, LayoutContext& ctx, const Fraction& tick);
     static InstrumentName* updateName(System* system, staff_idx_t staffIdx, LayoutContext& ctx, const String& name, InstrumentNameType type,

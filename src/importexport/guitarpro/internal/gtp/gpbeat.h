@@ -214,7 +214,7 @@ public:
     void setBeamMode(BeamMode mode) { m_beamMode = mode; }
     BeamMode beamMode() const { return m_beamMode; }
 
-    const std::vector<std::shared_ptr<GPNote> >& notes() const { return _notes; }
+    const muse::vector<std::shared_ptr<GPNote> >& notes() const { return _notes; }
 
     //! NOTE In GP version 6.2.0+ already arranged lyrics are written into bits, so the lyrics field of the beat is enough.
     //! In earlier versions of GP, there was no arrangement of lyrics by bits,
@@ -272,7 +272,7 @@ public:
 
 private:
     int _id = -1;
-    std::vector<std::shared_ptr<GPNote> > _notes;
+    muse::vector<std::shared_ptr<GPNote> > _notes;
     std::map<Key, std::string> _lyrics;
     std::map<Key, int> _diagramIdx;
     std::shared_ptr<GPRhythm> _rhythm;

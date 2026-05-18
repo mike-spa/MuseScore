@@ -223,7 +223,7 @@ void ModifyDom::sortMeasureSegments(Measure* measure, LayoutContext& ctx)
 
     auto changeAppliesToRepeatAndContinuation = [&](const Segment& seg) -> bool {
         // Check if the change applies to the beginning of the repeat section as well as the continuation
-        const std::vector<Measure*> measures = findFollowingRepeatMeasures(measure);
+        const muse::vector<Measure*> measures = findFollowingRepeatMeasures(measure);
         for (const Measure* repeatMeasure : measures) {
             if (repeatMeasure == measure->nextMeasureMM()) {
                 continue;
@@ -285,9 +285,9 @@ void ModifyDom::sortMeasureSegments(Measure* measure, LayoutContext& ctx)
 
     const bool sigsShouldBeInThisMeasure = ((measure->repeatEnd() && ctx.conf().styleB(Sid::changesBeforeBarlineRepeats))
                                             || (measure->repeatJump() && ctx.conf().styleB(Sid::changesBeforeBarlineOtherJumps)));
-    std::vector<Segment*> segsToRemove;
+    muse::vector<Segment*> segsToRemove;
 
-    std::vector<Segment*> segsToMoveToNextMeasure;
+    muse::vector<Segment*> segsToMoveToNextMeasure;
     for (Segment& seg : measure->segments()) {
         if (seg.tick() != measure->endTick() || seg.isChordRestType()) {
             continue;
@@ -337,7 +337,7 @@ void ModifyDom::sortMeasureSegments(Measure* measure, LayoutContext& ctx)
         return;
     }
 
-    std::vector<Segment*> segsToMoveToThisMeasure;
+    muse::vector<Segment*> segsToMoveToThisMeasure;
     for (Segment& seg : nextMeasure->segments()) {
         if (seg.tick() != nextMeasure->tick() || seg.isChordRestType()) {
             continue;
@@ -532,7 +532,7 @@ void ModifyDom::sortMeasureSegments(Measure* measure, LayoutContext& ctx)
 
 void ModifyDom::removeAndAddBeginSegments(Measure* measure)
 {
-    std::vector<Segment*> segsToSort;
+    muse::vector<Segment*> segsToSort;
     for (Segment& seg : measure->segments()) {
         if (seg.rtick() != Fraction(0, 1) || seg.isChordRestType() || seg.isEndBarLineType()) {
             continue;

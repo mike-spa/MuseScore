@@ -107,14 +107,14 @@ public:
     EngravingItem* drop(EditData& ed) override;
 
     static int dynamicVelocity(DynamicType t);
-    static const std::vector<Dyn>& dynamicList() { return DYN_LIST; }
+    static const muse::vector<Dyn>& dynamicList() { return DYN_LIST; }
 
     bool hasVoiceAssignmentProperties() const override { return true; }
 
     void startEdit(EditData&) override;
     void endEdit(EditData&) override;
     int gripsCount() const override;
-    std::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
+    muse::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
     void dragGrip(EditData& editData) override;
     void endDragGrip(EditData&) override;
 
@@ -155,7 +155,7 @@ private:
     int m_changeInVelocity = 128;
     DynamicSpeed m_velChangeSpeed = DynamicSpeed::NORMAL;
 
-    static const std::vector<Dyn> DYN_LIST;
+    static const muse::vector<Dyn> DYN_LIST;
 
     double m_leftDragOffset = 0.0;
     double m_rightDragOffset = 0.0;

@@ -48,7 +48,7 @@ Page::Page(RootItem* parent)
 //   items
 //---------------------------------------------------------
 
-std::vector<EngravingItem*> Page::items(const RectF& rect)
+muse::vector<EngravingItem*> Page::items(const RectF& rect)
 {
     if (!m_bspTreeValid) {
         doRebuildBspTree();
@@ -56,7 +56,7 @@ std::vector<EngravingItem*> Page::items(const RectF& rect)
     return bspTree.items(rect);
 }
 
-std::vector<EngravingItem*> Page::items(const PointF& point)
+muse::vector<EngravingItem*> Page::items(const PointF& point)
 {
     if (!m_bspTreeValid) {
         doRebuildBspTree();
@@ -165,7 +165,7 @@ bool Page::isOdd() const
 //   elements
 //---------------------------------------------------------
 
-std::vector<EngravingItem*> Page::elements() const
+muse::vector<EngravingItem*> Page::elements() const
 {
     return getChildren(false);
 }
@@ -220,7 +220,7 @@ RectF Page::tbbox() const
     double x2 = 0.0;
     double y1 = height();
     double y2 = 0.0;
-    const std::vector<EngravingItem*> el = elements();
+    const muse::vector<EngravingItem*> el = elements();
     for (EngravingItem* e : el) {
         if (e == this || !e->isPrintable()) {
             continue;

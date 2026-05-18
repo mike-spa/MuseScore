@@ -44,7 +44,7 @@ std::vector<INotationWriter::UnitType> ExportProjectScenario::supportedUnitTypes
         return {};
     }
 
-    return writer->supportedUnitTypes();
+    return writer->supportedUnitTypes().toStdVector();
 }
 
 RetVal<muse::io::path_t> ExportProjectScenario::askExportPath(const INotationPtrList& notations, const ExportType& exportType,

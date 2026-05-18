@@ -139,9 +139,9 @@ public:
         diagram->harmony()->endEdit(ed);
     }
 
-    std::vector<EID> chordsEIDs(MasterScore* score)
+    muse::vector<EID> chordsEIDs(MasterScore* score)
     {
-        std::vector<EID> eids;
+        muse::vector<EID> eids;
         FBox* fretBox = toFBox(score->measure(0));
 
         for (EngravingItem* item : fretBox->el()) {

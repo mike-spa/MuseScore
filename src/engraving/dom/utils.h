@@ -97,9 +97,9 @@ extern double yStaffDifference(const System* system1, const System* system2, sta
 extern bool allowRemoveWhenRemovingStaves(EngravingItem* item, staff_idx_t startStaff, staff_idx_t endStaff = 0);
 extern bool moveDownWhenAddingStaves(EngravingItem* item, staff_idx_t startStaff, staff_idx_t endStaff = 0);
 
-extern void collectChordsAndRest(Segment* segment, staff_idx_t staffIdx, std::vector<Chord*>& chords, std::vector<Rest*>& rests);
-extern void collectChordsOverlappingRests(Segment* segment, staff_idx_t staffIdx, std::vector<Chord*>& chords);
-extern std::vector<EngravingItem*> collectSystemObjects(const Score* score, const std::vector<Staff*>& staves = {});
+extern void collectChordsAndRest(Segment* segment, staff_idx_t staffIdx, muse::vector<Chord*>& chords, muse::vector<Rest*>& rests);
+extern void collectChordsOverlappingRests(Segment* segment, staff_idx_t staffIdx, muse::vector<Chord*>& chords);
+extern muse::vector<EngravingItem*> collectSystemObjects(const Score* score, const muse::vector<Staff*>& staves = {});
 extern std::unordered_set<EngravingItem*> collectElementsAnchoredToChordRest(const ChordRest* cr);
 extern std::unordered_set<EngravingItem*> collectElementsAnchoredToNote(const Note* cr, bool includeForwardTiesSpanners,
                                                                         bool includeBackwardTiesSpanners);
@@ -118,8 +118,8 @@ extern String bendAmountToString(int fulls, int quarts, bool useFractions = true
 
 extern InstrumentTrackId makeInstrumentTrackId(const EngravingItem* item);
 
-extern std::vector<Measure*> findFollowingRepeatMeasures(const Measure* measure);
-extern std::vector<Measure*> findPreviousRepeatMeasures(const Measure* measure);
+extern muse::vector<Measure*> findFollowingRepeatMeasures(const Measure* measure);
+extern muse::vector<Measure*> findPreviousRepeatMeasures(const Measure* measure);
 extern bool repeatHasPartialLyricLine(const Measure* endRepeatMeasure);
 extern bool segmentsAreAdjacent(const Segment* firstSeg, const Segment* secondSeg);
 extern bool segmentsAreInDifferentRepeatSegments(const Segment* firstSeg, const Segment* secondSeg);
@@ -129,7 +129,7 @@ extern PartialLyricsLine* findPrevPartialLyricsLineDash(Lyrics* lyrics);
 
 extern bool isElementInFretBox(const EngravingItem* item);
 
-extern std::vector<EngravingItem*> filterTargetElements(const Selection& sel, EngravingItem* dropElement, bool& unique);
+extern muse::vector<EngravingItem*> filterTargetElements(const Selection& sel, EngravingItem* dropElement, bool& unique);
 
 extern Lyrics* searchNextLyrics(Segment* s, staff_idx_t staffIdx, int verse, PlacementV p);
 extern bool noteIsBefore(const Note* n1, const Note* n2);

@@ -39,19 +39,19 @@ private:
     static void layoutSystemLockIndicators(System* system);
 
     //! puts segments on the positions according to their length
-    static void layoutSegmentsWithDuration(Measure* m, const std::vector<int>& visibleParts);
+    static void layoutSegmentsWithDuration(Measure* m, const muse::vector<int>& visibleParts);
 
     /*! \brief callulate width of segment and additional spacing of segment depends on duration of segment
      *  \return pair of {spacing, width}
      */
-    static std::pair<double, double> computeCellWidth(const Segment* s, const std::vector<int>& visibleParts);
+    static std::pair<double, double> computeCellWidth(const Segment* s, const muse::vector<int>& visibleParts);
 
     /*! \brief get among all ChordRests of segment the ChordRest with minimum ticks,
     * take into account visibleParts
     */
-    static ChordRest* chordRestWithMinDuration(const Segment* seg, const std::vector<int>& visibleParts);
+    static ChordRest* chordRestWithMinDuration(const Segment* seg, const muse::vector<int>& visibleParts);
 
-    static Fraction calculateQuantumCell(const Measure* m, const std::vector<int>& visibleParts);
+    static Fraction calculateQuantumCell(const Measure* m, const muse::vector<int>& visibleParts);
 };
 }
 

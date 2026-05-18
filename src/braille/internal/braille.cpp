@@ -445,7 +445,7 @@ void BrailleEngravingItemList::join(BrailleEngravingItemList* another, bool newl
     }
 }
 
-void BrailleEngravingItemList::join(std::vector<BrailleEngravingItemList*> lst, bool newline, bool del)
+void BrailleEngravingItemList::join(muse::vector<BrailleEngravingItemList*> lst, bool newline, bool del)
 {
     for (auto item: lst) {
         join(item, newline, del);
@@ -457,7 +457,7 @@ QString BrailleEngravingItemList::brailleStr()
     return m_braille_str;
 }
 
-std::vector<BrailleEngravingItem>* BrailleEngravingItemList::items()
+muse::vector<BrailleEngravingItem>* BrailleEngravingItemList::items()
 {
     return &m_items;
 }
@@ -497,10 +497,10 @@ void BrailleEngravingItemList::insert(int pos, BrailleEngravingItem bei)
 
         m_braille_str.append(bei.braille());
     } else { // insert middle
-        std::vector<BrailleEngravingItem> lst;
+        muse::vector<BrailleEngravingItem> lst;
         QString buff = "";
 
-        std::vector<BrailleEngravingItem>::iterator ptr;
+        muse::vector<BrailleEngravingItem>::iterator ptr;
         int inc = 0;
         for (ptr = m_items.begin(); ptr < m_items.end(); ptr++) {
             if (ptr->start() >= pos) {
@@ -805,9 +805,9 @@ bool Braille::write(QIODevice& device)
     credits(device);
     instruments(device);
     size_t nrStaves = m_score->staves().size();
-    std::vector<QString> measureBraille(nrStaves);
-    std::vector<QString> line(nrStaves + 1);
-    std::vector<QString> lyrics(nrStaves + 1);
+    muse::vector<QString> measureBraille(nrStaves);
+    muse::vector<QString> line(nrStaves + 1);
+    muse::vector<QString> lyrics(nrStaves + 1);
     int currentLineLength = 0;
     int currentMeasureMaxLength = 0;
     bool measureAboveMax = false;
@@ -1030,9 +1030,9 @@ int Braille::computeInterval(Note* note1, Note* note2, bool ignoreOctave)
     return interval;
 }
 
-std::vector<Slur*> Braille::slurs(ChordRest* chordRest)
+muse::vector<Slur*> Braille::slurs(ChordRest* chordRest)
 {
-    std::vector<Slur*> result;
+    muse::vector<Slur*> result;
     SpannerMap& smap = m_score->spannerMap();
     auto spanners = smap.findOverlapping(chordRest->tick().ticks(), chordRest->tick().ticks());
     for (auto interval : spanners) {
@@ -1047,9 +1047,9 @@ std::vector<Slur*> Braille::slurs(ChordRest* chordRest)
     return result;
 }
 
-std::vector<Hairpin*> Braille::hairpins(ChordRest* chordRest)
+muse::vector<Hairpin*> Braille::hairpins(ChordRest* chordRest)
 {
-    std::vector<Hairpin*> result;
+    muse::vector<Hairpin*> result;
     SpannerMap& smap = m_score->spannerMap();
     auto spanners = smap.findOverlapping(chordRest->tick().ticks(), chordRest->tick().ticks());
     for (auto interval : spanners) {
@@ -1118,7 +1118,7 @@ bool Braille::isLongSlur(Slur* slur)
     return !isShortSlur(slur);
 }
 
-bool Braille::isShortShortSlurConvergence(const std::vector<Slur*>& slurs)
+bool Braille::isShortShortSlurConvergence(const muse::vector<Slur*>& slurs)
 {
     for (Slur* slur1 : slurs) {
         for (Slur* slur2 : slurs) {
@@ -1133,7 +1133,7 @@ bool Braille::isShortShortSlurConvergence(const std::vector<Slur*>& slurs)
     return false;
 }
 
-bool Braille::isLongLongSlurConvergence(const std::vector<Slur*>& slurs)
+bool Braille::isLongLongSlurConvergence(const muse::vector<Slur*>& slurs)
 {
     for (Slur* slur1 : slurs) {
         for (Slur* slur2 : slurs) {
@@ -1777,14 +1777,14 @@ QString Braille::brailleChord(Chord* chord)
 
     QString tupletBraille = brailleTuplet(chord->tuplet(), chord);
 
-    std::vector<Hairpin*> chordHairpins = hairpins(chord);
+    muse::vector<Hairpin*> chordHairpins = hairpins(chord);
     QString hairpinBrailleBefore = brailleHairpinBefore(chord, chordHairpins);
 
     // 9.2. Direction of Intervals (in Chords). Page 75. Music Braille Code 2015
     // In Treble, Soprano, Alto clefs: Write the highest note, then give remaining notes as intervals downward.
     // In Tenor, Baritone, Bass clefs: Write the lowest note, then give remaining notes as intervals upward.
     // All intervals are relative to the original (highest or lowest) note.
-    std::vector<Note*> notes;
+    muse::vector<Note*> notes;
     if (ascendingChords(m_context.currentClefType[chord->staffIdx()])) {
         for (auto it = chord->notes().begin(); it != chord->notes().end(); ++it) {
             notes.push_back(*it);
@@ -1822,7 +1822,7 @@ QString Braille::brailleChord(Chord* chord)
         articulationsBraille += brailleArticulation(artic);
     }
 
-    std::vector<Slur*> chordSlurs = slurs(chord);
+    muse::vector<Slur*> chordSlurs = slurs(chord);
     QString slurBrailleBefore = brailleSlurBefore(chord, chordSlurs);
     QString slurBrailleAfter  = brailleSlurAfter(chord, chordSlurs);
 
@@ -1863,7 +1863,7 @@ QString Braille::brailleChord(Chord* chord)
 //    note:  The note for which we are currently representing the braille interval
 //    return the braille interval representation in the chord
 //-----------------------------------------------------------------------------------
-QString Braille::brailleChordInterval(Note* rootNote, const std::vector<Note*>& notes, Note* note)
+QString Braille::brailleChordInterval(Note* rootNote, const muse::vector<Note*>& notes, Note* note)
 {
     if (!rootNote || !note || notes.size() < 2) {
         return QString();
@@ -2647,10 +2647,10 @@ QString Braille::brailleRest(Rest* rest)
             fermata = brailleFermata(toFermata(el));
         }
     }
-    std::vector<Slur*> restSlurs = slurs(rest);
+    muse::vector<Slur*> restSlurs = slurs(rest);
     QString slurBrailleBefore = brailleSlurBefore(rest, restSlurs);
     QString slurBrailleAfter  = brailleSlurAfter(rest, restSlurs);
-    std::vector<Hairpin*> restHairpins = hairpins(rest);
+    muse::vector<Hairpin*> restHairpins = hairpins(rest);
     QString hairpinBrailleBefore = brailleHairpinBefore(rest, restHairpins);
     QString hairpinBrailleAfter = brailleHairpinAfter(rest, restHairpins);
 
@@ -2865,7 +2865,7 @@ QString Braille::brailleVolta(Measure* measure, Volta* volta, int staffCount)
     return result;
 }
 
-QString Braille::brailleHairpinBefore(ChordRest* chordRest, const std::vector<Hairpin*>& hairpins)
+QString Braille::brailleHairpinBefore(ChordRest* chordRest, const muse::vector<Hairpin*>& hairpins)
 {
     if (!chordRest) {
         return QString();
@@ -2912,7 +2912,7 @@ QString Braille::brailleHairpinBefore(ChordRest* chordRest, const std::vector<Ha
     return result;
 }
 
-QString Braille::brailleHairpinAfter(ChordRest* chordRest, const std::vector<Hairpin*>& hairpins)
+QString Braille::brailleHairpinAfter(ChordRest* chordRest, const muse::vector<Hairpin*>& hairpins)
 {
     if (!chordRest) {
         return QString();
@@ -2948,7 +2948,7 @@ QString Braille::brailleHairpinAfter(ChordRest* chordRest, const std::vector<Hai
     return result;
 }
 
-QString Braille::brailleSlurBefore(ChordRest* chordRest, const std::vector<Slur*>& slurs)
+QString Braille::brailleSlurBefore(ChordRest* chordRest, const muse::vector<Slur*>& slurs)
 {
     if (!chordRest || slurs.empty()) {
         return QString();
@@ -2972,7 +2972,7 @@ QString Braille::brailleSlurBefore(ChordRest* chordRest, const std::vector<Slur*
     return longSlur;
 }
 
-QString Braille::brailleSlurAfter(ChordRest* chordRest, const std::vector<Slur*>& crSlurs)
+QString Braille::brailleSlurAfter(ChordRest* chordRest, const muse::vector<Slur*>& crSlurs)
 {
     if (!chordRest || crSlurs.empty()) {
         return QString();
@@ -3001,7 +3001,7 @@ QString Braille::brailleSlurAfter(ChordRest* chordRest, const std::vector<Slur*>
     }
 
     if (hasShortSlurSymbol) {
-        std::vector<Slur*> nextCRSlurs;
+        muse::vector<Slur*> nextCRSlurs;
         if (chordRest->segment()->next1()) {
             ChordRest* nextCR = chordRest->segment()->next1()->nextChordRest(chordRest->track());
             nextCRSlurs = slurs(nextCR);

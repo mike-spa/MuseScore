@@ -95,7 +95,7 @@ PropertyValue StringTunings::getProperty(Pid id) const
     } else if (id == Pid::STRINGTUNINGS_PRESET) {
         return m_preset;
     } else if (id == Pid::STRINGTUNINGS_VISIBLE_STRINGS) {
-        std::vector<int> visibleStrings;
+        muse::vector<int> visibleStrings;
         for (string_idx_t string : m_visibleStrings) {
             visibleStrings.emplace_back(static_cast<int>(string));
         }
@@ -142,7 +142,7 @@ bool StringTunings::setProperty(Pid id, const PropertyValue& val)
         m_preset = val.value<String>();
     } else if (id == Pid::STRINGTUNINGS_VISIBLE_STRINGS) {
         m_visibleStrings.clear();
-        std::vector<int> ignoredStrings = val.value<std::vector<int> >();
+        muse::vector<int> ignoredStrings = val.value<muse::vector<int> >();
         for (int string : ignoredStrings) {
             m_visibleStrings.emplace_back(static_cast<string_idx_t>(string));
         }
@@ -165,7 +165,7 @@ String StringTunings::accessibleInfo() const
                          : TConv::translatedUserName(TextStyleType::STRING_TUNINGS);
     String info;
 
-    const std::vector<instrString>& stringList = stringData->stringList();
+    const muse::vector<instrString>& stringList = stringData->stringList();
     int numOfStrings = static_cast<int>(stringList.size());
     for (int i = 0; i < numOfStrings; ++i) {
         string_idx_t index = numOfStrings - i - 1;
@@ -217,12 +217,12 @@ void StringTunings::setPreset(const String& preset)
     m_preset = preset;
 }
 
-const std::vector<string_idx_t>& StringTunings::visibleStrings() const
+const muse::vector<string_idx_t>& StringTunings::visibleStrings() const
 {
     return m_visibleStrings;
 }
 
-void StringTunings::setVisibleStrings(const std::vector<string_idx_t>& visibleStrings)
+void StringTunings::setVisibleStrings(const muse::vector<string_idx_t>& visibleStrings)
 {
     m_visibleStrings = visibleStrings;
 }
@@ -271,8 +271,8 @@ String StringTunings::generateText() const
 
     auto guitarStringSymbol = [](int i) { return String(u"<sym>guitarString") + String::number(i) + u"</sym>"; };
 
-    const std::vector<instrString>& stringList = stringData->stringList();
-    std::vector<String> visibleStringList;
+    const muse::vector<instrString>& stringList = stringData->stringList();
+    muse::vector<String> visibleStringList;
     int numOfStrings = static_cast<int>(stringList.size());
     for (int i = 0; i < numOfStrings; ++i) {
         string_idx_t index = numOfStrings - i - 1;

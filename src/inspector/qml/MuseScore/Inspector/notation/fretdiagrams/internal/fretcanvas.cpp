@@ -167,7 +167,7 @@ void FretCanvas::draw(QPainter* painter)
     // Draw 'hover' dot
     if ((m_cfret > 0) && (m_cfret <= _frets) && (m_cstring >= 0) && (m_cstring < _strings)) {
         mu::engraving::FretItem::Dot cd = m_diagram->dot(m_cstring, m_cfret)[0];
-        std::vector<mu::engraving::FretItem::Dot> otherDots = m_diagram->dot(m_cstring);
+        muse::vector<mu::engraving::FretItem::Dot> otherDots = m_diagram->dot(m_cstring);
         mu::engraving::FretDotType dtype;
         symPen.setColor(Qt::lightGray);
 
@@ -306,7 +306,7 @@ void FretCanvas::mousePressEvent(QMouseEvent* ev)
                 if (m_automaticDotType && haveCtrl && m_diagram->dot(string)[0].exists()) {
                     dtype = mu::engraving::FretDotType::TRIANGLE;
 
-                    std::vector<mu::engraving::FretDotType> dtypes {
+                    muse::vector<mu::engraving::FretDotType> dtypes {
                         mu::engraving::FretDotType::NORMAL,
                         mu::engraving::FretDotType::CROSS,
                         mu::engraving::FretDotType::SQUARE,

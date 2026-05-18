@@ -260,7 +260,7 @@ QQmlListProperty<apiv1::Score> PluginAPI::scores()
 {
     NOT_IMPLEMENTED;
 
-    static std::vector<mu::engraving::Score*> scores;
+    static muse::vector<mu::engraving::Score*> scores;
 
     return wrapContainerProperty<Score>(this, scores);
 }

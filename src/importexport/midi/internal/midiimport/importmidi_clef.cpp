@@ -259,7 +259,7 @@ static std::pair<ElementType, ReducedFraction> findChordRest(const Segment* seg,
 int findClefChangePenalty(
     int pos,
     int clefIndex,
-    const std::vector<std::vector<int> >& trebleBassPath,
+    const muse::vector<muse::vector<int> >& trebleBassPath,
     const Segment* segment,
     const Staff* staff)
 {
@@ -343,8 +343,8 @@ ClefType clefFromIndex(int index)
     return (index == 0) ? ClefType::G : ClefType::F;
 }
 
-void makeDynamicProgrammingStep(std::vector<std::vector<int> >& penalties,
-                                std::vector<std::vector<int> >& optimalPaths,
+void makeDynamicProgrammingStep(muse::vector<muse::vector<int> >& penalties,
+                                muse::vector<muse::vector<int> >& optimalPaths,
                                 int pos,
                                 MidiTie::TieStateMachine::State tieState,
                                 const MinMaxPitch& minMaxPitch,
@@ -393,11 +393,11 @@ void makeDynamicProgrammingStep(std::vector<std::vector<int> >& penalties,
 
 bool createClefs(
     Staff* staff,
-    const std::vector<std::vector<int> >& optimalPaths,
+    const muse::vector<muse::vector<int> >& optimalPaths,
     int lastClef,
-    const std::vector<Segment*>& segments)
+    const muse::vector<Segment*>& segments)
 {
-    std::vector<std::pair<ClefType, int> > clefsAndTicks;
+    muse::vector<std::pair<ClefType, int> > clefsAndTicks;
 
     int currentClef = lastClef;
     for (size_t i = optimalPaths[0].size() - 1; i; --i) {
@@ -473,13 +473,13 @@ void createClefs(Staff* staff, int indexOfOperation, bool isDrumTrack)
         MidiTie::TieStateMachine tieTracker;
 
         // find optimal clef changes via dynamic programming
-        std::vector<std::vector<int> > penalties(2);            // 0 - treble, 1 - bass
+        muse::vector<muse::vector<int> > penalties(2);            // 0 - treble, 1 - bass
         // remember only 2 last positions to save memory
         for (size_t i = 0; i != penalties.size(); ++i) {
             penalties[i].resize(2);                             // 2 = current + prev
         }
-        std::vector<std::vector<int> > optimalPaths(2);         // first col is unused
-        std::vector<Segment*> segments;
+        muse::vector<muse::vector<int> > optimalPaths(2);         // first col is unused
+        muse::vector<Segment*> segments;
 
         int pos = 0;
         for (Segment* seg = staff->score()->firstSegment(SegmentType::ChordRest); seg;

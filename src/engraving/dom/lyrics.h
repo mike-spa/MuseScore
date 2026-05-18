@@ -192,11 +192,11 @@ public:
 
     struct LayoutData : public LineSegment::LayoutData {
     public:
-        const std::vector<LineF>& dashes() const { return m_dashes; }
+        const muse::vector<LineF>& dashes() const { return m_dashes; }
         void clearDashes() { m_dashes.clear(); }
         void addDash(const LineF& dash) { m_dashes.push_back(dash); }
     private:
-        std::vector<LineF> m_dashes;
+        muse::vector<LineF> m_dashes;
     };
     DECLARE_LAYOUTDATA_METHODS(LyricsLineSegment)
 

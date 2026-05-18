@@ -60,7 +60,7 @@ public:
 class MidiFile
 {
     QIODevice* fp;
-    std::vector<MidiTrack> _tracks;
+    muse::vector<MidiTrack> _tracks;
     int _division;
     bool _isDivisionInTps;         ///< ticks per second, alternative - ticks per beat
     int _format;                 ///< midi file format (0-2)
@@ -99,8 +99,8 @@ public:
     bool read(QIODevice*);
     bool write(QIODevice*);
 
-    std::vector<MidiTrack>& tracks() { return _tracks; }
-    const std::vector<MidiTrack>& tracks() const { return _tracks; }
+    muse::vector<MidiTrack>& tracks() { return _tracks; }
+    const muse::vector<MidiTrack>& tracks() const { return _tracks; }
 
     int format() const { return _format; }
     void setFormat(int fmt) { _format = fmt; }

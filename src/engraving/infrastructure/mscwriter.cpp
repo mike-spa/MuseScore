@@ -219,7 +219,7 @@ void MscWriter::writeMeta()
     m_meta.isWritten = true;
 }
 
-void MscWriter::writeContainer(const std::vector<String>& paths)
+void MscWriter::writeContainer(const muse::vector<String>& paths)
 {
     ByteArray data;
     auto buf = Buffer::opened(IODevice::WriteOnly, &data);
@@ -442,7 +442,7 @@ bool MscWriter::XmlFileWriter::addFileData(const String& fileName, const ByteArr
         return false;
     }
 
-    static const std::vector<String> supportedExts = { u"mscx", u"json", u"mss" };
+    static const muse::vector<String> supportedExts = { u"mscx", u"json", u"mss" };
     String ext = FileInfo::suffix(fileName);
     if (!muse::contains(supportedExts, ext)) {
         NOT_SUPPORTED << fileName;

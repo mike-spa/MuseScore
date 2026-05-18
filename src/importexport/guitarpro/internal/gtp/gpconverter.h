@@ -40,8 +40,8 @@ private:
     using ChordRest = mu::engraving::ChordRest;
     using Note = mu::engraving::Note;
 
-    using ChordRestContainer = std::vector<std::pair<mu::engraving::ChordRest*, const GPBeat*> >;
-    using TieMap = std::unordered_map<track_idx_t, std::vector<mu::engraving::Tie*> >;
+    using ChordRestContainer = muse::vector<std::pair<mu::engraving::ChordRest*, const GPBeat*> >;
+    using TieMap = std::unordered_map<track_idx_t, muse::vector<mu::engraving::Tie*> >;
 
     struct Context {
         int32_t masterBarIndex = 0;
@@ -49,19 +49,19 @@ private:
         Fraction curTick;
     };
 
-    void convert(const std::vector<std::unique_ptr<GPMasterBar> >& mBs);
+    void convert(const muse::vector<std::unique_ptr<GPMasterBar> >& mBs);
     void clearDefectedSpanner();
 
     void convertMasterBar(const GPMasterBar* mB, Context ctx);
     void fixEmptyMeasures();
-    void convertBars(const std::vector<std::unique_ptr<GPBar> >& bars, Context ctx);
+    void convertBars(const muse::vector<std::unique_ptr<GPBar> >& bars, Context ctx);
     void convertBar(const GPBar* bar, Context ctx);
-    void convertVoices(const std::vector<std::unique_ptr<GPVoice> >&, Context ctx);
+    void convertVoices(const muse::vector<std::unique_ptr<GPVoice> >&, Context ctx);
     void convertVoice(const GPVoice*, Context ctx);
-    void convertBeats(const std::vector<std::shared_ptr<GPBeat> >& beats, Context ctx);
+    void convertBeats(const muse::vector<std::shared_ptr<GPBeat> >& beats, Context ctx);
     Fraction convertBeat(const GPBeat* beat, ChordRestContainer& graceChords, Context ctx);
     void configureGraceChord(const GPBeat* beat, ChordRest* cr, GPBeat::OttavaType type);
-    void convertNotes(const std::vector<std::shared_ptr<GPNote> >& notes, ChordRest* cr);
+    void convertNotes(const muse::vector<std::shared_ptr<GPNote> >& notes, ChordRest* cr);
     void convertNote(const GPNote* note, mu::engraving::ChordRest* cr);
 
     void setUpGPScore(const GPScore* gpscore);
@@ -170,8 +170,8 @@ private:
     std::unordered_map<track_idx_t, GPBar::Clef> _clefs;
     std::unordered_map<track_idx_t, GPBeat::DynamicType> _dynamics;
     std::unordered_map<track_idx_t, bool> m_hasCapo;
-    std::unordered_map<track_idx_t, std::vector<mu::engraving::Tie*> > _ties; // map(track, tie)
-    std::unordered_map<track_idx_t, std::vector<mu::engraving::Tie*> > _harmonicTies; // map(track, tie between harmonic note)
+    std::unordered_map<track_idx_t, muse::vector<mu::engraving::Tie*> > _ties; // map(track, tie)
+    std::unordered_map<track_idx_t, muse::vector<mu::engraving::Tie*> > _harmonicTies; // map(track, tie between harmonic note)
     std::unordered_map<Note*, int> m_originalPitches; // info of changed pitches for keeping track of ties
     std::unordered_map<mu::engraving::Chord*, mu::engraving::TremoloType> m_tremolosInChords;
     std::unordered_map<track_idx_t, mu::engraving::Slur*> _slurs; // map(track, slur)
@@ -186,7 +186,7 @@ private:
     struct NextTupletInfo {
         Fraction ratio;
         Fraction duration;                // duration of all current elements
-        std::vector<ChordRest*> elements; // elements that will be added to tuplet
+        muse::vector<ChordRest*> elements; // elements that will be added to tuplet
         track_idx_t track;
         mu::engraving::Tuplet* tuplet = nullptr;
         mu::engraving::Measure* measure = nullptr;
@@ -195,9 +195,9 @@ private:
     } m_nextTupletInfo;
 
     // Index is the number of sharps. Using flat keysigs for signatures with double sharps
-    std::vector<int> m_sharpsToKeyConverter{ 0, 1, 2, 3, 4, 5, 6, 7, -4, -3, -2, -1 };
+    muse::vector<int> m_sharpsToKeyConverter{ 0, 1, 2, 3, 4, 5, 6, 7, -4, -3, -2, -1 };
     // Index is the number of sharps. Using sharp keysigs for signatures with double flats
-    std::vector<int> m_sharpsToFlatKeysConverter{ 0, 1, 2, 3, 4, -7, -6, -5, -4, -3, -2, -1 };
+    muse::vector<int> m_sharpsToFlatKeysConverter{ 0, 1, 2, 3, 4, -7, -6, -5, -4, -3, -2, -1 };
 
     static constexpr mu::engraving::voice_idx_t VOICES = 4;
 

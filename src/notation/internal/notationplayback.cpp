@@ -161,7 +161,7 @@ const muse::mpe::PlaybackData& NotationPlayback::trackPlaybackData(const engravi
     return m_playbackModel.resolveTrackPlaybackData(trackId);
 }
 
-void NotationPlayback::triggerEventsForItems(const std::vector<const EngravingItem*>& items, muse::mpe::duration_t duration,
+void NotationPlayback::triggerEventsForItems(const muse::vector<const EngravingItem *> &items, muse::mpe::duration_t duration,
                                              bool flushSound)
 {
     m_playbackModel.triggerEventsForItems(items, duration, flushSound);
@@ -438,7 +438,7 @@ void NotationPlayback::setTempoMultiplier(double multiplier)
     m_playbackModel.reload();
 }
 
-void NotationPlayback::addSoundFlags(const std::vector<StaffText*>& staffTextList)
+void NotationPlayback::addSoundFlags(const muse::vector<StaffText*>& staffTextList)
 {
     TRACEFUNC;
 
@@ -489,7 +489,7 @@ void NotationPlayback::removeSoundFlags(const InstrumentTrackIdSet& trackIdSet)
 {
     TRACEFUNC;
 
-    std::vector<StaffText*> staffTextList = collectStaffText(trackIdSet, true /*withSoundFlags*/);
+    muse::vector<StaffText*> staffTextList = collectStaffText(trackIdSet, true /*withSoundFlags*/);
     if (staffTextList.empty()) {
         return;
     }
@@ -537,11 +537,11 @@ bool NotationPlayback::hasSoundFlags(const engraving::InstrumentTrackIdSet& trac
     return false;
 }
 
-std::vector<StaffText*> NotationPlayback::collectStaffText(const InstrumentTrackIdSet& trackIdSet, bool withSoundFlags) const
+muse::vector<StaffText*> NotationPlayback::collectStaffText(const InstrumentTrackIdSet& trackIdSet, bool withSoundFlags) const
 {
     TRACEFUNC;
 
-    std::vector<StaffText*> result;
+    muse::vector<StaffText*> result;
 
     if (trackIdSet.empty()) {
         return result;

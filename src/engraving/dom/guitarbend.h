@@ -184,7 +184,7 @@ public:
     GuitarBendSegment* clone() const override { return new GuitarBendSegment(*this); }
 
     int gripsCount() const override;
-    std::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
+    muse::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
 
     PropertyValue getProperty(Pid id) const override;
     bool setProperty(Pid propertyId, const PropertyValue& v) override;
@@ -205,7 +205,7 @@ public:
 
     bool isUserModified() const override;
 
-    std::vector<LineF> gripAnchorLines(Grip) const override { return {}; }
+    muse::vector<LineF> gripAnchorLines(Grip) const override { return {}; }
 
     Color curColor(const rendering::PaintOptions& opt) const override
     {
@@ -286,7 +286,7 @@ public:
 
     double lineWidth() const { return guitarBendHold()->lineWidth(); }
 
-    std::vector<LineF> gripAnchorLines(Grip) const override { return {}; }
+    muse::vector<LineF> gripAnchorLines(Grip) const override { return {}; }
 
     struct LayoutData : LineSegment::LayoutData {
     public:

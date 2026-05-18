@@ -2248,7 +2248,7 @@ struct StyledProperty {
     Pid pid;
 };
 
-typedef std::vector<StyledProperty> ElementStyle;
+typedef muse::vector<StyledProperty> ElementStyle;
 
 //---------------------------------------------------------
 //   StyleDef

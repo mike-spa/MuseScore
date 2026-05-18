@@ -66,7 +66,7 @@ double HorizontalSpacing::computeSpacingForFullSystem(System* system, double str
     ctx.xLeftBarrier = system->leftMargin();
     ctx.systemIsFull = true;
 
-    std::vector<Measure*> measureGroup;
+    muse::vector<Measure*> measureGroup;
     measureGroup.reserve(system->measures().size());
 
     for (MeasureBase* mb : system->measures()) {
@@ -193,7 +193,7 @@ void HorizontalSpacing::justifySystem(System* system, double curSysWidth, double
         return;
     }
 
-    std::vector<Spring> springs;
+    muse::vector<Spring> springs;
 
     for (MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {
@@ -221,7 +221,7 @@ void HorizontalSpacing::justifySystem(System* system, double curSysWidth, double
     }
 }
 
-void HorizontalSpacing::spaceMeasureGroup(const std::vector<Measure*>& measureGroup, HorizontalSpacingContext& ctx)
+void HorizontalSpacing::spaceMeasureGroup(const muse::vector<Measure*>& measureGroup, HorizontalSpacingContext& ctx)
 {
     if (measureGroup.empty()) {
         return;
@@ -229,7 +229,7 @@ void HorizontalSpacing::spaceMeasureGroup(const std::vector<Measure*>& measureGr
 
     measureGroup.front()->mutldata()->setPosX(ctx.xCur);
 
-    std::vector<Segment*> segList;
+    muse::vector<Segment*> segList;
     segList.reserve(2 * measureGroup.size());
 
     int startSegIdx = -1;
@@ -246,7 +246,7 @@ void HorizontalSpacing::spaceMeasureGroup(const std::vector<Measure*>& measureGr
         return;
     }
 
-    std::vector<SegmentPosition> segmentPositions = spaceSegments(segList, startSegIdx, ctx);
+    muse::vector<SegmentPosition> segmentPositions = spaceSegments(segList, startSegIdx, ctx);
     moveRightAlignedSegments(segmentPositions, ctx);
 
     setPositionsAndWidths(segmentPositions);
@@ -259,10 +259,10 @@ void HorizontalSpacing::spaceMeasureGroup(const std::vector<Measure*>& measureGr
     ctx.xCur = lastMeas->x() + lastMeas->width();
 }
 
-std::vector<HorizontalSpacing::SegmentPosition> HorizontalSpacing::spaceSegments(const std::vector<Segment*>& segList, int startSegIdx,
+muse::vector<HorizontalSpacing::SegmentPosition> HorizontalSpacing::spaceSegments(const muse::vector<Segment*>& segList, int startSegIdx,
                                                                                  HorizontalSpacingContext& ctx)
 {
-    std::vector<SegmentPosition> placedSegments;
+    muse::vector<SegmentPosition> placedSegments;
     placedSegments.reserve(segList.size());
 
     for (size_t i = 0; i < segList.size(); ++i) {
@@ -331,7 +331,7 @@ bool HorizontalSpacing::ignoreSegmentForSpacing(const Segment* segment)
     return !segment->enabled() || !segment->isActive() || segment->allElementsInvisible();
 }
 
-bool HorizontalSpacing::ignoreAllSegmentsForSpacing(const std::vector<SegmentPosition>& segmentPositions)
+bool HorizontalSpacing::ignoreAllSegmentsForSpacing(const muse::vector<SegmentPosition>& segmentPositions)
 {
     for (const SegmentPosition& segPos : segmentPositions) {
         if (!segPos.ignoreForSpacing) {
@@ -342,7 +342,7 @@ bool HorizontalSpacing::ignoreAllSegmentsForSpacing(const std::vector<SegmentPos
     return true;
 }
 
-void HorizontalSpacing::spaceAgainstPreviousSegments(Segment* segment, std::vector<SegmentPosition>& prevSegPositions,
+void HorizontalSpacing::spaceAgainstPreviousSegments(Segment* segment, muse::vector<SegmentPosition>& prevSegPositions,
                                                      HorizontalSpacingContext& ctx)
 {
     double x = -DBL_MAX;
@@ -483,7 +483,7 @@ void HorizontalSpacing::checkLyricsAgainstLeftMargin(Segment* segment, double& x
     }
 }
 
-void HorizontalSpacing::checkLyricsAgainstRightMargin(std::vector<SegmentPosition>& segPositions, const HorizontalSpacingContext& ctx)
+void HorizontalSpacing::checkLyricsAgainstRightMargin(muse::vector<SegmentPosition>& segPositions, const HorizontalSpacingContext& ctx)
 {
     const double systemEdge = segPositions.back().xPosInSystemCoords + segPositions.back().segment->minRight();
     const MStyle& style = ctx.system->style();
@@ -600,7 +600,7 @@ double HorizontalSpacing::spaceLyricsAgainstBarlines(Segment* firstSeg, Segment*
     return w;
 }
 
-void HorizontalSpacing::checkLargeTimeSigAgainstRightMargin(std::vector<SegmentPosition>& segPositions)
+void HorizontalSpacing::checkLargeTimeSigAgainstRightMargin(muse::vector<SegmentPosition>& segPositions)
 {
     SegmentPosition& cautionaryTSSegPos = segPositions.back();
     if (!cautionaryTSSegPos.segment->hasTimeSigAboveStaves()) {
@@ -633,7 +633,7 @@ void HorizontalSpacing::checkLargeTimeSigAgainstRightMargin(std::vector<SegmentP
     }
 }
 
-void HorizontalSpacing::moveRightAlignedSegments(std::vector<SegmentPosition>& placedSegments, const HorizontalSpacingContext& ctx)
+void HorizontalSpacing::moveRightAlignedSegments(muse::vector<SegmentPosition>& placedSegments, const HorizontalSpacingContext& ctx)
 {
     for (size_t i = 0; i < placedSegments.size(); ++i) {
         Segment* segment = placedSegments[i].segment;
@@ -684,7 +684,7 @@ void HorizontalSpacing::moveRightAlignedSegments(std::vector<SegmentPosition>& p
 void HorizontalSpacing::checkCollisionsWithCrossStaffStems(const Segment* thisSeg, const Segment* nextSeg, staff_idx_t staffIdx,
                                                            double& curMinDist)
 {
-    std::vector<ChordRest*> itemsToCheck;
+    muse::vector<ChordRest*> itemsToCheck;
     itemsToCheck.reserve(VOICES);
 
     for (EngravingItem* el : nextSeg->elist()) {
@@ -888,7 +888,7 @@ double HorizontalSpacing::minStemDistOnNonAdjacentCross(const Segment* thisSeg, 
         }
 
         Beam* beam = chord->beam();
-        std::vector<ChordRest*> beamElements = beam->elements();
+        muse::vector<ChordRest*> beamElements = beam->elements();
         Chord* prevChordOnBeam = nullptr;
         for (size_t i = 0; i < beamElements.size(); ++i) {
             if (beamElements[i] == chord) {
@@ -1048,7 +1048,7 @@ double HorizontalSpacing::computeMinMeasureWidth(Measure* m)
     return minWidth;
 }
 
-void HorizontalSpacing::enforceMinimumMeasureWidths(const std::vector<Measure*> measureGroup)
+void HorizontalSpacing::enforceMinimumMeasureWidths(const muse::vector<Measure*> measureGroup)
 {
     for (size_t i = 0; i < measureGroup.size(); ++i) {
         Measure* measure = measureGroup[i];
@@ -1072,7 +1072,7 @@ void HorizontalSpacing::stretchMeasureToTargetWidth(Measure* m, double targetWid
         return;
     }
 
-    std::vector<Spring> springs;
+    muse::vector<Spring> springs;
     for (Segment& s : m->segments()) {
         if (s.isChordRestType() && s.visible() && s.enabled() && !s.allElementsInvisible()) {
             double springConst = 1 / s.stretch();
@@ -1087,7 +1087,7 @@ void HorizontalSpacing::stretchMeasureToTargetWidth(Measure* m, double targetWid
     m->respaceSegments();
 }
 
-void HorizontalSpacing::stretchSegmentsToWidth(std::vector<Spring>& springs, double width)
+void HorizontalSpacing::stretchSegmentsToWidth(muse::vector<Spring>& springs, double width)
 {
     if (springs.empty() || muse::RealIsEqualOrLess(width, 0.0)) {
         return;
@@ -1114,7 +1114,7 @@ void HorizontalSpacing::stretchSegmentsToWidth(std::vector<Spring>& springs, dou
     }
 }
 
-void HorizontalSpacing::setPositionsAndWidths(const std::vector<SegmentPosition>& segmentPositions)
+void HorizontalSpacing::setPositionsAndWidths(const muse::vector<SegmentPosition>& segmentPositions)
 {
     size_t segmentsSize = segmentPositions.size();
     for (size_t i = 0; i < segmentsSize; ++i) {
@@ -1837,7 +1837,7 @@ void HorizontalSpacing::computeHangingLineWidth(const Segment* firstSeg, const S
     const Measure* crMeasure = crSeg->measure();
     const size_t ntracks = crSeg->score()->ntracks();
 
-    std::vector<double> tieLengths;
+    muse::vector<double> tieLengths;
 
     for (track_idx_t track = 0; track < ntracks; track++) {
         // Hanging lines only occur at start or end of a measure

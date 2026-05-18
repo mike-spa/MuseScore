@@ -69,9 +69,9 @@ public:
     void setFileName(const String& fileName);
     void updateFileName(size_t index = muse::nidx);
 
-    std::vector<Part*>& parts() { return m_parts; }
-    const std::vector<Part*>& parts() const { return m_parts; }
-    void setParts(const std::vector<Part*>& parts) { m_parts = parts; }
+    muse::vector<Part*>& parts() { return m_parts; }
+    const muse::vector<Part*>& parts() const { return m_parts; }
+    void setParts(const muse::vector<Part*>& parts) { m_parts = parts; }
 
     bool containsPart(const Part* part) const;
 
@@ -85,10 +85,10 @@ public:
 
     void setVoiceVisible(Staff* staff, voice_idx_t voiceIndex, bool visible);
 
-    static std::vector<Excerpt*> createExcerptsFromParts(const std::vector<Part*>& parts, MasterScore* score);
+    static muse::vector<Excerpt*> createExcerptsFromParts(const muse::vector<Part*>& parts, MasterScore* score);
 
     static void createExcerpt(Excerpt*);
-    static void cloneStaves(Score* sourceScore, Score* dstScore, const std::vector<staff_idx_t>& sourceStavesIndexes,
+    static void cloneStaves(Score* sourceScore, Score* dstScore, const muse::vector<staff_idx_t>& sourceStavesIndexes,
                             const TracksMap& allTracks);
     static void cloneMeasures(Score* oscore, Score* score);
     static void cloneStaff(Staff* ostaff, Staff* nstaff, bool cloneSpanners = true);
@@ -111,7 +111,7 @@ private:
     String m_name;
     String m_fileName;
     muse::async::Notification m_nameChanged;
-    std::vector<Part*> m_parts;
+    muse::vector<Part*> m_parts;
     TracksMap m_tracksMapping;
     bool m_inited = false;
     ID m_initialPartId;

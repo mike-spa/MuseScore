@@ -161,7 +161,7 @@ TEST_F(Engraving_ChordSymbolTests, testNoSystem)
     //
     // create first part
     //
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(score->parts().at(0));
     Score* nscore = score->createScore();
 
@@ -404,7 +404,7 @@ TEST_F(Engraving_ChordSymbolTests, testNashvilleNumbers) {
 
     size_t idx = 0;
 
-    std::vector<EngravingItem*> els = score->selection().elements(ElementType::HARMONY);
+    muse::vector<EngravingItem*> els = score->selection().elements(ElementType::HARMONY);
 
     ASSERT_EQ(els.size(), tpcAndExtension.size());
 

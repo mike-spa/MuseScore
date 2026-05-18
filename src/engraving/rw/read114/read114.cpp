@@ -1486,7 +1486,7 @@ static void readMeasure(Measure* m, int staffIdx, XmlReader& e, ReadContext& ctx
 {
     Segment* segment = 0;
 
-    std::vector<Chord*> graceNotes;
+    muse::vector<Chord*> graceNotes;
 
     //sort tuplet elements. needed for nested tuplets #22537
     for (auto& p : ctx.tuplets()) {
@@ -2150,7 +2150,7 @@ static void readMeasure(Measure* m, int staffIdx, XmlReader& e, ReadContext& ctx
         Tuplet* tuplet = p.second;
         Fraction tupletTick = tuplet->tick();
         Fraction tupletDuration = tuplet->actualTicks() - Fraction::eps();
-        std::vector<DurationElement*> tElements = tuplet->elements();
+        muse::vector<DurationElement*> tElements = tuplet->elements();
         for (auto& p2 : ctx.tuplets()) {
             Tuplet* tuplet2 = p2.second;
             if ((tuplet2->tuplet()) || (tuplet2->voice() != tuplet->voice())) {     // already a nested tuplet or in a different voice
@@ -2610,7 +2610,7 @@ static void readPart(Part* part, XmlReader& e, ReadContext& ctx)
         }
     }
     //set default articulations
-    std::vector<MidiArticulation> articulations;
+    muse::vector<MidiArticulation> articulations;
     articulations.push_back(MidiArticulation(u"", u"", 100, 100));
     articulations.push_back(MidiArticulation(u"staccato", u"", 100, 50));
     articulations.push_back(MidiArticulation(u"tenuto", u"", 100, 100));
@@ -3133,7 +3133,7 @@ muse::Ret Read114::readScoreFile(Score* score, XmlReader& e, ReadInOutData* out)
 
     // create excerpts
     {
-        std::vector<Excerpt*> readExcerpts;
+        muse::vector<Excerpt*> readExcerpts;
         readExcerpts.swap(masterScore->m_excerpts);
         for (Excerpt* excerpt : readExcerpts) {
             if (excerpt->parts().empty()) {         // ignore empty parts
@@ -3168,7 +3168,7 @@ muse::Ret Read114::readScoreFile(Score* score, XmlReader& e, ReadInOutData* out)
     CompatUtils::assignInitialPartToExcerpts(masterScore->excerpts());
 
     // Cleanup invalid spanners
-    std::vector<Spanner*> invalidSpanners;
+    muse::vector<Spanner*> invalidSpanners;
     auto spanners = score->spanner();
     for (auto iter = spanners.begin(); iter != spanners.end(); ++iter) {
         Spanner* spanner = (*iter).second;
@@ -3186,8 +3186,8 @@ muse::Ret Read114::readScoreFile(Score* score, XmlReader& e, ReadInOutData* out)
 
 void Read114::readExcerpt(Excerpt* item, XmlReader& e, ReadContext&)
 {
-    const std::vector<Part*>& pl = item->masterScore()->parts();
-    std::vector<Part*> parts;
+    const muse::vector<Part*>& pl = item->masterScore()->parts();
+    muse::vector<Part*> parts;
     while (e.readNextStartElement()) {
         const AsciiStringView tag = e.name();
         if (tag == "name" || tag == "title") {

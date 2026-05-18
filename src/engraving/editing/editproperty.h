@@ -49,7 +49,7 @@ public:
     UNDO_TYPE(CommandType::ChangeProperty)
     UNDO_NAME("ChangeProperty")
 
-    std::vector<EngravingObject*> objectItems() const override;
+    muse::vector<EngravingObject*> objectItems() const override;
 
     bool isFiltered(UndoCommand::Filter f, const EngravingItem* target) const override
     {

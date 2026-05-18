@@ -39,9 +39,9 @@ double SystemHeaderLayout::layoutBrackets(System* system, LayoutContext& ctx)
     size_t nstaves = system->staves().size();
     size_t columns = system->getBracketsColumnsCount();
 
-    std::vector<double> bracketWidth(columns, 0.0);
+    muse::vector<double> bracketWidth(columns, 0.0);
 
-    std::vector<Bracket*> bl;
+    muse::vector<Bracket*> bl;
     bl.swap(system->brackets());
 
     for (size_t staffIdx = 0; staffIdx < nstaves; ++staffIdx) {
@@ -79,7 +79,7 @@ double SystemHeaderLayout::layoutBrackets(System* system, LayoutContext& ctx)
 }
 
 Bracket* SystemHeaderLayout::createBracket(System* system, LayoutContext& ctx, BracketItem* bi, size_t column, staff_idx_t staffIdx,
-                                           std::vector<Bracket*>& bl, Measure* measure)
+                                           muse::vector<Bracket*>& bl, Measure* measure)
 {
     if (!measure) {
         return nullptr;
@@ -137,7 +137,7 @@ Bracket* SystemHeaderLayout::createBracket(System* system, LayoutContext& ctx, B
         if (bi->selected()) {
             bool needSelect = true;
 
-            std::vector<EngravingItem*> brackets = ctx.selection().elements(ElementType::BRACKET);
+            muse::vector<EngravingItem*> brackets = ctx.selection().elements(ElementType::BRACKET);
             for (const EngravingItem* element : brackets) {
                 if (toBracket(element)->bracketItem() == bi) {
                     needSelect = false;
@@ -173,7 +173,7 @@ void SystemHeaderLayout::addBrackets(System* system, Measure* measure, LayoutCon
 
     size_t columns = system->getBracketsColumnsCount();
 
-    std::vector<Bracket*> bl;
+    muse::vector<Bracket*> bl;
     bl.swap(system->brackets());
 
     for (staff_idx_t staffIdx = 0; staffIdx < nstaves; ++staffIdx) {
@@ -215,7 +215,7 @@ double SystemHeaderLayout::totalBracketOffset(LayoutContext& ctx)
     }
 
     size_t nstaves = ctx.dom().nstaves();
-    std::vector < double > bracketWidth(nstaves, 0.0);
+    muse::vector < double > bracketWidth(nstaves, 0.0);
     for (staff_idx_t staffIdx = 0; staffIdx < nstaves; ++staffIdx) {
         const Staff* staff = ctx.dom().staff(staffIdx);
         for (auto bi : staff->brackets()) {
@@ -272,7 +272,7 @@ double SystemHeaderLayout::totalBracketOffset(LayoutContext& ctx)
 
 void SystemHeaderLayout::setBracketsXPosition(System* system, double xPosition)
 {
-    std::vector<Bracket*> brackets = system->brackets();
+    muse::vector<Bracket*> brackets = system->brackets();
     for (Bracket* b1 : brackets) {
         BracketType bracketType = b1->bracketType();
         // For brackets that are drawn, we must correct for half line width
@@ -373,7 +373,7 @@ void SystemHeaderLayout::computeGroupBracketsWidths(System* system, LayoutContex
     System::LayoutData* ldata = system->mutldata();
     ldata->clearGroupBracketsWidth();
 
-    std::vector<Bracket*> groupBrackets;
+    muse::vector<Bracket*> groupBrackets;
     for (Bracket* bracket : system->brackets()) {
         if (bracket->bracketType() == BracketType::GROUP) {
             groupBrackets.push_back(bracket);
@@ -403,7 +403,7 @@ void SystemHeaderLayout::computeGroupBracketsWidths(System* system, LayoutContex
             continue;
         }
 
-        std::vector<Bracket*> stack;
+        muse::vector<Bracket*> stack;
         double bracketWidth = 0.0;
         computeStackedBracketsWidth(firstBracketOnThisStaff, groupBrackets, bracketWidth, stack);
         if (hangIntoMargin) {
@@ -424,8 +424,8 @@ void SystemHeaderLayout::computeGroupBracketsWidths(System* system, LayoutContex
     }
 }
 
-void SystemHeaderLayout::computeStackedBracketsWidth(Bracket* first, const std::vector<Bracket*>& allGroupBracketsOrderedByColumn,
-                                                     double& width, std::vector<Bracket*>& stack)
+void SystemHeaderLayout::computeStackedBracketsWidth(Bracket* first, const muse::vector<Bracket*>& allGroupBracketsOrderedByColumn,
+                                                     double& width, muse::vector<Bracket*>& stack)
 {
     stack.push_back(first);
 
@@ -467,8 +467,8 @@ void SystemHeaderLayout::computeInstrumentNamesWidth(System* system, LayoutConte
     std::unordered_set<Part*> partsWithIndividualStaffNames;
     std::unordered_set<Part*> partsWithGroupNames;
 
-    std::vector<InstrumentName*> groupNames;
-    std::vector<InstrumentName*> instrumentNames;
+    muse::vector<InstrumentName*> groupNames;
+    muse::vector<InstrumentName*> instrumentNames;
 
     for (staff_idx_t staffIdx = 0; staffIdx < system->staves().size(); ++staffIdx) {
         const SysStaff* sysStaff = system->staff(staffIdx);
@@ -628,7 +628,7 @@ void SystemHeaderLayout::setInstrumentNamesVerticalPos(System* system, LayoutCon
         const RectF& bbox = t->ldata()->bbox();
         double yCenter = 0.5 * (bbox.bottom() + bbox.top());
 
-        std::vector<staff_idx_t> visibleStavesOfPart = system->visibleStavesOfPart(p);
+        muse::vector<staff_idx_t> visibleStavesOfPart = system->visibleStavesOfPart(p);
         size_t visibleStavesCount = visibleStavesOfPart.size();
         DO_ASSERT(visibleStavesCount > 0);
 
@@ -687,7 +687,7 @@ void SystemHeaderLayout::setInstrumentNamesVerticalPos(System* system, LayoutCon
         const RectF& bbox = groupName->ldata()->bbox();
         double yCenter = 0.5 * (bbox.bottom() + bbox.top());
 
-        std::vector<Part*> visibleParts = system->visiblePartsOfGroup(idx, groupName->ldata()->endIdxOfGroup());
+        muse::vector<Part*> visibleParts = system->visiblePartsOfGroup(idx, groupName->ldata()->endIdxOfGroup());
         size_t visiblePartsCount = visibleParts.size();
         DO_ASSERT(visiblePartsCount > 0);
 
@@ -714,7 +714,7 @@ void SystemHeaderLayout::setInstrumentNamesVerticalPos(System* system, LayoutCon
 
         Part* midPart = visibleParts[visiblePartsCount / 2];
         InstrumentName* instrName = system->staff(*midPart->staveIdxList().begin())->instrumentName;
-        std::vector<staff_idx_t> visibleStaves = system->visibleStavesOfPart(midPart);
+        muse::vector<staff_idx_t> visibleStaves = system->visibleStavesOfPart(midPart);
         size_t visibleStavesCount = visibleStaves.size();
 
         if (visibleStavesCount % 2) {
@@ -847,7 +847,7 @@ void SystemHeaderLayout::setInstrumentNamesHorizontalPos(System* system)
 
         if (name->instrumentNameRole() == InstrumentNameRole::PART) {
             const Part* p = system->score()->staff(staffIdx)->part();
-            std::vector<staff_idx_t> visibleStavesForPart = system->visibleStavesOfPart(p);
+            muse::vector<staff_idx_t> visibleStavesForPart = system->visibleStavesOfPart(p);
             size_t visibleStaveCount = visibleStavesForPart.size();
             if (visibleStaveCount % 2 == 0) {
                 name->mutldata()->setPosX(totalNamesWidth - bbox.right());
@@ -865,7 +865,7 @@ void SystemHeaderLayout::setInstrumentNamesHorizontalPos(System* system)
             return;
         }
 
-        std::vector<Part*> visiblePartsOfGroup = system->visiblePartsOfGroup(staffIdx, name->ldata()->endIdxOfGroup());
+        muse::vector<Part*> visiblePartsOfGroup = system->visiblePartsOfGroup(staffIdx, name->ldata()->endIdxOfGroup());
         size_t visiblePartsCount = visiblePartsOfGroup.size();
         if (visiblePartsCount % 2 == 0) {
             name->mutldata()->setPosX(totalNamesWidth - bbox.right());
@@ -879,7 +879,7 @@ void SystemHeaderLayout::setInstrumentNamesHorizontalPos(System* system)
             return;
         }
 
-        std::vector<staff_idx_t> visibleStavesOfPart = system->visibleStavesOfPart(centerPart);
+        muse::vector<staff_idx_t> visibleStavesOfPart = system->visibleStavesOfPart(centerPart);
         size_t visibleStavesCount = visibleStavesOfPart.size();
         if (visibleStavesCount % 2 == 0) {
             name->mutldata()->setPosX(totalNamesWidth - bbox.right());
@@ -914,7 +914,7 @@ void SystemHeaderLayout::setInstrumentNamesHorizontalPos(System* system)
 
 void SystemHeaderLayout::setGroupBracketsHorizontalPos(System* system)
 {
-    std::vector<Bracket*> groupBrackets;
+    muse::vector<Bracket*> groupBrackets;
     for (Bracket* b : system->brackets()) {
         if (b->bracketType() == BracketType::GROUP) {
             groupBrackets.push_back(b);
@@ -1199,7 +1199,7 @@ void SystemHeaderLayout::updateGroupNames(System* system, LayoutContext& ctx, co
             continue;
         }
 
-        std::vector<Part*> partsInThisGroup;
+        muse::vector<Part*> partsInThisGroup;
 
         staff_idx_t endOfGroup = startOfGroup;
         while (endOfGroup < system->staves().size()) {

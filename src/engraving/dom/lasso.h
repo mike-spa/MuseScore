@@ -42,6 +42,6 @@ public:
     int gripsCount() const override { return 8; }
     Grip initialEditModeGrip() const override { return Grip(7); }
     Grip defaultGrip() const override { return Grip(7); }
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 };
 }

@@ -275,7 +275,7 @@ static void createEnding(const Spanner* sp, MnxExporter* exporter)
 
     auto mnxEnding = mnxMeasure.ensure_ending(duration);
     mnxEnding.set_open(volta->voltaType() == Volta::Type::OPEN);
-    const std::vector<int> endings = volta->endings();
+    const muse::vector<int> endings = volta->endings();
     if (!endings.empty()) {
         auto mnxNumbers = mnxEnding.ensure_numbers();
         for (int ending : endings) {

@@ -510,10 +510,10 @@ void PowerTab::readPosition(int staff, int voice, ptSection& sec)
     //sec.getPosition(position).addComponent(beat);
 }
 
-std::vector<int> PowerTab::getStaffMap(ptSection& sec)
+muse::vector<int> PowerTab::getStaffMap(ptSection& sec)
 {
-    std::vector<int> result;
-    std::vector<int> slash;
+    muse::vector<int> result;
+    muse::vector<int> slash;
     if (!staffInc && curTrack->guitar_ins.size()) {
         auto first = curTrack->guitar_ins.front();
         while (first.section == sec.number) {
@@ -605,7 +605,7 @@ void PowerTab::addPalmMute(Chord* chord)
     }
 }
 
-void PowerTab::fillMeasure(tBeatList& elist, Measure* measure, int staff, std::vector<Note*>& tiedNotes)
+void PowerTab::fillMeasure(tBeatList& elist, Measure* measure, int staff, muse::vector<Note*>& tiedNotes)
 {
     Tuplet* tuple = nullptr;
     int tupleBeatCounter{ 0 };
@@ -792,7 +792,7 @@ void PowerTab::addToScore(ptSection& sec)
             }
             part->setPlainLongName(staffName);
 
-            std::vector<int> reverseStr;
+            muse::vector<int> reverseStr;
             for (auto it = info->strings.rbegin(); it != info->strings.rend(); ++it) {
                 reverseStr.push_back(*it);
             }
@@ -875,12 +875,12 @@ void PowerTab::addToScore(ptSection& sec)
         }
     }
 
-    std::vector<std::vector<Note*> > tiedNotes(staves);
+    muse::vector<muse::vector<Note*> > tiedNotes(staves);
     for (auto& nvec : tiedNotes) {
         nvec.resize(10);
         memset(nvec.data(), 0, sizeof(Note*) * 10);
     }
-    //std::vector<tBeatList>
+    //muse::vector<tBeatList>
     while (true) {
         bool empty = true;
         while (int(sec.beats.size()) < staves) {
@@ -1150,7 +1150,7 @@ void PowerTab::readDataInstruments(ptTrack& info)
 std::string crTS(int strings, int tuning[])
 {
     const static char* tune[] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
-    std::vector<int> pitch;
+    muse::vector<int> pitch;
     for (int i = 0; i < strings; ++i) {
         pitch.push_back(tuning[i]);
     }
@@ -1241,7 +1241,7 @@ Err PowerTab::read()
 
     staves = int(song.track1.infos.size());
 
-    std::vector<tBeatList> parts(staves);
+    muse::vector<tBeatList> parts(staves);
     for (int i = staffInc; i < staves; ++i) {
         for (auto& sec : song.track1.sections) {
             while (int(sec.beats.size()) < staves) {

@@ -334,7 +334,7 @@ Fraction GuitarPro5::readBeat(const Fraction& tick, int voice, Measure* measure,
         size_t numStrings = staff->part()->instrument()->stringData()->strings();
 
         Note* _note = nullptr;
-        std::vector<Note*> delnote;
+        muse::vector<Note*> delnote;
         for (int i = 6; i >= 0; --i) {
             if (strings & (1 << i) && ((6 - i) < static_cast<int>(numStrings))) {
                 Note* note = Factory::createNote(toChord(cr));
@@ -584,7 +584,7 @@ bool GuitarPro5::readTracks()
             readDelphiString();
             readDelphiString();
         }
-        std::vector<int> tuning2(strings);
+        muse::vector<int> tuning2(strings);
         //int tuning2[strings];
         for (int k = 0; k < strings; ++k) {
             tuning2[strings - k - 1] = tuning[k];
@@ -693,7 +693,7 @@ void GuitarPro5::readMeasures(int /*startingTempo*/)
             segment->add(s);
         }
 
-        std::vector<Tuplet*> tuplets(staves * 2);
+        muse::vector<Tuplet*> tuplets(staves * 2);
         //Tuplet* tuplets[staves * 2];     // two voices
         for (size_t track = 0; track < staves * 2; ++track) {
             tuplets[track] = 0;
@@ -871,7 +871,7 @@ bool GuitarPro5::read(IODevice* io)
 
     readChannels();
 
-    std::vector<unsigned int> articulations;
+    muse::vector<unsigned int> articulations;
     articulations.resize(19);
     {
         unsigned int r;
@@ -1000,7 +1000,7 @@ bool GuitarPro5::read(IODevice* io)
             }
             StringData sd = stringDatas.at(p->id().toUint64());
 
-            std::vector<int> tuningPitches(sd.strings());
+            muse::vector<int> tuningPitches(sd.strings());
             for (size_t i = 0; i < tuningPitches.size(); ++i) {
                 tuningPitches[i] = sd.stringList().at(i).pitch + p->instrument()->transpose().chromatic;
             }
@@ -1123,7 +1123,7 @@ GuitarPro::ReadNoteResult GuitarPro5::readNoteEffects(Note* note)
     ReadNoteResult result;
     uint8_t modMask1 = readUInt8();
     uint8_t modMask2 = readUInt8();
-    std::vector<PitchValue> bendData;
+    muse::vector<PitchValue> bendData;
     Note* bendParent = nullptr;
 
     if (modMask1 & EFFECT_BEND) {
@@ -1539,7 +1539,7 @@ GuitarPro::ReadNoteResult GuitarPro5::readNote(int string, Note* note)
         Chord* chord     = note->chord();
         Segment* segment = chord->segment()->prev1(SegmentType::ChordRest);
         track_idx_t track = note->track();
-        std::vector<ChordRest*> chords;
+        muse::vector<ChordRest*> chords;
         Note* true_note = nullptr;
         while (segment) {
             EngravingItem* e = segment->element(track);
@@ -1726,7 +1726,7 @@ void GuitarPro5::addGlissandos()
         gliss->setTrack2(endNote->track());
         score->addElement(gliss);
 
-        std::vector<std::pair<Slur*, Note*> > movedSlurs;
+        muse::vector<std::pair<Slur*, Note*> > movedSlurs;
         for (Spanner* spanner : startNote->chord()->startingSpanners()) {
             if (spanner && spanner->isSlur()) {
                 Slur* slur = toSlur(spanner);

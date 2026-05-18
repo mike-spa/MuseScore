@@ -578,13 +578,13 @@ MeasureBase* MasterScore::insertMeasure(MeasureBase* beforeMeasure, const Insert
             masterMeasure = newMeasure;
         }
 
-        std::vector<TimeSig*> timeSigList;
-        std::vector<KeySig*> keySigList;
-        std::vector<Clef*> initClefList;
-        std::vector<Clef*> previousClefList;
-        std::vector<Clef*> specialCaseClefs;
-        std::vector<Clef*> afterBarlineClefs;
-        std::vector<BarLine*> previousBarLinesList;
+        muse::vector<TimeSig*> timeSigList;
+        muse::vector<KeySig*> keySigList;
+        muse::vector<Clef*> initClefList;
+        muse::vector<Clef*> previousClefList;
+        muse::vector<Clef*> specialCaseClefs;
+        muse::vector<Clef*> afterBarlineClefs;
+        muse::vector<BarLine*> previousBarLinesList;
 
         Measure* pm = newMeasure->prevMeasure();
 

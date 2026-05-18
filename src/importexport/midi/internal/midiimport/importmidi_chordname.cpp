@@ -50,10 +50,10 @@ int readSecondHalf(uchar byte)
 
 QString readChordRoot(uchar byte)
 {
-    static const std::vector<QString> inversions = {
+    static const muse::vector<QString> inversions = {
         "bbb", "bb", "b", "", "#", "##", "###"
     };
-    static const std::vector<QString> notes = {
+    static const muse::vector<QString> notes = {
         "", "C", "D", "E", "F", "G", "A", "B"
     };
 
@@ -74,7 +74,7 @@ QString readChordRoot(uchar byte)
 
 QString readChordType(uchar chordTypeIndex)
 {
-    static const std::vector<QString> chordTypes = {
+    static const muse::vector<QString> chordTypes = {
         "",           // Maj
         "6",          // Maj6
         "Maj7",

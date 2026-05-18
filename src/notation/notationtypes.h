@@ -138,12 +138,12 @@ using InstrumentTrait = mu::engraving::Trait;
 using ScoreOrder = mu::engraving::ScoreOrder;
 using InstrumentGenre = mu::engraving::InstrumentGenre;
 using InstrumentGroup = mu::engraving::InstrumentGroup;
-using PageList = std::vector<Page*>;
-using PartList = std::vector<const Part*>;
-using InstrumentTemplateList = std::vector<const InstrumentTemplate*>;
-using InstrumentGenreList = std::vector<const InstrumentGenre*>;
-using ScoreOrderList = std::vector<mu::engraving::ScoreOrder>;
-using InstrumentGroupList = std::vector<const InstrumentGroup*>;
+using PageList = muse::vector<Page*>;
+using PartList = muse::vector<const Part*>;
+using InstrumentTemplateList = muse::vector<const InstrumentTemplate*>;
+using InstrumentGenreList = muse::vector<const InstrumentGenre*>;
+using ScoreOrderList = muse::vector<mu::engraving::ScoreOrder>;
+using InstrumentGroupList = muse::vector<const InstrumentGroup*>;
 using InstrumentTrackId = mu::engraving::InstrumentTrackId;
 using InstrumentTrackIdSet = mu::engraving::InstrumentTrackIdSet;
 using voice_idx_t = mu::engraving::voice_idx_t;
@@ -585,17 +585,17 @@ inline bool isVerticalBoxTextStyle(TextStyleType type)
 struct StringTuningPreset
 {
     std::string name;
-    std::vector<int> value;
+    muse::vector<int> value;
     bool useFlats = false;
 };
 
 struct StringTuningsInfo
 {
     size_t number = 0;
-    std::vector<StringTuningPreset> presets;
+    muse::vector<StringTuningPreset> presets;
 };
 
-using InstrumentStringTuningsMap = std::map<std::string, std::vector<StringTuningsInfo> >;
+using InstrumentStringTuningsMap = std::map<std::string, muse::vector<StringTuningsInfo> >;
 
 static const mu::engraving::ElementTypeSet NOTE_REST_TYPES {
     mu::engraving::ElementType::NOTE,

@@ -29,20 +29,20 @@
 namespace mu::instrumentsscene {
 struct SystemObjectsGroup {
     mu::engraving::ElementType type = mu::engraving::ElementType::INVALID;
-    std::vector<mu::engraving::EngravingItem*> items;
+    muse::vector<mu::engraving::EngravingItem*> items;
     mu::engraving::Staff* staff = nullptr;
 };
 
-using SystemObjectGroups = std::vector<SystemObjectsGroup>;
+using SystemObjectGroups = muse::vector<SystemObjectsGroup>;
 using SystemObjectGroupsByStaff = std::map<const mu::engraving::Staff*, SystemObjectGroups>;
 
-inline SystemObjectGroupsByStaff collectSystemObjectGroups(const std::vector<mu::engraving::Staff*>& staves)
+inline SystemObjectGroupsByStaff collectSystemObjectGroups(const muse::vector<mu::engraving::Staff*>& staves)
 {
     if (staves.empty()) {
         return {};
     }
 
-    const std::vector<engraving::EngravingItem*> systemObjects = engraving::collectSystemObjects(staves.front()->score(), staves);
+    const muse::vector<engraving::EngravingItem*> systemObjects = engraving::collectSystemObjects(staves.front()->score(), staves);
     SystemObjectGroupsByStaff result;
 
     for (engraving::EngravingItem* obj : systemObjects) {
@@ -74,7 +74,7 @@ inline SystemObjectGroupsByStaff collectSystemObjectGroups(const std::vector<mu:
 
 inline SystemObjectGroups collectSystemObjectGroups(const mu::engraving::Staff* systemObjectsStaff)
 {
-    const std::vector<mu::engraving::Staff*> staves {
+    const muse::vector<mu::engraving::Staff*> staves {
         const_cast<mu::engraving::Staff*>(systemObjectsStaff)
     };
 

@@ -43,7 +43,7 @@ struct TupletData
     ReducedFraction onTime;
     ReducedFraction len;
     int tupletNumber;
-    std::vector<engraving::DurationElement*> elements;
+    muse::vector<engraving::DurationElement*> elements;
 };
 
 struct TupletLimits
@@ -79,20 +79,20 @@ removeTupletIfEmpty(
     const std::multimap<ReducedFraction, TupletData>::iterator& tupletIt, std::multimap<ReducedFraction, TupletData>& tuplets,
     const ReducedFraction& maxChordLength, std::multimap<ReducedFraction, MidiChord>& chords);
 
-const TupletInfo& tupletFromId(int id, const std::vector<TupletInfo>& tuplets);
-TupletInfo& tupletFromId(int id, std::vector<TupletInfo>& tuplets);
+const TupletInfo& tupletFromId(int id, const muse::vector<TupletInfo>& tuplets);
+TupletInfo& tupletFromId(int id, muse::vector<TupletInfo>& tuplets);
 
 std::pair<ReducedFraction, ReducedFraction>
 tupletInterval(const TupletInfo& tuplet, const ReducedFraction& basicQuant);
 
-std::vector<std::pair<ReducedFraction, ReducedFraction> >
-findTupletIntervals(const std::vector<TupletInfo>& tuplets, const ReducedFraction& basicQuant);
+muse::vector<std::pair<ReducedFraction, ReducedFraction> >
+findTupletIntervals(const muse::vector<TupletInfo>& tuplets, const ReducedFraction& basicQuant);
 
-std::vector<TupletData>
+muse::vector<TupletData>
 findTupletsInBarForDuration(int voice, const ReducedFraction& barStartTick, const ReducedFraction& durationOnTime,
                             const ReducedFraction& durationLen, const std::multimap<ReducedFraction, TupletData>& tupletEvents);
 
-std::vector<std::multimap<ReducedFraction, TupletData>::const_iterator>
+muse::vector<std::multimap<ReducedFraction, TupletData>::const_iterator>
 findTupletsForTimeRange(int voice, const ReducedFraction& onTime, const ReducedFraction& len, const std::multimap<ReducedFraction,
                                                                                                                   TupletData>& tupletEvents,
                         bool strictComparison);

@@ -1164,7 +1164,7 @@ void Timeline::tempoMeta(Segment* seg, int* stagger, int pos)
     int row = getMetaRow(muse::qtrc("notation/timeline", "Tempo"));
 
     // Add all tempo texts in this segment
-    const std::vector<EngravingItem*> annotations = seg->annotations();
+    const muse::vector<EngravingItem*> annotations = seg->annotations();
     for (EngravingItem* element : annotations) {
         if (element->isTempoText()) {
             TempoText* text = toTempoText(element);
@@ -1264,7 +1264,7 @@ void Timeline::keyMeta(Segment* seg, int* stagger, int pos)
 
     int row = getMetaRow(muse::qtrc("notation/timeline", "Key signature"));
     std::map<Key, int> keyFrequencies;
-    const std::vector<Staff*>& staves = score()->staves();
+    const muse::vector<Staff*>& staves = score()->staves();
 
     int track = 0;
     for (Staff* stave : staves) {
@@ -1776,7 +1776,7 @@ int Timeline::getHeight() const
 staff_idx_t Timeline::correctStave(staff_idx_t stave)
 {
     // Find correct stave (skipping hidden staves)
-    const std::vector<Staff*>& list = score()->staves();
+    const muse::vector<Staff*>& list = score()->staves();
     size_t count = 0;
     while (stave >= count) {
         if (count >= list.size()) {
@@ -1798,7 +1798,7 @@ staff_idx_t Timeline::correctStave(staff_idx_t stave)
 int Timeline::correctPart(staff_idx_t stave)
 {
     // Find correct stave (skipping hidden staves)
-    const std::vector<Staff*>& list = score()->staves();
+    const muse::vector<Staff*>& list = score()->staves();
     staff_idx_t count = correctStave(stave);
     return getParts().indexOf(list.at(count)->part());
 }
@@ -1809,7 +1809,7 @@ int Timeline::correctPart(staff_idx_t stave)
 
 QList<Part*> Timeline::getParts()
 {
-    const std::vector<Part*>& realPartList = score()->parts();
+    const muse::vector<Part*>& realPartList = score()->parts();
     QList<Part*> partList;
     for (Part* p : realPartList) {
         for (size_t i = 0; i < p->nstaves(); i++) {
@@ -2043,7 +2043,7 @@ void Timeline::drawSelection()
 
         if (stave == -1 && it != metaLabelsSet.end()) {
             //Make sure the element is correct
-            const std::vector<EngravingItem*>& elementList = interaction()->selection()->elements();
+            const muse::vector<EngravingItem*>& elementList = interaction()->selection()->elements();
             EngravingItem* targetElement = static_cast<EngravingItem*>(graphicsItem->data(4).value<void*>());
             Segment* seg = static_cast<Segment*>(graphicsItem->data(6).value<void*>());
 
@@ -2208,7 +2208,7 @@ void Timeline::mousePressEvent(QMouseEvent* event)
             Segment* seg = static_cast<Segment*>(currGraphicsItem->data(6).value<void*>());
 
             if (seg) {
-                std::vector<EngravingItem*> elements;
+                muse::vector<EngravingItem*> elements;
 
                 for (size_t track = 0; track < score()->nstaves() * VOICES; track++) {
                     EngravingItem* element = seg->element(track);
@@ -2237,7 +2237,7 @@ void Timeline::mousePressEvent(QMouseEvent* event)
                     for (; currSeg && currSeg->segmentType() != segmentType; currSeg = currSeg->next()) {
                     }
                     if (currSeg) {
-                        std::vector<EngravingItem*> elements;
+                        muse::vector<EngravingItem*> elements;
 
                         for (size_t j = 0; j < score()->nstaves(); j++) {
                             EngravingItem* element = currSeg->firstElementForNavigation(j);
@@ -2317,7 +2317,7 @@ void Timeline::mousePressEvent(QMouseEvent* event)
 void Timeline::seekSelection()
 {
     const INotationSelectionPtr selection = interaction()->selection();
-    const std::vector<EngravingItem*>& elements = selection->elements();
+    const muse::vector<EngravingItem*>& elements = selection->elements();
     if (elements.empty()) {
         return;
     }
@@ -3026,7 +3026,7 @@ Staff* Timeline::numToStaff(int staff)
 
     size_t staffIdx = static_cast<size_t>(staff);
 
-    const std::vector<Staff*>& staves = score()->staves();
+    const muse::vector<Staff*>& staves = score()->staves();
     if (staffIdx < staves.size()) {
         return staves.at(staffIdx);
     } else {

@@ -106,16 +106,16 @@ bool Smufl::loadGlyphNamesJson()
     return true;
 }
 
-const std::map<String, std::vector<SymId> >& Smufl::smuflRanges()
+const std::map<String, muse::vector<SymId> >& Smufl::smuflRanges()
 {
-    static std::map<String, std::vector<SymId> > ranges = readSmuflRangesJson();
+    static std::map<String, muse::vector<SymId> > ranges = readSmuflRangesJson();
     return ranges;
 }
 
-std::map<String, std::vector<SymId> > Smufl::readSmuflRangesJson()
+std::map<String, muse::vector<SymId> > Smufl::readSmuflRangesJson()
 {
-    std::map<String, std::vector<SymId> > ranges;
-    std::vector<SymId> allSymbols;
+    std::map<String, muse::vector<SymId> > ranges;
+    muse::vector<SymId> allSymbols;
 
     File fi(":/fonts/smufl/ranges.json");
     if (!fi.open(IODevice::ReadOnly)) {
@@ -138,7 +138,7 @@ std::map<String, std::vector<SymId> > Smufl::readSmuflRangesJson()
         if (glyphs.empty()) {
             continue;
         }
-        std::vector<SymId> rangeSymbols;
+        muse::vector<SymId> rangeSymbols;
         for (size_t i = 0; i < glyphs.size(); ++i) {
             String symName = glyphs.at(i).toString();
             SymId symId = SymNames::symIdByName(symName);

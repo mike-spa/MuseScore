@@ -109,7 +109,7 @@ class ChangeChordPlayEventType : public UndoCommand
 
     Chord* chord = nullptr;
     PlayEventType petype;
-    std::vector<NoteEventList> events;
+    muse::vector<NoteEventList> events;
 
     void flip(EditData*) override;
 

@@ -48,7 +48,7 @@ void MaskLayout::computeMasks(LayoutContext& ctx, Page* page)
     bool maskBarlines = ctx.conf().styleB(Sid::maskBarlinesForText);
 
     for (const System* system : page->systems()) {
-        std::vector<TextBase*> allSystemText = collectAllSystemText(system);
+        muse::vector<TextBase*> allSystemText = collectAllSystemText(system);
 
         for (MeasureBase* mb : system->measures()) {
             if (!mb->isMeasure()) {
@@ -80,7 +80,7 @@ void MaskLayout::computeMasks(LayoutContext& ctx, Page* page)
     }
 }
 
-void MaskLayout::computeBarlineMasks(const Segment* barlineSement, const System* system, const std::vector<TextBase*>& allSystemText,
+void MaskLayout::computeBarlineMasks(const Segment* barlineSement, const System* system, const muse::vector<TextBase*>& allSystemText,
                                      LayoutContext& ctx)
 {
     if (barlineSement->measure()->isLastInSystem() && barlineSement == barlineSement->measure()->lastEnabled()) {
@@ -89,7 +89,7 @@ void MaskLayout::computeBarlineMasks(const Segment* barlineSement, const System*
 
     staff_idx_t nstaves = ctx.dom().nstaves();
 
-    std::vector<BarLine*> barlines;
+    muse::vector<BarLine*> barlines;
     barlines.reserve(nstaves);
 
     for (staff_idx_t staffIdx = 0; staffIdx < ctx.dom().nstaves(); ++staffIdx) {
@@ -104,7 +104,7 @@ void MaskLayout::computeBarlineMasks(const Segment* barlineSement, const System*
     }
 }
 
-void MaskLayout::maskBarlineForText(BarLine* barline, const std::vector<TextBase*>& allSystemText)
+void MaskLayout::maskBarlineForText(BarLine* barline, const muse::vector<TextBase*>& allSystemText)
 {
     TRACEFUNC;
 
@@ -198,11 +198,11 @@ void MaskLayout::cleanupMask(const Shape& itemShape, Shape& mask, double minFrag
     }
 }
 
-std::vector<TextBase*> MaskLayout::collectAllSystemText(const System* system)
+muse::vector<TextBase*> MaskLayout::collectAllSystemText(const System* system)
 {
     TRACEFUNC;
 
-    std::vector<TextBase*> allText;
+    muse::vector<TextBase*> allText;
 
     for (const MeasureBase* mb : system->measures()) {
         if (!mb->isMeasure()) {

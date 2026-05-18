@@ -59,9 +59,9 @@ public:
 
     const SystemLock* lockStartingAt(const MeasureBase* mb) const;
     const SystemLock* lockContaining(const MeasureBase* mb) const;
-    std::vector<const SystemLock*> locksContainedInRange(const MeasureBase* start, const MeasureBase* end) const;
+    muse::vector<const SystemLock*> locksContainedInRange(const MeasureBase* start, const MeasureBase* end) const;
 
-    std::vector<const SystemLock*> allLocks() const;
+    muse::vector<const SystemLock*> allLocks() const;
 
 private:
 #ifndef NDEBUG

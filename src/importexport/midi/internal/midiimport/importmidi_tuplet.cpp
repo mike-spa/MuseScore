@@ -58,7 +58,7 @@ const TupletLimits& tupletLimits(int tupletNumber)
     return it->second;
 }
 
-const TupletInfo& tupletFromId(int id, const std::vector<TupletInfo>& tuplets)
+const TupletInfo& tupletFromId(int id, const muse::vector<TupletInfo>& tuplets)
 {
     auto it = std::find_if(tuplets.begin(), tuplets.end(),
                            [=](const TupletInfo& t) { return t.id == id; });
@@ -68,10 +68,10 @@ const TupletInfo& tupletFromId(int id, const std::vector<TupletInfo>& tuplets)
     return *it;
 }
 
-TupletInfo& tupletFromId(int id, std::vector<TupletInfo>& tuplets)
+TupletInfo& tupletFromId(int id, muse::vector<TupletInfo>& tuplets)
 {
     return const_cast<TupletInfo&>(
-        tupletFromId(id, const_cast<const std::vector<TupletInfo>&>(tuplets)));
+        tupletFromId(id, const_cast<const muse::vector<TupletInfo>&>(tuplets)));
 }
 
 bool hasNonTrivialChord(
@@ -237,7 +237,7 @@ void sortNotesByPitch(const std::multimap<ReducedFraction, MidiChord>::iterator&
     }
 }
 
-void sortTupletsByAveragePitch(std::vector<TupletInfo>& tuplets)
+void sortTupletsByAveragePitch(muse::vector<TupletInfo>& tuplets)
 {
     struct {
         bool operator()(const TupletInfo& t1, const TupletInfo& t2)
@@ -266,11 +266,11 @@ tupletInterval(const TupletInfo& tuplet,
     return std::make_pair(tuplet.onTime, tupletEnd);
 }
 
-std::vector<std::pair<ReducedFraction, ReducedFraction> >
-findTupletIntervals(const std::vector<TupletInfo>& tuplets,
+muse::vector<std::pair<ReducedFraction, ReducedFraction> >
+findTupletIntervals(const muse::vector<TupletInfo>& tuplets,
                     const ReducedFraction& basicQuant)
 {
-    std::vector<std::pair<ReducedFraction, ReducedFraction> > tupletIntervals;
+    muse::vector<std::pair<ReducedFraction, ReducedFraction> > tupletIntervals;
     for (const auto& tuplet: tuplets) {
         tupletIntervals.push_back(tupletInterval(tuplet, basicQuant));
     }
@@ -280,7 +280,7 @@ findTupletIntervals(const std::vector<TupletInfo>& tuplets,
 
 // find tuplets over which duration lies
 
-std::vector<TupletData>
+muse::vector<TupletData>
 findTupletsInBarForDuration(
     int voice,
     const ReducedFraction& barStartTick,
@@ -288,7 +288,7 @@ findTupletsInBarForDuration(
     const ReducedFraction& durationLen,
     const std::multimap<ReducedFraction, TupletData>& tupletEvents)
 {
-    std::vector<TupletData> tupletsData;
+    muse::vector<TupletData> tupletsData;
     if (tupletEvents.empty()) {
         return tupletsData;
     }
@@ -309,7 +309,7 @@ findTupletsInBarForDuration(
     return tupletsData;
 }
 
-std::vector<std::multimap<ReducedFraction, TupletData>::const_iterator>
+muse::vector<std::multimap<ReducedFraction, TupletData>::const_iterator>
 findTupletsForTimeRange(
     int voice,
     const ReducedFraction& onTime,
@@ -320,7 +320,7 @@ findTupletsForTimeRange(
     Q_ASSERT_X(len >= ReducedFraction(0, 1),
                "MidiTuplet::findTupletForTimeRange", "Negative length of the time range");
 
-    std::vector<std::multimap<ReducedFraction, TupletData>::const_iterator> result;
+    muse::vector<std::multimap<ReducedFraction, TupletData>::const_iterator> result;
 
     if (tupletEvents.empty()) {
         return result;
@@ -369,7 +369,7 @@ findTupletContainingTime(
 }
 
 std::set<std::pair<const ReducedFraction, MidiChord>*>
-findTupletChords(const std::vector<TupletInfo>& tuplets)
+findTupletChords(const muse::vector<TupletInfo>& tuplets)
 {
     std::set<std::pair<const ReducedFraction, MidiChord>*> tupletChords;
     for (const auto& tupletInfo: tuplets) {
@@ -383,7 +383,7 @@ findTupletChords(const std::vector<TupletInfo>& tuplets)
 
 std::list<std::multimap<ReducedFraction, MidiChord>::iterator>
 findNonTupletChords(
-    const std::vector<TupletInfo>& tuplets,
+    const muse::vector<TupletInfo>& tuplets,
     const std::multimap<ReducedFraction, MidiChord>::iterator& startBarChordIt,
     const std::multimap<ReducedFraction, MidiChord>::iterator& endBarChordIt)
 {
@@ -400,7 +400,7 @@ findNonTupletChords(
 
 // split first tuplet chord, that belong to 2 tuplets, into 2 chords
 
-void splitTupletChord(const std::vector<TupletInfo>::iterator& lastMatch,
+void splitTupletChord(const muse::vector<TupletInfo>::iterator& lastMatch,
                       std::multimap<ReducedFraction, MidiChord>& chords)
 {
     auto& chordEvent = lastMatch->chords.begin()->second;
@@ -419,7 +419,7 @@ void splitTupletChord(const std::vector<TupletInfo>::iterator& lastMatch,
                "Tuplets were not filtered correctly: same notes in different tuplets");
 }
 
-void splitFirstTupletChords(std::vector<TupletInfo>& tuplets,
+void splitFirstTupletChords(muse::vector<TupletInfo>& tuplets,
                             std::multimap<ReducedFraction, MidiChord>& chords)
 {
     for (auto now = tuplets.begin(); now != tuplets.end(); ++now) {
@@ -452,7 +452,7 @@ void splitFirstTupletChords(std::vector<TupletInfo>& tuplets,
 //             we should leave at least one note in the first chord
 
 void minimizeOffTimeError(
-    std::vector<TupletInfo>& tuplets,
+    muse::vector<TupletInfo>& tuplets,
     std::multimap<ReducedFraction, MidiChord>& chords,
     std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
     const ReducedFraction& startBarTick,
@@ -472,8 +472,8 @@ void minimizeOffTimeError(
         MidiChord& midiChord = firstChord->second->second;
         auto& notes = midiChord.notes;
 
-        std::vector<int> removedIndexes;
-        std::vector<int> leavedIndexes;
+        muse::vector<int> removedIndexes;
+        muse::vector<int> leavedIndexes;
         const auto tupletNoteLen = tupletInfo.len / tupletInfo.tupletNumber;
 
         for (int i = 0; i != notes.size(); ++i) {
@@ -531,7 +531,7 @@ void minimizeOffTimeError(
 }
 
 void addChordsBetweenTupletNotes(
-    std::vector<TupletInfo>& tuplets,
+    muse::vector<TupletInfo>& tuplets,
     std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
     const std::multimap<ReducedFraction, MidiChord>& chords,
     const ReducedFraction& startBarTick,
@@ -572,7 +572,7 @@ void addChordsBetweenTupletNotes(
 
 #ifdef QT_DEBUG
 
-bool doTupletsHaveCommonChords(const std::vector<TupletInfo>& tuplets)
+bool doTupletsHaveCommonChords(const muse::vector<TupletInfo>& tuplets)
 {
     if (tuplets.empty()) {
         return false;
@@ -766,7 +766,7 @@ bool areTupletReferencesValid(const std::multimap<ReducedFraction, MidiChord>& c
 }
 
 bool areTupletNonTupletChordsDistinct(
-    const std::vector<TupletInfo>& tuplets,
+    const muse::vector<TupletInfo>& tuplets,
     const std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets)
 {
     std::set<std::pair<const ReducedFraction, MidiChord>*> chords;
@@ -860,7 +860,7 @@ bool areAllTupletsDifferent(const std::multimap<ReducedFraction, TupletData>& tu
 #endif
 
 void addTupletEvents(std::multimap<ReducedFraction, TupletData>& tupletEvents,
-                     const std::vector<TupletInfo>& tuplets,
+                     const muse::vector<TupletInfo>& tuplets,
                      const std::list<TiedTuplet>& backTiedTuplets)
 {
     for (size_t i = 0; i != tuplets.size(); ++i) {
@@ -923,7 +923,7 @@ void addTupletEvents(std::multimap<ReducedFraction, TupletData>& tupletEvents,
     }
 }
 
-void markStaccatoTupletNotes(std::vector<TupletInfo>& tuplets)
+void markStaccatoTupletNotes(muse::vector<TupletInfo>& tuplets)
 {
     for (auto& tuplet: tuplets) {
         for (const auto& staccato: tuplet.staccatoChords) {
@@ -1051,7 +1051,7 @@ ReducedFraction findPrevBarStart(const ReducedFraction& barStart,
 }
 
 void setBarIndexesOfNextBarChords(
-    std::vector<TupletInfo>& tuplets,
+    muse::vector<TupletInfo>& tuplets,
     std::list<std::multimap<ReducedFraction, MidiChord>::iterator>& nonTuplets,
     int barIndex)
 {
@@ -1096,7 +1096,7 @@ void findTuplets(
         sigmap->bar2tick(startBarChordIt->second.barIndex + 1, 0));
 
     const auto barFraction = ReducedFraction(sigmap->timesig(startBarTick.ticks()).timesig());
-    std::vector<TupletInfo> tuplets = detectTuplets(startBarChordIt, endBarChordIt, startBarTick,
+    muse::vector<TupletInfo> tuplets = detectTuplets(startBarChordIt, endBarChordIt, startBarTick,
                                                     barFraction, chords, basicQuant, barIndex);
     if (tuplets.empty()) {
         return;

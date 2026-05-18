@@ -231,7 +231,7 @@ bool haveIntersection(const std::pair<ReducedFraction, ReducedFraction>& interva
 
 bool haveIntersection(
     const std::pair<ReducedFraction, ReducedFraction>& interval,
-    const std::vector<std::pair<ReducedFraction, ReducedFraction> >& intervals,
+    const muse::vector<std::pair<ReducedFraction, ReducedFraction> >& intervals,
     bool strictComparison)
 {
     for (const auto& i: intervals) {

@@ -47,9 +47,9 @@ public:
     QMimeData* qMimeData() const override;
 
     EngravingItem* element() const override;
-    const std::vector<EngravingItem*>& elements() const override;
+    const muse::vector<EngravingItem*>& elements() const override;
 
-    std::vector<Note*> notes(NoteFilter filter) const override;
+    muse::vector<Note*> notes(NoteFilter filter) const override;
 
     muse::RectF canvasBoundingRect() const override;
 
@@ -61,7 +61,7 @@ public:
 
     mu::engraving::MeasureBase* startMeasureBase() const override;
     mu::engraving::MeasureBase* endMeasureBase() const override;
-    std::vector<mu::engraving::System*> selectedSystems() const override;
+    muse::vector<mu::engraving::System*> selectedSystems() const override;
 
     bool elementsSelected(const mu::engraving::ElementTypeSet& types) const override;
 

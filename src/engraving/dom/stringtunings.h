@@ -53,8 +53,8 @@ public:
     const String& preset() const;
     void setPreset(const String& preset);
 
-    const std::vector<string_idx_t>& visibleStrings() const;
-    void setVisibleStrings(const std::vector<string_idx_t>& visibleStrings);
+    const muse::vector<string_idx_t>& visibleStrings() const;
+    void setVisibleStrings(const muse::vector<string_idx_t>& visibleStrings);
 
     void updateText();
 
@@ -66,7 +66,7 @@ private:
     String generateText() const;
 
     String m_preset;
-    std::vector<string_idx_t> m_visibleStrings;
+    muse::vector<string_idx_t> m_visibleStrings;
     StringData m_stringData;
 
     bool m_noStringVisible = false;

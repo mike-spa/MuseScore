@@ -83,7 +83,7 @@ private:
 //    helper class for spreading staves over a page
 //---------------------------------------------------------
 
-class VerticalGapDataList : public std::vector<VerticalGapData*>
+class VerticalGapDataList : public muse::vector<VerticalGapData*>
 {
 public:
     void deleteAll();

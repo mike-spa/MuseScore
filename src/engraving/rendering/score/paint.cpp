@@ -42,7 +42,7 @@ void Paint::paintScore(Painter* painter, Score* score, const IScoreRenderer::Sco
         return;
     }
 
-    const std::vector<Page*>& pages = score->pages();
+    const muse::vector<Page*>& pages = score->pages();
     if (pages.empty()) {
         return;
     }
@@ -145,7 +145,7 @@ void Paint::paintScore(Painter* painter, Score* score, const IScoreRenderer::Sco
                 disableClipping = true;
             }
 
-            std::vector<EngravingItem*> elements = page->items(drawRect.translated(-pagePos));
+            muse::vector<EngravingItem*> elements = page->items(drawRect.translated(-pagePos));
             paintItems(*painter, elements, opt);
 
             if (disableClipping) {
@@ -231,10 +231,10 @@ void Paint::paintItem(Painter& painter, const EngravingItem* item, const PaintOp
     painter.translate(-itemPosition);
 }
 
-void Paint::paintItems(Painter& painter, const std::vector<EngravingItem*>& items, const PaintOptions& opt)
+void Paint::paintItems(Painter& painter, const muse::vector<EngravingItem*>& items, const PaintOptions& opt)
 {
     TRACEFUNC;
-    std::vector<EngravingItem*> sortedItems(items.begin(), items.end());
+    muse::vector<EngravingItem*> sortedItems(items.begin(), items.end());
 
     std::sort(sortedItems.begin(), sortedItems.end(), mu::engraving::elementLessThan);
 

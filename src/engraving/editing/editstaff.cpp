@@ -221,7 +221,7 @@ void RemoveStaves::redo(EditData*)
 //   SortStaves
 //---------------------------------------------------------
 
-SortStaves::SortStaves(Score* s, const std::vector<staff_idx_t>& l)
+SortStaves::SortStaves(Score* s, const muse::vector<staff_idx_t>& l)
 {
     score = s;
 

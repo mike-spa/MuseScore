@@ -60,24 +60,24 @@ DivisionInfo metricDivisionsOfBar(const ReducedFraction& barFraction);
 DivisionInfo metricDivisionsOfTuplet(const MidiTuplet::TupletData& tuplet, int tupletStartLevel);
 
 // result in vector: first elements - all tuplets info, one at the end - bar division info
-std::vector<DivisionInfo> divisionInfo(const ReducedFraction& barFraction, const std::vector<MidiTuplet::TupletData>& tupletsInBar);
+muse::vector<DivisionInfo> divisionInfo(const ReducedFraction& barFraction, const muse::vector<MidiTuplet::TupletData>& tupletsInBar);
 
 // tick is counted from the beginning of bar
-int levelOfTick(const ReducedFraction& tick, const std::vector<DivisionInfo>& divsInfo);
+int levelOfTick(const ReducedFraction& tick, const muse::vector<DivisionInfo>& divsInfo);
 
-std::vector<int> metricLevelsOfBar(const ReducedFraction& barFraction, const std::vector<DivisionInfo>& divsInfo,
+muse::vector<int> metricLevelsOfBar(const ReducedFraction& barFraction, const muse::vector<DivisionInfo>& divsInfo,
                                    const ReducedFraction& minDuration);
 
 bool isSimpleNoteDuration(const ReducedFraction& duration);   // quarter, half, eighth, 16th ...
 
 // division lengths of bar, each can be a tuplet length
-std::vector<ReducedFraction> divisionsOfBarForTuplets(const ReducedFraction& barFraction);
+muse::vector<ReducedFraction> divisionsOfBarForTuplets(const ReducedFraction& barFraction);
 
 // duration and all tuplets should belong to the same voice
 // nested tuplets are not allowed
 QList<std::pair<ReducedFraction, engraving::TDuration> >
 toDurationList(const ReducedFraction& startTickInBar, const ReducedFraction& endTickInBar, const ReducedFraction& barFraction,
-               const std::vector<MidiTuplet::TupletData>& tupletsInBar, DurationType durationType, bool useDots,
+               const muse::vector<MidiTuplet::TupletData>& tupletsInBar, DurationType durationType, bool useDots,
                bool printRestRemains = true);
 } // namespace Meter
 } // namespace mu::iex::midi

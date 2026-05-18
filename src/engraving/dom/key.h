@@ -84,8 +84,8 @@ public:
     void initFromSubtype(int);      // for backward compatibility
     int degInKey(int degree) const; // return "absolute degree"
     SymId symInKey(SymId sym, int degree) const;
-    std::vector<CustDef>& customKeyDefs() { return m_customKeyDefs; }
-    const std::vector<CustDef>& customKeyDefs() const { return m_customKeyDefs; }
+    muse::vector<CustDef>& customKeyDefs() { return m_customKeyDefs; }
+    const muse::vector<CustDef>& customKeyDefs() const { return m_customKeyDefs; }
 
 private:
 
@@ -96,7 +96,7 @@ private:
     KeyMode m_mode = KeyMode::UNKNOWN;
     bool m_custom = false;
     bool m_forInstrumentChange = false;
-    std::vector<CustDef> m_customKeyDefs;
+    muse::vector<CustDef> m_customKeyDefs;
 };
 
 //---------------------------------------------------------

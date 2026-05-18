@@ -323,7 +323,7 @@ void LayoutPanelTreeModel::updateSelectedRows()
 
     m_selectionModel->clear();
 
-    const std::vector<EngravingItem*>& selectedElements = m_notation->interaction()->selection()->elements();
+    const muse::vector<EngravingItem*>& selectedElements = m_notation->interaction()->selection()->elements();
     if (selectedElements.empty()) {
         return;
     }
@@ -399,7 +399,7 @@ void LayoutPanelTreeModel::load()
     }
 
     const bool showSystemObjectLayers = shouldShowSystemObjectLayers();
-    const std::vector<Staff*>& systemObjectStaves = m_masterNotation->notation()->parts()->systemObjectStaves();
+    const muse::vector<Staff*>& systemObjectStaves = m_masterNotation->notation()->parts()->systemObjectStaves();
 
     SystemObjectGroupsByStaff systemObjects;
     if (showSystemObjectLayers) {
@@ -1160,7 +1160,7 @@ void LayoutPanelTreeModel::updateSystemObjectLayers()
 
     // Create copy, because we're going to modify them
     const INotationPartsPtr notationParts = m_masterNotation->notation()->parts();
-    std::vector<Staff*> newSystemObjectStaves = notationParts->systemObjectStaves();
+    muse::vector<Staff*> newSystemObjectStaves = notationParts->systemObjectStaves();
     QList<AbstractLayoutPanelTreeItem*> children = m_rootItem->childItems();
 
     // Remove old system object layers
@@ -1253,7 +1253,7 @@ const PartTreeItem* LayoutPanelTreeModel::findPartItemByStaff(const Staff* staff
 
 const Staff* LayoutPanelTreeModel::resolveNewSystemObjectStaff() const
 {
-    const std::vector<Staff*>& systemObjectStaves = m_notation->parts()->systemObjectStaves();
+    const muse::vector<Staff*>& systemObjectStaves = m_notation->parts()->systemObjectStaves();
 
     const auto resolveStaff = [&](const AbstractLayoutPanelTreeItem* item) -> const Staff* {
         if (item->type() != LayoutPanelItemType::PART) {

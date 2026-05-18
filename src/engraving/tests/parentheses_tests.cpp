@@ -47,9 +47,9 @@ protected:
         score->endCmd();
     }
 
-    static void toggleMultipleNoteParen(MasterScore* score, std::vector<Note*>& notes)
+    static void toggleMultipleNoteParen(MasterScore* score, muse::vector<Note*>& notes)
     {
-        std::vector<EngravingItem*> items(notes.begin(), notes.end());
+        muse::vector<EngravingItem*> items(notes.begin(), notes.end());
         score->select(items, SelectType::ADD);
 
         score->startCmd(TranslatableString::untranslatable("Parentheses tests"));
@@ -81,14 +81,14 @@ protected:
         EXPECT_EQ(chord->noteParentheses().size(), count);
     }
 
-    static void checkAllNotesHaveParenInfo(const std::vector<Note*>& notes)
+    static void checkAllNotesHaveParenInfo(const muse::vector<Note*>& notes)
     {
         for (const Note* note : notes) {
             EXPECT_TRUE(note->parenthesisInfo());
         }
     }
 
-    static void checkNoNotesHaveParenInfo(const std::vector<Note*>& notes)
+    static void checkNoNotesHaveParenInfo(const muse::vector<Note*>& notes)
     {
         for (const Note* note : notes) {
             EXPECT_FALSE(note->parenthesisInfo());
@@ -218,8 +218,8 @@ TEST_F(Engraving_ParenthesesTests, removeParensBottomNotes)
     checkAllNotesHaveParenInfo(chord->notes());
 
     // Remove parentheses from bottom 2 notes
-    std::vector<Note*> notes = chord->notes();
-    std::vector<EngravingItem*> bottomNotes{ notes.at(notes.size() - 2), notes.at(notes.size() - 1) };
+    muse::vector<Note*> notes = chord->notes();
+    muse::vector<EngravingItem*> bottomNotes{ notes.at(notes.size() - 2), notes.at(notes.size() - 1) };
     score->select(bottomNotes, SelectType::ADD);
     score->startCmd(TranslatableString::untranslatable("Parentheses tests remove bottom notes"));
     score->cmdRemoveParenthesesFromNotes();

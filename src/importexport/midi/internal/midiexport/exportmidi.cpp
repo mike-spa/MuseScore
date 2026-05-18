@@ -64,7 +64,7 @@ void ExportMidi::writeHeader(const CompatMidiRendererInternal::Context& context)
 
         muse::ByteArray partName = staff->partName().toUtf8();
         size_t len = partName.size() + 1;
-        std::vector<unsigned char> data(partName.constData(), partName.constData() + len);
+        muse::vector<unsigned char> data(partName.constData(), partName.constData() + len);
 
         MidiEvent ev;
         ev.setType(ME_META);
@@ -217,7 +217,7 @@ bool ExportMidi::write(QIODevice* device, bool midiExpandRepeats, bool exportRPN
 {
     m_midiFile.setDivision(Constants::DIVISION);
     m_midiFile.setFormat(1);
-    std::vector<MidiTrack>& tracks = m_midiFile.tracks();
+    muse::vector<MidiTrack>& tracks = m_midiFile.tracks();
 
     for (size_t i = 0; i < m_score->nstaves(); ++i) {
         tracks.push_back(MidiTrack());
@@ -379,7 +379,7 @@ bool ExportMidi::write(QIODevice* device, bool midiExpandRepeats, bool exportRPN
                             }
 
                             size_t len = lyricText.size() + 1;
-                            std::vector<unsigned char> data(lyricText.constData(), lyricText.constData() + len);
+                            muse::vector<unsigned char> data(lyricText.constData(), lyricText.constData() + len);
 
                             MidiEvent ev;
                             ev.setType(ME_META);
@@ -404,7 +404,7 @@ bool ExportMidi::write(QIODevice* device, bool midiExpandRepeats, bool exportRPN
                             RehearsalMark* r = toRehearsalMark(e);
                             muse::ByteArray rText = r->plainText().toUtf8();
                             size_t len = rText.size() + 1;
-                            std::vector<unsigned char> data(rText.constData(), rText.constData() + len);
+                            muse::vector<unsigned char> data(rText.constData(), rText.constData() + len);
 
                             MidiEvent ev;
                             ev.setType(ME_META);

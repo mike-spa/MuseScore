@@ -151,7 +151,7 @@ void TestMidiMapping::testReadChangeOrderWrite(const char* f1, const char* ref, 
     QVERIFY(score);
     score->rebuildMidiMapping();
 
-    std::vector<int> dl;
+    muse::vector<int> dl;
     for (Staff* staff : score->staves()) {
         int idx = muse::indexOf(score->staves(), staff);
         if ((idx == p1 || idx == p2)

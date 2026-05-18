@@ -53,7 +53,7 @@ void Skyline::add(const ShapeElement& r)
             bool isCross = (beam && beam->cross())
                            || (tremolo && tremolo->chord1()->staffMove() != tremolo->chord2()->staffMove());
             if (isCross) {
-                std::vector<ChordRest*> elements;
+                muse::vector<ChordRest*> elements;
                 if (beam) {
                     elements = beam->elements();
                 } else if (tremolo) {

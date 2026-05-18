@@ -1027,9 +1027,9 @@ SegmentType Segment::segmentType(ElementType type)
 //   sortStaves
 //---------------------------------------------------------
 
-void Segment::sortStaves(std::vector<staff_idx_t>& dst)
+void Segment::sortStaves(muse::vector<staff_idx_t>& dst)
 {
-    std::vector<EngravingItem*> dl;
+    muse::vector<EngravingItem*> dl;
     dl.reserve(dst.size());
 
     for (staff_idx_t i = 0; i < dst.size(); ++i) {
@@ -1420,9 +1420,9 @@ EngravingItem* Segment::findAnnotation(ElementType type, track_idx_t minTrack, t
 ///  or an empty list if nothing was found.
 //---------------------------------------------------------
 
-std::vector<EngravingItem*> Segment::findAnnotations(ElementType type, track_idx_t minTrack, track_idx_t maxTrack) const
+muse::vector<EngravingItem*> Segment::findAnnotations(ElementType type, track_idx_t minTrack, track_idx_t maxTrack) const
 {
-    std::vector<EngravingItem*> found;
+    muse::vector<EngravingItem*> found;
     for (EngravingItem* e : m_annotations) {
         if (e->type() == type && e->track() >= minTrack && e->track() <= maxTrack) {
             found.push_back(e);
@@ -1744,7 +1744,7 @@ EngravingItem* Segment::nextElementOfSegment(EngravingItem* e, staff_idx_t activ
             }
         }
         if (el->isChord()) {
-            std::vector<Note*> notes = toChord(el)->notes();
+            muse::vector<Note*> notes = toChord(el)->notes();
             auto i = std::find(notes.begin(), notes.end(), e);
             if (i == notes.end()) {
                 continue;
@@ -1813,12 +1813,12 @@ EngravingItem* Segment::prevElementOfSegment(EngravingItem* e, staff_idx_t activ
                 }
             }
 
-            std::vector<Note*> notes = chord->notes();
+            muse::vector<Note*> notes = chord->notes();
             auto i = std::find(notes.begin(), notes.end(), e);
             if (i == notes.end()) {
                 continue;
             }
-            if (i != --notes.end()) {
+            if (i != notes.end() - 1) {
                 return *(i + 1);
             } else {
                 EngravingItem* prevEl = element(--track);
@@ -1853,7 +1853,7 @@ EngravingItem* Segment::lastElementOfSegment(staff_idx_t activeStaff) const
         return nullptr;
     }
 
-    const std::vector<EngravingItem*>& elements = m_elist;
+    const muse::vector<EngravingItem*>& elements = m_elist;
     for (auto it = elements.rbegin(); it != elements.rend(); ++it) {
         EngravingItem* item = *it;
         if (item && item->staffIdx() == activeStaff) {
@@ -1863,7 +1863,7 @@ EngravingItem* Segment::lastElementOfSegment(staff_idx_t activeStaff) const
                     return chord->graceNotesAfter().back()->notes().back();
                 }
 
-                const std::vector<Articulation*>& articulations = chord->articulations();
+                const muse::vector<Articulation*>& articulations = chord->articulations();
                 if (!articulations.empty()) {
                     Articulation* lastArtic = articulations.back();
                     if (lastArtic->isTapping()) {
@@ -2576,7 +2576,7 @@ void Segment::createShape(staff_idx_t staffIdx)
     s.clear();
 
     if (const System* system = this->system()) {
-        const std::vector<SysStaff*>& staves = system->staves();
+        const muse::vector<SysStaff*>& staves = system->staves();
 
         if (staffIdx < staves.size() && !staves[staffIdx]->show()) {
             return;

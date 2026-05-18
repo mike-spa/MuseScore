@@ -99,9 +99,9 @@ Sid SystemDivider::getPropertyStyle(Pid id) const
     return Symbol::getPropertyStyle(id);
 }
 
-std::vector<LineF> SystemDivider::dragAnchorLines() const
+muse::vector<LineF> SystemDivider::dragAnchorLines() const
 {
-    std::vector<LineF> result;
+    muse::vector<LineF> result;
 
     const System* system = toSystem(parentItem());
     IF_ASSERT_FAILED(system) {

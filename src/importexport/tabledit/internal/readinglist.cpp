@@ -35,7 +35,7 @@ bool MeasureStatus::isRegular()
 // return the number of exact matches at the front of the list
 // due to compaction, this is rare
 
-size_t findExactMatches(const std::vector<SimplifiedItem>& list)
+size_t findExactMatches(const muse::vector<SimplifiedItem>& list)
 {
     if (list.size() == 0) {
         return 0; // shouldn't happen
@@ -49,7 +49,7 @@ size_t findExactMatches(const std::vector<SimplifiedItem>& list)
 
 // return the number of exact matches at the second items on the list
 
-size_t findExactMatchesFrom2nd(const std::vector<SimplifiedItem>& list)
+size_t findExactMatchesFrom2nd(const muse::vector<SimplifiedItem>& list)
 {
     if (list.size() == 0) {
         return 0; // shouldn't happen
@@ -65,7 +65,7 @@ size_t findExactMatchesFrom2nd(const std::vector<SimplifiedItem>& list)
 // with the measure numbers changed from one-based to zero-based
 // and items describing consecutive sets of measures merged
 
-void ReadingList::initializeList(const size_t nMeasures, const std::vector<TefReadingListItem>& tefReadingList)
+void ReadingList::initializeList(const size_t nMeasures, const muse::vector<TefReadingListItem>& tefReadingList)
 {
     UNUSED(nMeasures);
     for (const auto& tefItem : tefReadingList) {
@@ -90,7 +90,7 @@ void ReadingList::initializeList(const size_t nMeasures, const std::vector<TefRe
     }
 }
 
-void ReadingList::calculate(const size_t nMeasures, const std::vector<TefReadingListItem>& tefReadingList)
+void ReadingList::calculate(const size_t nMeasures, const muse::vector<TefReadingListItem>& tefReadingList)
 {
     LOGN("reading list size %zu number of measures %zu", tefReadingList.size(), nMeasures);
     if (nMeasures == 0) {

@@ -91,7 +91,7 @@ public:
     const SoloMuteState& trackSoloMuteState(const engraving::InstrumentTrackId& trackId) const override;
     void setTrackSoloMuteState(const engraving::InstrumentTrackId& trackId, const SoloMuteState& state) override;
 
-    void playElements(const std::vector<const notation::EngravingItem*>& elements,
+    void playElements(const muse::vector<const notation::EngravingItem*>& elements,
                       const PlayParams& params = PlayParams(), bool isMidi = false) override;
     void playNotes(const notation::NoteValList& notes, notation::staff_idx_t staffIdx, const notation::Segment* segment,
                    const PlayParams& params = PlayParams()) override;
@@ -167,7 +167,7 @@ private:
     bool shouldLoadDrumset(const engraving::InstrumentTrackId& instrumentTrackId, const muse::audio::AudioResourceMeta& oldMeta,
                            const muse::audio::AudioResourceMeta& newMeta) const;
 
-    void addSoundFlagsIfNeed(const std::vector<engraving::EngravingItem*>& selection);
+    void addSoundFlagsIfNeed(const muse::vector<engraving::EngravingItem*>& selection);
 
     void togglePlay(bool showErrors = true);
     void playFromSelection(bool showErrors = true);

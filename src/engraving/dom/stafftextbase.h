@@ -58,8 +58,8 @@ public:
         m_swingParameters.swingRatio = ratio;
     }
 
-    const std::vector<ChannelActions>& channelActions() const { return m_channelActions; }
-    std::vector<ChannelActions>& channelActions() { return m_channelActions; }
+    const muse::vector<ChannelActions>& channelActions() const { return m_channelActions; }
+    muse::vector<ChannelActions>& channelActions() { return m_channelActions; }
     const SwingParameters& swingParameters() const { return m_swingParameters; }
     void clearAeolusStops();
     void setAeolusStop(int group, int idx, bool val);
@@ -78,7 +78,7 @@ public:
 private:
 
     String m_channelNames[4];
-    std::vector<ChannelActions> m_channelActions;
+    muse::vector<ChannelActions> m_channelActions;
     SwingParameters m_swingParameters;
     bool m_setAeolusStops = false;
     int m_aeolusStops[4] { 0, 0, 0, 0 };

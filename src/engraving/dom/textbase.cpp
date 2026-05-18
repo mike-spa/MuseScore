@@ -720,7 +720,7 @@ String TextCursor::extractText(int r1, int c1, int r2, int c2, bool withFormat) 
     }
 
     assert(TextBase::isSorted(r1, c1, r2, c2));
-    const std::vector<TextBlock>& tb = ldata->blocks;
+    const muse::vector<TextBlock>& tb = ldata->blocks;
 
     if (r1 == r2) {
         return tb.at(r1).text(c1, c2 - c1, withFormat);
@@ -955,7 +955,7 @@ double TextFragment::calculatedFontSize(const TextBase* t) const
 void TextFragment::resolveFallback(muse::draw::Font::Type fontType, const muse::draw::FontMetrics& fm,
                                    String& family) const
 {
-    std::vector<char32_t> missingChars;
+    muse::vector<char32_t> missingChars;
     for (size_t i = 0; i < text.size(); ++i) {
         const Char& c = text.at(i);
         if (c.isHighSurrogate()) {
@@ -2228,9 +2228,9 @@ void TextBase::dragTo(EditData& ed)
 //   dragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> TextBase::dragAnchorLines() const
+muse::vector<LineF> TextBase::dragAnchorLines() const
 {
-    std::vector<LineF> result(genericDragAnchorLines());
+    muse::vector<LineF> result(genericDragAnchorLines());
 
     if (layoutToParentWidth() && !result.empty()) {
         LineF& line = result[0];
@@ -3062,7 +3062,7 @@ void TextBase::initTextStyleType(TextStyleType tid, bool preserveDifferent)
 void TextBase::initTextStyleType(TextStyleType tid)
 {
     auto getTextPID = [&](Pid p) -> Pid {
-        static const std::vector<std::pair<Pid, Pid> > TEXT_LINE_PID_MAP = { { Pid::FONT_FACE, Pid::BEGIN_FONT_FACE },
+        static const muse::vector<std::pair<Pid, Pid> > TEXT_LINE_PID_MAP = { { Pid::FONT_FACE, Pid::BEGIN_FONT_FACE },
             { Pid::FONT_SIZE, Pid::BEGIN_FONT_SIZE },
             { Pid::FONT_STYLE, Pid::BEGIN_FONT_STYLE },
             { Pid::ALIGN, Pid::BEGIN_TEXT_ALIGN },

@@ -59,7 +59,7 @@ public:
     void setPartSharpFlat(const muse::ID& partId, const SharpFlat& sharpFlat) override;
     void setInstrumentName(const InstrumentKey& instrumentKey, const QString& name) override;
     void setInstrumentAbbreviature(const InstrumentKey& instrumentKey, const QString& abbreviature) override;
-    void setInstrumentGroupNameOptions(const std::vector<InstrumentKey>& instruments, bool useCustom, const QString& longName,
+    void setInstrumentGroupNameOptions(const muse::vector<InstrumentKey>& instruments, bool useCustom, const QString& longName,
                                        const QString& shortName) override;
     void setInstrumentNumber(const InstrumentKey& instrumentKey, int v) override;
     void setStaffType(const muse::ID& staffId, StaffTypeId type) override;
@@ -83,7 +83,7 @@ public:
                            const StaffType* newStaffType = nullptr) override;
     void replaceDrumset(const InstrumentKey& instrumentKey, const Drumset& newDrumset, bool undoable = true) override;
 
-    const std::vector<Staff*>& systemObjectStaves() const override;
+    const muse::vector<Staff*>& systemObjectStaves() const override;
     muse::async::Notification systemObjectStavesChanged() const override;
 
     void addSystemObjects(const muse::IDList& stavesIds) override;
@@ -109,7 +109,7 @@ protected:
     void apply();
     void rollback();
 
-    virtual void onPartsRemoved(const std::vector<Part*>& parts);
+    virtual void onPartsRemoved(const muse::vector<Part*>& parts);
 
 private:
     friend class MasterNotationParts;
@@ -119,15 +119,15 @@ private:
     void listenStyleChanges();
 
     void doSetScoreOrder(const ScoreOrder& order);
-    void doRemoveParts(const std::vector<Part*>& parts);
+    void doRemoveParts(const muse::vector<Part*>& parts);
     void doAppendStaff(Staff* staff, Part* destinationPart, bool createRests=true);
     void doSetStaffConfig(Staff* staff, const StaffConfig& config, Fraction tick = Fraction(0, 1));
     void doInsertPart(Part* part, size_t index);
 
     Staff* staffModifiable(const muse::ID& staffId) const;
 
-    std::vector<Staff*> staves(const muse::IDList& stavesIds) const;
-    std::vector<Part*> parts(const muse::IDList& partsIds) const;
+    muse::vector<Staff*> staves(const muse::IDList& stavesIds) const;
+    muse::vector<Part*> parts(const muse::IDList& partsIds) const;
 
     void appendStaves(Part* part, const InstrumentTemplate& templ, const mu::engraving::KeyList& keyList);
     void insertStaff(Staff* staff, engraving::staff_idx_t destinationStaffIndex, bool createRests=true);
@@ -160,8 +160,8 @@ private:
     muse::async::Notification m_partsChanged;
     muse::async::Notification m_scoreOrderChanged;
 
-    std::vector<Part*> m_parts;
-    std::vector<Staff*> m_systemObjectStaves;
+    muse::vector<Part*> m_parts;
+    muse::vector<Staff*> m_systemObjectStaves;
     muse::async::Notification m_systemObjectStavesChanged;
     muse::async::Notification m_sharedPartsChanged;
 

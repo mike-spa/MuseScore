@@ -46,7 +46,7 @@ private:
 
     static void createEvents(const muse::mpe::ArticulationType type, NominalNoteCtx& noteCtx, const int alterationsCount,
                              const int availableDurationTicks, const int overallDurationTicks,
-                             const std::vector<muse::mpe::pitch_level_t>& pitchOffsets, muse::mpe::PlaybackEventList& result);
+                             const muse::vector<muse::mpe::pitch_level_t>& pitchOffsets, muse::mpe::PlaybackEventList& result);
 };
 }
 

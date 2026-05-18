@@ -1629,7 +1629,7 @@ TEST_F(Engraving_ApiScoreTests, fretDiagramSetDotApi)
     domScore->endCmd();
 
     // [THEN] The dot is recorded on the diagram
-    std::vector<FretItem::Dot> dots = domFd->dot(0);
+    muse::vector<FretItem::Dot> dots = domFd->dot(0);
     ASSERT_EQ(dots.size(), 1u);
     EXPECT_EQ(dots[0].fret, 3);
 

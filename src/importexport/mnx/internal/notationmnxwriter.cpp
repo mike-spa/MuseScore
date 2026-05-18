@@ -33,14 +33,14 @@ using namespace mu::project;
 using namespace muse;
 using namespace muse::io;
 
-std::vector<INotationWriter::UnitType> NotationMnxWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> NotationMnxWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool NotationMnxWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

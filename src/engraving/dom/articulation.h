@@ -136,7 +136,7 @@ public:
 
     bool isHiddenOnTabStaff() const;
 
-    std::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> dragAnchorLines() const override;
 
     PropertyValue getProperty(Pid propertyId) const override;
     bool setProperty(Pid propertyId, const PropertyValue&) override;

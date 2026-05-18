@@ -558,7 +558,7 @@ muse::Ret NotationProject::savePage(const muse::io::path_t& path, const size_t p
     }
 
     const Page* page = score->pages().at(pageNum);
-    const std::vector<System*>& systems = page->systems();
+    const muse::vector<System*>& systems = page->systems();
     if (systems.empty()) {
         return make_ret(notation::Err::UnknownError);
     }

@@ -310,13 +310,13 @@ void TrackList::append(EngravingItem* e)
             }
             if (element) {
                 element->setSelected(false);
-                std::vector<EngravingItem*>::push_back(element);
+                muse::vector<EngravingItem*>::push_back(element);
             }
         }
     } else {
         EngravingItem* c = e->clone();
         c->resetExplicitParent();
-        std::vector<EngravingItem*>::push_back(c);
+        muse::vector<EngravingItem*>::push_back(c);
     }
 }
 
@@ -339,7 +339,7 @@ void TrackList::appendGap(const Fraction& du, Score* score)
     } else {
         Rest* rest = Factory::createRest(score->dummy()->segment());
         rest->setTicks(du);
-        std::vector<EngravingItem*>::push_back(rest);
+        muse::vector<EngravingItem*>::push_back(rest);
         m_duration   += du;
     }
 }
@@ -558,7 +558,7 @@ Tuplet* TrackList::writeTuplet(Tuplet* parent, Tuplet* tuplet, Measure*& measure
             }
             if (e->isChordRest()) {
                 Fraction dd = std::min(rest, duration) * ratio;
-                std::vector<TDuration> dl = toDurationList(dd, false);
+                muse::vector<TDuration> dl = toDurationList(dd, false);
                 for (const TDuration& k : dl) {
                     Segment* segment = measure->undoGetSegmentR(SegmentType::ChordRest, measure->ticks() - rest);
                     Fraction gd      = k.fraction() / ratio;
@@ -652,7 +652,7 @@ bool TrackList::write(Score* score, const Fraction& tick) const
                     remains.set(0, 1);
                 } else if (e->isChordRest()) {
                     Fraction du               = std::min(remains, duration);
-                    std::vector<TDuration> dl = toDurationList(du, e->isChord());
+                    muse::vector<TDuration> dl = toDurationList(du, e->isChord());
                     if (dl.empty()) {
                         MScore::setError(MsError::CORRUPTED_MEASURE);
                         return false;
@@ -806,7 +806,7 @@ void ScoreRange::read(Segment* first, Segment* last, bool readSpanner)
     m_first        = first;
     m_last         = last;
     Score* score  = first->score();
-    std::vector<track_idx_t> sl = score->uniqueStaves();
+    muse::vector<track_idx_t> sl = score->uniqueStaves();
 
     track_idx_t startTrack = 0;
     track_idx_t endTrack   = score->nstaves() * VOICES;

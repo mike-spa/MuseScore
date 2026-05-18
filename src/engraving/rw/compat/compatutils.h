@@ -40,14 +40,14 @@ namespace mu::engraving::compat {
 class CompatUtils
 {
 public:
-    static void assignInitialPartToExcerpts(const std::vector<Excerpt*>& excerpts);
+    static void assignInitialPartToExcerpts(const muse::vector<Excerpt*>& excerpts);
     static void doCompatibilityConversions(MasterScore* masterScore);
     static ArticulationAnchor translateToNewArticulationAnchor(int anchor);
     static double convertChordExtModUnits(double val);
     static void setHarmonyRootTpcFromFunction(HarmonyInfo* info, const Harmony* h, const muse::String& s);
     static const std::set<SymId> ORNAMENT_IDS;
     static const std::map<Sid, Sid> ALIGN_VALS_TO_CONVERT;
-    static void setPositionStylesFromAlign(MStyle* style, std::vector<Sid> ignoreSids = {});
+    static void setPositionStylesFromAlign(MStyle* style, muse::vector<Sid> ignoreSids = {});
     static void setTextLineTextPositionFromAlign(TextLineBase* tl);
     static void resetHookHeightSign(TextLineBase* tl);
     static void setMusicSymbolSize470(MStyle& style);

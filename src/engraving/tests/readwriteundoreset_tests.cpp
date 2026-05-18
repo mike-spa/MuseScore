@@ -37,7 +37,7 @@ class Engraving_ReadWriteUndoResetTests : public ::testing::Test
 
 TEST_F(Engraving_ReadWriteUndoResetTests, testReadWriteResetPositions)
 {
-    std::vector<const char16_t*> files = {
+    muse::vector<const char16_t*> files = {
         u"barlines",
         u"slurs",
         u"mmrestBarlineTextLinks" // see issue #296426

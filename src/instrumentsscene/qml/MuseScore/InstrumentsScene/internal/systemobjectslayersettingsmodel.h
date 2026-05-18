@@ -55,6 +55,6 @@ private:
         VisibilityRole,
     };
 
-    std::vector<SystemObjectsGroup> m_systemObjectGroups;
+    muse::vector<SystemObjectsGroup> m_systemObjectGroups;
 };
 }

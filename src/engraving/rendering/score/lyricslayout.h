@@ -38,14 +38,14 @@ class LyricsLayout
 {
     struct LyricsVerse {
     private:
-        std::vector<Lyrics*> m_lyrics;
-        std::vector<LyricsLineSegment*> m_lines;
+        muse::vector<Lyrics*> m_lyrics;
+        muse::vector<LyricsLineSegment*> m_lines;
     public:
         void addLyrics(Lyrics* l) { m_lyrics.push_back(l); }
         void addLine(LyricsLineSegment* lls) { m_lines.push_back(lls); }
 
-        const std::vector<Lyrics*>& lyrics() const { return m_lyrics; }
-        const std::vector<LyricsLineSegment*>& lines() const { return m_lines; }
+        const muse::vector<Lyrics*>& lyrics() const { return m_lyrics; }
+        const muse::vector<LyricsLineSegment*>& lines() const { return m_lines; }
     };
 
     using LyricsVersesMap = std::map<int, LyricsVerse>;

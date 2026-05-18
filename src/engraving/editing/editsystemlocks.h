@@ -40,7 +40,7 @@ public:
     static void undoRemoveSystemLock(Score* score, const SystemLock* lock);
     static void undoRemoveAllLocks(Score* score);
 
-    static void toggleSystemLock(Score* score, const std::vector<System*>& systems);
+    static void toggleSystemLock(Score* score, const muse::vector<System*>& systems);
     static void toggleScoreLock(Score* score);
 
     static void addRemoveSystemLocks(Score* score, int interval, bool lock);

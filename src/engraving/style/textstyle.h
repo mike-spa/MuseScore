@@ -77,7 +77,7 @@ struct TextStyle {
 };
 
 const TextStyle* textStyle(TextStyleType);
-const std::vector<TextStyleType>& allTextStyles();
-const std::vector<TextStyleType>& editableTextStyles();
-const std::vector<TextStyleType>& primaryTextStyles();
+const muse::vector<TextStyleType>& allTextStyles();
+const muse::vector<TextStyleType>& editableTextStyles();
+const muse::vector<TextStyleType>& primaryTextStyles();
 }

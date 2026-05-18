@@ -28,7 +28,7 @@ using namespace mu::engraving;
 using namespace muse;
 using namespace muse::mpe;
 
-static duration_t graceNotesTotalDuration(const std::vector<Chord*>& graceChords, const BeatsPerSecond& bps)
+static duration_t graceNotesTotalDuration(const muse::vector<Chord*>& graceChords, const BeatsPerSecond& bps)
 {
     duration_t result = 0;
 
@@ -94,7 +94,7 @@ static RenderingContext buildGraceRenderingCtx(const RenderingContext& baseCtx,
 
 GraceChordCtx GraceChordCtx::buildCtx(const Chord* chord, const mpe::ArticulationType type, const RenderingContext& ctx)
 {
-    std::vector<Chord*> graceChords;
+    muse::vector<Chord*> graceChords;
 
     const bool isPlacedBeforePrincipal = isGraceNotePlacedBeforePrincipalNote(type);
     if (isPlacedBeforePrincipal) {

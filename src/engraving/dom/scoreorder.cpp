@@ -347,7 +347,7 @@ int ScoreOrder::instrumentSortingIndex(const String& instrumentId, bool isSolois
 //   isScoreOrder
 //---------------------------------------------------------
 
-bool ScoreOrder::isScoreOrder(const std::vector<int>& indices) const
+bool ScoreOrder::isScoreOrder(const muse::vector<int>& indices) const
 {
     if (isCustom()) {
         return true;
@@ -365,7 +365,7 @@ bool ScoreOrder::isScoreOrder(const std::vector<int>& indices) const
 
 bool ScoreOrder::isScoreOrder(const Score* score) const
 {
-    std::vector<int> indices;
+    muse::vector<int> indices;
     for (const Part* part : score->parts()) {
         indices.push_back(instrumentSortingIndex(part->instrument()->id(), part->soloist()));
     }
@@ -408,7 +408,7 @@ void ScoreOrder::setBracketsAndBarlines(Score* score)
         size_t braceSpan { 0 };
         for (Staff* staff : part->staves()) {
             // Create copy, because the original is modified while we are iterating over it
-            std::vector<BracketItem*> brackets = staff->brackets();
+            muse::vector<BracketItem*> brackets = staff->brackets();
 
             for (BracketItem* bi : brackets) {
                 if (bi->bracketType() == BracketType::GROUP) {

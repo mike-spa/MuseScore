@@ -36,7 +36,7 @@ struct GroupNode {
 
     bool operator==(const GroupNode& g) const { return g.pos == pos && g.action == action; }
 };
-using GroupNodes = std::vector<GroupNode>;
+using GroupNodes = muse::vector<GroupNode>;
 }
 
 #endif // MU_ENGRAVING_GROUPNODE_H

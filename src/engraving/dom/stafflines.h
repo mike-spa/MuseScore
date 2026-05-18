@@ -46,8 +46,8 @@ public:
     PointF pagePos() const override;      ///< position in page coordinates
     PointF canvasPos() const override;    ///< position in page coordinates
 
-    const std::vector<LineF>& lines() const { return m_lines; }
-    void setLines(const std::vector<LineF>& l) { m_lines = l; }
+    const muse::vector<LineF>& lines() const { return m_lines; }
+    void setLines(const muse::vector<LineF>& l) { m_lines = l; }
 
     Measure* measure() const { return (Measure*)explicitParent(); }
     double y1() const;
@@ -65,7 +65,7 @@ private:
     StaffLines(Measure* parent);
 
     double m_lw = 0.0;
-    std::vector<LineF> m_lines;
+    muse::vector<LineF> m_lines;
 };
 }
 

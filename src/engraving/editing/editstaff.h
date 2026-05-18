@@ -175,11 +175,11 @@ class SortStaves : public UndoCommand
     OBJECT_ALLOCATOR(engraving, SortStaves)
 
     Score* score = nullptr;
-    std::vector<staff_idx_t> list;
-    std::vector<staff_idx_t> rlist;
+    muse::vector<staff_idx_t> list;
+    muse::vector<staff_idx_t> rlist;
 
 public:
-    SortStaves(Score*, const std::vector<staff_idx_t>&);
+    SortStaves(Score*, const muse::vector<staff_idx_t>&);
     void undo(EditData*) override;
     void redo(EditData*) override;
 

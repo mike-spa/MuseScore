@@ -618,7 +618,7 @@ struct QuantData
     // then chord can be merged with previous chord
     bool canMergeWithPrev = false;
     int metricalLevelForLen;
-    std::vector<QuantPos> positions;
+    muse::vector<QuantPos> positions;
 };
 
 #ifdef QT_DEBUG
@@ -654,8 +654,8 @@ bool areChordsDifferent(
 }
 
 bool notLessThanPrev(
-    const std::vector<QuantData>::iterator& it,
-    const std::vector<QuantData>& data)
+    const muse::vector<QuantData>::iterator& it,
+    const muse::vector<QuantData>& data)
 {
     if (it != data.begin()) {
         const auto prev = std::prev(it);
@@ -839,7 +839,7 @@ ReducedFraction quantizeToSmall(
 }
 
 void findMetricalLevels(
-    std::vector<QuantData>& data,
+    muse::vector<QuantData>& data,
     const std::deque<std::multimap<ReducedFraction, MidiChord>::const_iterator>& chords,
     const ReducedFraction& tupletQuant,
     const ReducedFraction& barStart,
@@ -884,7 +884,7 @@ void findMetricalLevels(
 }
 
 void findChordRangeEnds(
-    std::vector<QuantData>& data,
+    muse::vector<QuantData>& data,
     const ReducedFraction& rangeStart,
     const ReducedFraction& rangeEnd,
     const ReducedFraction& barStart,
@@ -932,7 +932,7 @@ void findChordRangeEnds(
 }
 
 void findChordRangeStarts(
-    std::vector<QuantData>& data,
+    muse::vector<QuantData>& data,
     const ReducedFraction& rangeStart,
     const ReducedFraction& rangeEnd,
     const ReducedFraction& barStart,
@@ -988,7 +988,7 @@ void findChordRangeStarts(
 }
 
 void findQuants(
-    std::vector<QuantData>& data,
+    muse::vector<QuantData>& data,
     const std::deque<std::multimap<ReducedFraction, MidiChord>::const_iterator>& chords,
     const ReducedFraction& rangeStart,
     const ReducedFraction& rangeEnd,
@@ -1047,7 +1047,7 @@ ReducedFraction findTupletQuant(
     return tupletQuant;
 }
 
-std::vector<QuantData> findQuantData(
+muse::vector<QuantData> findQuantData(
     const std::deque<std::multimap<ReducedFraction, MidiChord>::const_iterator>& chords,
     const ReducedFraction& rangeStart,
     const ReducedFraction& rangeEnd,
@@ -1057,7 +1057,7 @@ std::vector<QuantData> findQuantData(
 {
     Q_ASSERT_X(!chords.empty(), "Quantize::findQuantData", "Empty chords");
 
-    std::vector<QuantData> data;
+    muse::vector<QuantData> data;
     const auto tupletQuant = findTupletQuant(chords);
     const auto beatLen = Meter::beatLength(barFraction);
 
@@ -1075,7 +1075,7 @@ struct QuantInfo {
     std::multimap<ReducedFraction, MidiChord>::const_iterator chord;
 };
 
-int findLastChordPosition(const std::vector<QuantData>& quantData)
+int findLastChordPosition(const muse::vector<QuantData>& quantData)
 {
     int posIndex = -1;
     double minPenalty = std::numeric_limits<double>::max();
@@ -1093,7 +1093,7 @@ int findLastChordPosition(const std::vector<QuantData>& quantData)
     return posIndex;
 }
 
-void applyDynamicProgramming(std::vector<QuantData>& quantData)
+void applyDynamicProgramming(muse::vector<QuantData>& quantData)
 {
     const auto& opers = midiImportOperations.data()->trackOpers;
     const bool isHuman = opers.isHumanPerformance.value();
@@ -1188,7 +1188,7 @@ void quantizeOnTimesInRange(
                    chords.front()->second.tuplet->second, rangeStart, rangeEnd) : true,
                "Quantize::quantizeOnTimesInRange", "Tuplet range is incorrect");
 #endif
-    std::vector<QuantData> quantData = findQuantData(chords, rangeStart, rangeEnd,
+    muse::vector<QuantData> quantData = findQuantData(chords, rangeStart, rangeEnd,
                                                      basicQuant, barStart, barFraction);
     applyDynamicProgramming(quantData);
 

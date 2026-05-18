@@ -178,12 +178,12 @@ Page* AppearanceSettingsModel::page() const
     return toPage(m_elementsForArrangeProperty.first()->findAncestor(ElementType::PAGE));
 }
 
-std::vector<EngravingItem*> AppearanceSettingsModel::allElementsInPage() const
+muse::vector<EngravingItem*> AppearanceSettingsModel::allElementsInPage() const
 {
     return page()->elements();
 }
 
-std::vector<EngravingItem*> AppearanceSettingsModel::allOverlappingElements() const
+muse::vector<EngravingItem*> AppearanceSettingsModel::allOverlappingElements() const
 {
     RectF bbox = m_elementsForArrangeProperty.first()->pageBoundingRect();
     for (EngravingItem* element : m_elementsForArrangeProperty) {
@@ -198,7 +198,7 @@ std::vector<EngravingItem*> AppearanceSettingsModel::allOverlappingElements() co
 
 void AppearanceSettingsModel::pushBackwardsInOrder()
 {
-    std::vector<EngravingItem*> elements = allOverlappingElements();
+    muse::vector<EngravingItem*> elements = allOverlappingElements();
     std::sort(elements.begin(), elements.end(), elementLessThan);
 
     int minZ = (*std::min_element(m_elementsForArrangeProperty.begin(), m_elementsForArrangeProperty.end(), elementLessThan))->z();
@@ -217,7 +217,7 @@ void AppearanceSettingsModel::pushBackwardsInOrder()
 
 void AppearanceSettingsModel::pushForwardsInOrder()
 {
-    std::vector<EngravingItem*> elements = allOverlappingElements();
+    muse::vector<EngravingItem*> elements = allOverlappingElements();
     std::sort(elements.begin(), elements.end(), elementLessThan);
 
     int maxZ = (*std::max_element(m_elementsForArrangeProperty.begin(), m_elementsForArrangeProperty.end(), elementLessThan))->z();
@@ -237,7 +237,7 @@ void AppearanceSettingsModel::pushForwardsInOrder()
 
 void AppearanceSettingsModel::pushToBackInOrder()
 {
-    std::vector<EngravingItem*> elements = allElementsInPage();
+    muse::vector<EngravingItem*> elements = allElementsInPage();
     EngravingItem* minElement = *std::min_element(
         elements.begin(), elements.end(), [](const EngravingItem* const e1, const EngravingItem* const e2) {
         // Certain elements (TimeTickAnchor) have their Z set to -INT_MAX to ensure they're always at the back.
@@ -262,7 +262,7 @@ void AppearanceSettingsModel::pushToBackInOrder()
 
 void AppearanceSettingsModel::pushToFrontInOrder()
 {
-    std::vector<EngravingItem*> elements = allElementsInPage();
+    muse::vector<EngravingItem*> elements = allElementsInPage();
     EngravingItem* maxElement = *std::max_element(
         elements.begin(), elements.end(), [](const EngravingItem* const e1, const EngravingItem* const e2) {
         // Certain elements (SoundFlag) have their Z set to INT_MAX to ensure they're always at the front.

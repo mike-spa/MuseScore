@@ -99,7 +99,7 @@ public:
     int gripsCount() const override { return 2; }
     Grip initialEditModeGrip() const override { return Grip(1); }
     Grip defaultGrip() const override { return Grip(1); }
-    std::vector<PointF> gripsPositions(const EditData&) const override;
+    muse::vector<PointF> gripsPositions(const EditData&) const override;
 
     SizeF pixel2size(const SizeF& s) const;
     SizeF size2pixel(const SizeF& s) const;
@@ -114,7 +114,7 @@ private:
     bool isEditable() const override { return true; }
     void startDragGrip(EditData&) override;
     void dragGrip(EditData& ed) override;
-    std::vector<LineF> gripAnchorLines(Grip) const override { return std::vector<LineF>(); }
+    muse::vector<LineF> gripAnchorLines(Grip) const override { return muse::vector<LineF>(); }
 
     ImageStoreItem* m_storeItem = nullptr;
     std::string m_storePath; // the path of the img in the ImageStore

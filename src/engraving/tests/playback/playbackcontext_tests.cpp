@@ -56,7 +56,7 @@ TEST_F(Engraving_PlaybackContextTests, Hairpins_Repeats)
     // [GIVEN] Score with hairpins and repeats
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "dynamics/hairpins_and_repeats.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     const RepeatList& repeats = score->repeatList();
@@ -141,7 +141,7 @@ TEST_F(Engraving_PlaybackContextTests, Dynamics_MeasureRepeats)
     // (so the previous 2 measures will be repeated)
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "dynamics/dynamics_and_measure_repeats.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_EQ(parts.size(), 2);
 
     // [GIVEN] Context for parsing dynamics
@@ -210,7 +210,7 @@ TEST_F(Engraving_PlaybackContextTests, Dynamics_OnDifferentVoices)
     // [GIVEN]
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "dynamics/dynamics_on_voices.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing dynamics
@@ -274,7 +274,7 @@ TEST_F(Engraving_PlaybackContextTests, Dynamics_Overlap)
     // [GIVEN]
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "dynamics/dynamics_overlap.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing dynamics
@@ -316,7 +316,7 @@ TEST_F(Engraving_PlaybackContextTests, Dynamics_Niente)
     // [GIVEN]
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "dynamics/dynamics_niente.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing dynamics
@@ -374,7 +374,7 @@ TEST_F(Engraving_PlaybackContextTests, Dynamics_HairpinWithCompound)
     // [GIVEN]
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "dynamics/dynamics_compound.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing dynamics
@@ -481,7 +481,7 @@ TEST_F(Engraving_PlaybackContextTests, PlayTechniques)
     // [GIVEN] Score with playing technique annotations
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "play_techniques/play_tech_annotations.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing techniques
@@ -569,7 +569,7 @@ TEST_F(Engraving_PlaybackContextTests, PlayTechniques_MeasureRepeats)
     // (so the previous 2 measures will be repeated)
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "play_techniques/play_techniques_measure_repeats.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] the 1st measure is repeated
@@ -611,7 +611,7 @@ TEST_F(Engraving_PlaybackContextTests, SoundFlags_TextArticulations)
     // [GIVEN] Score (piano with 2 staves) with sound flags
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "sound_flags/sound_flags.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing sound flags
@@ -705,7 +705,7 @@ TEST_F(Engraving_PlaybackContextTests, SoundFlags_MeasureRepeats)
     // (so the previous 2 measures will be repeated)
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "sound_flags/sound_flags_measure_repeats.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_FALSE(parts.empty());
 
     // [GIVEN] Context for parsing sound flags
@@ -740,7 +740,7 @@ TEST_F(Engraving_PlaybackContextTests, SoundFlags_CancelPlayingTechniques)
     // [GIVEN] Score (violin + brass) with sound flags & playing techniques
     Score* score = ScoreRW::readScore(PLAYBACK_CONTEXT_TEST_FILES_DIR + "sound_flags/cancel_playing_technique.mscx");
 
-    const std::vector<Part*>& parts = score->parts();
+    const muse::vector<Part*>& parts = score->parts();
     ASSERT_EQ(parts.size(), 2);
 
     // [GIVEN] Context for parsing sound flags & playing techniques

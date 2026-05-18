@@ -267,9 +267,9 @@ char* getTablesDir()
     return lou_getDataPath();
 }
 
-std::vector<std::string> split_string(std::string txt, int width)
+muse::vector<std::string> split_string(std::string txt, int width)
 {
-    std::vector<std::string> lines;
+    muse::vector<std::string> lines;
 
     QString str = QString::fromStdString(txt);
 
@@ -306,7 +306,7 @@ std::vector<std::string> split_string(std::string txt, int width)
 
 std::string braille_long_translate(const char* table_name, std::string txt)
 {
-    std::vector<std::string> lines = split_string(txt, 256);
+    muse::vector<std::string> lines = split_string(txt, 256);
 
     if (lines.size() == 0) {
         return "";

@@ -82,14 +82,14 @@ static muse::String notationSubtitle(const INotationPtr notation)
     return notation->name();
 }
 
-std::vector<INotationWriter::UnitType> VideoWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> VideoWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool VideoWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

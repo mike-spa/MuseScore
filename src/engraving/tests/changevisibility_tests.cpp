@@ -54,9 +54,9 @@ protected:
         m_score = nullptr;
     }
 
-    std::vector<EngravingItem*> collectChildren(const Chord* chord) const
+    muse::vector<EngravingItem*> collectChildren(const Chord* chord) const
     {
-        std::vector<EngravingItem*> children;
+        muse::vector<EngravingItem*> children;
 
         for (EngravingObject* obj : chord->getChildren()) {
             if (obj->isEngravingItem()) {
@@ -67,9 +67,9 @@ protected:
         return children;
     }
 
-    std::vector<Chord*> collectChords(const Beam* beam) const
+    muse::vector<Chord*> collectChords(const Beam* beam) const
     {
-        std::vector<Chord*> chords;
+        muse::vector<Chord*> chords;
 
         for (EngravingItem* item : beam->elements()) {
             if (item->isChord()) {
@@ -124,7 +124,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_SingleNoteChord)
     ASSERT_TRUE(note);
 
     // [GIVEN] All items attached to this chord
-    std::vector<EngravingItem*> children = collectChildren(chord);
+    muse::vector<EngravingItem*> children = collectChildren(chord);
     ASSERT_FALSE(children.empty());
 
     // [WHEN] Hide the note
@@ -205,7 +205,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_IgnoredElements)
     Chord* chord = findChord(1200);
     ASSERT_TRUE(chord);
 
-    const std::vector<Chord*>& graceNotes = chord->graceNotes();
+    const muse::vector<Chord*>& graceNotes = chord->graceNotes();
     ASSERT_TRUE(!graceNotes.empty());
 
     ASSERT_TRUE(chord->notes().size() == 1);
@@ -283,7 +283,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordContainingSeveral
     Hook* hook = chord->hook();
     ASSERT_TRUE(hook);
 
-    std::vector<Articulation*> arcticulations = chord->articulations();
+    muse::vector<Articulation*> arcticulations = chord->articulations();
     ASSERT_FALSE(arcticulations.empty());
 
     // [GIVEN] First note
@@ -338,7 +338,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordContainingSeveral
     }
 
     // [GIVEN] All items attached to this chord
-    std::vector<EngravingItem*> children = collectChildren(chord);
+    muse::vector<EngravingItem*> children = collectChildren(chord);
     ASSERT_FALSE(children.empty());
 
     // [THEN] Everything in the chord is now hidden (including the stem and the hook)
@@ -367,7 +367,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordsConnectedWithBea
     Beam* beam = firstChord->beam();
     ASSERT_TRUE(beam);
 
-    std::vector<Chord*> chordsConnectedWithBeam = collectChords(beam);
+    muse::vector<Chord*> chordsConnectedWithBeam = collectChords(beam);
     ASSERT_FALSE(chordsConnectedWithBeam.empty());
 
     // [WHEN] Hide all notes in the first chord
@@ -380,7 +380,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordsConnectedWithBea
     EXPECT_TRUE(firstChordStem->visible());
 
     for (Chord* chord : chordsConnectedWithBeam) {
-        std::vector<EngravingItem*> children = collectChildren(chord);
+        muse::vector<EngravingItem*> children = collectChildren(chord);
         ASSERT_TRUE(!children.empty());
 
         for (const EngravingItem* child : children) {
@@ -401,7 +401,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordsConnectedWithBea
 
     // [WHEN] Hide all notes of all chords under the beam
     for (Chord* chord : chordsConnectedWithBeam) {
-        std::vector<EngravingItem*> children = collectChildren(chord);
+        muse::vector<EngravingItem*> children = collectChildren(chord);
 
         for (EngravingItem* child : children) {
             if (child->isNote()) {
@@ -414,7 +414,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordsConnectedWithBea
     EXPECT_FALSE(beam->visible());
 
     for (Chord* chord : chordsConnectedWithBeam) {
-        std::vector<EngravingItem*> children = collectChildren(chord);
+        muse::vector<EngravingItem*> children = collectChildren(chord);
         ASSERT_TRUE(!children.empty());
 
         for (const EngravingItem* child : children) {
@@ -433,7 +433,7 @@ TEST_F(Engraving_ChangeVisibilityTests, UndoChangeVisible_ChordsConnectedWithBea
     EXPECT_TRUE(firstChordNote->visible());
 
     for (Chord* chord : chordsConnectedWithBeam) {
-        std::vector<EngravingItem*> children = collectChildren(chord);
+        muse::vector<EngravingItem*> children = collectChildren(chord);
 
         for (EngravingItem* child : children) {
             if (child->isStem() || child->isBeam()) {

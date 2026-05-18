@@ -48,7 +48,7 @@ protected:
     std::unique_ptr<GPNote::Bend> createBend(muse::XmlDomNode* propertyNode);
     void readHarmonic(muse::XmlDomNode* propertyNode, GPNote* note) const;
 
-    std::vector<GPMasterTracks::Automation> readTempoMap(muse::XmlDomNode* currentNode);
+    muse::vector<GPMasterTracks::Automation> readTempoMap(muse::XmlDomNode* currentNode);
     GPTrack::RSE readTrackRSE(muse::XmlDomNode* trackChildNode) const;
     GPMasterBar::KeySig readKeySig(muse::XmlDomNode* keyNode) const;
     bool readUseFlats(muse::XmlDomNode* keyNode) const;
@@ -57,11 +57,11 @@ protected:
     void readBeatProperties(const muse::XmlDomNode& propertiesNode, GPBeat* beat) const;
     void readDiagram(const muse::XmlDomNode& items, GPTrack* track) const;
     void readLyrics(const muse::XmlDomNode& items, GPTrack* track) const;
-    std::vector<GPMasterBar::Fermata> readFermatas(muse::XmlDomNode* fermatasNode) const;
-    std::vector<GPMasterBar::Direction> readRepeatsJumps(muse::XmlDomNode* repeatsJumpsNode) const;
+    muse::vector<GPMasterBar::Fermata> readFermatas(muse::XmlDomNode* fermatasNode) const;
+    muse::vector<GPMasterBar::Direction> readRepeatsJumps(muse::XmlDomNode* repeatsJumpsNode) const;
     std::pair<muse::String, muse::String> readMasterBarSection(const muse::XmlDomNode& sectionNode) const;
     GPMasterBar::Repeat readRepeat(muse::XmlDomNode* repeatNode) const;
-    std::vector<int> readEnding(muse::XmlDomNode* endNode) const;
+    muse::vector<int> readEnding(muse::XmlDomNode* endNode) const;
 
     std::unordered_map<int, std::shared_ptr<GPNote> > _notes;
     std::unordered_map<int, std::shared_ptr<GPRhythm> > _rhythms;

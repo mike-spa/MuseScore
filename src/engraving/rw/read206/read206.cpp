@@ -2027,7 +2027,7 @@ bool Read206::readChordProperties206(XmlReader& e, ReadContext& ctx, Chord* ch)
 
 static void convertDoubleArticulations(Chord* chord)
 {
-    std::vector<Articulation*> pairableArticulations;
+    muse::vector<Articulation*> pairableArticulations;
     for (Articulation* a : chord->articulations()) {
         if (a->isStaccato() || a->isTenuto()
             || a->isAccent() || a->isMarcato()) {
@@ -2088,7 +2088,7 @@ static void convertDoubleArticulations(Chord* chord)
 
 static void fixTies(Chord* chord)
 {
-    std::vector<Note*> notes;
+    muse::vector<Note*> notes;
     for (Note* note : chord->notes()) {
         Tie* tie = note->tieBack();
         if (tie && tie->startNote()->pitch() != note->pitch()) {
@@ -2646,7 +2646,7 @@ static void readMeasure206(Measure* m, int staffIdx, XmlReader& e, ReadContext& 
 {
     Segment* segment = 0;
 
-    std::vector<Chord*> graceNotes;
+    muse::vector<Chord*> graceNotes;
     ctx.tuplets().clear();
     ctx.setTrack(staffIdx * VOICES);
 

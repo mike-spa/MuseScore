@@ -95,7 +95,7 @@ TEST_F(Engraving_PartsTests, voicesExcerpt)
     //
     // create first part
     //
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
 
     parts.push_back(masterScore->parts().at(0));
     Score* nscore = masterScore->createScore();
@@ -1159,7 +1159,7 @@ TEST_F(Engraving_PartsTests, partExclusion)
     EXPECT_TRUE(ScoreComp::saveCompareScore(partScore, u"partExclusion-part-0.mscx", PARTS_DATA_DIR + u"partExclusion-part-0.mscx"));
 
     // Collect the relevant items
-    std::vector<EngravingItem*> itemsToExclude;
+    muse::vector<EngravingItem*> itemsToExclude;
     for (MeasureBase* mb = masterScore->first(); mb; mb = mb->next()) {
         if (!mb->isMeasure()) {
             itemsToExclude.push_back(mb);

@@ -132,7 +132,7 @@ private:
     bool useFallbackFont(SymId id) const;
 
     bool m_loaded = false;
-    std::vector<Sym> m_symbols;
+    muse::vector<Sym> m_symbols;
     mutable muse::draw::Font m_font;
 
     std::string m_name;

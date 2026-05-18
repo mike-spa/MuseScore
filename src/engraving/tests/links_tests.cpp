@@ -206,7 +206,7 @@ TEST_F(Engraving_LinksTests, test3LinkedParts_99796)
 
     // create parts
     score->startCmd(TranslatableString::untranslatable("Engraving links tests"));
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(score->parts().at(0));
     Score* nscore = score->createScore();
     Excerpt ex(score);
@@ -305,7 +305,7 @@ TEST_F(Engraving_LinksTests, DISABLED_test4LinkedParts_94911)
 
     // create parts
     score->startCmd(TranslatableString::untranslatable("Engraving links tests"));
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(score->parts().at(0));
     Score* nscore = score->createScore();
     Excerpt ex(score);
@@ -334,7 +334,7 @@ TEST_F(Engraving_LinksTests, DISABLED_test4LinkedParts_94911)
     score->startCmd(TranslatableString::untranslatable("Engraving links tests"));
     score->cmdRemoveStaff(1);
     for (Excerpt* excerpt : score->excerpts()) {
-        std::vector<Staff*> sl = nscore->staves();
+        muse::vector<Staff*> sl = nscore->staves();
         if (sl.size() == 0) {
             score->undo(new RemoveExcerpt(excerpt));
         }
@@ -410,7 +410,7 @@ TEST_F(Engraving_LinksTests, test5LinkedParts_94911)
 
     // create parts//
     score->startCmd(TranslatableString::untranslatable("Engraving links tests"));
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
     parts.push_back(score->parts().at(0));
     Score* nscore = score->createScore();
     Excerpt ex(score);

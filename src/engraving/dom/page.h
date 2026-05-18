@@ -53,8 +53,8 @@ class Page final : public EngravingItem
 public:
     Page* clone() const override { return new Page(*this); }
 
-    const std::vector<System*>& systems() const { return m_systems; }
-    std::vector<System*>& systems() { return m_systems; }
+    const muse::vector<System*>& systems() const { return m_systems; }
+    muse::vector<System*>& systems() { return m_systems; }
     System* system(size_t idx) { return m_systems[idx]; }
     const System* system(size_t idx) const { return m_systems.at(idx); }
 
@@ -70,11 +70,11 @@ public:
 
     void scanElements(std::function<void(EngravingItem*)> func) override;
 
-    std::vector<EngravingItem*> items(const RectF& r);
-    std::vector<EngravingItem*> items(const PointF& p);
+    muse::vector<EngravingItem*> items(const RectF& r);
+    muse::vector<EngravingItem*> items(const PointF& p);
     void invalidateBspTree() { m_bspTreeValid = false; }
     PointF pagePos() const override { return PointF(); }       ///< position in page coordinates
-    std::vector<EngravingItem*> elements() const;              ///< list of visible elements
+    muse::vector<EngravingItem*> elements() const;              ///< list of visible elements
     RectF tbbox() const;                             // tight bounding box, excluding white space
     Fraction endTick() const;
 
@@ -93,7 +93,7 @@ private:
 
     void doRebuildBspTree();
 
-    std::vector<System*> m_systems;
+    muse::vector<System*> m_systems;
     page_idx_t m_pageNumber = 0;
 
     std::array<Text*, MAX_HEADERS> m_headerTexts {};

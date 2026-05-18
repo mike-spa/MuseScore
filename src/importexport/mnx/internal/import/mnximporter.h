@@ -157,7 +157,7 @@ private:
         engraving::staff_idx_t endStaff{};
         mnx::StaffGroupBarlineOverride barlineOverride{};
     };
-    std::vector<GroupBarlineOverrideSpan> m_groupBarlineOverrides;
+    muse::vector<GroupBarlineOverrideSpan> m_groupBarlineOverrides;
     // event tracking
     std::unordered_map<std::string, engraving::ChordRest*> m_mnxEventToCR; // key is json_pointer, since event.id() is optional.
     std::unordered_map<std::string, engraving::Note*> m_mnxNoteToNote; // key is json_pointer, since event.id() is optional.

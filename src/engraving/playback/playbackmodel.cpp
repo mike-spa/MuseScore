@@ -274,7 +274,7 @@ PlaybackData& PlaybackModel::resolveTrackPlaybackData(const ID& partId, const St
     return resolveTrackPlaybackData(idKey(partId, instrumentId));
 }
 
-void PlaybackModel::triggerEventsForItems(const std::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound)
+void PlaybackModel::triggerEventsForItems(const muse::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound)
 {
     if (items.empty()) {
         return;
@@ -1137,7 +1137,7 @@ InstrumentTrackId PlaybackModel::idKey(const EngravingItem* item) const
     return makeInstrumentTrackId(item);
 }
 
-InstrumentTrackId PlaybackModel::idKey(const std::vector<const EngravingItem*>& items) const
+InstrumentTrackId PlaybackModel::idKey(const muse::vector<const EngravingItem*>& items) const
 {
     InstrumentTrackId result;
 

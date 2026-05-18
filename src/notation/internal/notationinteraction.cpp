@@ -308,7 +308,7 @@ void NotationInteraction::onViewModeChanged()
     }
 
     // VBoxes are not included in horizontal layouts - deselect them (and their contents) when switching to horizontal mode...
-    const std::vector<EngravingItem*> sel = selection()->elements();
+    const muse::vector<EngravingItem*> sel = selection()->elements();
     for (EngravingItem* item : sel) {
         if (!item->findAncestor(ElementType::VBOX) || !item->findAncestor(ElementType::FBOX)) {
             continue;
@@ -630,7 +630,7 @@ void NotationInteraction::toggleVisible()
 
 EngravingItem* NotationInteraction::hitElement(const PointF& pos, float width) const
 {
-    std::vector<mu::engraving::EngravingItem*> elements = hitElements(pos, width);
+    muse::vector<mu::engraving::EngravingItem*> elements = hitElements(pos, width);
     if (elements.empty()) {
         return nullptr;
     }
@@ -663,14 +663,14 @@ mu::engraving::Page* NotationInteraction::point2page(const PointF& p, bool useNe
     return nearestPage;
 }
 
-std::vector<EngravingItem*> NotationInteraction::elementsAt(const PointF& p) const
+muse::vector<EngravingItem*> NotationInteraction::elementsAt(const PointF& p) const
 {
     mu::engraving::Page* page = point2page(p);
     if (!page) {
         return {};
     }
 
-    std::vector<EngravingItem*> el = page->items(p - page->pos());
+    muse::vector<EngravingItem*> el = page->items(p - page->pos());
     if (el.empty()) {
         return {};
     }
@@ -682,18 +682,18 @@ std::vector<EngravingItem*> NotationInteraction::elementsAt(const PointF& p) con
 
 EngravingItem* NotationInteraction::elementAt(const PointF& p) const
 {
-    std::vector<EngravingItem*> el = elementsAt(p);
+    muse::vector<EngravingItem*> el = elementsAt(p);
     return el.empty() || el.back()->isPage() ? nullptr : el.back();
 }
 
-std::vector<EngravingItem*> NotationInteraction::hitElements(const PointF& pos, float width) const
+muse::vector<EngravingItem*> NotationInteraction::hitElements(const PointF& pos, float width) const
 {
     mu::engraving::Page* page = point2page(pos);
     if (!page) {
         return {};
     }
 
-    std::vector<EngravingItem*> hitElements;
+    muse::vector<EngravingItem*> hitElements;
 
     PointF posOnPage = pos - page->pos();
 
@@ -708,7 +708,7 @@ std::vector<EngravingItem*> NotationInteraction::hitElements(const PointF& pos, 
 
     RectF hitRect(posOnPage.x() - width, posOnPage.y() - width, 3.0 * width, 3.0 * width);
 
-    std::vector<EngravingItem*> potentiallyHitElements = page->items(hitRect);
+    muse::vector<EngravingItem*> potentiallyHitElements = page->items(hitRect);
 
     auto canHitElement = [](const EngravingItem* element) {
         if (!element->selectable() || element->isPage()) {
@@ -980,9 +980,9 @@ void NotationInteraction::findAndSelectChordRest(const Fraction& tick)
         return;
     }
 
-    std::vector<EngravingItem*> itemsToSelect;
+    muse::vector<EngravingItem*> itemsToSelect;
     if (toSelect->isChord()) {
-        const std::vector<Note*>& notes = toChord(toSelect)->notes();
+        const muse::vector<Note*>& notes = toChord(toSelect)->notes();
         itemsToSelect.insert(itemsToSelect.end(), notes.begin(), notes.end());
     } else {
         itemsToSelect = { toSelect };
@@ -991,12 +991,12 @@ void NotationInteraction::findAndSelectChordRest(const Fraction& tick)
     select(itemsToSelect, SelectType::REPLACE);
 }
 
-void NotationInteraction::select(const std::vector<EngravingItem*>& elements, SelectType type, staff_idx_t staffIndex)
+void NotationInteraction::select(const muse::vector<EngravingItem*>& elements, SelectType type, staff_idx_t staffIndex)
 {
     TRACEFUNC;
 
     const mu::engraving::Selection& selection = score()->selection();
-    const std::vector<EngravingItem*> oldSelectedElements = selection.elements();
+    const muse::vector<EngravingItem*> oldSelectedElements = selection.elements();
     const mu::engraving::SelState oldSelectionState = selection.state();
 
     const Fraction oldStartTick = selection.tickStart();
@@ -1021,7 +1021,7 @@ void NotationInteraction::select(const std::vector<EngravingItem*>& elements, Se
     }
 }
 
-void NotationInteraction::doSelect(const std::vector<EngravingItem*>& elements, SelectType type, staff_idx_t staffIndex)
+void NotationInteraction::doSelect(const muse::vector<EngravingItem*>& elements, SelectType type, staff_idx_t staffIndex)
 {
     TRACEFUNC;
 
@@ -1077,7 +1077,7 @@ void NotationInteraction::selectElementsWithSameTypeOnSegment(mu::engraving::Ele
 
     score()->deselectAll();
 
-    std::vector<EngravingItem*> elementsToSelect;
+    muse::vector<EngravingItem*> elementsToSelect;
 
     for (track_idx_t track = 0; track < score()->ntracks(); track += VOICES) {
         EngravingItem* element = segment->element(track);
@@ -1198,7 +1198,7 @@ void NotationInteraction::DragData::reset()
     dragGroups.clear();
 }
 
-void NotationInteraction::startDrag(const std::vector<EngravingItem*>& elems,
+void NotationInteraction::startDrag(const muse::vector<EngravingItem*>& elems,
                                     const PointF& eoffset,
                                     const IsDraggable& isDraggable)
 {
@@ -2538,7 +2538,7 @@ void NotationInteraction::applyPaletteElementToList(EngravingItem* element, mu::
     }
 
     bool unique;
-    std::vector<EngravingItem*> targetElements = mu::engraving::filterTargetElements(sel, element, unique);
+    muse::vector<EngravingItem*> targetElements = mu::engraving::filterTargetElements(sel, element, unique);
 
     for (EngravingItem* target : targetElements) {
         applyDropPaletteElement(score, target, element, modifiers);
@@ -2551,7 +2551,7 @@ void NotationInteraction::applyPaletteElementToRange(EngravingItem* element, mu:
     const ElementType elementType = element->type();
 
     bool isMeasureAnchoredElement = false;
-    std::vector<EngravingItem*> targetElements = mu::engraving::filterTargetElements(sel, element, isMeasureAnchoredElement);
+    muse::vector<EngravingItem*> targetElements = mu::engraving::filterTargetElements(sel, element, isMeasureAnchoredElement);
     if (isMeasureAnchoredElement) {
         if (elementType == ElementType::BAR_LINE) {
             // In a range selection, add barlines to all selected measures
@@ -2720,7 +2720,7 @@ void NotationInteraction::applyPaletteElementToRange(EngravingItem* element, mu:
         case ActionIconType::SCOOP:
         {
             // Insertion of bend may alter the segment list, so collect the original list here and loop on this
-            std::vector<Segment*> segList;
+            muse::vector<Segment*> segList;
             for (Segment* seg = sel.startSegment(); seg && seg != sel.endSegment(); seg = seg->next1()) {
                 if (seg->isChordRestType()) {
                     segList.push_back(seg);
@@ -3060,7 +3060,7 @@ void NotationInteraction::doAddSlur(EngravingItem* firstItem, EngravingItem* sec
 bool NotationInteraction::scoreHasMeasure() const
 {
     mu::engraving::Page* page = score()->pages().empty() ? nullptr : score()->pages().front();
-    const std::vector<mu::engraving::System*>* systems = page ? &page->systems() : nullptr;
+    const muse::vector<mu::engraving::System*>* systems = page ? &page->systems() : nullptr;
     if (systems == nullptr || systems->empty() || systems->front()->measures().empty()) {
         return false;
     }
@@ -3068,7 +3068,7 @@ bool NotationInteraction::scoreHasMeasure() const
     return true;
 }
 
-bool NotationInteraction::notesHaveActiculation(const std::vector<Note*>& notes, SymbolId articulationSymbolId) const
+bool NotationInteraction::notesHaveActiculation(const muse::vector<Note*>& notes, SymbolId articulationSymbolId) const
 {
     for (Note* note: notes) {
         Chord* chord = note->chord();
@@ -3133,7 +3133,7 @@ bool NotationInteraction::dropCanvas(EngravingItem* e)
 //! NOTE Copied from ScoreView::getDropTarget
 EngravingItem* NotationInteraction::dropTarget(mu::engraving::EditData& ed) const
 {
-    std::vector<EngravingItem*> el = elementsAt(ed.pos);
+    muse::vector<EngravingItem*> el = elementsAt(ed.pos);
     mu::engraving::Measure* fallbackMeasure = nullptr;
     for (EngravingItem* e : el) {
         if (e->isStaffLines()) {
@@ -3420,7 +3420,7 @@ void NotationInteraction::doFinishAddFretboardDiagram()
     startEditElement(text);
 }
 
-void NotationInteraction::setAnchorLines(const std::vector<LineF>& anchorList)
+void NotationInteraction::setAnchorLines(const muse::vector<LineF>& anchorList)
 {
     m_anchorLines = anchorList;
 }
@@ -3466,9 +3466,9 @@ double NotationInteraction::currentScaling(Painter* painter) const
     return painter->worldTransform().m11() / guiScaling;
 }
 
-std::vector<NotationInteraction::ShadowNoteParams> NotationInteraction::previewNotes() const
+muse::vector<NotationInteraction::ShadowNoteParams> NotationInteraction::previewNotes() const
 {
-    std::vector<ShadowNoteParams> result;
+    muse::vector<ShadowNoteParams> result;
 
     const InputState& is = score()->inputState();
     if (!is.isValid()) {
@@ -3537,12 +3537,12 @@ bool NotationInteraction::shouldDrawInputPreview() const
 
 void NotationInteraction::drawInputPreview(Painter* painter, const engraving::rendering::PaintOptions& opt)
 {
-    std::vector<ShadowNoteParams> paramsList = previewNotes();
+    muse::vector<ShadowNoteParams> paramsList = previewNotes();
     if (paramsList.empty()) {
         return;
     }
 
-    std::vector<ShadowNote*> previewList;
+    muse::vector<ShadowNote*> previewList;
     previewList.reserve(paramsList.size());
 
     const InputState& is = score()->inputState();
@@ -3651,7 +3651,7 @@ void NotationInteraction::drawSelectionRange(muse::draw::Painter* painter)
     pen.setStyle(PenStyle::SolidLine);
     painter->setPen(pen);
 
-    std::vector<RectF> rangeArea = m_selection->range()->boundingArea();
+    muse::vector<RectF> rangeArea = m_selection->range()->boundingArea();
     for (const RectF& rect: rangeArea) {
         PainterPath path;
         path.addRoundedRect(rect, 4, 4);
@@ -4784,7 +4784,7 @@ bool NotationInteraction::isGripEditStarted() const
     return m_editData.element && m_editData.curGrip != mu::engraving::Grip::NO_GRIP;
 }
 
-static int findGrip(const std::vector<muse::RectF>& grips, const muse::PointF& canvasPos)
+static int findGrip(const muse::vector<muse::RectF>& grips, const muse::PointF& canvasPos)
 {
     if (grips.empty()) {
         return -1;
@@ -4843,10 +4843,10 @@ void NotationInteraction::updateGripAnchorLines()
         return;
     }
 
-    std::vector<LineF> lines;
+    muse::vector<LineF> lines;
     mu::engraving::Grip anchorLinesGrip = m_editData.curGrip == mu::engraving::Grip::NO_GRIP
                                           ? m_editData.element->defaultGrip() : m_editData.curGrip;
-    std::vector<LineF> anchorLines = m_editData.element->gripAnchorLines(anchorLinesGrip);
+    muse::vector<LineF> anchorLines = m_editData.element->gripAnchorLines(anchorLinesGrip);
 
     if (!anchorLines.empty()) {
         for (LineF& line : anchorLines) {
@@ -4861,9 +4861,9 @@ void NotationInteraction::updateGripAnchorLines()
 
 void NotationInteraction::updateDragAnchorLines()
 {
-    std::vector<LineF> anchorLines;
+    muse::vector<LineF> anchorLines;
     for (const EngravingItem* e : selection()->elements()) {
-        std::vector<LineF> elAnchorLines = e->dragAnchorLines();
+        muse::vector<LineF> elAnchorLines = e->dragAnchorLines();
         if (!elAnchorLines.empty()) {
             for (LineF& l : elAnchorLines) {
                 anchorLines.push_back(l);
@@ -5168,7 +5168,7 @@ void NotationInteraction::addBoxes(BoxType boxType, int count, AddBoxesTarget ta
             break;
         }
 
-        const std::vector<EngravingItem*>& elements = selection()->elements();
+        const muse::vector<EngravingItem*>& elements = selection()->elements();
         IF_ASSERT_FAILED(!elements.empty()) {
             // This would contradict the fact that selection()->isNone() == false at this point
             MScore::setError(MsError::NO_MEASURE_SELECTED);
@@ -5678,7 +5678,7 @@ void NotationInteraction::addHairpinsToSelection(HairpinType type)
     }
 
     startEdit(TranslatableString("undoableAction", "Add hairpin"));
-    std::vector<mu::engraving::Hairpin*> hairpins = score()->addHairpins(type);
+    muse::vector<mu::engraving::Hairpin*> hairpins = score()->addHairpins(type);
     apply();
 
     if (!noteInput()->isNoteInputMode() && hairpins.size() == 1) {
@@ -5792,7 +5792,7 @@ void NotationInteraction::toggleArticulationForSelection(SymbolId articulationSy
         return;
     }
 
-    std::vector<mu::engraving::Note*> notes = score()->selection().noteList();
+    muse::vector<mu::engraving::Note*> notes = score()->selection().noteList();
     if (notes.empty()) {
         // no notes, but maybe they have an articulation selected. we should use that chord
         EngravingItem* e = score()->selection().element();
@@ -6160,7 +6160,7 @@ void NotationInteraction::addIntervalToSelectedNotes(int interval)
         return;
     }
 
-    std::vector<Note*> notes;
+    muse::vector<Note*> notes;
 
     if (score()->selection().isRange()) {
         const bool hasMultiNoteChords = score()->selection().rangeContainsMultiNoteChords();
@@ -6169,7 +6169,7 @@ void NotationInteraction::addIntervalToSelectedNotes(int interval)
                 continue;
             }
             const Chord* chord = toChord(chordRest);
-            const std::vector<Note*> nl = chord->notes();
+            const muse::vector<Note*> nl = chord->notes();
             if (interval > 0) {
                 for (size_t noteIdx = nl.size(); noteIdx > 0; --noteIdx) {
                     if (score()->selectionFilter().canSelectNoteIdx(noteIdx - 1, nl.size(), hasMultiNoteChords)) {
@@ -6526,7 +6526,7 @@ void NotationInteraction::removeSelectedMeasures()
         firstMeasure = measureRange.startMeasure;
         lastMeasure = measureRange.endMeasure;
     } else {
-        const std::vector<EngravingItem*>& elements = selection()->elements();
+        const muse::vector<EngravingItem*>& elements = selection()->elements();
         if (elements.empty()) {
             return;
         }
@@ -6735,7 +6735,7 @@ void NotationInteraction::setScoreConfig(const ScoreConfig& config)
     apply();
 }
 
-bool NotationInteraction::needEndTextEditing(const std::vector<EngravingItem*>& newSelectedElements) const
+bool NotationInteraction::needEndTextEditing(const muse::vector<EngravingItem*>& newSelectedElements) const
 {
     if (!isTextEditingStarted()) {
         return false;
@@ -6759,7 +6759,7 @@ bool NotationInteraction::needEndTextEditing(const std::vector<EngravingItem*>& 
     return newSelectedElements.front() != m_editData.element;
 }
 
-bool NotationInteraction::needEndElementEditing(const std::vector<EngravingItem*>& newSelectedElements) const
+bool NotationInteraction::needEndElementEditing(const muse::vector<EngravingItem*>& newSelectedElements) const
 {
     if (!isEditingElement()) {
         return false;
@@ -7120,7 +7120,7 @@ void NotationInteraction::navigateToNextSyllable()
         Measure* fromLyricsMeasure = fromLyrics->measure();
 
         if (toLyricsMeasure != fromLyricsMeasure && fromLyricsMeasure->lastChordRest(track)->hasFollowingJumpItem()) {
-            const std::vector<Measure*> previousRepeats = findPreviousRepeatMeasures(toLyricsMeasure);
+            const muse::vector<Measure*> previousRepeats = findPreviousRepeatMeasures(toLyricsMeasure);
             const bool inPrecedingRepeatSeg = muse::contains(previousRepeats, fromLyricsMeasure);
             if (!previousRepeats.empty() && !inPrecedingRepeatSeg) {
                 fromLyrics = nullptr;
@@ -7628,7 +7628,7 @@ void NotationInteraction::navigateToNearText(MoveDirection direction)
         // go to next/prev note in same chord, or go to next/prev chord, which may be in another voice
         Note* origNote = toNote(op);
         Chord* ch = origNote->chord();
-        const std::vector<Note*>& notes = ch->notes();
+        const muse::vector<Note*>& notes = ch->notes();
 
         // first, try going to prev/next note in the current chord
         if (origNote != (back ? notes.back() : notes.front())) {
@@ -7639,7 +7639,7 @@ void NotationInteraction::navigateToNearText(MoveDirection direction)
         }
 
         // next, try going to next/prev grace note chord in the same group as the current
-        const std::vector<Chord*> chordList = ch->allGraceChordsOfMainChord();
+        const muse::vector<Chord*> chordList = ch->allGraceChordsOfMainChord();
 
         if (!el && ch != (back ? chordList.front() : chordList.back())) {
             auto it = std::find(chordList.begin(), chordList.end(), ch);
@@ -7667,7 +7667,7 @@ void NotationInteraction::navigateToNearText(MoveDirection direction)
             for (int track = sTrack; back ? (track >= eTrack) : (track <= eTrack); track += inc) {
                 EngravingItem* e = seg->element(track);
                 if (e && e->isChord()) {
-                    const std::vector<Chord*> targetChordList = toChord(e)->allGraceChordsOfMainChord();
+                    const muse::vector<Chord*> targetChordList = toChord(e)->allGraceChordsOfMainChord();
                     if (back) {
                         Chord* targetChord = targetChordList.back();
                         el = targetChord->notes().front();
@@ -7691,7 +7691,7 @@ void NotationInteraction::navigateToNearText(MoveDirection direction)
                 for (int track = sTrack; back ? (track >= eTrack) : (track <= eTrack); track += inc) {
                     EngravingItem* e = seg->element(track);
                     if (e && e->isChord()) {
-                        const std::vector<Chord*> targetChordList = toChord(e)->allGraceChordsOfMainChord();
+                        const muse::vector<Chord*> targetChordList = toChord(e)->allGraceChordsOfMainChord();
                         if (back) {
                             Chord* targetChord = targetChordList.back();
                             el = targetChord->notes().front();
@@ -7965,7 +7965,7 @@ void NotationInteraction::addMelisma()
         Measure* fromLyricsMeasure = fromLyrics->measure();
 
         if (toLyricsMeasure != fromLyricsMeasure && fromLyricsMeasure->lastChordRest(track)->hasFollowingJumpItem()) {
-            const std::vector<Measure*> previousRepeats = findPreviousRepeatMeasures(toLyricsMeasure);
+            const muse::vector<Measure*> previousRepeats = findPreviousRepeatMeasures(toLyricsMeasure);
             const bool inPrecedingRepeatSeg = muse::contains(previousRepeats, fromLyricsMeasure);
             if (!previousRepeats.empty() && !inPrecedingRepeatSeg) {
                 fromLyrics = nullptr;
@@ -8091,7 +8091,7 @@ void NotationInteraction::addGuitarBend(GuitarBendType bendType)
     }
 
     const Selection& selection = score->selection();
-    const std::vector<Note*>& noteList = selection.noteList();
+    const muse::vector<Note*>& noteList = selection.noteList();
     if (selection.isNone() || noteList.empty()) {
         MScore::setError(MsError::NO_NOTE_SELECTED);
         checkAndShowError();
@@ -8139,10 +8139,10 @@ void NotationInteraction::addFretboardDiagram()
     };
 
     auto selection = this->selection();
-    std::vector<EngravingItem*> filteredElements;
+    muse::vector<EngravingItem*> filteredElements;
 
     if (selection && !selection->isNone()) {
-        std::vector<EngravingItem*> selectedElements;
+        muse::vector<EngravingItem*> selectedElements;
 
         if (EngravingItem* element = selection->element()) {
             selectedElements = { element };
@@ -8170,7 +8170,7 @@ void NotationInteraction::addFretboardDiagram()
     startEdit(TranslatableString("undoableAction", "Add fretboard diagram"));
 
     engraving::FretDiagram* lastAddedDiagram = nullptr;
-    std::vector<engraving::FretDiagram*> created;
+    muse::vector<engraving::FretDiagram*> created;
 
     for (EngravingItem* element : filteredElements) {
         engraving::FretDiagram* diagram = engraving::Factory::createFretDiagram(score->dummy()->segment());

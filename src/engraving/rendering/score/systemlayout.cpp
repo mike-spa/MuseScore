@@ -497,7 +497,7 @@ void SystemLayout::layoutSystemLockIndicators(System* system, LayoutContext& ctx
 {
     UNUSED(ctx);
 
-    const std::vector<SystemLockIndicator*> lockIndicators = system->lockIndicators();
+    const muse::vector<SystemLockIndicator*> lockIndicators = system->lockIndicators();
     // In PAGE view, at most ONE lock indicator can exist per system.
     assert(lockIndicators.size() <= 1);
     system->deleteLockIndicators();
@@ -910,7 +910,7 @@ void SystemLayout::clearBigTimeSigNotShown(System* system, LayoutContext& ctx)
     }
 }
 
-void SystemLayout::layoutSticking(const std::vector<Sticking*> stickings, System* system, LayoutContext& ctx)
+void SystemLayout::layoutSticking(const muse::vector<Sticking*> stickings, System* system, LayoutContext& ctx)
 {
     if (stickings.empty()) {
         return;
@@ -920,7 +920,7 @@ void SystemLayout::layoutSticking(const std::vector<Sticking*> stickings, System
         TLayout::layoutItem(sticking, ctx);
     }
 
-    std::vector<EngravingItem*> stickingItems(stickings.begin(), stickings.end());
+    muse::vector<EngravingItem*> stickingItems(stickings.begin(), stickings.end());
     AlignmentLayout::alignItemsForSystem(stickingItems, system);
 }
 
@@ -971,7 +971,7 @@ void SystemLayout::layoutVoltas(const ElementsToLayout& elementsToLayout, Layout
             continue;
         }
 
-        std::vector<EngravingItem*> voltasToAlign;
+        muse::vector<EngravingItem*> voltasToAlign;
         voltasToAlign.push_back(volta1->backSegment());
 
         for (size_t j = i + 1; j < elementsToLayout.voltas.size(); ++j) {
@@ -995,7 +995,7 @@ void SystemLayout::layoutDynamicExpressionAndHairpins(const ElementsToLayout& el
 {
     System* system = elementsToLayout.system;
 
-    std::vector<EngravingItem*> dynamicsExprAndHairpinsToAlign;
+    muse::vector<EngravingItem*> dynamicsExprAndHairpinsToAlign;
 
     for (Dynamic* dynamic : elementsToLayout.dynamics) {
         TLayout::layoutItem(dynamic, ctx);
@@ -1063,7 +1063,7 @@ static void autoplaceHarmony(EngravingItem* harmony)
     Autoplace::autoplaceSegmentElement(harmony, harmony->mutldata());
 }
 
-void SystemLayout::layoutHarmonies(const std::vector<Harmony*> harmonies, System* system, LayoutContext& ctx)
+void SystemLayout::layoutHarmonies(const muse::vector<Harmony*> harmonies, System* system, LayoutContext& ctx)
 {
     if (!ctx.conf().styleB(Sid::verticallyAlignChordSymbols)) {
         for (Harmony* harmony : harmonies) {
@@ -1074,8 +1074,8 @@ void SystemLayout::layoutHarmonies(const std::vector<Harmony*> harmonies, System
 
     // Only vertically align one chord symbol per tick & staff
     std::set<std::pair<Fraction, staff_idx_t> > harmonyPositions;
-    std::vector<EngravingItem*> harmonyItemsAlign;
-    std::vector<EngravingItem*> harmonyItemsNoAlign;
+    muse::vector<EngravingItem*> harmonyItemsAlign;
+    muse::vector<EngravingItem*> harmonyItemsNoAlign;
 
     for (Harmony* h : harmonies) {
         if (muse::contains(harmonyPositions, { h->tick(), h->staffIdx() })) {
@@ -1121,9 +1121,9 @@ void SystemLayout::layoutFretDiagrams(const ElementsToLayout& elements, System* 
 
     // Only vertically align one fd per tick & staff
     std::set<std::pair<Fraction, staff_idx_t> > fretHarmonyPositions;
-    std::vector<EngravingItem*> fretItemsAlign;
-    std::vector<EngravingItem*> fretOrHarmonyItemsNoAlign;
-    std::vector<Harmony*> harmonyItemsAlign(elements.harmonies.begin(), elements.harmonies.end());
+    muse::vector<EngravingItem*> fretItemsAlign;
+    muse::vector<EngravingItem*> fretOrHarmonyItemsNoAlign;
+    muse::vector<Harmony*> harmonyItemsAlign(elements.harmonies.begin(), elements.harmonies.end());
 
     for (FretDiagram* fd : elements.fretDiagrams) {
         if (muse::contains(fretHarmonyPositions, { fd->tick(), fd->staffIdx() })) {
@@ -1204,7 +1204,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         collectElementsToLayout(measure, elementsToLayout, ctx);
     }
 
-    const std::vector<Segment*>& sl = elementsToLayout.segments;
+    const muse::vector<Segment*>& sl = elementsToLayout.segments;
     if (sl.empty()) {
         return;
     }
@@ -1340,7 +1340,7 @@ void SystemLayout::layoutSystemElements(System* system, LayoutContext& ctx)
         TLayout::layoutItem(rm, ctx);
     }
 
-    std::vector<EngravingItem*> tempoElementsToAlign;
+    muse::vector<EngravingItem*> tempoElementsToAlign;
     for (TempoText* tt : elementsToLayout.tempoText) {
         TLayout::layoutItem(tt, ctx);
         tempoElementsToAlign.push_back(tt);
@@ -1554,7 +1554,7 @@ void SystemLayout::collectSpannersToLayout(ElementsToLayout& elements, const Lay
         return sp1.value->tick() < sp2.value->tick();
     });
 
-    std::vector<Spanner*> allSpanners;
+    muse::vector<Spanner*> allSpanners;
     allSpanners.reserve(spanners.size());
     for (auto item : spanners) {
         allSpanners.push_back(item.value);
@@ -1732,7 +1732,7 @@ void SystemLayout::createSkylines(const ElementsToLayout& elementsToLayout, Layo
     }
 }
 
-void SystemLayout::doLayoutTies(System* system, const std::vector<Segment*>& sl, const Fraction& stick, const Fraction& etick,
+void SystemLayout::doLayoutTies(System* system, const muse::vector<Segment*>& sl, const Fraction& stick, const Fraction& etick,
                                 LayoutContext& ctx)
 {
     UNUSED(etick);
@@ -1751,7 +1751,7 @@ void SystemLayout::doLayoutTies(System* system, const std::vector<Segment*>& sl,
     }
 }
 
-void SystemLayout::layoutTuplets(const std::vector<ChordRest*>& chordRests, LayoutContext& ctx)
+void SystemLayout::layoutTuplets(const muse::vector<ChordRest*>& chordRests, LayoutContext& ctx)
 {
     std::set<Tuplet*> laidoutTuplets;
     for (auto revIter = chordRests.rbegin(); revIter != chordRests.rend(); ++revIter) {
@@ -1828,9 +1828,9 @@ void SystemLayout::doLayoutNoteSpannersLinear(System* system, LayoutContext& ctx
     }
 }
 
-void SystemLayout::processLines(System* system, LayoutContext& ctx, const std::vector<Spanner*>& lines, bool align)
+void SystemLayout::processLines(System* system, LayoutContext& ctx, const muse::vector<Spanner*>& lines, bool align)
 {
-    std::vector<SpannerSegment*> segments;
+    muse::vector<SpannerSegment*> segments;
     for (Spanner* sp : lines) {
         SpannerSegment* ss = TLayout::layoutSystem(sp, system, ctx);        // create/layout spanner segment for this system
         if (ss->autoplace()) {
@@ -1841,8 +1841,8 @@ void SystemLayout::processLines(System* system, LayoutContext& ctx, const std::v
     if (align && segments.size() > 1) {
         const size_t nstaves = system->staves().size();
         const double defaultY = segments[0]->ldata()->pos().y();
-        std::vector<double> yAbove(nstaves, -DBL_MAX);
-        std::vector<double> yBelow(nstaves, -DBL_MAX);
+        muse::vector<double> yAbove(nstaves, -DBL_MAX);
+        muse::vector<double> yBelow(nstaves, -DBL_MAX);
 
         for (SpannerSegment* ss : segments) {
             if (ss->visible()) {
@@ -1928,8 +1928,8 @@ void SystemLayout::layoutTies(Chord* ch, System* system, const Fraction& stick, 
     if (!staff->show()) {
         return;
     }
-    std::vector<TieSegment*> stackedForwardTies;
-    std::vector<TieSegment*> stackedBackwardTies;
+    muse::vector<TieSegment*> stackedForwardTies;
+    muse::vector<TieSegment*> stackedBackwardTies;
     for (Note* note : ch->notes()) {
         Tie* t = note->tieFor();
         if (t && !t->isLaissezVib()) {
@@ -2175,7 +2175,7 @@ void SystemLayout::layout2(System* system, LayoutContext& ctx)
     }
 
     system->setPos(0.0, 0.0);
-    std::vector<std::pair<size_t, SysStaff*> > visibleStaves;
+    muse::vector<std::pair<size_t, SysStaff*> > visibleStaves;
 
     for (size_t i = 0; i < system->staves().size(); ++i) {
         const Staff* s  = ctx.dom().staff(i);
@@ -2551,7 +2551,7 @@ void SystemLayout::updateSkylineForElement(EngravingItem* element, const System*
 
 void SystemLayout::centerElementsBetweenStaves(const System* system)
 {
-    std::vector<EngravingItem*> centeredItems;
+    muse::vector<EngravingItem*> centeredItems;
 
     for (SpannerSegment* spannerSeg : system->spannerSegments()) {
         if (spannerSeg->isHairpinSegment() && elementShouldBeCenteredBetweenStaves(spannerSeg, system)) {
@@ -2652,7 +2652,7 @@ bool SystemLayout::elementShouldBeCenteredBetweenStaves(const EngravingItem* ite
     }
 
     const Staff* thisStaff = item->staff();
-    const std::vector<Staff*>& partStaves = itemPart->staves();
+    const muse::vector<Staff*>& partStaves = itemPart->staves();
     IF_ASSERT_FAILED(partStaves.size() > 0) {
         return false;
     }

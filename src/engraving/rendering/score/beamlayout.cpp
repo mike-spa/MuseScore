@@ -70,7 +70,7 @@ void BeamLayout::layout(Beam* item, const LayoutContext& ctx)
     System* system = item->elements().front()->measure()->system();
     item->setParent(system);
 
-    std::vector<ChordRest*> crl;
+    muse::vector<ChordRest*> crl;
 
     size_t n = 0;
     for (ChordRest* cr : item->elements()) {
@@ -257,7 +257,7 @@ void BeamLayout::layout1(Beam* item, LayoutContext& ctx)
                 item->setUp(chord->stemDirection() == DirectionV::UP);
             } else {
                 std::set<BeamBase::NotePosition> notePosSet(item->notePositions().begin(), item->notePositions().end());
-                std::vector<int> noteLines;
+                muse::vector<int> noteLines;
                 noteLines.reserve(notePosSet.size());
                 for (BeamBase::NotePosition pos : notePosSet) {
                     noteLines.push_back(pos.line);
@@ -301,7 +301,7 @@ void BeamLayout::layout1(Beam* item, LayoutContext& ctx)
     }
 }
 
-void BeamLayout::layout2(Beam* item, const LayoutContext& ctx, const std::vector<ChordRest*>& chordRests, SpannerSegmentType, int frag)
+void BeamLayout::layout2(Beam* item, const LayoutContext& ctx, const muse::vector<ChordRest*>& chordRests, SpannerSegmentType, int frag)
 {
     TRACEFUNC;
 
@@ -505,8 +505,8 @@ void BeamLayout::breakCrossMeasureBeams(Measure* measure, LayoutContext& ctx)
             continue;
         }
 
-        std::vector<ChordRest*> mElements;
-        std::vector<ChordRest*> nextElements;
+        muse::vector<ChordRest*> mElements;
+        muse::vector<ChordRest*> nextElements;
 
         for (ChordRest* beamCR : beam->elements()) {
             if (beamCR->tick() < next->tick()) {
@@ -557,7 +557,7 @@ void BeamLayout::beamGraceNotes(LayoutContext& ctx, Chord* mainNote, bool after)
     ChordRest* a1    = 0;        // start of (potential) beam
     Beam* beam       = 0;        // current beam
     BeamMode bm = BeamMode::AUTO;
-    std::vector<Chord*> graceNotes = after ? mainNote->graceNotesAfter() : mainNote->graceNotesBefore();
+    muse::vector<Chord*> graceNotes = after ? mainNote->graceNotesAfter() : mainNote->graceNotesBefore();
 
     if (beam) {
         beam->setIsGrace(true);
@@ -890,8 +890,8 @@ void BeamLayout::verticalAdjustBeamedRests(Rest* rest, Beam* beam, LayoutContext
         Segment* segment = rest->segment();
         staff_idx_t staffIdx = rest->vStaffIdx();
         const Staff* staff = ctx.dom().staff(staffIdx);
-        std::vector<Chord*> chords;
-        std::vector<Rest*> rests;
+        muse::vector<Chord*> chords;
+        muse::vector<Rest*> rests;
         collectChordsAndRest(segment, staffIdx, chords, rests);
         RestLayout::resolveRestVSChord(rests, chords, staff, segment);
         RestLayout::resolveRestVSRest(rests, staff, segment, ctx, /*considerBeams*/ true);
@@ -944,7 +944,7 @@ void BeamLayout::checkCrossPosAndStemConsistency(Beam* beam, LayoutContext& ctx)
     }
 }
 
-void BeamLayout::createBeamSegments(Beam* item, const LayoutContext& ctx, const std::vector<ChordRest*>& chordRests)
+void BeamLayout::createBeamSegments(Beam* item, const LayoutContext& ctx, const muse::vector<ChordRest*>& chordRests)
 {
     item->clearBeamSegments();
 

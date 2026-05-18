@@ -428,7 +428,7 @@ void ParenthesisLayout::setChordValues(Parenthesis* item, Parenthesis::LayoutDat
         return;
     }
 
-    const std::vector<Note*>& notes = parenInfo->notes();
+    const muse::vector<Note*>& notes = parenInfo->notes();
 
     assert(!notes.empty());
 

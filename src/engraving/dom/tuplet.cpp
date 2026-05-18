@@ -435,10 +435,10 @@ int Tuplet::gripsCount() const
     return m_hasBracket ? 3 : 0;
 }
 
-std::vector<PointF> Tuplet::gripsPositions(const EditData&) const
+muse::vector<PointF> Tuplet::gripsPositions(const EditData&) const
 {
     IF_ASSERT_FAILED(gripsCount() != 0) {
-        return std::vector<PointF>();
+        return muse::vector<PointF>();
     }
 
     const PointF pp(pagePos());
@@ -798,7 +798,7 @@ void Tuplet::addMissingElements()
     // first, fill in any holes in the middle of the tuplet
     Fraction expectedTick = elements().front()->tick();
 
-    const std::vector<DurationElement*> elementsCopy = elements(); // mofified during loop
+    const muse::vector<DurationElement*> elementsCopy = elements(); // mofified during loop
     for (const DurationElement* de : elementsCopy) {
         if (!de) {
             continue;

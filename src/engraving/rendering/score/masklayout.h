@@ -39,10 +39,10 @@ public:
     static void computeMasks(LayoutContext& ctx, Page* page);
 
 private:
-    static void computeBarlineMasks(const Segment* barlineSement, const System* system, const std::vector<TextBase*>& allSystemText,
+    static void computeBarlineMasks(const Segment* barlineSement, const System* system, const muse::vector<TextBase*>& allSystemText,
                                     LayoutContext& ctx);
-    static void maskBarlineForText(BarLine* barline, const std::vector<TextBase*>& allSystemText);
-    static std::vector<TextBase*> collectAllSystemText(const System* system);
+    static void maskBarlineForText(BarLine* barline, const muse::vector<TextBase*>& allSystemText);
+    static muse::vector<TextBase*> collectAllSystemText(const System* system);
 
     static void cleanupMask(const Shape& itemShape, Shape& mask, double minFragmentLength);
 

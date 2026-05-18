@@ -322,7 +322,7 @@ void PlaybackContext::update(const ID partId, const Score* score, bool expandRep
     }
 
     for (const RepeatSegment* repeatSegment : score->repeatList(expandRepeats)) {
-        std::vector<const MeasureRepeat*> measureRepeats;
+        muse::vector<const MeasureRepeat*> measureRepeats;
         int tickPositionOffset = repeatSegment->utick - repeatSegment->tick;
 
         for (const Measure* measure : repeatSegment->measureList()) {
@@ -690,7 +690,7 @@ void PlaybackContext::handleSegmentAnnotations(const ID partId, const Segment* s
 
 void PlaybackContext::handleSegmentElements(const RepeatSegment* repeat, const Segment* segment,
                                             const int segmentPositionTick,
-                                            std::vector<const MeasureRepeat*>& foundMeasureRepeats)
+                                            muse::vector<const MeasureRepeat*>& foundMeasureRepeats)
 {
     for (track_idx_t track = m_partStartTrack; track < m_partEndTrack; ++track) {
         const EngravingItem* item = segment->element(track);
@@ -762,7 +762,7 @@ static void copyItemsInRange(std::map<track_idx_t, ItemsMap>& source, const int 
     }
 }
 
-void PlaybackContext::handleMeasureRepeats(const std::vector<const MeasureRepeat*>& measureRepeats, const int tickPositionOffset)
+void PlaybackContext::handleMeasureRepeats(const muse::vector<const MeasureRepeat*>& measureRepeats, const int tickPositionOffset)
 {
     for (const MeasureRepeat* mr : measureRepeats) {
         const Measure* currMeasure = mr->firstMeasureOfGroup();

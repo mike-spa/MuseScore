@@ -121,7 +121,7 @@ public:
     int gripsCount() const override { return int(Grip::GRIPS); }
     Grip initialEditModeGrip() const override { return Grip::END; }
     Grip defaultGrip() const override { return Grip::DRAG; }
-    std::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
+    muse::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
 
     virtual bool isUserModified() const override;
 
@@ -141,7 +141,7 @@ protected:
     SlurTieSegment(const SlurTieSegment&);
 
     virtual void changeAnchor(EditData&, EngravingItem*) = 0;
-    std::vector<LineF> gripAnchorLines(Grip grip) const override;
+    muse::vector<LineF> gripAnchorLines(Grip grip) const override;
 
     struct UP m_ups[int(Grip::GRIPS)];
 };

@@ -106,7 +106,7 @@ public:
 
     String name(int tpc) const;
     String voicing() const;
-    void add(const std::vector<HDegree>& degreeList);
+    void add(const muse::vector<HDegree>& degreeList);
 
 protected:
     int m_keys = 0;
@@ -328,7 +328,7 @@ class ChordToken
 public:
     ChordTokenClass tokenClass;
     StringList names;
-    std::vector<RenderActionPtr > renderList;
+    muse::vector<RenderActionPtr > renderList;
     void read(XmlReader&, int mscVersion);
     void write(XmlWriter&) const;
     bool isValid() const { return !names.empty(); }
@@ -346,8 +346,8 @@ public:
     ParsedChord() = default;
 
     bool parse(const String&, const ChordList*, bool syntaxOnly = false, bool preferMinor = false);
-    String fromXml(const String&, const String&, const String&, const String&, const std::vector<HDegree>&, const ChordList*);
-    const std::vector<RenderActionPtr >& renderList(const ChordList* cl, bool stacked);
+    String fromXml(const String&, const String&, const String&, const String&, const muse::vector<HDegree>&, const ChordList*);
+    const muse::vector<RenderActionPtr >& renderList(const ChordList* cl, bool stacked);
     bool parseable() const { return m_parseable; }
     bool understandable() const { return m_understandable; }
     const String& name() const { return m_name; }
@@ -379,8 +379,8 @@ private:
     String m_extension;
     String m_modifiers;
     StringList m_modifierList;
-    std::vector<ChordToken> m_tokenList;
-    std::vector<RenderActionPtr > m_renderList;
+    muse::vector<ChordToken> m_tokenList;
+    muse::vector<RenderActionPtr > m_renderList;
     String m_xmlKind;
     String m_xmlText;
     String m_xmlSymbols;
@@ -401,7 +401,7 @@ struct ChordDescription {
     int id = 0;               // Chord id number (Band In A Box Chord Number)
     StringList names;        // list of alternative chord names
                              // that will by recognized from keyboard entry (without root/base)
-    std::vector<ParsedChord> parsedChords;
+    muse::vector<ParsedChord> parsedChords;
     // parsed forms of primary name (optionally also include parsed forms of other names)
     String xmlKind;          // MusicXML: kind
     String xmlText;          // MusicXML: kind text=
@@ -409,8 +409,8 @@ struct ChordDescription {
     String xmlParens;        // MusicXML: kind parentheses-degrees=
     StringList xmlDegrees;   // MusicXML: list of degrees (if any)
     HChord chord;             // C based chord
-    std::vector<RenderActionPtr > renderList;
-    std::vector<RenderActionPtr > renderListStacked;
+    muse::vector<RenderActionPtr > renderList;
+    muse::vector<RenderActionPtr > renderListStacked;
     bool generated = false;
     bool renderListGenerated = false;
     bool exportOk = false;
@@ -463,12 +463,12 @@ class ChordList : public std::map<int, ChordDescription>
     OBJECT_ALLOCATOR(engraving, ChordList)
 
 public:
-    std::vector<ChordFont> fonts;
-    std::vector<RenderActionPtr > renderListRoot;
-    std::vector<RenderActionPtr > renderListFunction;
-    std::vector<RenderActionPtr > renderListBass;
-    std::vector<RenderActionPtr > renderListBassOffset;
-    std::vector<ChordToken> chordTokenList;
+    muse::vector<ChordFont> fonts;
+    muse::vector<RenderActionPtr > renderListRoot;
+    muse::vector<RenderActionPtr > renderListFunction;
+    muse::vector<RenderActionPtr > renderListBass;
+    muse::vector<RenderActionPtr > renderListBassOffset;
+    muse::vector<ChordToken> chordTokenList;
     static int privateID;
 
     bool autoAdjust() const { return m_autoAdjust; }

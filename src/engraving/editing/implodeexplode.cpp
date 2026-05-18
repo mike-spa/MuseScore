@@ -119,7 +119,7 @@ bool ImplodeExplode::explode(Score* score)
 
         auto doExplode = [score](Chord* c, size_t lastStaff, size_t srcStaff, size_t i) -> void
         {
-            std::vector<Note*> notes = c->notes();
+            muse::vector<Note*> notes = c->notes();
             size_t nnotes = notes.size();
             // keep note "i" from top, which is backwards from nnotes - 1
             // reuse notes if there are more instruments than notes

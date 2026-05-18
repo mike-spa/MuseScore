@@ -117,7 +117,7 @@ muse::Ret Read500::readScoreFile(Score* score, XmlReader& e, rw::ReadInOutData* 
 
 bool Read500::readScoreTag(Score* score, XmlReader& e, ReadContext& ctx)
 {
-    std::vector<int> sysStaves;
+    muse::vector<int> sysStaves;
     while (e.readNextStartElement()) {
         ctx.setTrack(muse::nidx);
         const AsciiStringView tag(e.name());
@@ -331,8 +331,8 @@ bool Read500::pasteStaff(XmlReader& e, Segment* dst, staff_idx_t dstStaff, Fract
     ReadContext ctx(score);
     ctx.setPasteMode(true);
 
-    std::vector<Harmony*> pastedHarmony;
-    std::vector<Chord*> graceNotes;
+    muse::vector<Harmony*> pastedHarmony;
+    muse::vector<Chord*> graceNotes;
     Beam* startingBeam = nullptr;
     Tuplet* tuplet = nullptr;
     TremoloTwoChord* prevTremolo = nullptr;
@@ -753,7 +753,7 @@ bool Read500::pasteStaff(XmlReader& e, Segment* dst, staff_idx_t dstStaff, Fract
         // fix up spanners
         if (doScale && spannerFound) {
             // build list of original spanners
-            std::vector<Spanner*> oSpannerList;
+            muse::vector<Spanner*> oSpannerList;
             for (auto interval : oSpanner) {
                 Spanner* sp = interval.value;
                 oSpannerList.push_back(sp);

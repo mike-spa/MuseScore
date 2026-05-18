@@ -32,28 +32,28 @@ constexpr Fraction TWO_DOTS_DURATION_MULTIPLIER(7, 4);
 
 static Fraction findClosestDisplayableDuration(const Fraction& totalDuration, const Fraction& targetDuration, int maxDenominator,
                                                bool skipFirstBest);
-static std::vector<Fraction> fillDurationsByProportions(const Fraction& totalDuration, const std::vector<Fraction>& proportions,
+static muse::vector<Fraction> fillDurationsByProportions(const Fraction& totalDuration, const muse::vector<Fraction>& proportions,
                                                         int maxDenominator, bool skipFirstBest);
 static bool canBeRepresentedAsDottedNote(const Fraction& duration, int maxDenominator);
-static std::vector<Fraction> bruteForceSplit(const Fraction& totalDuration, const std::vector<Fraction>& proportions, int maxDenominator);
-static std::vector<Fraction> bruteForceSplitInTwo(const Fraction& target, const std::vector<Fraction>& proportions,
-                                                  const std::vector<Fraction>& durations);
-static std::vector<Fraction> bruteForceSplitInThree(const Fraction& target, const std::vector<Fraction>& durations);
+static muse::vector<Fraction> bruteForceSplit(const Fraction& totalDuration, const muse::vector<Fraction>& proportions, int maxDenominator);
+static muse::vector<Fraction> bruteForceSplitInTwo(const Fraction& target, const muse::vector<Fraction>& proportions,
+                                                  const muse::vector<Fraction>& durations);
+static muse::vector<Fraction> bruteForceSplitInThree(const Fraction& target, const muse::vector<Fraction>& durations);
 
-static std::vector<Fraction> generateDurations(int maxDenominator);
+static muse::vector<Fraction> generateDurations(int maxDenominator);
 
-std::vector<Fraction> BendChordDurationSplitter::findValidNoteSplit(const Fraction& totalDuration, const std::vector<Fraction>& proportions,
+muse::vector<Fraction> BendChordDurationSplitter::findValidNoteSplit(const Fraction& totalDuration, const muse::vector<Fraction>& proportions,
                                                                     int maxDenominator)
 {
     if (proportions.size() == 1) {
-        std::vector<Fraction> unchangedDurations;
+        muse::vector<Fraction> unchangedDurations;
         unchangedDurations.push_back(totalDuration);
         return unchangedDurations;
     }
 
     bool splitReached = false;
     bool skipFirstBest = false;
-    std::vector<Fraction> durations;
+    muse::vector<Fraction> durations;
 
     do {
         durations = fillDurationsByProportions(totalDuration, proportions, maxDenominator, skipFirstBest);
@@ -75,10 +75,10 @@ std::vector<Fraction> BendChordDurationSplitter::findValidNoteSplit(const Fracti
     return durations;
 }
 
-static std::vector<Fraction> fillDurationsByProportions(const Fraction& totalDuration, const std::vector<Fraction>& proportions,
+static muse::vector<Fraction> fillDurationsByProportions(const Fraction& totalDuration, const muse::vector<Fraction>& proportions,
                                                         int maxDenominator, bool skipFirstBest)
 {
-    std::vector<Fraction> durations;
+    muse::vector<Fraction> durations;
 
     for (size_t i = 0; i < proportions.size() - 1; i++) {
         Fraction targetDuration = totalDuration * proportions[i];
@@ -90,7 +90,7 @@ static std::vector<Fraction> fillDurationsByProportions(const Fraction& totalDur
     return durations;
 }
 
-static std::vector<Fraction> bruteForceSplit(const Fraction& totalDuration, const std::vector<Fraction>& proportions, int maxDenominator)
+static muse::vector<Fraction> bruteForceSplit(const Fraction& totalDuration, const muse::vector<Fraction>& proportions, int maxDenominator)
 {
     auto durations = generateDurations(maxDenominator);
     std::sort(durations.begin(), durations.end());
@@ -102,8 +102,8 @@ static std::vector<Fraction> bruteForceSplit(const Fraction& totalDuration, cons
     return bruteForceSplitInThree(totalDuration, durations);
 }
 
-static std::vector<Fraction> bruteForceSplitInTwo(const Fraction& target, const std::vector<Fraction>& proportions,
-                                                  const std::vector<Fraction>& durations)
+static muse::vector<Fraction> bruteForceSplitInTwo(const Fraction& target, const muse::vector<Fraction>& proportions,
+                                                  const muse::vector<Fraction>& durations)
 {
     if (proportions.front() < proportions.back()) {
         for (auto it1 = durations.begin(); it1 != durations.end(); ++it1) {
@@ -126,7 +126,7 @@ static std::vector<Fraction> bruteForceSplitInTwo(const Fraction& target, const 
     return {};
 }
 
-static std::vector<Fraction> bruteForceSplitInThree(const Fraction& target, const std::vector<Fraction>& durations)
+static muse::vector<Fraction> bruteForceSplitInThree(const Fraction& target, const muse::vector<Fraction>& durations)
 {
     for (auto it1 = durations.begin(); it1 != durations.end(); ++it1) {
         for (auto it2 = it1; it2 != durations.end(); ++it2) {
@@ -141,9 +141,9 @@ static std::vector<Fraction> bruteForceSplitInThree(const Fraction& target, cons
     return {};
 }
 
-static std::vector<Fraction> generateDurations(int maxDenominator)
+static muse::vector<Fraction> generateDurations(int maxDenominator)
 {
-    std::vector<Fraction> durations;
+    muse::vector<Fraction> durations;
     for (int denom = 1; denom <= std::min(maxDenominator, MAX_DENOMINATOR); denom *= 2) {
         durations.emplace_back(1, denom);
         durations.emplace_back(ONE_DOT_DURATION_MULTIPLIER * denom);

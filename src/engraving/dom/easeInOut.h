@@ -59,7 +59,7 @@ public:
     double tFromY(const double y) const;
     double YfromX(const double x) const { return EvalY(tFromX(x)); }
     double XfromY(const double y) const { return EvalX(tFromY(y)); }
-    void timeList(const int nbNotes, const int duration, std::vector<int>* times) const;
+    void timeList(const int nbNotes, const int duration, muse::vector<int>* times) const;
 
 private:
     double m_easeIn = 0.0;

@@ -191,7 +191,7 @@ void addLastBeats(
 }
 
 MidiOperations::HumanBeatData prepareHumanBeatData(
-    const std::vector<double>& beatTimes,
+    const muse::vector<double>& beatTimes,
     const std::multimap<ReducedFraction, MidiChord>& chords,
     double ticksPerSec,
     int beatsInBar)
@@ -218,7 +218,7 @@ MidiOperations::HumanBeatData prepareHumanBeatData(
 
 double findMatchRank(const std::set<ReducedFraction>& beatSet,
                      const ::EventList& events,
-                     const std::vector<int>& levels,
+                     const muse::vector<int>& levels,
                      int beatsInBar,
                      double ticksPerSec)
 {
@@ -226,7 +226,7 @@ double findMatchRank(const std::set<ReducedFraction>& beatSet,
     for (const auto& e: events) {
         saliences.insert({ MidiTempo::time2Tick(e.time, ticksPerSec), e.salience });
     }
-    std::vector<ReducedFraction> beatsOfBar;
+    muse::vector<ReducedFraction> beatsOfBar;
     double matchFrac = 0;
     int matchCount = 0;
     int beatCount = 0;
@@ -285,9 +285,9 @@ void removeEvery2ndBeat(std::set<ReducedFraction>& beatSet)
 // because it reduces itself only if numerator or denominator
 // is greater than some big number (see ReducedFraction class definition)
 
-std::vector<ReducedFraction> findTimeSignatures(const ReducedFraction& timeSigFromMidiFile)
+muse::vector<ReducedFraction> findTimeSignatures(const ReducedFraction& timeSigFromMidiFile)
 {
-    std::vector<ReducedFraction> fractions{ ReducedFraction(4, 4), ReducedFraction(3, 4) };
+    muse::vector<ReducedFraction> fractions{ ReducedFraction(4, 4), ReducedFraction(3, 4) };
     bool match = false;
     for (const ReducedFraction& f: fractions) {
         if (f.isIdenticalTo(timeSigFromMidiFile)) {
@@ -315,7 +315,7 @@ void findBeatLocations(
 {
     const size_t MIN_BEAT_COUNT = 8;
     const auto barFractions = findTimeSignatures(ReducedFraction(sigmap->timesig(0).timesig()));
-    const std::vector<
+    const muse::vector<
         std::function<double(const std::pair<const ReducedFraction, MidiChord>&, double)>
         >
     salienceFuncs = { findChordSalience1, findChordSalience2 };
@@ -325,7 +325,7 @@ void findBeatLocations(
 
     for (const auto& func: salienceFuncs) {
         const auto events = prepareChordEvents(allChords, func, ticksPerSec);
-        const auto beatTimes = BeatTracker::beatTrack(events);
+        const auto beatTimes = muse::vector<double>::fromStdVector(BeatTracker::beatTrack(events));
         if (beatTimes.size() <= MIN_BEAT_COUNT) {
             continue;
         }
@@ -335,7 +335,7 @@ void findBeatLocations(
             const auto div = barFraction / beatLen;
             const int beatsInBar = div.numerator() / div.denominator();
 
-            const std::vector<Meter::DivisionInfo> divsInfo
+            const muse::vector<Meter::DivisionInfo> divsInfo
                 = { Meter::metricDivisionsOfBar(barFraction) };
             const auto levels = Meter::metricLevelsOfBar(barFraction, divsInfo, beatLen);
 

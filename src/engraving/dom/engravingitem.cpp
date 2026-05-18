@@ -553,7 +553,7 @@ staff_idx_t EngravingItem::effectiveStaffIdx() const
         return (cutaway || !staffVisible) && measureNo;
     };
 
-    const std::vector<Staff*>& systemObjectStaves = m_score->systemObjectStaves(); // CAUTION: may not be ordered
+    const muse::vector<Staff*>& systemObjectStaves = m_score->systemObjectStaves(); // CAUTION: may not be ordered
     if (originalStaffIdx > 0) {
         staff_idx_t prevSysObjStaffIdx = 0;
         for (Staff* sysObjStaff : systemObjectStaves) {
@@ -969,7 +969,7 @@ bool EngravingItem::hitShapeIntersects(const RectF& rr) const
 
 bool ElementList::remove(EngravingItem* el)
 {
-    auto i = find(begin(), end(), el);
+    auto i = std::find(begin(), end(), el);
     if (i == end()) {
         return false;
     }
@@ -983,7 +983,7 @@ bool ElementList::remove(EngravingItem* el)
 
 void ElementList::replace(EngravingItem* o, EngravingItem* n)
 {
-    auto i = find(begin(), end(), o);
+    auto i = std::find(begin(), end(), o);
     if (i == end()) {
         LOGD("ElementList::replace: element not found");
         return;
@@ -2279,7 +2279,7 @@ void EngravingItem::endDrag(EditData& ed)
 //   genericDragAnchorLines
 //---------------------------------------------------------
 
-std::vector<LineF> EngravingItem::genericDragAnchorLines() const
+muse::vector<LineF> EngravingItem::genericDragAnchorLines() const
 {
     double xp = 0.0;
     for (EngravingItem* e = parentItem(); e; e = e->parentItem()) {

@@ -78,7 +78,7 @@ struct PitchValue {
 #endif
 };
 
-using PitchValues = std::vector<PitchValue>;
+using PitchValues = muse::vector<PitchValue>;
 
 #ifndef NO_QT_SUPPORT
 inline QVariant pitchValuesToQVariant(const PitchValues& values)

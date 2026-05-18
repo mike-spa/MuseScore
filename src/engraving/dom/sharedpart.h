@@ -36,7 +36,7 @@ public:
 
     void addOriginPart(Part* p);
     void removeOriginPart(Part* p);
-    const std::vector<Part*> originParts() const { return m_originParts; }
+    const muse::vector<Part*> originParts() const { return m_originParts; }
 
     String partName() const override;
 
@@ -49,7 +49,7 @@ public:
 
 private:
     bool m_enabled = true;
-    std::vector<Part*> m_originParts;
+    muse::vector<Part*> m_originParts;
     std::map<Fraction, SharedTracksMap> m_trackMaps;
 };
 }

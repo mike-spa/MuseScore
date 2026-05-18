@@ -195,7 +195,7 @@ private:
     bool mousePress_considerDragOutgoingElement(const ClickContext& ctx);
     void mousePress_considerSelect(const ClickContext& ctx);
     void mousePress_seekSelection(const ClickContext& ctx);
-    void cycleOverlappingHitElements(const std::vector<EngravingItem*>& hitElements, staff_idx_t hitStaffIndex);
+    void cycleOverlappingHitElements(const muse::vector<EngravingItem*>& hitElements, staff_idx_t hitStaffIndex);
     bool mousePress_considerDragOutgoingRange(const ClickContext& ctx);
     bool mousePress_considerStartPasteRangeOnRelease(const ClickContext& ctx);
     void handleLeftClick(const ClickContext& ctx);
@@ -239,12 +239,12 @@ private:
 
     bool dropEvent(const DragMoveEvent& event, const QMimeData* mimeData = nullptr);
 
-    std::vector<int> pitchesBeingDragged() const;
+    muse::vector<int> pitchesBeingDragged() const;
 
     DragMoveEvent m_lastDragMoveEvent;
 
     const mu::engraving::EngravingItem* m_prevSelectedElement = nullptr;
-    std::vector<const mu::engraving::EngravingItem*> m_notesBeingDragged;
+    muse::vector<const mu::engraving::EngravingItem*> m_notesBeingDragged;
 
     bool m_hitElementWasAlreadySingleSelected = false;
     bool m_shouldSelectOnLeftClickRelease = false;

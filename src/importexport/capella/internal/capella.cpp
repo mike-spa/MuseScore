@@ -1471,7 +1471,7 @@ void TextObj::read()
 {
     BasicRectObj::read();
     unsigned size = cap->readUnsigned();
-    std::vector<char> vtxt(size + 1);
+    muse::vector<char> vtxt(size + 1);
     char* txt = vtxt.data();
     cap->read(txt, size);
     txt[size] = 0;
@@ -1557,7 +1557,7 @@ void MetafileObj::read()
 {
     BasicRectObj::read();
     unsigned size = cap->readUnsigned();
-    std::vector<char> vEnhMetaFileBits(size);
+    muse::vector<char> vEnhMetaFileBits(size);
     char* enhMetaFileBits = vEnhMetaFileBits.data();
     cap->read(enhMetaFileBits, size);
     // CAPELLA_TRACE("MetaFileObj::read %d bytes", size);

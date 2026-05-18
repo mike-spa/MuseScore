@@ -767,17 +767,17 @@ void EngravingFont::loadEngravingDefaults(const JsonObject& engravingDefaultsObj
     }
 
     struct EngravingDefault {
-        std::vector<Sid> sids;
+        muse::vector<Sid> sids;
 
         // If a childKey is not specified in `engravingDefaultsObject`,
         // it will receive the value for the key of `this` EngravingDefault.
         // This is done for compatibility with fonts made for older SMuFL versions:
         // in newer versions, some settings have been split into two.
-        std::vector<std::string> childKeys = {};
+        muse::vector<std::string> childKeys = {};
 
-        EngravingDefault(const std::vector<Sid>& sids)
+        EngravingDefault(const muse::vector<Sid>& sids)
             : sids(sids), childKeys() {}
-        EngravingDefault(const std::vector<Sid>& sids, const std::vector<std::string>& childKeys)
+        EngravingDefault(const muse::vector<Sid>& sids, const muse::vector<std::string>& childKeys)
             : sids(sids), childKeys(childKeys) {}
     };
 
@@ -1017,7 +1017,7 @@ void EngravingFont::constructShapeWithCutouts(Shape& shape, SymId id)
     double topInset = std::max(cutOutNW.y(), cutOutNE.y());
     double bottomInset = std::min(cutOutSW.y(), cutOutSE.y());
 
-    std::vector<RectF> rects;
+    muse::vector<RectF> rects;
     rects.reserve(6); //at most
 
     // bottom rect

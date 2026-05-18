@@ -59,7 +59,7 @@ public:
     virtual void setPartSharpFlat(const muse::ID& partId, const SharpFlat& sharpFlat) = 0;
     virtual void setInstrumentName(const InstrumentKey& instrumentKey, const QString& name) = 0;
     virtual void setInstrumentAbbreviature(const InstrumentKey& instrumentKey, const QString& abbreviature) = 0;
-    virtual void setInstrumentGroupNameOptions(const std::vector<InstrumentKey>& instruments, bool useCustom, const QString& longName,
+    virtual void setInstrumentGroupNameOptions(const muse::vector<InstrumentKey>& instruments, bool useCustom, const QString& longName,
                                                const QString& shortName) = 0;
     virtual void setInstrumentNumber(const InstrumentKey& instrumentKey, int v) = 0;
     virtual void setStaffType(const muse::ID& staffId, StaffTypeId type) = 0;
@@ -89,7 +89,7 @@ public:
                                    const StaffType* newStaffType = nullptr) = 0;
     virtual void replaceDrumset(const InstrumentKey& instrumentKey, const Drumset& newDrumset, bool undoable = true) = 0;
 
-    virtual const std::vector<Staff*>& systemObjectStaves() const = 0;
+    virtual const muse::vector<Staff*>& systemObjectStaves() const = 0;
     virtual muse::async::Notification systemObjectStavesChanged() const = 0;
 
     virtual void addSystemObjects(const muse::IDList& stavesIds) = 0;

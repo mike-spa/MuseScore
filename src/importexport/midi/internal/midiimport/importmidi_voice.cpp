@@ -70,7 +70,7 @@ int voiceLimit()
 
 bool areNotesSortedByOffTimeInAscOrder(
     const QList<MidiNote>& notes,
-    const std::vector<int>& groupOfIndexes)
+    const muse::vector<int>& groupOfIndexes)
 {
     for (size_t i = 0; i != groupOfIndexes.size() - 1; ++i) {
         if (notes[groupOfIndexes[i]].offTime > notes[groupOfIndexes[i + 1]].offTime) {
@@ -139,7 +139,7 @@ int findDurationCountInGroup(
     const ReducedFraction& chordOnTime,
     const QList<MidiNote>& notes,
     int voice,
-    const std::vector<int>& groupOfIndexes,
+    const muse::vector<int>& groupOfIndexes,
     const TimeSigMap* sigmap,
     const std::multimap<ReducedFraction, MidiTuplet::TupletData>& tuplets)
 {
@@ -209,8 +209,8 @@ int findDurationCount(
     const TimeSigMap* sigmap,
     const std::multimap<ReducedFraction, MidiTuplet::TupletData>& tuplets)
 {
-    std::vector<int> lowGroup;
-    std::vector<int> highGroup;
+    muse::vector<int> lowGroup;
+    muse::vector<int> highGroup;
 
     for (int i = 0; i != splitPoint; ++i) {
         lowGroup.push_back(i);
@@ -339,7 +339,7 @@ bool hasIntersectionWithTuplets(
 }
 
 void addGroupSplits(
-    std::vector<VoiceSplit>& splits,
+    muse::vector<VoiceSplit>& splits,
     const ReducedFraction& maxChordLength,
     const std::multimap<ReducedFraction, MidiChord>& chords,
     const std::multimap<ReducedFraction, MidiTuplet::TupletData>& tuplets,
@@ -395,7 +395,7 @@ ReducedFraction maximizeOffTime(const MidiNote& note, const ReducedFraction& off
     return result;
 }
 
-std::vector<VoiceSplit> findPossibleVoiceSplits(
+muse::vector<VoiceSplit> findPossibleVoiceSplits(
     int origVoice,
     const std::multimap<ReducedFraction, MidiChord>::iterator& chordIt,
     int splitPoint,
@@ -405,7 +405,7 @@ std::vector<VoiceSplit> findPossibleVoiceSplits(
                         std::multimap<ReducedFraction, MidiTuplet::TupletData>::iterator>& insertedTuplets,
     int maxOccupiedVoice)
 {
-    std::vector<VoiceSplit> splits;
+    muse::vector<VoiceSplit> splits;
 
     ReducedFraction onTime = chordIt->first;
     ReducedFraction lowGroupOffTime(0, 1);
@@ -530,7 +530,7 @@ int findAverageHighPitch(const QList<MidiNote>& notes, int splitPoint)
 VoiceSplit findBestSplit(
     const std::multimap<ReducedFraction, MidiChord>::iterator& chordIt,
     const std::multimap<ReducedFraction, MidiChord>& chords,
-    const std::vector<VoiceSplit>& possibleSplits,
+    const muse::vector<VoiceSplit>& possibleSplits,
     int splitPoint)
 {
     // to minimize <pitch distance, voice>
@@ -963,7 +963,7 @@ int findBarIndexForOffTime(const ReducedFraction& offTime, const TimeSigMap* sig
 }
 
 int averagePitchOfChords(
-    const std::vector<std::multimap<ReducedFraction, MidiChord>::iterator>& chords)
+    const muse::vector<std::multimap<ReducedFraction, MidiChord>::iterator>& chords)
 {
     if (chords.empty()) {
         return -1;
@@ -982,11 +982,11 @@ int averagePitchOfChords(
     return qRound(sumPitch * 1.0 / noteCounter);
 }
 
-void sortVoicesByPitch(const std::map<int, std::vector<
+void sortVoicesByPitch(const std::map<int, muse::vector<
                                           std::multimap<ReducedFraction, MidiChord>::iterator> >& voiceChords)
 {
     // [newVoice] = <average pitch, old voice>
-    std::vector<std::pair<int, int> > pitchVoices;
+    muse::vector<std::pair<int, int> > pitchVoices;
     for (const auto& v: voiceChords) {
         pitchVoices.push_back({ averagePitchOfChords(v.second), v.first });
     }
@@ -1033,7 +1033,7 @@ void sortVoices(
     const TimeSigMap* sigmap)
 {
     // <voice, chords>
-    std::map<int, std::vector<std::multimap<ReducedFraction, MidiChord>::iterator> > voiceChords;
+    std::map<int, muse::vector<std::multimap<ReducedFraction, MidiChord>::iterator> > voiceChords;
     int maxBarIndex = 0;
 
     for (auto it = chords.begin(); it != chords.end(); ++it) {

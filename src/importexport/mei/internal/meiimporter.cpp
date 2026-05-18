@@ -576,7 +576,7 @@ EngravingItem* MeiImporter::addToChordRest(const libmei::Element& meiElement, Me
 
     EngravingItem* item = nullptr;
 
-    static const std::vector<std::string> s_ornaments = { "mordent", "ornam", "trill", "turn" };
+    static const muse::vector<std::string> s_ornaments = { "mordent", "ornam", "trill", "turn" };
 
     if (std::find(s_ornaments.begin(), s_ornaments.end(), meiElement.m_name) != s_ornaments.end()) {
         item = Factory::createOrnament(chordRest);
@@ -784,7 +784,7 @@ Note* MeiImporter::findEndNote(pugi::xml_node controlNode)
  * Do a lookup in the m_plistValueChordRests map with the @plist values to retrieve all the ChordRests to which the plist refers to.
  */
 
-const std::vector<ChordRest*> MeiImporter::findPlistChordRests(pugi::xml_node controlNode)
+const muse::vector<ChordRest*> MeiImporter::findPlistChordRests(pugi::xml_node controlNode)
 {
     libmei::InstPlist plistAtt;
     plistAtt.ReadPlist(controlNode);
@@ -794,7 +794,7 @@ const std::vector<ChordRest*> MeiImporter::findPlistChordRests(pugi::xml_node co
         return {};
     }
 
-    std::vector<ChordRest*> plistChordRests;
+    muse::vector<ChordRest*> plistChordRests;
     for (auto& id : plistAtt.GetPlist()) {
         std::string plistValue = this->xmlIdFrom(id);
         // The plist corresponding Note should have been added to the m_plistValueChordRests previously
@@ -3606,7 +3606,7 @@ void MeiImporter::addSpannerEnds()
         }
     }
     for (auto arpegMapEntry : m_openArpegMap) {
-        std::vector plistChordRests = findPlistChordRests(arpegMapEntry.second);
+        muse::vector plistChordRests = findPlistChordRests(arpegMapEntry.second);
         // Go through the list of chord rest and check if they are on a staff below
         for (auto chordRest : plistChordRests) {
             Arpeggio* arpeggio = arpegMapEntry.first;

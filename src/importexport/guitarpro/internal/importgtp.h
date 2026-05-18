@@ -81,7 +81,7 @@ struct GpTrack {
 
 struct GPVolta {
     int voltaType;
-    std::vector<int> voltaInfo;
+    muse::vector<int> voltaInfo;
 };
 
 /* How the fermatas are represented in Guitar Pro is two integers, the
@@ -103,8 +103,8 @@ struct GPFermata {
 
 struct GPLyrics {
     muse::StringList lyrics;
-    std::vector<mu::engraving::Segment*> segments;
-    std::vector<size_t> lyricPos;
+    muse::vector<mu::engraving::Segment*> segments;
+    muse::vector<size_t> lyricPos;
     size_t fromBeat = 0;
     size_t beatCounter = 0;
     size_t lyricTrack = 0;
@@ -122,7 +122,7 @@ struct GpBar {
     muse::String direction;
     muse::String directionStyle;
     muse::String section[2];
-    std::vector<muse::String> directions;
+    muse::vector<muse::String> directions;
 };
 
 //---------------------------------------------------------
@@ -151,7 +151,7 @@ protected:
     };
 
     struct GPProperties {
-        std::vector<TabImportOption> partsImportOptions;
+        muse::vector<TabImportOption> partsImportOptions;
     };
 
     struct ReadNoteResult {
@@ -171,7 +171,7 @@ protected:
 
     GPProperties m_properties;
 
-    std::vector<Note*> slideList;   //list of start slide notes
+    muse::vector<Note*> slideList;   //list of start slide notes
 
     // note effect bit masks
     static const uint8_t EFFECT_BEND = 0x1;
@@ -253,13 +253,13 @@ protected:
     Measure* last_measure = nullptr;
     int last_tempo = -1;
 
-    std::vector<mu::engraving::Ottava*> ottava; /// will be removed
+    muse::vector<mu::engraving::Ottava*> ottava; /// will be removed
     mu::engraving::Hairpin** hairpins = nullptr; /// will be removed
     mu::engraving::MasterScore* score = nullptr;
     muse::io::IODevice* f = nullptr;
     int curPos = 0;
     int previousTempo = -1;
-    std::vector<int> previousDynamicByTrack;
+    muse::vector<int> previousDynamicByTrack;
     constexpr static int INVALID_DYNAMIC = -1;
     constexpr static int DEFAULT_DYNAMIC = 0;
     int tempo = -1;
@@ -268,7 +268,7 @@ protected:
     GPLyrics gpLyrics;
     int slide = 0;
     int voltaSequence = 0;
-    std::vector<mu::engraving::Slur*> slurs;
+    muse::vector<mu::engraving::Slur*> slurs;
 
     void skip(int64_t len);
     void read(void* p, int64_t len);
@@ -282,8 +282,8 @@ protected:
     muse::String readDelphiString();
     void readVolta(GPVolta*, Measure*);
     void readBend(Note*);
-    std::vector<mu::engraving::PitchValue> readBendDataFromFile();
-    void createBend(Note* note, std::vector<mu::engraving::PitchValue>& bendData);
+    muse::vector<mu::engraving::PitchValue> readBendDataFromFile();
+    void createBend(Note* note, muse::vector<mu::engraving::PitchValue>& bendData);
     virtual bool readMixChange(Measure* measure);
     virtual int readBeatEffects(int track, mu::engraving::Segment*) = 0;
     void readLyrics();
@@ -318,7 +318,7 @@ protected:
     void addTunings();
 
 public:
-    std::vector<std::string> tunings;
+    muse::vector<std::string> tunings;
 
     void setTempo(int n, Measure* measure);
     muse::String title, subtitle, artist, album, composer, poet;
@@ -326,7 +326,7 @@ public:
     GpTrack channelDefaults[GP_MAX_TRACK_NUMBER * 2];
     size_t staves = 0;
     size_t measures = 0;
-    std::vector<GpBar> bars;
+    muse::vector<GpBar> bars;
     std::unique_ptr<ContiniousElementsBuilder> m_continiousElementsBuilder;
     std::unique_ptr<GuitarBendImporter> m_guitarBendImporter;
 
@@ -389,8 +389,8 @@ public:
 
 class GuitarPro4 : public GuitarPro
 {
-    std::vector<int> curDynam;
-    std::vector<int> tupleKind;
+    muse::vector<int> curDynam;
+    muse::vector<int> tupleKind;
     void readInfo();
     ReadNoteResult readNote(int string, int staffIdx, Note* note);
     int readBeatEffects(int track, mu::engraving::Segment* segment) override;
@@ -415,7 +415,7 @@ class GuitarPro5 : public GuitarPro
     std::unordered_map<Note*, Note*> m_harmonicNotes; // for adding ties for harmonic notes
     bool m_currentBeatHasRasgueado = false;
     std::unordered_set<ChordRest*> m_letRingForChords; // fixing gp5 bug with no storing let ring for tied notes
-    std::vector<std::pair<Note*, Note*> > m_glissandoNotePairs;
+    muse::vector<std::pair<Note*, Note*> > m_glissandoNotePairs;
 
     void readInfo();
     void readPageSetup();

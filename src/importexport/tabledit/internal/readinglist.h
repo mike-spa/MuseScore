@@ -61,12 +61,12 @@ struct SimplifiedItem {
 class ReadingList
 {
 public:
-    void calculate(const size_t nMeasures, const std::vector<TefReadingListItem>& tefReadingList);
-    const std::vector<MeasureStatus>& status() const { return m_status; }
+    void calculate(const size_t nMeasures, const muse::vector<TefReadingListItem>& tefReadingList);
+    const muse::vector<MeasureStatus>& status() const { return m_status; }
 private:
-    void initializeList(const size_t nMeasures, const std::vector<TefReadingListItem>& tefReadingList);
+    void initializeList(const size_t nMeasures, const muse::vector<TefReadingListItem>& tefReadingList);
     void analyze();
-    std::vector<SimplifiedItem> m_list;
-    std::vector<MeasureStatus> m_status;
+    muse::vector<SimplifiedItem> m_list;
+    muse::vector<MeasureStatus> m_status;
 };
 } // namespace mu::iex::tabledit

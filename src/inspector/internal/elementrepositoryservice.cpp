@@ -390,10 +390,10 @@ QList<mu::engraving::EngravingItem*> ElementRepositoryService::findSectionBreaks
     return resultList;
 }
 
-std::vector<EngravingItem*> ElementRepositoryService::findTextDelegates(EngravingItem* element) const
+muse::vector<EngravingItem*> ElementRepositoryService::findTextDelegates(EngravingItem* element) const
 {
     if (element->isTextLineBaseSegment()) {
-        std::vector<EngravingItem*> textItems;
+        muse::vector<EngravingItem*> textItems;
         TextLineBase* tl = toTextLineBaseSegment(element)->textLineBase();
         for (SpannerSegment* seg : tl->spannerSegments()) {
             if (Text* text = toTextLineBaseSegment(seg)->text()) {
@@ -428,7 +428,7 @@ QList<mu::engraving::EngravingItem*> ElementRepositoryService::findTexts() const
     QList<mu::engraving::EngravingItem*> resultList;
 
     for (mu::engraving::EngravingItem* element : m_exposedElementList) {
-        std::vector<EngravingItem*> delegateItems = findTextDelegates(element);
+        muse::vector<EngravingItem*> delegateItems = findTextDelegates(element);
         for (mu::engraving::EngravingItem* el : delegateItems) {
             resultList << el;
         }

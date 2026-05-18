@@ -42,7 +42,7 @@ struct LastGraceNoteData {
 };
 
 struct GraceNotesImportInfo {
-    std::vector<BendNoteData> data;
+    muse::vector<BendNoteData> data;
     LastGraceNoteData lastNoteData;
 };
 
@@ -79,7 +79,7 @@ enum class ConnectionToNextNoteType {
 
 struct ImportedBendInfo {
     const mu::engraving::Note* note = nullptr;
-    std::vector<BendSegment> segments;
+    muse::vector<BendSegment> segments;
     BendType type = BendType::NORMAL_BEND;
     int timeOffsetFromStart = 0;
     int pitchOffsetFromStart = 0;

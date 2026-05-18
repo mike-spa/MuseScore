@@ -159,7 +159,7 @@ Sid Ottava::getPropertyStyle(Pid pid) const
 {
     static_assert(int(OttavaType::OTTAVA_22MB) - int(OttavaType::OTTAVA_8VA) == 5);
 
-    static const std::vector<Sid> ss = {
+    static const muse::vector<Sid> ss = {
         Sid::ottava8VAPlacement,
         Sid::ottava8VAnoText,
         Sid::ottava8VAnoContinueText,

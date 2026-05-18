@@ -450,7 +450,7 @@ void TWrite::writeProperty(const EngravingItem* item, XmlWriter& xml, Pid pid, b
 
 void TWrite::writeSystemLocks(const Score* score, XmlWriter& xml)
 {
-    std::vector<const SystemLock*> locks = score->systemLocks()->allLocks();
+    muse::vector<const SystemLock*> locks = score->systemLocks()->allLocks();
     if (locks.empty()) {
         return;
     }
@@ -464,7 +464,7 @@ void TWrite::writeSystemLocks(const Score* score, XmlWriter& xml)
 
 void TWrite::writeSystemDividers(const Score* score, XmlWriter& xml, WriteContext& ctx)
 {
-    std::vector<const System*> systemsToWrite;
+    muse::vector<const System*> systemsToWrite;
     for (const System* system : score->systems()) {
         bool writeSystem = (system->systemDividerLeft() && !system->systemDividerLeft()->generated())
                            || (system->systemDividerRight() && !system->systemDividerRight()->generated());
@@ -1470,7 +1470,7 @@ void TWrite::write(const FretDiagram* item, XmlWriter& xml, WriteContext& ctx)
     {
         for (int i = 0; i < item->strings(); ++i) {
             FretItem::Marker m = item->marker(i);
-            std::vector<FretItem::Dot> allDots = item->dot(i);
+            muse::vector<FretItem::Dot> allDots = item->dot(i);
 
             bool dotExists = false;
             for (auto const& d : allDots) {
@@ -3585,7 +3585,7 @@ void TWrite::writeSegments(XmlWriter& xml, WriteContext& ctx, track_idx_t strack
         }
     }
 
-    std::vector<Spanner*> spanners;
+    muse::vector<Spanner*> spanners;
     auto sl = score->spannerMap().findOverlapping(sseg->tick().ticks(), endTick.ticks());
     for (auto i : sl) {
         Spanner* s = i.value;

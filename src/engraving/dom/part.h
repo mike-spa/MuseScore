@@ -80,7 +80,7 @@ public:
 
     size_t nstaves() const;
     size_t visibleStavesCount() const;
-    const std::vector<Staff*>& staves() const;
+    const muse::vector<Staff*>& staves() const;
     std::set<staff_idx_t> staveIdxList() const;
     void appendStaff(Staff* staff);
     void clearStaves();
@@ -207,7 +207,7 @@ private:
     friend class SharedPart;
 
     InstrumentList m_instruments;
-    std::vector<Staff*> m_staves;
+    muse::vector<Staff*> m_staves;
     muse::ID m_id = INVALID_ID;       ///< used for MusicXML import
     bool m_show = false;              ///< show part in partitur if true
     bool m_soloist = false;           ///< used in score ordering

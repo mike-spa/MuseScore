@@ -96,22 +96,22 @@ private:
         engraving::staff_idx_t staffIdx{};
         engraving::voice_idx_t voice{};
         int mnxPartStaff{}; // 1-based staff number within part.
-        std::vector<const engraving::Tuplet*> tupletStack;
+        muse::vector<const engraving::Tuplet*> tupletStack;
         std::unordered_set<const engraving::ChordRest*> graceBeforeEmitted;
         std::unordered_set<const engraving::ChordRest*> graceAfterEmitted;
     };
 
     void createGlobal();
     bool createParts();
-    void createLayout(const std::vector<engraving::Staff*>& staves, const std::string& layoutId);
+    void createLayout(const muse::vector<engraving::Staff*>& staves, const std::string& layoutId);
     void createSequences(const engraving::Part* part, const engraving::Measure* measure, mnx::part::Measure& mnxMeasure);
-    void appendContent(mnx::ContentArray content, ExportContext& ctx, const std::vector<engraving::ChordRest*>& chordRests,
+    void appendContent(mnx::ContentArray content, ExportContext& ctx, const muse::vector<engraving::ChordRest*>& chordRests,
                        ContentContext context);
     void appendGrace(mnx::ContentArray content, ExportContext& ctx, engraving::GraceNotesGroup& graceNotes);
     void createBeam(ExportContext& ctx, engraving::ChordRest* chordRest);
-    size_t appendTuplet(mnx::ContentArray content, ExportContext& ctx, const std::vector<engraving::ChordRest*>& chordRests, size_t idx,
+    size_t appendTuplet(mnx::ContentArray content, ExportContext& ctx, const muse::vector<engraving::ChordRest*>& chordRests, size_t idx,
                         engraving::ChordRest* chordRest, const engraving::Tuplet* tuplet);
-    size_t appendTremolo(mnx::ContentArray content, ExportContext& ctx, const std::vector<engraving::ChordRest*>& chordRests, size_t idx,
+    size_t appendTremolo(mnx::ContentArray content, ExportContext& ctx, const muse::vector<engraving::ChordRest*>& chordRests, size_t idx,
                          engraving::ChordRest* chordRest);
     bool appendEvent(mnx::ContentArray content, ExportContext& ctx, engraving::ChordRest* chordRest);
     bool createRest(mnx::sequence::Event& mnxEvent, engraving::ChordRest* chordRest);
@@ -129,7 +129,7 @@ private:
     std::unordered_map<const engraving::Measure*, size_t> m_measToMnxMeas;
     std::unordered_map<const engraving::ChordRest*, mnx::json_pointer> m_crToMnxEvent;
     std::unordered_map<engraving::staff_idx_t, std::pair<size_t, int> > m_staffToPartStaff;
-    std::vector<engraving::Staff*> m_exportedStaves;
+    muse::vector<engraving::Staff*> m_exportedStaves;
     std::set<std::string> m_lyricLineIds; // this could be (ordered) map if we ever support lyric line metadata.
 
     bool m_exportBeams { true };

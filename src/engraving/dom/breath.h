@@ -74,7 +74,7 @@ public:
 
     bool isCaesura() const;
 
-    static const std::vector<BreathType> BREATH_LIST;
+    static const muse::vector<BreathType> BREATH_LIST;
 
 protected:
     void added() override;

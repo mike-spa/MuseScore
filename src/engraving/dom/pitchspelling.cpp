@@ -615,7 +615,7 @@ int tpc(int idx, int pitch, int opt)
 //   computeWindow
 //---------------------------------------------------------
 
-int computeWindow(const std::vector<Note*>& notes, int start, int end)
+int computeWindow(const muse::vector<Note*>& notes, int start, int end)
 {
     int p   = 10000;
     int idx = -1;
@@ -714,7 +714,7 @@ void changeAllTpcs(Note* n, int tpc1)
 //   spell
 //---------------------------------------------------------
 
-void Score::spellNotelist(std::vector<Note*>& notes)
+void Score::spellNotelist(muse::vector<Note*>& notes)
 {
     int n = int(notes.size());
 
@@ -1182,7 +1182,7 @@ Key clampKey(Key key, PreferSharpFlat prefer)
     return key;
 }
 
-int bestEnharmonicFit(const std::vector<int> tpcs, Key key)
+int bestEnharmonicFit(const muse::vector<int> tpcs, Key key)
 {
     int keyIndex = int(key) - int(Key::MIN);
     if (keyIndex < 0 || keyIndex >= int(Key::NUM_OF)) {

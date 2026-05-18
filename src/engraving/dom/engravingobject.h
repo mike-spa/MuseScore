@@ -207,7 +207,7 @@ class LinkedObjects;
 enum class Pid : short;
 enum class PropertyFlags : char;
 
-using EngravingObjectList = std::vector<EngravingObject*>;
+using EngravingObjectList = muse::vector<EngravingObject*>;
 
 class EngravingObject
 {
@@ -235,7 +235,7 @@ public:
 
     const EngravingObjectList& children() const { return m_children; }
 
-    std::vector<EngravingItem*> getChildren(bool includeInvisible = true) const;
+    muse::vector<EngravingItem*> getChildren(bool includeInvisible = true) const;
     virtual void scanElements(std::function<void(EngravingItem*)>) {}
 
     // context

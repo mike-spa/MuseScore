@@ -44,9 +44,9 @@ class Slur;
 
 namespace mu::engraving::rendering::score {
 struct ChordPosInfo {
-    std::vector<Chord*> chords;
-    std::vector<Note*> upStemNotes;
-    std::vector<Note*> downStemNotes;
+    muse::vector<Chord*> chords;
+    muse::vector<Note*> upStemNotes;
+    muse::vector<Note*> downStemNotes;
     int upVoices       = 0;
     int downVoices     = 0;
     double maxUpWidth   = 0.0;
@@ -97,15 +97,15 @@ public:
 
     static void computeUp(const Chord* item, ChordRest::LayoutData* ldata, const LayoutContext& ctx);
     static void computeUp(ChordRest* item, const LayoutContext& ctx);
-    static int computeAutoStemDirection(const std::vector<int>& noteDistances);
+    static int computeAutoStemDirection(const muse::vector<int>& noteDistances);
     static bool isChordPosBelowBeam(const Chord* item, Beam* beam);
     static bool isChordPosBelowTrem(const Chord* item, TremoloTwoChord* trem);
 
     static void layoutChords1(LayoutContext& ctx, Segment* segment, staff_idx_t staffIdx);
-    static double layoutChords2(std::vector<Note*>& notes, bool up, LayoutContext& ctx);
-    static void layoutChords3(const std::vector<Chord*>&, const std::vector<Note*>&, const Staff*, LayoutContext& ctx);
-    static void layoutLedgerLines(const std::vector<Chord*>& chords, LayoutContext& ctx);
-    static void getNoteListForDots(Chord* c, std::vector<Note*>&, std::vector<Note*>&, std::vector<int>&);
+    static double layoutChords2(muse::vector<Note*>& notes, bool up, LayoutContext& ctx);
+    static void layoutChords3(const muse::vector<Chord*>&, const muse::vector<Note*>&, const Staff*, LayoutContext& ctx);
+    static void layoutLedgerLines(const muse::vector<Chord*>& chords, LayoutContext& ctx);
+    static void getNoteListForDots(Chord* c, muse::vector<Note*>&, muse::vector<Note*>&, muse::vector<int>&);
     static void repositionGraceNotesAfter(Segment* segment, size_t tracks);
     static void appendGraceNotes(Chord* chord);
     static void clearLineAttachPoints(Measure* measure);
@@ -140,10 +140,10 @@ private:
 
     static void createParenGroups(Chord* chord);
 
-    static void placeDots(const std::vector<Chord*>& chords, const std::vector<Note*>& notes, LayoutContext& ctx);
+    static void placeDots(const muse::vector<Chord*>& chords, const muse::vector<Note*>& notes, LayoutContext& ctx);
 
     static void setDotRelativeLine(Note* note, int dotMove, LayoutContext& ctx);
-    static void setDotX(const std::vector<Chord*>& chords, const std::array<double, 3 * VOICES>& dotPos, const Staff* staff,
+    static void setDotX(const muse::vector<Chord*>& chords, const std::array<double, 3 * VOICES>& dotPos, const Staff* staff,
                         const double upDotPosX, const double downDotPosX);
 
     static void skipAccidentals(Segment* segment, track_idx_t startTrack, track_idx_t endTrack);

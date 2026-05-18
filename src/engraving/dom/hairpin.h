@@ -63,7 +63,7 @@ public:
     EngravingObject* propertyDelegate(Pid) const override;
 
     int gripsCount() const override;
-    std::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
+    muse::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
 
     std::unique_ptr<ElementGroup> getDragGroup(std::function<bool(const EngravingItem*)> isDragged) override;
 

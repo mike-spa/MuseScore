@@ -37,7 +37,7 @@ public:
     const PropertyValue& defaultStyleValue(const StyleId& styleId) const override;
     void setStyleValue(const StyleId& styleId, const PropertyValue& newValue) override;
     void resetStyleValue(const StyleId& styleId) override;
-    void resetStyleValues(const std::vector<StyleId>& styleIds) override;
+    void resetStyleValues(const muse::vector<StyleId>& styleIds) override;
 
     bool canApplyToAllParts() const override;
     void applyToAllParts() override;

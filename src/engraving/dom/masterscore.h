@@ -118,8 +118,8 @@ public:
     const RepeatList& repeatList() const override;
     const RepeatList& repeatList(bool expandRepeats, bool updateTies = true) const override;
 
-    std::vector<Excerpt*>& excerpts() { return m_excerpts; }
-    const std::vector<Excerpt*>& excerpts() const { return m_excerpts; }
+    muse::vector<Excerpt*>& excerpts() { return m_excerpts; }
+    const muse::vector<Excerpt*>& excerpts() const { return m_excerpts; }
     //   QQueue<MidiInputEvent>* midiInputQueue() override { return &_midiInputQueue; }
     std::list<MidiInputEvent>& activeMidiPitches() override { return m_activeMidiPitches; }
 
@@ -142,7 +142,7 @@ public:
 
     int midiPortCount() const { return m_midiPortCount; }
     void setMidiPortCount(int val) { m_midiPortCount = val; }
-    std::vector<MidiMapping>& midiMapping() { return m_midiMapping; }
+    muse::vector<MidiMapping>& midiMapping() { return m_midiMapping; }
     MidiMapping* midiMapping(int channel) { return &m_midiMapping[channel]; }
     void addMidiMapping(InstrChannel* channel, Part* part, int midiPort, int midiChannel);
     void updateMidiMapping(InstrChannel* channel, Part* part, int midiPort, int midiChannel);
@@ -222,8 +222,8 @@ private:
     AutomationController* m_automationController = nullptr;
     bool m_expandRepeats = true;
     bool m_playlistDirty = true;
-    std::vector<Excerpt*> m_excerpts;
-    std::vector<PartChannelSettingsLink> m_playbackSettingsLinks;
+    muse::vector<Excerpt*> m_excerpts;
+    muse::vector<PartChannelSettingsLink> m_playbackSettingsLinks;
     Score* m_playbackScore = nullptr;
     muse::async::Channel<ScoreChanges> m_changesChannel;
 
@@ -236,7 +236,7 @@ private:
     int m_midiPortCount = 0;                           // A count of ALSA midi out ports
     //    QQueue<MidiInputEvent> _midiInputQueue;           // MIDI events that have yet to be processed
     std::list<MidiInputEvent> m_activeMidiPitches;     // MIDI keys currently being held down
-    std::vector<MidiMapping> m_midiMapping;
+    muse::vector<MidiMapping> m_midiMapping;
     bool m_isSimpleMidiMapping = false;                 // midi mapping is simple if all ports and channels
     // don't decrease and don't have gaps
     double m_widthOfSegmentCell = 3;

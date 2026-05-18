@@ -163,7 +163,7 @@ void ReadContext::addLink(Staff* staff, LinkedObjects* link, const Location& loc
         staffIndex *= -1;
     }
 
-    std::vector<std::pair<LinkedObjects*, Location> >& staffLinks = m_staffLinkedElements[staffIndex];
+    muse::vector<std::pair<LinkedObjects*, Location> >& staffLinks = m_staffLinkedElements[staffIndex];
     if (!isMasterScore) {
         if (!staffLinks.empty()
             && (link->mainElement()->score() != staffLinks.front().first->mainElement()->score())
@@ -184,7 +184,7 @@ LinkedObjects* ReadContext::getLink(bool isMasterScore, const Location& location
     }
 
     const int localIndex = m_linksIndexer.assignLocalIndex(location) + localIndexDiff;
-    std::vector<std::pair<LinkedObjects*, Location> >& staffLinks = m_staffLinkedElements[staffIndex];
+    muse::vector<std::pair<LinkedObjects*, Location> >& staffLinks = m_staffLinkedElements[staffIndex];
 
     if (!staffLinks.empty() && staffLinks.back().second == location) {
         // This element potentially affects local index for "main"
@@ -457,7 +457,7 @@ void ReadContext::reconnectBrokenConnectors()
         return;
     }
     LOGD("Reconnecting broken connectors (%d nodes)", int(_connectors.size()));
-    std::vector<std::pair<int, std::pair<ConnectorInfoReader*, ConnectorInfoReader*> > > brokenPairs;
+    muse::vector<std::pair<int, std::pair<ConnectorInfoReader*, ConnectorInfoReader*> > > brokenPairs;
     for (size_t i = 1; i < _connectors.size(); ++i) {
         for (size_t j = 0; j < i; ++j) {
             ConnectorInfoReader* c1 = _connectors[i].get();
@@ -538,7 +538,7 @@ void ReadContext::clearOrphanedConnectors()
     }
 
     for (auto& it : m_staffLinkedElements) {
-        std::vector<std::pair<LinkedObjects*, Location> >& vector = it.second;
+        muse::vector<std::pair<LinkedObjects*, Location> >& vector = it.second;
         muse::remove_if(vector, [&deletedLinks](std::pair<LinkedObjects*, Location>& pair){
             return deletedLinks.count(pair.first);
         });

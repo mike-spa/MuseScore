@@ -252,7 +252,7 @@ public:
     int bassTpc() const;                           // WILL BE DEPRECATED AFTER RelaizedHarmony IS UPDATED
     int rootTpc() const;                           // WILL BE DEPRECATED AFTER RelaizedHarmony IS UPDATED
     void addDegree(const HDegree& d);
-    const std::vector<HDegree>& degreeList() const;
+    const muse::vector<HDegree>& degreeList() const;
     HarmonyType harmonyType() const { return m_harmonyType; }
     void setHarmonyType(HarmonyType val);
 
@@ -262,7 +262,7 @@ public:
     void render();
 
     bool isPolychord() const { return m_chords.size() > 1; }
-    const std::vector<HarmonyInfo*> chords() const { return m_chords; }
+    const muse::vector<HarmonyInfo*> chords() const { return m_chords; }
     void addChord(HarmonyInfo* info) { m_chords.push_back(info); }
 
     bool hasModifiers() const;
@@ -316,18 +316,18 @@ public:
 
     struct LayoutData : public TextBase::LayoutData {
         ld_field<double> harmonyHeight = { "[Harmony] harmonyHeight", 0.0 };    // used for calculating the height is frame while editing.
-        ld_field<std::vector<LineF> > polychordDividerLines = { "[Harmony] polychordDividerLine", std::vector<LineF>() };
+        ld_field<muse::vector<LineF> > polychordDividerLines = { "[Harmony] polychordDividerLine", muse::vector<LineF>() };
         ld_field<double> polychordDividerOffset = { "[Harmony] polychordDividerOffset", 0.0 };
         ld_field<double> baseline = { "[Harmony] baseline", 0.0 };
-        ld_field<std::vector<muse::draw::Font> > fontList = "[Harmony] fontList";          // temp values used in render()
-        ld_field<std::vector<HarmonyRenderItem*> > renderItemList = "[Harmony] renderItemList";              // rendered chord
+        ld_field<muse::vector<muse::draw::Font> > fontList = "[Harmony] fontList";          // temp values used in render()
+        ld_field<muse::vector<HarmonyRenderItem*> > renderItemList = "[Harmony] renderItemList";              // rendered chord
     };
     DECLARE_LAYOUTDATA_METHODS(Harmony)
 
 private:
-    std::vector<HarmonyInfo*> m_chords;
+    muse::vector<HarmonyInfo*> m_chords;
 
-    const std::vector<const ChordDescription*> parseHarmony(const String& s, bool syntaxOnly = false);
+    const muse::vector<const ChordDescription*> parseHarmony(const String& s, bool syntaxOnly = false);
     const ChordDescription* parseSingleHarmony(const String& s, HarmonyInfo* info, bool syntaxOnly = false);
 
     Sid getPropertyStyle(Pid) const override;
@@ -339,7 +339,7 @@ private:
 
     mutable RealizedHarmony m_realizedHarmony;           // the realized harmony used for playback
 
-    std::vector<HDegree> m_degreeList;
+    muse::vector<HDegree> m_degreeList;
 
     bool m_play = true;                                  // whether or not to play back the harmony
     bool m_doNotStackModifiers = false;

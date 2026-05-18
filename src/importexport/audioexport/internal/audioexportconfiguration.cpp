@@ -58,9 +58,9 @@ void AudioExportConfiguration::setExportMp3BitrateOverride(std::optional<int> bi
     m_exportMp3BitrateOverride = bitrate;
 }
 
-const std::vector<int>& AudioExportConfiguration::availableMp3BitRates() const
+const muse::vector<int>& AudioExportConfiguration::availableMp3BitRates() const
 {
-    static const std::vector<int> rates { 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, };
+    static const muse::vector<int> rates { 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, };
     return rates;
 }
 
@@ -74,9 +74,9 @@ void AudioExportConfiguration::setExportSampleRate(int rate)
     settings()->setSharedValue(EXPORT_SAMPLE_RATE_KEY, Val(rate));
 }
 
-const std::vector<int>& AudioExportConfiguration::availableSampleRates() const
+const muse::vector<int>& AudioExportConfiguration::availableSampleRates() const
 {
-    static const std::vector<int> rates { 32000, 44100, 48000 };
+    static const muse::vector<int> rates { 32000, 44100, 48000 };
     return rates;
 }
 
@@ -105,10 +105,10 @@ void AudioExportConfiguration::setExportSampleFormat(const QString& extension, A
     }
 }
 
-const std::vector<AudioSampleFormat>& AudioExportConfiguration::availableSampleFormats(const QString& extension) const
+const muse::vector<AudioSampleFormat>& AudioExportConfiguration::availableSampleFormats(const QString& extension) const
 {
     if (extension == QLatin1String("wav")) {
-        static const std::vector<muse::audio::AudioSampleFormat> wavSampleFormats {
+        static const muse::vector<muse::audio::AudioSampleFormat> wavSampleFormats {
             AudioSampleFormat::Int16,
             AudioSampleFormat::Int24,
             AudioSampleFormat::Float32,
@@ -116,13 +116,13 @@ const std::vector<AudioSampleFormat>& AudioExportConfiguration::availableSampleF
         return wavSampleFormats;
     }
     if (extension == QLatin1String("flac")) {
-        static const std::vector<muse::audio::AudioSampleFormat> flacSampleFormats {
+        static const muse::vector<muse::audio::AudioSampleFormat> flacSampleFormats {
             AudioSampleFormat::Int16,
             AudioSampleFormat::Int24,
         };
         return flacSampleFormats;
     }
-    static const std::vector<muse::audio::AudioSampleFormat> emptySampleFormats {};
+    static const muse::vector<muse::audio::AudioSampleFormat> emptySampleFormats {};
     return emptySampleFormats;
 }
 

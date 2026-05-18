@@ -30,7 +30,7 @@ namespace mu::engraving {
 //---------------------------------------------------------
 
 NoteEventList::NoteEventList()
-    : std::vector<NoteEvent>()
+    : muse::vector<NoteEvent>()
 {
 }
 

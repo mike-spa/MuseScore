@@ -45,7 +45,7 @@ class LineSegment : public SpannerSegment
 protected:
     virtual bool isEditAllowed(EditData&) const override;
     virtual bool edit(EditData&) override;
-    virtual std::vector<LineF> gripAnchorLines(Grip) const override;
+    virtual muse::vector<LineF> gripAnchorLines(Grip) const override;
     virtual void startDragGrip(EditData&) override;
     virtual void dragGrip(EditData&) override;
     void startDrag(EditData&) override;
@@ -68,9 +68,9 @@ public:
     int gripsCount() const override { return 3; }
     Grip initialEditModeGrip() const override { return Grip::END; }
     Grip defaultGrip() const override { return Grip::MIDDLE; }
-    std::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
+    muse::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
 
-    std::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> dragAnchorLines() const override;
     RectF drag(EditData& ed) override;
 
     Spatium lineWidth() const;

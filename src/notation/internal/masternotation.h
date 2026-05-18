@@ -80,8 +80,8 @@ private:
 
     void initAfterSettingScore(const engraving::MasterScore* score, bool disablePlayback = false);
 
-    void initExcerptNotations(const std::vector<engraving::Excerpt*>& excerpts);
-    void addExcerptsToMasterScore(const std::vector<engraving::Excerpt*>& excerpts);
+    void initExcerptNotations(const muse::vector<engraving::Excerpt*>& excerpts);
+    void addExcerptsToMasterScore(const muse::vector<engraving::Excerpt*>& excerpts);
     void doSetExcerpts(const ExcerptNotationList& excerpts);
     void updateExcerpts();
     void updatePotentialExcerpts() const;

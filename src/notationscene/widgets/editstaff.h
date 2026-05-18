@@ -28,6 +28,7 @@
 #include "engraving/dom/stafftype.h"
 
 #include "global/async/asyncable.h"
+#include "global/types/vector.h"
 
 #include "modularity/ioc.h"
 #include "context/iglobalcontext.h"
@@ -100,7 +101,7 @@ private:
     Staff* staff(int staffIndex) const;
     Instrument instrument() const;
 
-    std::vector<InstrumentKey> otherInstrumentsInSameGroup() const;
+    muse::vector<InstrumentKey> otherInstrumentsInSameGroup() const;
 
     void applyStaffProperties();
     void applyPartProperties();

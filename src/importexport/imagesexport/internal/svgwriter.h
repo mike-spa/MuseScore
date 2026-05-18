@@ -35,7 +35,7 @@ class SvgWriter : public AbstractImageWriter
     muse::GlobalInject<engraving::rendering::IScoreRenderer> scoreRenderer;
 
 public:
-    std::vector<project::INotationWriter::UnitType> supportedUnitTypes() const override;
+    muse::vector<project::INotationWriter::UnitType> supportedUnitTypes() const override;
     muse::Ret write(notation::INotationPtr notation, muse::io::IODevice& dstDevice, const Options& options = Options()) override;
 
 private:

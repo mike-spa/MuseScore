@@ -168,7 +168,7 @@ size_t Part::visibleStavesCount() const
     return result;
 }
 
-const std::vector<Staff*>& Part::staves() const
+const muse::vector<Staff*>& Part::staves() const
 {
     return m_staves;
 }

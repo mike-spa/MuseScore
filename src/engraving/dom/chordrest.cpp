@@ -1308,7 +1308,7 @@ bool ChordRest::hasFollowingJumpItem() const
         return false;
     }
 
-    std::vector<Measure*> followingRepeatMeasures = findFollowingRepeatMeasures(measure);
+    muse::vector<Measure*> followingRepeatMeasures = findFollowingRepeatMeasures(measure);
 
     return !followingRepeatMeasures.empty();
 }
@@ -1323,7 +1323,7 @@ bool ChordRest::hasPrecedingJumpItem() const
         return false;
     }
 
-    std::vector<Measure*> precedingRepeatMeasures = findPreviousRepeatMeasures(measure);
+    muse::vector<Measure*> precedingRepeatMeasures = findPreviousRepeatMeasures(measure);
 
     return !precedingRepeatMeasures.empty();
 }

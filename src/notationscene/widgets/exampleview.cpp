@@ -130,7 +130,7 @@ void ExampleView::drawBackground(Painter* p, const RectF& r) const
     }
 }
 
-void ExampleView::drawElements(Painter& painter, const std::vector<EngravingItem*>& el)
+void ExampleView::drawElements(Painter& painter, const muse::vector<EngravingItem*>& el)
 {
     engraving::rendering::PaintOptions opt;
     opt.invertColors = notationConfiguration()->shouldInvertScore();
@@ -161,7 +161,7 @@ void ExampleView::paintEvent(QPaintEvent* event)
     painter.setWorldTransform(m_matrix);
 
     Page* page = m_score->pages().front();
-    std::vector<EngravingItem*> ell = page->items(m_matrix.inverted().map(rect));
+    muse::vector<EngravingItem*> ell = page->items(m_matrix.inverted().map(rect));
     std::sort(ell.begin(), ell.end(), elementLessThan);
     drawElements(painter, ell);
 }

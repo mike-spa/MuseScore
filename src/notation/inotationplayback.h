@@ -51,7 +51,7 @@ public:
 
     virtual const muse::mpe::PlaybackData& trackPlaybackData(const engraving::InstrumentTrackId& trackId) const = 0;
 
-    virtual void triggerEventsForItems(const std::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound) = 0;
+    virtual void triggerEventsForItems(const muse::vector<const EngravingItem*>& items, muse::mpe::duration_t duration, bool flushSound) = 0;
     virtual void triggerMetronome(muse::midi::tick_t tick) = 0;
     virtual void triggerCountIn(muse::midi::tick_t tick, muse::secs_t& countInDuration) = 0;
     virtual void triggerControllers(const muse::mpe::ControllerChangeEventList& list, notation::staff_idx_t staffIdx, int tick) = 0;
@@ -89,7 +89,7 @@ public:
     virtual double tempoMultiplier() const = 0;
     virtual void setTempoMultiplier(double multiplier) = 0;
 
-    virtual void addSoundFlags(const std::vector<mu::engraving::StaffText*>& staffTextList) = 0;
+    virtual void addSoundFlags(const muse::vector<mu::engraving::StaffText*>& staffTextList) = 0;
     virtual void removeSoundFlags(const engraving::InstrumentTrackIdSet& trackIdSet) = 0;
     virtual bool hasSoundFlags(const engraving::InstrumentTrackIdSet& trackIdSet) = 0;
 };

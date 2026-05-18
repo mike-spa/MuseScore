@@ -162,9 +162,9 @@ Staff* NotationParts::staffModifiable(const ID& staffId) const
     return score()->staffById(staffId.toUint64());
 }
 
-std::vector<Staff*> NotationParts::staves(const IDList& stavesIds) const
+muse::vector<Staff*> NotationParts::staves(const IDList& stavesIds) const
 {
-    std::vector<Staff*> staves;
+    muse::vector<Staff*> staves;
 
     if (stavesIds.empty()) {
         return staves;
@@ -179,9 +179,9 @@ std::vector<Staff*> NotationParts::staves(const IDList& stavesIds) const
     return staves;
 }
 
-std::vector<Part*> NotationParts::parts(const IDList& partsIds) const
+muse::vector<Part*> NotationParts::parts(const IDList& partsIds) const
 {
-    std::vector<Part*> parts;
+    muse::vector<Part*> parts;
 
     for (Part* part : score()->parts()) {
         if (std::find(partsIds.cbegin(), partsIds.cend(), part->id()) != partsIds.cend()) {
@@ -321,7 +321,7 @@ void NotationParts::updatePartsAndSystemObjectStaves(const mu::engraving::ScoreC
     const bool partsChanged = m_parts != score()->parts();
     m_parts = score()->parts();
 
-    std::vector<Staff*> newSystemObjectStaves = score()->systemObjectStavesWithTopStaff();
+    muse::vector<Staff*> newSystemObjectStaves = score()->systemObjectStavesWithTopStaff();
     const bool systemObjectStavesChanged = m_systemObjectStaves != newSystemObjectStaves;
     m_systemObjectStaves = std::move(newSystemObjectStaves);
 
@@ -337,8 +337,8 @@ void NotationParts::updatePartsAndSystemObjectStaves(const mu::engraving::ScoreC
         m_sharedPartsChanged.notify();
     }
 
-    std::vector<Staff*> removedStaves;
-    std::vector<Staff*> addedStaves;
+    muse::vector<Staff*> removedStaves;
+    muse::vector<Staff*> addedStaves;
 
     bool stavesSorted = false;
 
@@ -446,14 +446,14 @@ void NotationParts::setInstrumentAbbreviature(const InstrumentKey& instrumentKey
     notifyAboutPartChanged(part);
 }
 
-void NotationParts::setInstrumentGroupNameOptions(const std::vector<InstrumentKey>& instruments, bool useCustom, const QString& name,
+void NotationParts::setInstrumentGroupNameOptions(const muse::vector<InstrumentKey>& instruments, bool useCustom, const QString& name,
                                                   const QString& shortName)
 {
     TRACEFUNC;
 
     startEdit(TranslatableString("undoableAction", "Set instrument custom group name"));
 
-    std::vector<Part*> changedParts;
+    muse::vector<Part*> changedParts;
 
     for (const InstrumentKey& key : instruments) {
         Part* part = partModifiable(key.partId);
@@ -815,7 +815,7 @@ void NotationParts::replaceDrumset(const InstrumentKey& instrumentKey, const Dru
     m_interaction->noteInput()->stateChanged().notify();
 }
 
-const std::vector<Staff*>& NotationParts::systemObjectStaves() const
+const muse::vector<Staff*>& NotationParts::systemObjectStaves() const
 {
     return m_systemObjectStaves;
 }
@@ -827,7 +827,7 @@ muse::async::Notification NotationParts::systemObjectStavesChanged() const
 
 void NotationParts::addSystemObjects(const muse::IDList& stavesIds)
 {
-    std::vector<Staff*> staves = this->staves(stavesIds);
+    muse::vector<Staff*> staves = this->staves(stavesIds);
     if (staves.empty()) {
         return;
     }
@@ -841,7 +841,7 @@ void NotationParts::addSystemObjects(const muse::IDList& stavesIds)
 
 void NotationParts::removeSystemObjects(const IDList& stavesIds)
 {
-    std::vector<Staff*> staves = this->staves(stavesIds);
+    muse::vector<Staff*> staves = this->staves(stavesIds);
     if (staves.empty()) {
         return;
     }
@@ -945,7 +945,7 @@ void NotationParts::removeParts(const IDList& partsIds)
 {
     TRACEFUNC;
 
-    std::vector<Part*> partsToRemove = parts(partsIds);
+    muse::vector<Part*> partsToRemove = parts(partsIds);
     if (partsToRemove.empty()) {
         return;
     }
@@ -974,7 +974,7 @@ void NotationParts::removeParts(const IDList& partsIds)
     }
 }
 
-void NotationParts::doRemoveParts(const std::vector<Part*>& parts)
+void NotationParts::doRemoveParts(const muse::vector<Part*>& parts)
 {
     TRACEFUNC;
 
@@ -983,7 +983,7 @@ void NotationParts::doRemoveParts(const std::vector<Part*>& parts)
     onPartsRemoved(parts);
 }
 
-void NotationParts::onPartsRemoved(const std::vector<Part*>&)
+void NotationParts::onPartsRemoved(const muse::vector<Part*>&)
 {
 }
 
@@ -1024,7 +1024,7 @@ void NotationParts::doInsertPart(Part* part, size_t index)
 {
     TRACEFUNC;
 
-    std::vector<Staff*> stavesCopy(part->staves());
+    muse::vector<Staff*> stavesCopy(part->staves());
     part->clearStaves();
 
     mu::engraving::InstrumentList instrumentsCopy = part->instruments();
@@ -1065,7 +1065,7 @@ void NotationParts::removeStaves(const IDList& stavesIds)
 {
     TRACEFUNC;
 
-    std::vector<Staff*> stavesToRemove = staves(stavesIds);
+    muse::vector<Staff*> stavesToRemove = staves(stavesIds);
     if (stavesToRemove.empty()) {
         return;
     }
@@ -1082,7 +1082,7 @@ void NotationParts::moveParts(const IDList& sourcePartsIds, const ID& destinatio
 {
     TRACEFUNC;
 
-    std::vector<Part*> sourceParts = parts(sourcePartsIds);
+    muse::vector<Part*> sourceParts = parts(sourcePartsIds);
     if (sourceParts.empty()) {
         return;
     }
@@ -1109,7 +1109,7 @@ void NotationParts::moveStaves(const IDList& sourceStavesIds, const ID& destinat
         return;
     }
 
-    std::vector<Staff*> staves = this->staves(sourceStavesIds);
+    muse::vector<Staff*> staves = this->staves(sourceStavesIds);
     if (staves.empty()) {
         return;
     }
@@ -1199,7 +1199,7 @@ void NotationParts::removeMissingParts(const PartInstrumentList& newParts)
         return true;
     };
 
-    std::vector<Part*> partsToRemove;
+    muse::vector<Part*> partsToRemove;
 
     for (Part* part: score()->parts()) {
         if (needRemove(part)) {
@@ -1275,7 +1275,7 @@ void NotationParts::sortParts(const PartInstrumentList& parts)
 {
     TRACEFUNC;
 
-    std::vector<mu::engraving::staff_idx_t> staffMapping;
+    muse::vector<mu::engraving::staff_idx_t> staffMapping;
 
     int partIndex = 0;
     for (const PartInstrument& pi: parts) {

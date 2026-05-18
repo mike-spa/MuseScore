@@ -121,7 +121,7 @@ private:
     };
 
     struct Meta {
-        std::vector<muse::String> files;
+        muse::vector<muse::String> files;
         bool isWritten = false;
 
         bool contains(const muse::String& file) const;
@@ -133,7 +133,7 @@ private:
     bool addFileData(const muse::String& fileName, const muse::ByteArray& data);
 
     void writeMeta();
-    void writeContainer(const std::vector<muse::String>& paths);
+    void writeContainer(const muse::vector<muse::String>& paths);
 
     muse::String mainFileName() const;
 

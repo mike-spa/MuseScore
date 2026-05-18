@@ -61,7 +61,7 @@ public:
     MOCK_METHOD(void, setTrackSoloMuteState, (const engraving::InstrumentTrackId&, const SoloMuteState&),
                 (override));
 
-    MOCK_METHOD(void, playElements, (const std::vector<const notation::EngravingItem*>&, const PlayParams&, bool), (override));
+    MOCK_METHOD(void, playElements, (const muse::vector<const notation::EngravingItem*>&, const PlayParams&, bool), (override));
     MOCK_METHOD(void, playNotes, (const notation::NoteValList&, notation::staff_idx_t, const notation::Segment*, const PlayParams&),
                 (override));
     MOCK_METHOD(void, playMetronome, (int), (override));

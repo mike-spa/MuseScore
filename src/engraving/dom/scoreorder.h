@@ -69,7 +69,7 @@ struct ScoreOrder
     String id;
     TranslatableString name;
     std::map<String, InstrumentOverwrite> instrumentMap;
-    std::vector<ScoreGroup> groups;
+    muse::vector<ScoreGroup> groups;
     bool customized = false;
 
     ScoreOrder() = default;
@@ -91,7 +91,7 @@ struct ScoreOrder
     ScoreGroup newUnsortedGroup(const String group, const String section) const;
     ScoreGroup getGroup(const String family, const String instrumentGroup) const;
     int instrumentSortingIndex(const String& instrumentId, bool isSoloist) const;
-    bool isScoreOrder(const std::vector<int>& indices) const;
+    bool isScoreOrder(const muse::vector<int>& indices) const;
     bool isScoreOrder(const Score* score) const;
 
     void setBracketsAndBarlines(Score* score);

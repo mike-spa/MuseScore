@@ -479,7 +479,7 @@ GuitarPro::ReadNoteResult GuitarPro4::readNote(int string, int staffIdx, Note* n
         Chord* chord = note->chord();
         Segment* segment = chord->segment()->prev1(SegmentType::ChordRest);
         track_idx_t track = note->track();
-        std::vector<ChordRest*> chords;
+        muse::vector<ChordRest*> chords;
         Note* true_note = 0;
         while (segment) {
             EngravingItem* e = segment->element(track);
@@ -733,7 +733,7 @@ bool GuitarPro4::read(IODevice* io)
         int capo         = readInt();
         /*int color        =*/ readInt();
 
-        std::vector<int> tuning2(strings);
+        muse::vector<int> tuning2(strings);
         //int tuning2[strings];
         for (int k = 0; k < strings; ++k) {
             tuning2[strings - k - 1] = tuning[k];
@@ -841,7 +841,7 @@ bool GuitarPro4::read(IODevice* io)
             segment->add(s);
         }
 
-        std::vector<Tuplet*> tuplets(staves);
+        muse::vector<Tuplet*> tuplets(staves);
         for (size_t staffIdx = 0; staffIdx < staves; ++staffIdx) {
             tuplets[staffIdx] = 0;
         }

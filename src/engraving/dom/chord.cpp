@@ -79,7 +79,7 @@ using namespace mu;
 using namespace mu::engraving;
 
 namespace mu::engraving {
-NoteParenthesisInfo::NoteParenthesisInfo (Parenthesis* lParen, Parenthesis* rParen, std::vector<Note*> nList)
+NoteParenthesisInfo::NoteParenthesisInfo (Parenthesis* lParen, Parenthesis* rParen, muse::vector<Note*> nList)
     : m_leftParen(lParen), m_rightParen(rParen), m_notes(nList)
 {
     std::sort(m_notes.begin(), m_notes.end(), noteIsBefore);
@@ -261,14 +261,14 @@ int Chord::downString() const
 //   noteDistances
 //---------------------------------------------------------
 
-std::vector<int> Chord::noteDistances() const
+muse::vector<int> Chord::noteDistances() const
 {
     const StaffType* staffType = this->staffType();
     assert(staffType);
     bool isTabStaff = staffType->isTabStaff();
     int staffMiddleLine = staffType->middleLine();
 
-    std::vector<int> distances;
+    muse::vector<int> distances;
     for (Note* note : m_notes) {
         int noteLine = isTabStaff ? note->string() : note->line();
         distances.push_back(noteLine - staffMiddleLine);
@@ -410,7 +410,7 @@ Chord::Chord(const Chord& c, bool link)
                 score()->undo(new Link(newRightParen, info->rightParen()));
             }
 
-            std::vector<Note*> newNotes;
+            muse::vector<Note*> newNotes;
             for (Note* note : info->notes()) {
                 newNotes.push_back(findNote(note->pitch()));
             }
@@ -1142,7 +1142,7 @@ static void updatePercussionNotes(Chord* c, const Drumset* drumset)
     for (Chord* ch : c->graceNotes()) {
         updatePercussionNotes(ch, drumset);
     }
-    std::vector<Note*> lnotes(c->notes());    // we need a copy!
+    muse::vector<Note*> lnotes(c->notes());    // we need a copy!
     for (Note* note : lnotes) {
         if (!drumset) {
             note->setLine(0);
@@ -1187,19 +1187,19 @@ void Chord::cmdUpdateNotes(AccidentalState* as, staff_idx_t staffIdx)
     // PITCHED_ and PERCUSSION_STAFF can go note by note
 
     if (staffGroup == StaffGroup::STANDARD) {
-        const std::vector<Chord*> gnb(graceNotesBefore());
+        const muse::vector<Chord*> gnb(graceNotesBefore());
         for (Chord* ch : gnb) {
             if (ch->vStaffIdx() != staffIdx) {
                 continue;
             }
-            std::vector<Note*> notes(ch->notes());        // we need a copy!
+            muse::vector<Note*> notes(ch->notes());        // we need a copy!
             for (Note* note : notes) {
                 note->updateAccidental(as);
             }
             ch->sortNotes();
         }
         if (vStaffIdx() == staffIdx) {
-            std::vector<Note*> lnotes(notes());      // we need a copy!
+            muse::vector<Note*> lnotes(notes());      // we need a copy!
             for (Note* note : lnotes) {
                 if (note->tieBackNonPartial() && note->tpc() == note->tieBack()->startNote()->tpc()) {
                     // same pitch
@@ -1230,12 +1230,12 @@ void Chord::cmdUpdateNotes(AccidentalState* as, staff_idx_t staffIdx)
             }
             sortNotes();
         }
-        const std::vector<Chord*> gna(graceNotesAfter());
+        const muse::vector<Chord*> gna(graceNotesAfter());
         for (Chord* ch : gna) {
             if (ch->vStaffIdx() != staffIdx) {
                 continue;
             }
-            std::vector<Note*> notes(ch->notes());        // we need a copy!
+            muse::vector<Note*> notes(ch->notes());        // we need a copy!
             for (Note* note : notes) {
                 note->updateAccidental(as);
             }
@@ -1773,7 +1773,7 @@ Articulation* Chord::hasArticulation(const Articulation* aa)
 
 Tapping* Chord::tapping() const
 {
-    std::vector<Tapping*> tappings;
+    muse::vector<Tapping*> tappings;
     tappings.reserve(1);
     for (Articulation* a : m_articulations) {
         if (a->isTapping()) {
@@ -1794,7 +1794,7 @@ void Chord::updateArticulations(const std::set<SymId>& newArticulationIds, Artic
     ArticulationAnchor overallAnchor = ArticulationAnchor::AUTO;
     bool mixedDirections = false;
     if (!m_articulations.empty()) {
-        std::vector<Articulation*> articsToRemove;
+        muse::vector<Articulation*> articsToRemove;
         // split all articulations
         for (Articulation* artic : m_articulations) {
             if (!artic->isDouble()) {
@@ -2187,10 +2187,10 @@ Chord* Chord::graceNoteAt(size_t idx) const
 //   allGraceChordsOfMainChord
 //   returns a list containing all grace notes (chords) attached to the main chord and the main chord itself, in order
 //---------------------------------------------------------
-std::vector<Chord*> Chord::allGraceChordsOfMainChord()
+muse::vector<Chord*> Chord::allGraceChordsOfMainChord()
 {
     Chord* mainChord = isGrace() ? toChord(explicitParent()) : this;
-    std::vector<Chord*> chords = { mainChord };
+    muse::vector<Chord*> chords = { mainChord };
     const GraceNotesGroup& gnBefore = mainChord->graceNotesBefore();
     const GraceNotesGroup& gnAfter = mainChord->graceNotesAfter();
     chords.insert(chords.begin(), gnBefore.begin(), gnBefore.end());
@@ -2709,9 +2709,9 @@ std::set<SymId> Chord::articulationSymbolIds() const
 //    the chord.
 //---------------------------------------------------------
 
-std::vector<NoteEventList> Chord::getNoteEventLists()
+muse::vector<NoteEventList> Chord::getNoteEventLists()
 {
-    std::vector<NoteEventList> ell;
+    muse::vector<NoteEventList> ell;
     if (notes().empty()) {
         return ell;
     }
@@ -2727,7 +2727,7 @@ std::vector<NoteEventList> Chord::getNoteEventLists()
 //    the chord.
 //---------------------------------------------------------
 
-void Chord::setNoteEventLists(std::vector<NoteEventList>& ell)
+void Chord::setNoteEventLists(muse::vector<NoteEventList>& ell)
 {
     if (notes().empty()) {
         return;

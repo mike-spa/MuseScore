@@ -201,7 +201,7 @@ void MeasureRead::readMeasure(Measure* measure, XmlReader& e, ReadContext& ctx, 
 void MeasureRead::readVoice(Measure* measure, XmlReader& e, ReadContext& ctx, int staffIdx, bool irregular)
 {
     Segment* segment = nullptr;
-    std::vector<Chord*> graceNotes;
+    muse::vector<Chord*> graceNotes;
     Beam* startingBeam = nullptr;
     Tuplet* tuplet = nullptr;
     Fermata* fermata = nullptr;

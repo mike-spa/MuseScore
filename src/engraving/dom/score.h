@@ -408,9 +408,9 @@ public:
     void cmdAddTie(bool addToChord = false);
     Tie* cmdToggleTie();
     void cmdToggleLaissezVib();
-    static std::vector<Note*> cmdTieNoteList(const Selection& selection, bool noteEntryMode);
+    static muse::vector<Note*> cmdTieNoteList(const Selection& selection, bool noteEntryMode);
     void cmdAddOttava(OttavaType);
-    std::vector<Hairpin*> addHairpins(HairpinType);
+    muse::vector<Hairpin*> addHairpins(HairpinType);
     void addNoteLine();
     void padToggle(Pad p, bool toggleForSelectionOnly = false);
 
@@ -462,7 +462,7 @@ public:
     bool appendMeasuresFromScore(Score* score, const Fraction& startTick, const Fraction& endTick);
     bool appendScore(Score*, bool addPageBreak = false, bool addSectionBreak = true);
 
-    const std::vector<Staff*>& staves() const { return m_staves; }
+    const muse::vector<Staff*>& staves() const { return m_staves; }
     size_t nstaves() const { return m_staves.size(); }
     size_t visibleStavesCount() const;
     bool allStavesInvisible() const;
@@ -477,8 +477,8 @@ public:
     void clearSystemObjectStaves();
     void addSystemObjectStaff(Staff* staff);
     void removeSystemObjectStaff(Staff* staff);
-    const std::vector<Staff*>& systemObjectStaves() const { return m_systemObjectStaves; }
-    const std::vector<Staff*> systemObjectStavesWithTopStaff() const;
+    const muse::vector<Staff*>& systemObjectStaves() const { return m_systemObjectStaves; }
+    const muse::vector<Staff*> systemObjectStavesWithTopStaff() const;
 
     Measure* pos2measure(const PointF&, staff_idx_t* staffIdx, int* pitch, Segment**, PointF* offset) const;
     void dragPosition(const PointF&, staff_idx_t* staffIdx, Segment**, double spacingFactor = 0.5, bool allowTimeAnchor = false) const;
@@ -490,7 +490,7 @@ public:
     void undoRemoveHopoText(HammerOnPullOffText* hopoText);
     void undoChangeSpannerElements(Spanner* spanner, EngravingItem* startElement, EngravingItem* endElement);
     void undoChangeElement(EngravingItem* oldElement, EngravingItem* newElement);
-    void spellNotelist(std::vector<Note*>& notes);
+    void spellNotelist(muse::vector<Note*>& notes);
     void undoChangeChordRestLen(ChordRest* cr, const TDuration&);
     void undoRemovePart(Part* part, size_t partIdx = muse::nidx);
     void undoInsertPart(Part* part, size_t targetPartIndex);
@@ -543,7 +543,7 @@ public:
 
     ChordRest* addClone(ChordRest* cr, const Fraction& tick, const TDuration& d);
     Rest* setRest(const Fraction& tick, track_idx_t track, const Fraction&, bool useDots, Tuplet* tuplet, bool useFullMeasureRest = true);
-    std::vector<Rest*> setRests(const Fraction& tick, track_idx_t track, const Fraction& l, bool useDots, Tuplet* tuplet,
+    muse::vector<Rest*> setRests(const Fraction& tick, track_idx_t track, const Fraction& l, bool useDots, Tuplet* tuplet,
                                 bool useFullMeasureRest = true);
 
     ChordRest* searchNote(const Fraction& tick, track_idx_t track) const;
@@ -570,7 +570,7 @@ public:
     void restoreInitialKeySigAndTimeSig();
     void reconnectSlurs(MeasureBase* mbStart, MeasureBase* mbLast);
     void cmdDeleteSelection();
-    std::vector<ChordRest*> deleteRange(Segment* segStart, Segment* segEnd, track_idx_t trackStart, track_idx_t trackEnd,
+    muse::vector<ChordRest*> deleteRange(Segment* segStart, Segment* segEnd, track_idx_t trackStart, track_idx_t trackEnd,
                                         const SelectionFilter& filter, bool selectionContainsMultiNoteChords);
     void cmdFullMeasureRest();
 
@@ -617,9 +617,9 @@ public:
     void changeSelectedElementsVoice(voice_idx_t);
     void changeSelectedElementsVoiceAssignment(VoiceAssignment);
 
-    const std::vector<Part*>& parts() const;
+    const muse::vector<Part*>& parts() const;
     size_t visiblePartCount() const;
-    std::vector<SharedPart*> sharedParts() const;
+    muse::vector<SharedPart*> sharedParts() const;
     bool hasSharedParts() const;
 
     using StaffAccepted = std::function<bool (const Staff&)>;
@@ -627,8 +627,8 @@ public:
                                                StaffAccepted staffAccepted = StaffAccepted()) const;
 
     void appendPart(const InstrumentTemplate*);
-    void sortSystemObjects(std::vector<staff_idx_t>& dst);
-    void sortStaves(std::vector<staff_idx_t>& dst);
+    void sortSystemObjects(muse::vector<staff_idx_t>& dst);
+    void sortStaves(muse::vector<staff_idx_t>& dst);
 
     bool isShowInvisible() const { return m_showInvisible; }
     bool showUnprintable() const { return m_showUnprintable; }
@@ -655,7 +655,7 @@ public:
     void getSelectedStartEndChordRests(ChordRest*& cr1, ChordRest*& cr2) const;
 
     void select(EngravingItem* item, SelectType = SelectType::SINGLE, staff_idx_t staff = 0);
-    void select(const std::vector<EngravingItem*>& items, SelectType = SelectType::SINGLE, staff_idx_t staff = 0);
+    void select(const muse::vector<EngravingItem*>& items, SelectType = SelectType::SINGLE, staff_idx_t staff = 0);
     void selectSimilar(EngravingItem* e, bool sameStaff);
     void selectSimilarInRange(EngravingItem* e);
     static void collectMatch(ElementPattern* p, EngravingItem* e);
@@ -802,7 +802,7 @@ public:
     void lassoSelectEnd();
 
     Page* searchPage(const PointF&) const;
-    std::vector<System*> searchSystem(const PointF& p, const System* preferredSystem = nullptr, double spacingFactor = 0.5,
+    muse::vector<System*> searchSystem(const PointF& p, const System* preferredSystem = nullptr, double spacingFactor = 0.5,
                                       double preferredSpacingFactor = 1.0) const;
     Measure* searchMeasure(const PointF& p, const System* preferredSystem = nullptr, double spacingFactor = 0.5,
                            double preferredSpacingFactor = 1.0) const;
@@ -832,11 +832,11 @@ public:
 
     virtual size_t npages() const { return m_pages.size(); }
     virtual page_idx_t pageIdx(const Page* page) const { return muse::indexOf(m_pages, page); }
-    virtual const std::vector<Page*>& pages() const { return m_pages; }
-    virtual std::vector<Page*>& pages() { return m_pages; }
+    virtual const muse::vector<Page*>& pages() const { return m_pages; }
+    virtual muse::vector<Page*>& pages() { return m_pages; }
 
-    const std::vector<System*>& systems() const { return m_systems; }
-    std::vector<System*>& systems() { return m_systems; }
+    const muse::vector<System*>& systems() const { return m_systems; }
+    muse::vector<System*>& systems() { return m_systems; }
 
     MeasureBaseList* measures() { return &m_measures; }
     bool checkHasMeasures() const;
@@ -871,7 +871,7 @@ public:
     EngravingItem* move(const String& cmd);
     void cmdEnterRest(const TDuration& d);
     void enterRest(const TDuration& d, InputState* externalInputState = nullptr);
-    void addInterval(int, const std::vector<Note*>&);
+    void addInterval(int, const muse::vector<Note*>&);
     void cmdCreateTuplet(ChordRest*, Tuplet*);
     void removeAudio();
 
@@ -951,7 +951,7 @@ public:
     const std::multimap<int, Spanner*>& spanner() const { return m_spanner.map(); }
     SpannerMap& spannerMap() { return m_spanner; }
     const SpannerMap& spannerMap() const { return m_spanner; }
-    std::vector<Spanner*> spannerList() const; // Return all spanners as a vector for Plugin API
+    muse::vector<Spanner*> spannerList() const; // Return all spanners as a vector for Plugin API
     bool isSpannerStartEnd(const Fraction& tick, track_idx_t track) const;
     void removeSpanner(Spanner*);
     void addSpanner(Spanner*, bool computeStartEnd = true);
@@ -977,7 +977,7 @@ public:
     std::shared_ptr<IEngravingFont> engravingFont() const { return m_engravingFont; }
     void setEngravingFont(std::shared_ptr<IEngravingFont> f) { m_engravingFont = f; }
 
-    std::vector<staff_idx_t> uniqueStaves() const;
+    muse::vector<staff_idx_t> uniqueStaves() const;
 
     void moveUp(ChordRest*);
     void moveDown(ChordRest*);
@@ -996,7 +996,7 @@ public:
 
     bool hasLyrics() const;
     int  lyricCount() const;
-    std::vector<Lyrics*> lyrics() const;
+    muse::vector<Lyrics*> lyrics() const;
     String extractLyrics() const;
 
     int keysig() const;
@@ -1100,7 +1100,7 @@ private:
 
     bool rewriteMeasures(Measure* fm, Measure* lm, const Fraction&, staff_idx_t staffIdx);
     bool rewriteMeasures(Measure* fm, const Fraction& ns, staff_idx_t staffIdx);
-    std::vector<Fraction> splitGapToMeasureBoundaries(ChordRest*, Fraction);
+    muse::vector<Fraction> splitGapToMeasureBoundaries(ChordRest*, Fraction);
     void pasteChordRest(ChordRest* cr, const Fraction& tick);
 
     void doSelect(EngravingItem* e, SelectType type, staff_idx_t staffIdx);
@@ -1119,7 +1119,7 @@ private:
     void resetTempo();
     void resetTempoRange(const Fraction& tick1, const Fraction& tick2);
     void rebuildTempoAndTimeSigMaps(Measure* m, std::optional<BeatsPerSecond>& tempoPrimo);
-    void fixAnacrusisTempo(const std::vector<Measure*>& measures) const;
+    void fixAnacrusisTempo(const muse::vector<Measure*>& measures) const;
 
     void doUndoRemoveStaleTieJumpPoints(Tie* tie, bool undo = true);
     void doUndoResetPartialSlur(Slur* slur, bool undo);
@@ -1131,7 +1131,7 @@ private:
     void deleteAnnotationsFromRange(Segment* segStart, Segment* segEnd, track_idx_t trackStart, track_idx_t trackEnd,
                                     const SelectionFilter& filter);
 
-    void deleteRangeAtTrack(std::vector<ChordRest*>& crsToSelect, const track_idx_t track, Segment* startSeg, const Fraction& endTick,
+    void deleteRangeAtTrack(muse::vector<ChordRest*>& crsToSelect, const track_idx_t track, Segment* startSeg, const Fraction& endTick,
                             Tuplet* currentTuplet, const SelectionFilter& filter, bool selectionContainsMultiNoteChords);
 
     void update(bool resetCmdState, bool layoutAllParts = false);
@@ -1166,9 +1166,9 @@ private:
     UpdateState m_updateState;
 
     MeasureBaseList m_measures;            // here are the notes
-    std::vector<Part*> m_parts;
-    std::vector<Staff*> m_staves;
-    std::vector<Staff*> m_systemObjectStaves;
+    muse::vector<Part*> m_parts;
+    muse::vector<Staff*> m_staves;
+    muse::vector<Staff*> m_systemObjectStaves;
     SystemLocks m_systemLocks;
 
     SpannerMap m_spanner;
@@ -1177,8 +1177,8 @@ private:
     //
     // objects generated by layout:
     //
-    std::vector<Page*> m_pages;            // pages are build from systems
-    std::vector<System*> m_systems;        // measures are accumulated to systems
+    muse::vector<Page*> m_pages;            // pages are build from systems
+    muse::vector<System*> m_systems;        // measures are accumulated to systems
 
     std::map<size_t, std::array<SystemDivider*, 2> > m_systemDividers; // list of system dividers (left and right) indexed by system
 

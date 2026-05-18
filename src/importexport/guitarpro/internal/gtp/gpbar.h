@@ -36,12 +36,12 @@ public:
 
     void setId(int id) { _id = id; }
 
-    const std::vector<std::unique_ptr<GPVoice> >& voices() const { return _voices; }
+    const muse::vector<std::unique_ptr<GPVoice> >& voices() const { return _voices; }
 
 private:
 
     int _id{ -1 };
-    std::vector<std::unique_ptr<GPVoice> > _voices;
+    muse::vector<std::unique_ptr<GPVoice> > _voices;
     Clef _clef;
     SimileMark _simileMark;
 };

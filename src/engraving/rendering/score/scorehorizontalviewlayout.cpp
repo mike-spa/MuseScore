@@ -259,7 +259,7 @@ void ScoreHorizontalViewLayout::layoutSystemLockIndicators(System* system)
 
     system->deleteLockIndicators();
 
-    std::vector<const SystemLock*> systemLocks = system->score()->systemLocks()->allLocks();
+    muse::vector<const SystemLock*> systemLocks = system->score()->systemLocks()->allLocks();
     for (const SystemLock* lock : systemLocks) {
         SystemLockIndicator* lockIndicator = Factory::createSystemLockIndicator(system, lock);
         lockIndicator->setParent(system);
@@ -271,7 +271,7 @@ void ScoreHorizontalViewLayout::layoutSystemLockIndicators(System* system)
 // Append all measures to System. VBox is not included to System
 void ScoreHorizontalViewLayout::collectLinearSystem(LayoutContext& ctx)
 {
-    std::vector<int> visibleParts;
+    muse::vector<int> visibleParts;
     for (size_t partIdx = 0; partIdx < ctx.dom().parts().size(); partIdx++) {
         if (ctx.dom().parts().at(partIdx)->show()) {
             visibleParts.push_back(static_cast<int>(partIdx));
@@ -412,7 +412,7 @@ static Segment* findFirstEnabledSegment(Measure* measure)
     return current;
 }
 
-void ScoreHorizontalViewLayout::layoutSegmentsWithDuration(Measure* m, const std::vector<int>& visibleParts)
+void ScoreHorizontalViewLayout::layoutSegmentsWithDuration(Measure* m, const muse::vector<int>& visibleParts)
 {
     double currentXPos = 0;
 
@@ -444,7 +444,7 @@ void ScoreHorizontalViewLayout::layoutSegmentsWithDuration(Measure* m, const std
     m->setWidth(currentXPos);
 }
 
-std::pair<double, double> ScoreHorizontalViewLayout::computeCellWidth(const Segment* s, const std::vector<int>& visibleParts)
+std::pair<double, double> ScoreHorizontalViewLayout::computeCellWidth(const Segment* s, const muse::vector<int>& visibleParts)
 {
     if (!s->enabled()) {
         return { 0, 0 };
@@ -522,7 +522,7 @@ std::pair<double, double> ScoreHorizontalViewLayout::computeCellWidth(const Segm
     return { 0, s->minRight() };
 }
 
-ChordRest* ScoreHorizontalViewLayout::chordRestWithMinDuration(const Segment* seg, const std::vector<int>& visibleParts)
+ChordRest* ScoreHorizontalViewLayout::chordRestWithMinDuration(const Segment* seg, const muse::vector<int>& visibleParts)
 {
     ChordRest* chordRestWithMinDuration = nullptr;
     int minTicks = std::numeric_limits<int>::max();
@@ -550,7 +550,7 @@ ChordRest* ScoreHorizontalViewLayout::chordRestWithMinDuration(const Segment* se
     return chordRestWithMinDuration;
 }
 
-Fraction ScoreHorizontalViewLayout::calculateQuantumCell(const Measure* m, const std::vector<int>& visibleParts)
+Fraction ScoreHorizontalViewLayout::calculateQuantumCell(const Measure* m, const muse::vector<int>& visibleParts)
 {
     Fraction quantum = { 1, 16 };
     for (const Segment& s : m->segments()) {

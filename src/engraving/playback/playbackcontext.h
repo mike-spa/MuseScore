@@ -99,8 +99,8 @@ private:
     void handleHairpin(const Hairpin* hairpin, const int tickPositionOffset);
     void handleSegmentAnnotations(const ID partId, const Segment* segment, const int segmentPositionTick);
     void handleSegmentElements(const RepeatSegment* repeat, const Segment* segment, const int segmentPositionTick,
-                               std::vector<const MeasureRepeat*>& foundMeasureRepeats);
-    void handleMeasureRepeats(const std::vector<const MeasureRepeat*>& measureRepeats, const int tickPositionOffset);
+                               muse::vector<const MeasureRepeat*>& foundMeasureRepeats);
+    void handleMeasureRepeats(const muse::vector<const MeasureRepeat*>& measureRepeats, const int tickPositionOffset);
 
     void applyDynamic(const EngravingItem* dynamicItem, muse::mpe::dynamic_level_t dynamicLevel, const int positionTick);
 

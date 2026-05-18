@@ -920,7 +920,7 @@ void MeasureLayout::removeMMRestElements(Measure* mmRestMeasure)
     }
 
     for (Segment* seg = mmRestMeasure->first(); seg && seg->rtick().isZero(); seg = seg->next()) {
-        const std::vector<EngravingItem*> annotations = seg->annotations(); // copy because we're removing elements
+        const muse::vector<EngravingItem*> annotations = seg->annotations(); // copy because we're removing elements
         for (EngravingItem* item : annotations) {
             item->undoUnlink();
             mmRestMeasure->score()->doUndoRemoveElement(item);
@@ -1306,7 +1306,7 @@ void MeasureLayout::layoutPlayCountText(Measure* m, LayoutContext& ctx)
     }
 
     Score* score = m->score();
-    const std::vector<MStaff*>& measureStaves = m->mstaves();
+    const muse::vector<MStaff*>& measureStaves = m->mstaves();
 
     for (staff_idx_t staffIdx = 0; staffIdx < score->nstaves(); ++staffIdx) {
         if (staffIdx >= measureStaves.size()) {
@@ -1355,7 +1355,7 @@ void MeasureLayout::layoutMeasureNumber(Measure* m, LayoutContext& ctx)
 
     Score* score = m->score();
 
-    const std::vector<MStaff*>& measureStaves = m->mstaves();
+    const muse::vector<MStaff*>& measureStaves = m->mstaves();
 
     for (staff_idx_t staffIdx = 0; staffIdx < score->nstaves(); ++staffIdx) {
         if (staffIdx >= measureStaves.size()) {
@@ -2481,7 +2481,7 @@ void MeasureLayout::setRepeatCourtesiesAndParens(Measure* m, LayoutContext& ctx)
 
 void MeasureLayout::addRepeatCourtesies(Measure* m, LayoutContext& ctx)
 {
-    const std::vector<Measure*> measures = findFollowingRepeatMeasures(m);
+    const muse::vector<Measure*> measures = findFollowingRepeatMeasures(m);
     if (measures.empty()) {
         removeRepeatCourtesies(m);
         return;
@@ -3145,7 +3145,7 @@ void MeasureLayout::layoutPartialWidth(StaffLines* lines, LayoutContext& ctx, do
         ldata->setBbox(ldata->bbox().adjusted(0, -extraSize, 0, extraSize));
     }
 
-    std::vector<LineF> ll;
+    muse::vector<LineF> ll;
     for (int i = 0; i < _lines; ++i) {
         if (alignRight) {
             ll.push_back(LineF(x2 - wPartial, y, x2, y));

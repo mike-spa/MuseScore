@@ -50,6 +50,6 @@ public:
     void add(Tuplet* _o, Tuplet* _n) { m_map.emplace_back(_o, _n); }
 
 private:
-    std::vector<Tuplet2> m_map;
+    muse::vector<Tuplet2> m_map;
 };
 }

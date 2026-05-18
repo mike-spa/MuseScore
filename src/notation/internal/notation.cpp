@@ -77,7 +77,7 @@ Notation::Notation(MasterNotation* master, const muse::modularity::ContextPtr& i
         notifyAboutNotationChanged();
     });
 
-    m_midiInput->notesReceived().onReceive(this, [this](const std::vector<const Note*>&){
+    m_midiInput->notesReceived().onReceive(this, [this](const muse::vector<const Note*>&){
         notifyAboutNotationChanged();
     });
 

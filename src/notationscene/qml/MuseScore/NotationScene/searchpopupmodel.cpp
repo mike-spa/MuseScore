@@ -49,7 +49,7 @@ void SearchPopupModel::search(const QString& text)
 
     notation->interaction()->clearSelection();
 
-    std::vector<EngravingItem*> elements = notation->elements()->search(text);
+    muse::vector<EngravingItem*> elements = notation->elements()->search(text);
     if (!elements.empty()) {
         const NoteInputState& inputState = notation->interaction()->noteInput()->state();
         notation->interaction()->select(elements, elements.size() == 1 ? SelectType::SINGLE : SelectType::RANGE,

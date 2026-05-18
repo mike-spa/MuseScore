@@ -35,14 +35,14 @@ using namespace muse;
 using namespace mu::iex::mei;
 using namespace mu::project;
 
-std::vector<INotationWriter::UnitType> MeiWriter::supportedUnitTypes() const
+muse::vector<INotationWriter::UnitType> MeiWriter::supportedUnitTypes() const
 {
     return { UnitType::PER_PART };
 }
 
 bool MeiWriter::supportsUnitType(UnitType unitType) const
 {
-    std::vector<UnitType> unitTypes = supportedUnitTypes();
+    muse::vector<UnitType> unitTypes = supportedUnitTypes();
     return std::find(unitTypes.cbegin(), unitTypes.cend(), unitType) != unitTypes.cend();
 }
 

@@ -153,7 +153,7 @@ static const QMap<mu::engraving::TempoTextType, InspectorModelType> TEMPO_TEXT_E
 
 QString AbstractInspectorModel::shortcutsForActionCode(std::string code) const
 {
-    std::vector<std::string> shortcuts = shortcutsRegister()->shortcut(code).sequences;
+    muse::vector<std::string> shortcuts = shortcutsRegister()->shortcut(code).sequences;
     return muse::shortcuts::sequencesToNativeText(shortcuts);
 }
 
@@ -637,7 +637,7 @@ PropertyValue AbstractInspectorModel::valueToElementUnits(const mu::engraving::P
 
     case P_TYPE::INT_VEC: {
         bool ok = true;
-        std::vector<int> res;
+        muse::vector<int> res;
 
         for (const QString& str : value.toString().split(',', Qt::SkipEmptyParts)) {
             if (int i = str.simplified().toInt(&ok); ok) {
@@ -687,7 +687,7 @@ QVariant AbstractInspectorModel::valueFromElementUnits(const mu::engraving::Pid&
     case P_TYPE::INT_VEC: {
         QStringList strList;
 
-        for (const int i : value.value<std::vector<int> >()) {
+        for (const int i : value.value<muse::vector<int> >()) {
             strList << QString::number(i);
         }
 

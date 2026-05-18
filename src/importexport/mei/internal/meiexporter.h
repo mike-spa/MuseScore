@@ -92,8 +92,8 @@ private:
     bool writeLines(pugi::xml_node node, const muse::StringList& lines);
     bool writeLinesWithSMuFL(pugi::xml_node node, const muse::StringList& lines);
     bool writeScoreDefChange();
-    bool writeStaffGrpStart(const engraving::Staff* staff, std::vector<int>& ends, const engraving::Part* part);
-    bool writeStaffGrpEnd(const engraving::Staff* staff, std::vector<int>& ends);
+    bool writeStaffGrpStart(const engraving::Staff* staff, muse::vector<int>& ends, const engraving::Part* part);
+    bool writeStaffGrpEnd(const engraving::Staff* staff, muse::vector<int>& ends);
     bool writeStaffDef(const engraving::Staff* staff, const engraving::Measure* measure, const engraving::Part* part, bool isPart);
     bool writeLabel(pugi::xml_node node, const engraving::Part* part);
     bool writeInstrDef(pugi::xml_node node, const engraving::Part* part);
@@ -164,7 +164,7 @@ private:
      * Helper methods
      */
     bool isCurrentNode(const libmei::Element& element);
-    std::vector<const engraving::Volta*> findVoltasInMeasure(const engraving::Measure* measure);
+    muse::vector<const engraving::Volta*> findVoltasInMeasure(const engraving::Measure* measure);
     void fillControlEventMap(const std::string& xmlId, const engraving::ChordRest* chordRest);
     std::string findStartIdFor(const engraving::EngravingItem* item);
     void addToRepeatMarkList(const engraving::EngravingItem* repeatMark, pugi::xml_node node, const std::string& xmlId);
@@ -219,7 +219,7 @@ private:
     bool m_hasSections;
 
     /** A list of items (first) for which we know the @startid (second)  */
-    std::vector<std::pair<const engraving::EngravingItem*, std::string> > m_startingControlEventList;
+    muse::vector<std::pair<const engraving::EngravingItem*, std::string> > m_startingControlEventList;
     /** A map of items with the @endid they will need to have added */
     std::map<const engraving::EngravingItem*, std::string> m_endingControlEventMap;
     /** A map of items with the @plist value they will need to have added */
@@ -227,11 +227,11 @@ private:
     /** A map of chord that are a plist of the arpeggio */
     std::map<const engraving::Chord*, const engraving::Arpeggio*> m_arpegPlistMap;
     /** A map of elements (e.g., Fermata) to which a tstamp will need to be added  */
-    std::vector<std::pair<const engraving::EngravingItem*, std::pair<libmei::xsdPositiveInteger_List, double> > > m_tstampControlEventMap;
+    muse::vector<std::pair<const engraving::EngravingItem*, std::pair<libmei::xsdPositiveInteger_List, double> > > m_tstampControlEventMap;
     /** A map of items with the corresponding node (to which the endid from m_endingControlEventMap or plist from m_plistMap will be added) */
     std::map<const engraving::EngravingItem*, pugi::xml_node> m_openControlEventMap;
 
-    std::vector<MeiExporter::RepeatMark> m_repeatMarks;
+    muse::vector<MeiExporter::RepeatMark> m_repeatMarks;
 
     /** Counters for generating xml:ids */
     int m_xmlIDCounter;
@@ -240,7 +240,7 @@ private:
     int m_staffCounter;
     int m_layerCounter;
     /** Sub counters by elementType */
-    std::vector<int> m_layerCounterFor;
+    muse::vector<int> m_layerCounterFor;
 
     /** map of abbreviations for element within layers */
     inline static const std::map<layerElementCounter, muse::String> s_layerXmlIdMap = {

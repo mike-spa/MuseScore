@@ -78,9 +78,9 @@ const SystemLock* SystemLocks::lockContaining(const MeasureBase* mb) const
     return lock->contains(mb) ? lock : nullptr;
 }
 
-std::vector<const SystemLock*> SystemLocks::locksContainedInRange(const MeasureBase* start, const MeasureBase* end) const
+muse::vector<const SystemLock*> SystemLocks::locksContainedInRange(const MeasureBase* start, const MeasureBase* end) const
 {
-    std::vector<const SystemLock*> result;
+    muse::vector<const SystemLock*> result;
 
     for (auto& pair : m_systemLocks) {
         const SystemLock* lock = pair.second;
@@ -95,9 +95,9 @@ std::vector<const SystemLock*> SystemLocks::locksContainedInRange(const MeasureB
     return result;
 }
 
-std::vector<const SystemLock*> SystemLocks::allLocks() const
+muse::vector<const SystemLock*> SystemLocks::allLocks() const
 {
-    std::vector <const SystemLock* > locks;
+    muse::vector <const SystemLock* > locks;
     locks.reserve(m_systemLocks.size());
     for (auto& pair : m_systemLocks) {
         locks.push_back(pair.second);

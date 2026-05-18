@@ -47,7 +47,7 @@ mu::engraving::Score* NotationElements::msScore() const
     return m_getScore->score();
 }
 
-std::vector<EngravingItem*> NotationElements::search(const QString& searchText) const
+muse::vector<EngravingItem*> NotationElements::search(const QString& searchText) const
 {
     SearchCommandsParser commandsParser;
 
@@ -79,7 +79,7 @@ std::vector<EngravingItem*> NotationElements::search(const QString& searchText) 
         auto [startMeasureIndex, endMeasureIndex] = searchData.measureRange();
         mu::engraving::Measure* startMeasure = this->measure(startMeasureIndex - 1);
         mu::engraving::Measure* endMeasure = this->measure(endMeasureIndex - 1);
-        std::vector<EngravingItem*> result;
+        muse::vector<EngravingItem*> result;
         if (startMeasure) {
             result.push_back(startMeasure);
         }
@@ -100,9 +100,9 @@ std::vector<EngravingItem*> NotationElements::search(const QString& searchText) 
     return {};
 }
 
-std::vector<EngravingItem*> NotationElements::elements(const FilterElementsOptions& elementsOptions) const
+muse::vector<EngravingItem*> NotationElements::elements(const FilterElementsOptions& elementsOptions) const
 {
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
 
     const FilterElementsOptions* elementsFilterOptions = dynamic_cast<const FilterElementsOptions*>(&elementsOptions);
 
@@ -168,9 +168,9 @@ mu::engraving::Page* NotationElements::page(const size_t pageIndex) const
     return score()->pages().at(pageIndex);
 }
 
-std::vector<EngravingItem*> NotationElements::allScoreElements() const
+muse::vector<EngravingItem*> NotationElements::allScoreElements() const
 {
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
     for (mu::engraving::Page* page : score()->pages()) {
         for (EngravingItem* element: page->elements()) {
             result.push_back(element);
@@ -180,13 +180,13 @@ std::vector<EngravingItem*> NotationElements::allScoreElements() const
     return result;
 }
 
-std::vector<EngravingItem*> NotationElements::filterElements(const FilterElementsOptions* elementsOptions) const
+muse::vector<EngravingItem*> NotationElements::filterElements(const FilterElementsOptions* elementsOptions) const
 {
     ElementPattern pattern = constructElementPattern(elementsOptions);
 
     score()->scanElements([&](EngravingItem* item) { mu::engraving::Score::collectMatch(&pattern, item); });
 
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
     for (EngravingItem* element: pattern.el) {
         result.push_back(element);
     }
@@ -194,13 +194,13 @@ std::vector<EngravingItem*> NotationElements::filterElements(const FilterElement
     return result;
 }
 
-std::vector<EngravingItem*> NotationElements::filterNotes(const FilterNotesOptions* notesOptions) const
+muse::vector<EngravingItem*> NotationElements::filterNotes(const FilterNotesOptions* notesOptions) const
 {
     mu::engraving::NotePattern pattern = constructNotePattern(notesOptions);
 
     score()->scanElements([&](EngravingItem* item) { mu::engraving::Score::collectNoteMatch(&pattern, item); });
 
-    std::vector<EngravingItem*> result;
+    muse::vector<EngravingItem*> result;
     for (EngravingItem* element: pattern.el) {
         result.push_back(element);
     }

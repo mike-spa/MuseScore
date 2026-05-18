@@ -73,8 +73,8 @@ public:
 
     bool isNorth() const { return m_isNorth; }
 
-    const std::vector<ShapeElement>& elements() const { return m_shape.elements(); }
-    std::vector<ShapeElement>& elements() { return m_shape.elements(); }
+    const muse::vector<ShapeElement>& elements() const { return m_shape.elements(); }
+    muse::vector<ShapeElement>& elements() { return m_shape.elements(); }
 
 private:
     double staffLinesTopAtX(double x) const;

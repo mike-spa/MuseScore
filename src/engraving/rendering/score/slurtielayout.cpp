@@ -969,7 +969,7 @@ void SlurTieLayout::avoidCollisions(SlurSegment* slurSeg, PointF& pp1, PointF& p
 
     // Divide slur in several rectangles to localize collisions
     const unsigned npoints = 20;
-    std::vector<RectF> slurRects;
+    muse::vector<RectF> slurRects;
     slurRects.reserve(npoints);
 
     // Define separate collision areas (left-mid-center)
@@ -1756,7 +1756,7 @@ void SlurTieLayout::createSlurSegments(Slur* item, LayoutContext& ctx)
     const System* startSys = startCR->measure()->system();
     const System* endSys = endCR->measure()->system();
 
-    const std::vector<System*>& systems = ctx.dom().systems();
+    const muse::vector<System*>& systems = ctx.dom().systems();
     system_idx_t startSysIdx = muse::indexOf(systems, startSys);
     system_idx_t endSysIdx = muse::indexOf(systems, endSys);
     if (startSysIdx == muse::nidx || endSysIdx == muse::nidx) {
@@ -1798,7 +1798,7 @@ void SlurTieLayout::createSlurSegments(Slur* item, LayoutContext& ctx)
 
 void SlurTieLayout::adjustOverlappingSlurs(const std::list<SpannerSegment*>& spannerSegments)
 {
-    std::vector<SlurSegment*> segments;
+    muse::vector<SlurSegment*> segments;
     for (SpannerSegment* seg : spannerSegments) {
         if (seg->isSlurSegment()) {
             segments.push_back(toSlurSegment(seg));
@@ -2485,7 +2485,7 @@ bool SlurTieLayout::hasEndPointAboveNote(TieSegment* tieSegment)
            || (tieEndPos.x() > endNotePos.x() && !endNote->shouldHideFret());
 }
 
-void SlurTieLayout::resolveVerticalTieCollisions(const std::vector<TieSegment*>& stackedTies)
+void SlurTieLayout::resolveVerticalTieCollisions(const muse::vector<TieSegment*>& stackedTies)
 {
     if (stackedTies.size() < 2) {
         return;
@@ -3016,7 +3016,7 @@ void SlurTieLayout::calculateDirection(Tie* item)
     const Measure* secondaryMeasure = secondaryChord ? secondaryChord->measure() : nullptr;
 
     if (item->slurDirection() == DirectionV::AUTO) {
-        std::vector<Note*> notes = primaryChord->notes();
+        muse::vector<Note*> notes = primaryChord->notes();
         size_t n = notes.size();
         StaffType* st = item->staff()->staffType(primaryNote ? primaryNote->tick() : Fraction(0, 1));
         bool simpleException = st && st->isSimpleTabStaff();

@@ -213,7 +213,7 @@ bool InstrumentsRepository::loadStringTuningsPresets(const path_t& path)
         const JsonValue& presetInfoVal = arr.at(i);
         JsonObject presetInfoObj = presetInfoVal.toObject();
 
-        std::vector<StringTuningsInfo> strings;
+        muse::vector<StringTuningsInfo> strings;
 
         JsonArray stringsArr = presetInfoObj.value("strings").toArray();
         for (size_t j = 0; j < stringsArr.size(); ++j) {
@@ -271,7 +271,7 @@ void InstrumentsRepository::loadMuseInstruments(const InstrumentTemplateMap& sta
     }
 
     InstrumentGroup* otherGroup = nullptr;
-    std::vector<musesampler::Instrument> instruments = museSampler()->instruments();
+    muse::vector<musesampler::Instrument> instruments = museSampler()->instruments();
 
     for (const musesampler::Instrument& instrument : instruments) {
         mpe::PlaybackSetupData sound = mpe::PlaybackSetupData::fromString(instrument.soundId);

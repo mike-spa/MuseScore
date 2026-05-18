@@ -120,7 +120,7 @@ public:
 
 private:
 
-    std::vector<Listener<Data>*> m_listeners;
+    muse::vector<Listener<Data>*> m_listeners;
     bool m_atChange = false;
 };
 

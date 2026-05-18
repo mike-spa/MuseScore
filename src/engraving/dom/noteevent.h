@@ -23,10 +23,10 @@
 #ifndef MU_ENGRAVING_NOTEEVENT_H
 #define MU_ENGRAVING_NOTEEVENT_H
 
-#include <vector>
 #include <algorithm>
 
 #include "global/allocator.h"
+#include "global/types/vector.h"
 
 namespace mu::engraving {
 //---------------------------------------------------------
@@ -76,7 +76,7 @@ private:
 //   NoteEventList
 //---------------------------------------------------------
 
-class NoteEventList : public std::vector<NoteEvent>
+class NoteEventList : public muse::vector<NoteEvent>
 {
     OBJECT_ALLOCATOR(engraving, NoteEventList)
 public:

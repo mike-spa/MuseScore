@@ -33,8 +33,8 @@ public:
 
     mu::engraving::Score* msScore() const override;
 
-    std::vector<EngravingItem*> search(const QString& searchText) const override;
-    std::vector<EngravingItem*> elements(const FilterElementsOptions& elementsOptions) const override;
+    muse::vector<EngravingItem*> search(const QString& searchText) const override;
+    muse::vector<EngravingItem*> elements(const FilterElementsOptions& elementsOptions) const override;
 
     Measure* measure(const int measureIndex) const override;
     const PageList& pages() const override;
@@ -46,10 +46,10 @@ private:
     mu::engraving::RehearsalMark* rehearsalMark(const muse::String& name) const;
     mu::engraving::Page* page(const size_t pageIndex) const;
 
-    std::vector<EngravingItem*> allScoreElements() const;
+    muse::vector<EngravingItem*> allScoreElements() const;
 
-    std::vector<EngravingItem*> filterElements(const FilterElementsOptions* elementsOptions) const;
-    std::vector<EngravingItem*> filterNotes(const FilterNotesOptions* notesOptions) const;
+    muse::vector<EngravingItem*> filterElements(const FilterElementsOptions* elementsOptions) const;
+    muse::vector<EngravingItem*> filterNotes(const FilterNotesOptions* notesOptions) const;
 
     ElementPattern constructElementPattern(const FilterElementsOptions* elementsOptions) const;
     mu::engraving::NotePattern constructNotePattern(const FilterNotesOptions* notesOptions) const;

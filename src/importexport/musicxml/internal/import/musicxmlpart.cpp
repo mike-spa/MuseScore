@@ -30,7 +30,7 @@
 using namespace mu::engraving;
 using namespace mu::iex::musicxml;
 
-static const std::vector<String> vocalInstrumentNames = {
+static const muse::vector<String> vocalInstrumentNames = {
     u"Voice",
     u"Soprano",
     u"Mezzo-Soprano",
@@ -42,7 +42,7 @@ static const std::vector<String> vocalInstrumentNames = {
     u"Men"
 };
 
-static const std::vector<String> percussionInstrumentNames = {
+static const muse::vector<String> percussionInstrumentNames = {
     u"Percussion",
     u"Timpani",
     u"Glockenspiel",

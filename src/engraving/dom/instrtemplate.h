@@ -107,10 +107,10 @@ public:
 
     StringData stringData;
 
-    std::vector<NamedEventList> midiActions;
-    std::vector<MidiArticulation> midiArticulations;
-    std::vector<InstrChannel> channel;
-    std::vector<const InstrumentGenre*> genres; //; list of genres this instrument belongs to
+    muse::vector<NamedEventList> midiActions;
+    muse::vector<MidiArticulation> midiArticulations;
+    muse::vector<InstrChannel> channel;
+    muse::vector<const InstrumentGenre*> genres; //; list of genres this instrument belongs to
     const InstrumentFamily* family = nullptr;   //; family the instrument belongs to
 
     ClefTypeList clefTypes[MAX_STAVES];
@@ -149,7 +149,7 @@ struct InstrumentGroup {
     String id;
     String name;
     bool extended; // belongs to extended instruments set if true
-    std::vector<const InstrumentTemplate*> instrumentTemplates;
+    muse::vector<const InstrumentTemplate*> instrumentTemplates;
     void read(XmlReader&);
     void clear();
 
@@ -169,11 +169,11 @@ struct InstrumentIndex {
     InstrumentIndex(int g, int i, const InstrumentTemplate* it);
 };
 
-extern std::vector<const InstrumentGenre*> instrumentGenres;
-extern std::vector<const InstrumentFamily*> instrumentFamilies;
-extern std::vector<const InstrumentGroup*> instrumentGroups;
-extern std::vector<MidiArticulation> midiArticulations;
-extern std::vector<ScoreOrder> instrumentOrders;
+extern muse::vector<const InstrumentGenre*> instrumentGenres;
+extern muse::vector<const InstrumentFamily*> instrumentFamilies;
+extern muse::vector<const InstrumentGroup*> instrumentGroups;
+extern muse::vector<MidiArticulation> midiArticulations;
+extern muse::vector<ScoreOrder> instrumentOrders;
 extern void clearInstrumentTemplates();
 extern bool loadInstrumentTemplates(const muse::io::path_t& instrTemplatesPath);
 extern const InstrumentTemplate* combinedTemplateSearch(const Instrument& instrument);
@@ -181,7 +181,7 @@ extern InstrumentIndex searchTemplateIndexForTrackName(const String& trackName);
 extern InstrumentIndex searchTemplateIndexForId(const String& id);
 extern const InstrumentTemplate* searchTemplate(const String& name);
 extern const InstrumentTemplate* searchTemplateForMusicXmlId(const String& mxmlId);
-extern const InstrumentTemplate* searchTemplateForInstrNameList(const std::vector<String>& nameList, bool useDrumset = false,
+extern const InstrumentTemplate* searchTemplateForInstrNameList(const muse::vector<String>& nameList, bool useDrumset = false,
                                                                 bool caseSensitive = true);
 extern const InstrumentTemplate* searchTemplateForMidiProgram(int bank, int program, bool useDrumset = false);
 extern const InstrumentGenre* searchInstrumentGenre(const String& id);

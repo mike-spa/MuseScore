@@ -173,8 +173,8 @@ public:
 
     EngravingItem* element(track_idx_t track) const;
 
-    const std::vector<EngravingItem*>& elist() const { return m_elist; }
-    std::vector<EngravingItem*>& elist() { return m_elist; }
+    const muse::vector<EngravingItem*>& elist() const { return m_elist; }
+    muse::vector<EngravingItem*>& elist() { return m_elist; }
 
     void removeElement(track_idx_t track);
     void setElement(track_idx_t track, EngravingItem* el);
@@ -191,7 +191,7 @@ public:
     void remove(EngravingItem*) override;
     void swapElements(track_idx_t i1, track_idx_t i2);
 
-    void sortStaves(std::vector<staff_idx_t>& dst);
+    void sortStaves(muse::vector<staff_idx_t>& dst);
     const char* subTypeName() const;
 
     static const char* subTypeName(SegmentType);
@@ -223,12 +223,12 @@ public:
 
     bool splitsTuplet() const;
 
-    const std::vector<EngravingItem*>& annotations() const { return m_annotations; }
+    const muse::vector<EngravingItem*>& annotations() const { return m_annotations; }
     void clearAnnotations();
     void removeAnnotation(EngravingItem* e);
     bool hasAnnotationOrElement(ElementType type, track_idx_t minTrack, track_idx_t maxTrack) const;
     EngravingItem* findAnnotation(ElementType type, track_idx_t minTrack, track_idx_t maxTrack) const;
-    std::vector<EngravingItem*> findAnnotations(ElementType type, track_idx_t minTrack, track_idx_t maxTrack) const;
+    muse::vector<EngravingItem*> findAnnotations(ElementType type, track_idx_t minTrack, track_idx_t maxTrack) const;
     bool hasElements() const;
     bool hasElements(track_idx_t minTrack, track_idx_t maxTrack) const;
     bool hasElements(staff_idx_t staffIdx) const;
@@ -272,8 +272,8 @@ public:
 
     EngravingItem* firstElement(staff_idx_t staffIdx) const;
 
-    std::vector<Shape> shapes() { return m_shapes; }
-    const std::vector<Shape>& shapes() const { return m_shapes; }
+    muse::vector<Shape> shapes() { return m_shapes; }
+    const muse::vector<Shape>& shapes() const { return m_shapes; }
     const Shape& staffShape(staff_idx_t staffIdx) const { return m_shapes[staffIdx]; }
     Shape& staffShape(staff_idx_t staffIdx) { return m_shapes[staffIdx]; }
     void createShapes();
@@ -371,10 +371,10 @@ private:
     Segment* m_next = nullptr;                       // linked list of segments inside a measure
     Segment* m_prev = nullptr;
 
-    std::vector<EngravingItem*> m_annotations;
-    std::vector<EngravingItem*> m_elist;         // EngravingItem storage, size = staves * VOICES.
-    std::vector<EngravingItem*> m_preAppendedItems; // Container for items appended to the left of this segment (example: grace notes), size = staves * VOICES.
-    std::vector<Shape> m_shapes;           // size = staves
+    muse::vector<EngravingItem*> m_annotations;
+    muse::vector<EngravingItem*> m_elist;         // EngravingItem storage, size = staves * VOICES.
+    muse::vector<EngravingItem*> m_preAppendedItems; // Container for items appended to the left of this segment (example: grace notes), size = staves * VOICES.
+    muse::vector<Shape> m_shapes;           // size = staves
     double m_spacing = 0;
 };
 } // namespace mu::engraving

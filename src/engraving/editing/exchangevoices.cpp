@@ -149,8 +149,8 @@ void ExchangeVoices::exchangeVoices(Score* score, Measure* measure, voice_idx_t 
 
             if (ex) {
                 const TracksMap& tracks = ex->tracksMapping();
-                std::vector<track_idx_t> srcTrackList = muse::values(tracks, srcTrack);
-                std::vector<track_idx_t> dstTrackList = muse::values(tracks, dstTrack);
+                muse::vector<track_idx_t> srcTrackList = muse::values(tracks, srcTrack);
+                muse::vector<track_idx_t> dstTrackList = muse::values(tracks, dstTrack);
 
                 for (track_idx_t srcTrack2 : srcTrackList) {
                     // don't care about other linked staves
@@ -159,7 +159,7 @@ void ExchangeVoices::exchangeVoices(Score* score, Measure* measure, voice_idx_t 
                     }
 
                     track_idx_t tempTrack = srcTrack;
-                    std::vector<track_idx_t> testTracks = muse::values(tracks, tempTrack + trackDiff);
+                    muse::vector<track_idx_t> testTracks = muse::values(tracks, tempTrack + trackDiff);
                     bool hasVoice = false;
                     for (track_idx_t testTrack : testTracks) {
                         if (staffTrack <= testTrack && testTrack < staffTrack + VOICES && muse::contains(dstTrackList, testTrack)) {
@@ -183,7 +183,7 @@ void ExchangeVoices::exchangeVoices(Score* score, Measure* measure, voice_idx_t 
                     }
 
                     track_idx_t tempTrack = dstTrack;
-                    std::vector<track_idx_t> testTracks = muse::values(tracks, tempTrack - trackDiff);
+                    muse::vector<track_idx_t> testTracks = muse::values(tracks, tempTrack - trackDiff);
                     bool hasVoice = false;
                     for (track_idx_t testTrack : testTracks) {
                         if (staffTrack <= testTrack && testTrack < staffTrack + VOICES && muse::contains(srcTrackList, testTrack)) {

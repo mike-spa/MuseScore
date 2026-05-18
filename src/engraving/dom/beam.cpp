@@ -185,7 +185,7 @@ const Chord* Beam::findChordWithCustomStemDirection() const
 
 const BeamSegment* Beam::topLevelSegmentForElement(const ChordRest* element) const
 {
-    const std::vector<BeamSegment*>& segments = beamSegments();
+    const muse::vector<BeamSegment*>& segments = beamSegments();
     size_t segmentsSize = segments.size();
 
     IF_ASSERT_FAILED(segmentsSize > 0) {
@@ -346,7 +346,7 @@ void Beam::dragGrip(EditData& ed)
 //   gripsPositions
 //---------------------------------------------------------
 
-std::vector<PointF> Beam::gripsPositions(const EditData& ed) const
+muse::vector<PointF> Beam::gripsPositions(const EditData& ed) const
 {
     int idx = directionIdx();
     BeamEditData* bed = static_cast<BeamEditData*>(ed.getData(this).get());
@@ -357,7 +357,7 @@ std::vector<PointF> Beam::gripsPositions(const EditData& ed) const
     size_t n = m_elements.size();
 
     if (n == 0) {
-        return std::vector<PointF>();
+        return muse::vector<PointF>();
     }
 
     for (size_t i = 0; i < n; ++i) {
@@ -841,7 +841,7 @@ Shape BeamSegment::shape() const
     subBoxesCount = std::max(subBoxesCount, 1); // at least one rectangle, of course (avoid division by zero)
     double horizontalStep = beamHorizontalLength / subBoxesCount;
     double verticalStep = beamHeightDiff / subBoxesCount;
-    std::vector<PointF> pointsOnBeamLine;
+    muse::vector<PointF> pointsOnBeamLine;
     pointsOnBeamLine.push_back(startPoint);
     for (int i = 0; i < subBoxesCount - 1; ++i) {
         PointF nextPoint = pointsOnBeamLine.back() + PointF(horizontalStep, verticalStep);

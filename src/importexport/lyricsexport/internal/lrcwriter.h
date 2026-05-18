@@ -43,7 +43,7 @@ public:
     }
 
     // Interface implementation
-    std::vector<UnitType> supportedUnitTypes() const override;
+    muse::vector<UnitType> supportedUnitTypes() const override;
     bool supportsUnitType(UnitType) const override;
     muse::Ret write(notation::INotationPtr, muse::io::IODevice&, const Options&) override;
     void writeMetadata(muse::io::IODevice* device, const engraving::Score* score) const;

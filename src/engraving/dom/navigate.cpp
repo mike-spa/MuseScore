@@ -316,7 +316,7 @@ EngravingItem* Score::upAlt(EngravingItem* element)
     } else if (element->isNote()) {
         Note* note = toNote(element);
         Chord* chord = note->chord();
-        const std::vector<Note*>& notes = chord->notes();
+        const muse::vector<Note*>& notes = chord->notes();
         auto i = std::find(notes.begin(), notes.end(), note);
         ++i;
         if (i != notes.end()) {
@@ -361,7 +361,7 @@ EngravingItem* Score::downAlt(EngravingItem* element)
     } else if (element->isNote()) {
         Note* note   = toNote(element);
         Chord* chord = note->chord();
-        const std::vector<Note*>& notes = chord->notes();
+        const muse::vector<Note*>& notes = chord->notes();
         auto i = std::find(notes.begin(), notes.end(), note);
         if (i != notes.begin()) {
             --i;

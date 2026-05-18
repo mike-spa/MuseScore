@@ -127,7 +127,7 @@ bool noMidi          = false;
 bool midiInputTrace  = false;
 bool midiOutputTrace = false;
 
-static void markInstrumentsAsPrimary(std::vector<Part*>& parts)
+static void markInstrumentsAsPrimary(muse::vector<Part*>& parts)
 {
     TRACEFUNC;
 
@@ -434,7 +434,7 @@ void Score::setUpTempoMap()
         sigmap()->clear();
         sigmap()->add(0, SigEvent(fm->ticks(),  fm->timesig(), 0));
     }
-    std::vector<Measure*> anacrusisMeasures;
+    muse::vector<Measure*> anacrusisMeasures;
 
     auto tempoPrimo = std::optional<BeatsPerSecond> {};
 
@@ -646,7 +646,7 @@ void Score::rebuildTempoAndTimeSigMaps(Measure* measure, std::optional<BeatsPerS
     }
 }
 
-void Score::fixAnacrusisTempo(const std::vector<Measure*>& measures) const
+void Score::fixAnacrusisTempo(const muse::vector<Measure*>& measures) const
 {
     auto getTempoTextIfExist = [](const Measure* m) -> TempoText* {
         for (const Segment& s : m->segments()) {
@@ -860,7 +860,7 @@ void Score::setIsOpen(bool open)
 void Score::spell()
 {
     for (staff_idx_t i = 0; i < nstaves(); ++i) {
-        std::vector<Note*> notes;
+        muse::vector<Note*> notes;
         for (Segment* s = firstSegment(SegmentType::ChordRest); s; s = s->next1(SegmentType::ChordRest)) {
             track_idx_t strack = i * VOICES;
             track_idx_t etrack = strack + VOICES;
@@ -884,7 +884,7 @@ void Score::spell()
 
 void Score::spellWithSharpsOrFlats(Prefer prefer)
 {
-    std::vector<Note*> notes = selection().noteList();
+    muse::vector<Note*> notes = selection().noteList();
     for (Note* n : notes) {
         Interval v = n->part()->instrument(n->chord()->tick())->transpose();
         int tpc1, tpc2;
@@ -1000,16 +1000,16 @@ Page* Score::searchPage(const PointF& p) const
 ///   \returns List of found systems.
 //---------------------------------------------------------
 
-std::vector<System*> Score::searchSystem(const PointF& pos, const System* preferredSystem, double spacingFactor,
+muse::vector<System*> Score::searchSystem(const PointF& pos, const System* preferredSystem, double spacingFactor,
                                          double preferredSpacingFactor) const
 {
-    std::vector<System*> systems;
+    muse::vector<System*> systems;
     Page* page = searchPage(pos);
     if (!page) {
         return systems;
     }
     double y = pos.y() - page->pos().y();    // transform to page relative
-    const std::vector<System*>& sl = page->systems();
+    const muse::vector<System*>& sl = page->systems();
     double y2;
     size_t n = sl.size();
     for (size_t i = 0; i < n; ++i) {
@@ -1062,7 +1062,7 @@ std::vector<System*> Score::searchSystem(const PointF& pos, const System* prefer
 
 Measure* Score::searchMeasure(const PointF& p, const System* preferredSystem, double spacingFactor, double preferredSpacingFactor) const
 {
-    std::vector<System*> systems = searchSystem(p, preferredSystem, spacingFactor, preferredSpacingFactor);
+    muse::vector<System*> systems = searchSystem(p, preferredSystem, spacingFactor, preferredSpacingFactor);
     Measure* lastMeasure = nullptr;
     for (System* system : systems) {
         double x = p.x() - system->canvasPos().x();
@@ -1291,7 +1291,7 @@ bool Score::getPosition(Position* pos, const PointF& p, voice_idx_t voice) const
 bool Score::checkHasMeasures() const
 {
     Page* page = pages().empty() ? 0 : pages().front();
-    const std::vector<System*>* sl = page ? &page->systems() : 0;
+    const muse::vector<System*>* sl = page ? &page->systems() : 0;
     if (sl == 0 || sl->empty() || sl->front()->measures().empty()) {
         LOGD("first create measure, then repeat operation");
         return false;
@@ -1728,7 +1728,7 @@ bool Score::canReselectItem(const EngravingItem* item) const
 
     EngravingItem* seg = const_cast<EngravingItem*>(item->findAncestor(ElementType::SEGMENT));
     if (seg) {
-        std::vector<EngravingItem*> elements = seg->getChildren(false);
+        muse::vector<EngravingItem*> elements = seg->getChildren(false);
         return muse::contains(elements, const_cast<EngravingItem*>(item));
     }
 
@@ -2791,9 +2791,9 @@ void Score::cmdRemoveStaff(staff_idx_t staffIdx)
     undoRemoveStaff(s);
 }
 
-void Score::sortSystemObjects(std::vector<staff_idx_t>& dst)
+void Score::sortSystemObjects(muse::vector<staff_idx_t>& dst)
 {
-    std::vector<staff_idx_t> moveTo;
+    muse::vector<staff_idx_t> moveTo;
     for (const Staff* staff : m_systemObjectStaves) {
         staff_idx_t oldStaffIdx = staff->idx();
         staff_idx_t newStaffIfx = oldStaffIdx < dst.size() ? dst[oldStaffIdx] : muse::nidx;
@@ -2869,14 +2869,14 @@ void Score::sortSystemObjects(std::vector<staff_idx_t>& dst)
 //   sortStaves
 //---------------------------------------------------------
 
-void Score::sortStaves(std::vector<staff_idx_t>& dst)
+void Score::sortStaves(muse::vector<staff_idx_t>& dst)
 {
     sortSystemObjects(dst);
     muse::DeleteAll(systems());
     systems().clear();    //??
     m_parts.clear();
     Part* curPart = nullptr;
-    std::vector<Staff*> dl;
+    muse::vector<Staff*> dl;
     std::map<size_t, size_t> trackMap;
     track_idx_t track = 0;
     for (staff_idx_t idx : dst) {
@@ -3158,8 +3158,8 @@ void Score::padToggle(Pad p, bool toggleForSelectionOnly)
         }
     }
 
-    std::vector<ChordRest*> crs;
-    std::vector<EngravingItem*> elementsToSelect;
+    muse::vector<ChordRest*> crs;
+    muse::vector<EngravingItem*> elementsToSelect;
 
     if (selection().isSingle()) {
         EngravingItem* e = selection().element();
@@ -3254,7 +3254,7 @@ void Score::padToggle(Pad p, bool toggleForSelectionOnly)
     }
 
     if (!elementsToSelect.empty()) {
-        std::vector<EngravingItem*> selectList;
+        muse::vector<EngravingItem*> selectList;
         for (EngravingItem* e : elementsToSelect) {
             if (canReselectItem(e)) {
                 selectList.push_back(e);
@@ -3351,10 +3351,10 @@ void Score::deselect(EngravingItem* el)
 
 void Score::select(EngravingItem* item, SelectType type, staff_idx_t staffIdx)
 {
-    select(std::vector<EngravingItem*> { item }, type, staffIdx);
+    select(muse::vector<EngravingItem*> { item }, type, staffIdx);
 }
 
-void Score::select(const std::vector<EngravingItem*>& items, SelectType type, staff_idx_t staffIdx)
+void Score::select(const muse::vector<EngravingItem*>& items, SelectType type, staff_idx_t staffIdx)
 {
     for (EngravingItem* item : items) {
         doSelect(item, type, staffIdx);
@@ -3654,7 +3654,7 @@ bool Score::trySelectSimilarInRange(EngravingItem* e)
     selectSimilarInRange(e);
     if (selectedElement->track() == e->track()) {
         // limit to this voice only
-        const std::vector<EngravingItem*>& list = m_selection.elements();
+        const muse::vector<EngravingItem*>& list = m_selection.elements();
         for (EngravingItem* el : list) {
             if (el->track() != e->track()) {
                 m_selection.remove(el);
@@ -4100,8 +4100,8 @@ void Score::lassoSelect(const RectF& bbox)
             break;
         }
 
-        std::vector<EngravingItem*> items = page->items(frr);
-        std::vector<EngravingItem*> itemsToSelect;
+        muse::vector<EngravingItem*> items = page->items(frr);
+        muse::vector<EngravingItem*> itemsToSelect;
 
         for (EngravingItem* item : items) {
             if (frr.contains(item->pageBoundingRect())) {
@@ -4432,9 +4432,9 @@ void Score::addSpanner(Spanner* s, bool computeStartEnd)
 //   spannerList
 //---------------------------------------------------------
 
-std::vector<Spanner*> Score::spannerList() const
+muse::vector<Spanner*> Score::spannerList() const
 {
-    std::vector<Spanner*> result;
+    muse::vector<Spanner*> result;
     const std::multimap<int, Spanner*>& spannerMap = m_spanner.map();
     for (auto it = spannerMap.begin(); it != spannerMap.end(); ++it) {
         result.push_back(it->second);
@@ -4525,9 +4525,9 @@ void Score::removeUnmanagedSpanner(Spanner* s)
 //   uniqueStaves
 //---------------------------------------------------------
 
-std::vector<staff_idx_t> Score::uniqueStaves() const
+muse::vector<staff_idx_t> Score::uniqueStaves() const
 {
-    std::vector<staff_idx_t> sl;
+    muse::vector<staff_idx_t> sl;
 
     for (size_t staffIdx = 0; staffIdx < nstaves(); ++staffIdx) {
         Staff* s = staff(staffIdx);
@@ -4998,9 +4998,9 @@ int Score::lyricCount() const
     return int(lyrics().size());
 }
 
-std::vector<Lyrics*> Score::lyrics() const
+muse::vector<Lyrics*> Score::lyrics() const
 {
-    std::vector<Lyrics*> result;
+    muse::vector<Lyrics*> result;
     masterScore()->setExpandRepeats(true);
     SegmentType st = SegmentType::ChordRest;
     for (size_t track = 0; track < ntracks(); track++) {
@@ -5075,7 +5075,7 @@ std::vector<Lyrics*> Score::lyrics() const
 String Score::extractLyrics() const
 {
     String result;
-    std::vector<Lyrics*> list = lyrics();
+    muse::vector<Lyrics*> list = lyrics();
     for (const Lyrics* l : list) {
         String lyric = l->plainText().trimmed();
         LyricsSyllabic ls = l->syllabic();
@@ -5286,8 +5286,8 @@ void Score::changeSelectedElementsVoice(voice_idx_t voice)
         return true;
     };
 
-    std::vector<EngravingItem*> newElements;
-    std::vector<EngravingItem*> oel = selection().elements();       // make copy
+    muse::vector<EngravingItem*> newElements;
+    muse::vector<EngravingItem*> oel = selection().elements();       // make copy
     for (EngravingItem* e : oel) {
         if (e->isNote()) {
             Note* note   = toNote(e);
@@ -5536,7 +5536,7 @@ void Score::changeSelectedElementsVoice(voice_idx_t voice)
 
 void Score::changeSelectedElementsVoiceAssignment(VoiceAssignment voiceAssignment)
 {
-    std::vector<EngravingItem*> newElements;
+    muse::vector<EngravingItem*> newElements;
 
     for (EngravingItem* e : selection().elements()) {
         if (e->hasVoiceAssignmentProperties()) {
@@ -5761,9 +5761,9 @@ void Score::removeSystemObjectStaff(Staff* staff)
     muse::remove(m_systemObjectStaves, staff);
 }
 
-const std::vector<Staff*> Score::systemObjectStavesWithTopStaff() const
+const muse::vector<Staff*> Score::systemObjectStavesWithTopStaff() const
 {
-    std::vector<Staff*> result;
+    muse::vector<Staff*> result;
     if (Staff* topStaff = staff(0)) {
         result.push_back(topStaff);
     }
@@ -5773,7 +5773,7 @@ const std::vector<Staff*> Score::systemObjectStavesWithTopStaff() const
     return result;
 }
 
-const std::vector<Part*>& Score::parts() const
+const muse::vector<Part*>& Score::parts() const
 {
     return m_parts;
 }
@@ -5789,9 +5789,9 @@ size_t Score::visiblePartCount() const
     return count;
 }
 
-std::vector<SharedPart*> Score::sharedParts() const
+muse::vector<SharedPart*> Score::sharedParts() const
 {
-    std::vector<SharedPart*> sharedParts;
+    muse::vector<SharedPart*> sharedParts;
     for (Part* part : m_parts) {
         if (part->isSharedPart()) {
             sharedParts.push_back(toSharedPart(part));

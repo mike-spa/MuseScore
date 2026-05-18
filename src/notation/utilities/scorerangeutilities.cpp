@@ -31,7 +31,7 @@
 using namespace mu::notation;
 using namespace mu::engraving;
 
-std::vector<muse::RectF> ScoreRangeUtilities::boundingArea(const Score* score,
+muse::vector<muse::RectF> ScoreRangeUtilities::boundingArea(const Score* score,
                                                            const Segment* startSegment, const Segment* endSegment,
                                                            staff_idx_t startStaffIndex, staff_idx_t endStaffIndex)
 {
@@ -39,9 +39,9 @@ std::vector<muse::RectF> ScoreRangeUtilities::boundingArea(const Score* score,
         return {};
     }
 
-    std::vector<RectF> result;
+    muse::vector<RectF> result;
 
-    const std::vector<RangeSection> sections = splitRangeBySections(startSegment, endSegment);
+    const muse::vector<RangeSection> sections = splitRangeBySections(startSegment, endSegment);
 
     for (const RangeSection& section : sections) {
         const staff_idx_t firstStaff = firstVisibleStaffIdx(score, section.system, startStaffIndex);
@@ -89,11 +89,11 @@ std::vector<muse::RectF> ScoreRangeUtilities::boundingArea(const Score* score,
     return result;
 }
 
-std::vector<ScoreRangeUtilities::RangeSection> ScoreRangeUtilities::splitRangeBySections(
+muse::vector<ScoreRangeUtilities::RangeSection> ScoreRangeUtilities::splitRangeBySections(
     const Segment* rangeStartSegment,
     const Segment* rangeEndSegment)
 {
-    std::vector<RangeSection> sections;
+    muse::vector<RangeSection> sections;
 
     const Segment* startSegment = rangeStartSegment;
     const Fraction rangeEndTick = rangeEndSegment->tick();

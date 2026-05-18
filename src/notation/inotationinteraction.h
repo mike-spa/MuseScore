@@ -56,7 +56,7 @@ public:
 
     // Hit
     virtual EngravingItem* hitElement(const muse::PointF& pos, float width) const = 0;
-    virtual std::vector<EngravingItem*> hitElements(const muse::PointF& pos, float width) const = 0;
+    virtual muse::vector<EngravingItem*> hitElements(const muse::PointF& pos, float width) const = 0;
     virtual Staff* hitStaff(const muse::PointF& pos) const = 0;
 
     struct HitElementContext
@@ -75,7 +75,7 @@ public:
 
     // Select
     virtual void moveChordNoteSelection(MoveDirection d) = 0;
-    virtual void select(const std::vector<EngravingItem*>& elements, SelectType type = SelectType::REPLACE,
+    virtual void select(const muse::vector<EngravingItem*>& elements, SelectType type = SelectType::REPLACE,
                         engraving::staff_idx_t staffIndex = 0) = 0;
     virtual void selectAndStartEditIfNeeded(EngravingItem* element) = 0;
     virtual void selectAll() = 0;
@@ -96,7 +96,7 @@ public:
     // Drag
     using IsDraggable = std::function<bool (const EngravingItem*)>;
     virtual bool isDragStarted() const = 0;
-    virtual void startDrag(const std::vector<EngravingItem*>& elems, const muse::PointF& eoffset, const IsDraggable& isDrag) = 0;
+    virtual void startDrag(const muse::vector<EngravingItem*>& elems, const muse::PointF& eoffset, const IsDraggable& isDrag) = 0;
     virtual void drag(const muse::PointF& fromPos, const muse::PointF& toPos, DragMode mode) = 0;
     virtual void endDrag() = 0;
     virtual muse::async::Notification dragChanged() const = 0;

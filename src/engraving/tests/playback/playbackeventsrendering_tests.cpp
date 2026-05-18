@@ -375,12 +375,12 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Turn_Regular)
     duration_t expectedSubNoteDuration = QUAVER_NOTE_DURATION / expectedSubNotesCount;
     duration_t expectedPrincipalNoteDuration = 312500;
 
-    std::vector<duration_t> expectedDurations = { expectedSubNoteDuration,
+    muse::vector<duration_t> expectedDurations = { expectedSubNoteDuration,
                                                   expectedSubNoteDuration,
                                                   expectedSubNoteDuration,
                                                   expectedPrincipalNoteDuration };
 
-    std::vector<timestamp_t> expectedTimestamps = { 0,
+    muse::vector<timestamp_t> expectedTimestamps = { 0,
                                                     expectedSubNoteDuration,
                                                     expectedSubNoteDuration* 2,
                                                     expectedSubNoteDuration* 3 };
@@ -388,7 +388,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Turn_Regular)
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
     pitch_level_t plus = nominalPitchLevel + 2 * PITCH_LEVEL_STEP;
     pitch_level_t minus = nominalPitchLevel - PITCH_LEVEL_STEP;
-    std::vector<pitch_level_t> expectedPitches = { plus,
+    muse::vector<pitch_level_t> expectedPitches = { plus,
                                                    nominalPitchLevel,
                                                    minus,
                                                    nominalPitchLevel };
@@ -449,12 +449,12 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Turn_Inverted)
     duration_t expectedSubNoteDuration = QUAVER_NOTE_DURATION / expectedSubNotesCount;
     duration_t expectedPrincipalNoteDuration = 312500;
 
-    std::vector<duration_t> expectedDurations = { expectedSubNoteDuration,
+    muse::vector<duration_t> expectedDurations = { expectedSubNoteDuration,
                                                   expectedSubNoteDuration,
                                                   expectedSubNoteDuration,
                                                   expectedPrincipalNoteDuration };
 
-    std::vector<timestamp_t> expectedTimestamps = { 0,
+    muse::vector<timestamp_t> expectedTimestamps = { 0,
                                                     expectedSubNoteDuration,
                                                     expectedSubNoteDuration* 2,
                                                     expectedSubNoteDuration* 3 };
@@ -462,7 +462,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Turn_Inverted)
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
     pitch_level_t plus = nominalPitchLevel + 2 * PITCH_LEVEL_STEP;
     pitch_level_t minus = nominalPitchLevel - PITCH_LEVEL_STEP;
-    std::vector<pitch_level_t> expectedPitches = { minus,
+    muse::vector<pitch_level_t> expectedPitches = { minus,
                                                    nominalPitchLevel,
                                                    plus,
                                                    nominalPitchLevel };
@@ -524,12 +524,12 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Turn_Inverted_Slash_Var
     duration_t expectedSubNoteDuration = QUAVER_NOTE_DURATION / expectedSubNotesCount;
     duration_t expectedPrincipalNoteDuration = 312500;
 
-    std::vector<duration_t> expectedDurations = { expectedSubNoteDuration,
+    muse::vector<duration_t> expectedDurations = { expectedSubNoteDuration,
                                                   expectedSubNoteDuration,
                                                   expectedSubNoteDuration,
                                                   expectedPrincipalNoteDuration };
 
-    std::vector<timestamp_t> expectedTimestamps = { 0,
+    muse::vector<timestamp_t> expectedTimestamps = { 0,
                                                     expectedSubNoteDuration,
                                                     expectedSubNoteDuration* 2,
                                                     expectedSubNoteDuration* 3 };
@@ -537,7 +537,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Turn_Inverted_Slash_Var
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
     pitch_level_t plus = nominalPitchLevel + 2 * PITCH_LEVEL_STEP;
     pitch_level_t minus = nominalPitchLevel - PITCH_LEVEL_STEP;
-    std::vector<pitch_level_t> expectedPitches = { minus,
+    muse::vector<pitch_level_t> expectedPitches = { minus,
                                                    nominalPitchLevel,
                                                    plus,
                                                    nominalPitchLevel };
@@ -596,13 +596,13 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Upper_Mordent)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         DEMI_SEMI_QUAVER_NOTE_DURATION,
         DEMI_SEMI_QUAVER_NOTE_DURATION,
         3 * QUARTER_NOTE_DURATION / 4
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         DEMI_SEMI_QUAVER_NOTE_DURATION,
         2 * DEMI_SEMI_QUAVER_NOTE_DURATION
@@ -611,7 +611,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Upper_Mordent)
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
     pitch_level_t plus = nominalPitchLevel + 2 * PITCH_LEVEL_STEP;
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         nominalPitchLevel,
         plus,
         nominalPitchLevel
@@ -671,13 +671,13 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Lower_Mordent)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         DEMI_SEMI_QUAVER_NOTE_DURATION,
         DEMI_SEMI_QUAVER_NOTE_DURATION,
         3 * QUARTER_NOTE_DURATION / 4
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         DEMI_SEMI_QUAVER_NOTE_DURATION,
         2 * DEMI_SEMI_QUAVER_NOTE_DURATION
@@ -686,7 +686,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Lower_Mordent)
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
     pitch_level_t minus = nominalPitchLevel - PITCH_LEVEL_STEP;
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         nominalPitchLevel,
         minus,
         nominalPitchLevel
@@ -750,7 +750,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TwoNotes_Discrete_Glissando)
 
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
 
-    std::vector<pitch_level_t> expectedPitches;
+    muse::vector<pitch_level_t> expectedPitches;
     for (size_t i = 0; i < expectedSubNotesCount; ++i) {
         expectedPitches.push_back(nominalPitchLevel + static_cast<int>(i) * PITCH_LEVEL_STEP);
     }
@@ -817,12 +817,12 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TwoNotes_Continuous_Glissando)
 
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
 
-    std::vector<pitch_level_t> expectedPitches;
+    muse::vector<pitch_level_t> expectedPitches;
     for (int i = 0; i < expectedSubNotesCount; ++i) {
         expectedPitches.push_back(nominalPitchLevel + i * PITCH_LEVEL_STEP);
     }
 
-    std::vector<timestamp_t> expectedTimestamps {
+    muse::vector<timestamp_t> expectedTimestamps {
         0,
         WHOLE_NOTE_DURATION, // 2nd repeat segment
     };
@@ -906,7 +906,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TwoNotes_Glissando_NoPlay)
 
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::F, 4);
 
-    std::vector<pitch_level_t> expectedPitches;
+    muse::vector<pitch_level_t> expectedPitches;
     for (int i = 0; i < expectedSubNotesCount; ++i) {
         expectedPitches.push_back(nominalPitchLevel + i * PITCH_LEVEL_STEP);
     }
@@ -979,9 +979,9 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TwoNotes_Discrete_Harp_Glissando) 
     float expectedDuration = static_cast<float>(WHOLE_NOTE_DURATION) / expectedSubNotesCount;
 
     pitch_level_t nominalPitchLevel = pitchLevel(PitchClass::C, 4);
-    std::vector<int> pitchesWt = { 0, 0, 2, 4, 6, 8, 10, 12 };
+    muse::vector<int> pitchesWt = { 0, 0, 2, 4, 6, 8, 10, 12 };
 
-    std::vector<pitch_level_t> expectedPitches;
+    muse::vector<pitch_level_t> expectedPitches;
     for (size_t i = 0; i < expectedSubNotesCount; ++i) {
         expectedPitches.push_back(nominalPitchLevel + pitchesWt.at(i) * PITCH_LEVEL_STEP);
     }
@@ -1021,7 +1021,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TwoNotes_Discrete_Harp_Glissando) 
     expectedDuration = static_cast<float>(WHOLE_NOTE_DURATION) / expectedSubNotesCount;
 
     nominalPitchLevel = pitchLevel(PitchClass::C, 5);
-    std::vector<int> pitches2 = { 0, 1, 3, 6 };
+    muse::vector<int> pitches2 = { 0, 1, 3, 6 };
 
     expectedPitches.clear();
     for (size_t i = 0; i < expectedSubNotesCount; ++i) {
@@ -1109,9 +1109,9 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Glissando_on_tied_notes)
     // [THEN] Expected glissando disclosure
     size_t expectedSubNotesCount = 3;
     mpe::timestamp_t expectedTimestamp = timestampFromTicks(score, chord->tick().ticks()) + glissandoNoteDuration;
-    std::vector<int> pitchesWt = { -1, -2, -3 };
+    muse::vector<int> pitchesWt = { -1, -2, -3 };
 
-    std::vector<pitch_level_t> expectedPitches;
+    muse::vector<pitch_level_t> expectedPitches;
     for (size_t i = 0; i < expectedSubNotesCount; ++i) {
         expectedPitches.push_back(nominalPitchLevel + pitchesWt.at(i) * PITCH_LEVEL_STEP);
     }
@@ -1205,22 +1205,22 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Acciaccatura)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 2;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
         QUARTER_NOTE_DURATION - (DEMI_SEMI_QUAVER_NOTE_DURATION / 2)
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::G, 4),
         pitchLevel(PitchClass::F, 4),
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::Acciaccatura,
         ArticulationType::Standard,
     };
@@ -1279,7 +1279,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AcciaccaturaChord)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 5;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
@@ -1287,7 +1287,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AcciaccaturaChord)
         QUARTER_NOTE_DURATION - (DEMI_SEMI_QUAVER_NOTE_DURATION / 2)
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         0,
         0,
@@ -1295,7 +1295,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AcciaccaturaChord)
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::G, 4),
         pitchLevel(PitchClass::B, 4),
         pitchLevel(PitchClass::D, 5),
@@ -1303,7 +1303,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AcciaccaturaChord)
         pitchLevel(PitchClass::F, 4),
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::Acciaccatura,
         ArticulationType::Acciaccatura,
         ArticulationType::Acciaccatura,
@@ -1365,25 +1365,25 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_MultiAcciaccatura)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
         QUARTER_NOTE_DURATION - DEMI_SEMI_QUAVER_NOTE_DURATION
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         DEMI_SEMI_QUAVER_NOTE_DURATION / 2,
         DEMI_SEMI_QUAVER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::G, 4),
         pitchLevel(PitchClass::F, 4),
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::Acciaccatura,
         ArticulationType::Acciaccatura,
         ArticulationType::Standard,
@@ -1443,23 +1443,23 @@ TEST_F(Engraving_PlaybackEventsRendererTests, GraceNoteWithTiedNotes)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 2;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         HALF_NOTE_DURATION / 2, // PreAppoggiatura, quarter note
         2 * HALF_NOTE_DURATION - HALF_NOTE_DURATION / 2, // 2 * half note duration - grace note duration
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         HALF_NOTE_DURATION / 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::G, 4),
         pitchLevel(PitchClass::G, 4),
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::PreAppoggiatura,
         ArticulationType::Standard,
         ArticulationType::Standard,
@@ -1522,22 +1522,22 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_Appoggiatura_Post)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 2;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         QUAVER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::G, 4)
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::Standard,
         ArticulationType::PostAppoggiatura,
     };
@@ -1596,7 +1596,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AppoggiaturaChord_Post)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 5;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION,
@@ -1604,7 +1604,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AppoggiaturaChord_Post)
         QUAVER_NOTE_DURATION
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION,
@@ -1612,7 +1612,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AppoggiaturaChord_Post)
         QUAVER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::G, 4),
         pitchLevel(PitchClass::B, 4),
@@ -1620,7 +1620,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_AppoggiaturaChord_Post)
         pitchLevel(PitchClass::F, 5),
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::Standard,
         ArticulationType::PostAppoggiatura,
         ArticulationType::PostAppoggiatura,
@@ -1682,25 +1682,25 @@ TEST_F(Engraving_PlaybackEventsRendererTests, SingleNote_MultiAppoggiatura_Post)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUARTER_NOTE_DURATION - SEMI_QUAVER_NOTE_DURATION - DEMI_SEMI_QUAVER_NOTE_DURATION,
         SEMI_QUAVER_NOTE_DURATION,
         DEMI_SEMI_QUAVER_NOTE_DURATION
     };
 
-    std::vector<timestamp_t> expectedTimestamps = {
+    muse::vector<timestamp_t> expectedTimestamps = {
         0,
         QUARTER_NOTE_DURATION - SEMI_QUAVER_NOTE_DURATION - DEMI_SEMI_QUAVER_NOTE_DURATION,
         QUARTER_NOTE_DURATION - DEMI_SEMI_QUAVER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::G, 4),
         pitchLevel(PitchClass::A, 4),
     };
 
-    std::vector<ArticulationType> expectedArticulations = {
+    muse::vector<ArticulationType> expectedArticulations = {
         ArticulationType::Standard,
         ArticulationType::PostAppoggiatura,
         ArticulationType::PostAppoggiatura,
@@ -1760,19 +1760,19 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio)
     int expectedSubNotesCount = 3;
     int expectedOffset = SEMI_QUAVER_NOTE_DURATION / 3;
 
-    std::vector<timestamp_t> expectedTimestamp = {
+    muse::vector<timestamp_t> expectedTimestamp = {
         0,
         expectedOffset,
         expectedOffset* 2,
     };
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         SEMI_QUAVER_NOTE_DURATION,
         SEMI_QUAVER_NOTE_DURATION - expectedOffset,
         SEMI_QUAVER_NOTE_DURATION - expectedOffset * 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::C, 5)
@@ -1832,19 +1832,19 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio_Up)
     int expectedSubNotesCount = 3;
     int expectedOffset = 60000;
 
-    std::vector<timestamp_t> expectedTimestamp = {
+    muse::vector<timestamp_t> expectedTimestamp = {
         0,
         expectedOffset,
         expectedOffset* 2,
     };
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUARTER_NOTE_DURATION,
         QUARTER_NOTE_DURATION - expectedOffset,
         QUARTER_NOTE_DURATION - expectedOffset * 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::C, 5),
@@ -1905,17 +1905,17 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio_Up_TiedNotes)
     int expectedSubNotesCount = 2;
     int expectedOffset = 60000;
 
-    std::vector<timestamp_t> expectedTimestamp = {
+    muse::vector<timestamp_t> expectedTimestamp = {
         0,
         expectedOffset,
     };
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         HALF_NOTE_DURATION* 3, // + 2 tied notes
         HALF_NOTE_DURATION* 3 - expectedOffset, // + 2 tied notes
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::B, 4),
         pitchLevel(PitchClass::D, 5),
     };
@@ -1975,19 +1975,19 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio_Down)
     int expectedSubNotesCount = 3;
     int expectedOffset = 60000;
 
-    std::vector<timestamp_t> expectedTimestamp = {
+    muse::vector<timestamp_t> expectedTimestamp = {
         0,
         expectedOffset,
         expectedOffset* 2,
     };
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUARTER_NOTE_DURATION,
         QUARTER_NOTE_DURATION - expectedOffset,
         QUARTER_NOTE_DURATION - expectedOffset * 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::C, 5),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::F, 4),
@@ -2048,19 +2048,19 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio_Straight_Down)
     int expectedSubNotesCount = 3;
     int expectedOffset = 60000;
 
-    std::vector<timestamp_t> expectedTimestamp = {
+    muse::vector<timestamp_t> expectedTimestamp = {
         0,
         expectedOffset,
         expectedOffset* 2,
     };
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUARTER_NOTE_DURATION,
         QUARTER_NOTE_DURATION - expectedOffset,
         QUARTER_NOTE_DURATION - expectedOffset * 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::C, 5),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::F, 4),
@@ -2121,19 +2121,19 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio_Straight_Up)
     int expectedSubNotesCount = 3;
     int expectedOffset = 60000;
 
-    std::vector<timestamp_t> expectedTimestamp = {
+    muse::vector<timestamp_t> expectedTimestamp = {
         0,
         expectedOffset,
         expectedOffset* 2,
     };
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUARTER_NOTE_DURATION,
         QUARTER_NOTE_DURATION - expectedOffset,
         QUARTER_NOTE_DURATION - expectedOffset * 2
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::C, 5),
@@ -2193,13 +2193,13 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Chord_Arpeggio_Bracket)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUARTER_NOTE_DURATION,
         QUARTER_NOTE_DURATION,
         QUARTER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::C, 5),
@@ -2268,13 +2268,13 @@ TEST_F(Engraving_PlaybackEventsRendererTests, PartiallyTiedArpeggio)
         }
     }
 
-    const std::vector<timestamp_t> expectedArpeggioTimestamps {
+    const muse::vector<timestamp_t> expectedArpeggioTimestamps {
         0, // 1st measure
         3500000, // 2nd measure
         7500000, // 2nd measure (repeated)
     };
 
-    const std::vector<duration_t> expectedArpeggioDurations {
+    const muse::vector<duration_t> expectedArpeggioDurations {
         QUARTER_NOTE_DURATION, // 1st measure
         QUARTER_NOTE_DURATION* 2, // 2nd measure
         QUARTER_NOTE_DURATION, // 2nd measure (repeated)
@@ -2336,14 +2336,14 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Single_Note_Tremolo)
     // [GIVEN] Expected disclosure
     int expectedSubNotesCount = 4;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION,
         QUAVER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::F, 4),
@@ -2551,14 +2551,14 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Single_Chord_Tremolo)
     int expectedChordsCount = 4;
     int expectedSubNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations = {
+    muse::vector<duration_t> expectedDurations = {
         SEMI_QUAVER_NOTE_DURATION,
         SEMI_QUAVER_NOTE_DURATION,
         SEMI_QUAVER_NOTE_DURATION,
         SEMI_QUAVER_NOTE_DURATION
     };
 
-    std::vector<pitch_level_t> expectedPitches = {
+    muse::vector<pitch_level_t> expectedPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::C, 5)
@@ -2731,14 +2731,14 @@ TEST_F(Engraving_PlaybackEventsRendererTests, PartiallyTiedTremolo)
     // [THEN] We expect 4 lists of events (for each note with tremolo)
     EXPECT_EQ(result.size(), 4);
 
-    const std::vector<timestamp_t> expectedTremoloTimestamps {
+    const muse::vector<timestamp_t> expectedTremoloTimestamps {
         0, // 1st measure
         5000000, // 3rd measure, outgoing partially tied A4
         5000000, // 1st measure (repeated), incoming A4
         11000000, // 3rd measure (repeated), outgoing A4 note
     };
 
-    const std::vector<duration_t> expectedTremoloDurations {
+    const muse::vector<duration_t> expectedTremoloDurations {
         HALF_NOTE_DURATION, // 1st measure
         HALF_NOTE_DURATION* 2, // 3rd measure: total duration of all partially tied notes
         HALF_NOTE_DURATION* 2, // 1st measure (repeated): total duration of all partially tied notes
@@ -2830,15 +2830,15 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Two_Chords_Tremolo)
     int expectedChordsCount = 16;
     int chordNotesCount = 3;
 
-    std::vector<duration_t> expectedDurations(expectedChordsCount, SEMI_QUAVER_NOTE_DURATION);
+    muse::vector<duration_t> expectedDurations(expectedChordsCount, SEMI_QUAVER_NOTE_DURATION);
 
-    std::vector<pitch_level_t> firstChordPitches = {
+    muse::vector<pitch_level_t> firstChordPitches = {
         pitchLevel(PitchClass::F, 4),
         pitchLevel(PitchClass::A, 4),
         pitchLevel(PitchClass::C, 5)
     };
 
-    std::vector<pitch_level_t> secondChordPitches = {
+    muse::vector<pitch_level_t> secondChordPitches = {
         pitchLevel(PitchClass::C, 5),
         pitchLevel(PitchClass::E, 5),
         pitchLevel(PitchClass::G, 5)
@@ -2926,7 +2926,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Pauses)
 
     timestamp_t fifthMeasureTime = fourthMeasureTime + (WHOLE_NOTE_DURATION + 5000000) * 2; // repeat
 
-    std::vector<TimestampAndDuration> expectedTnDList {
+    muse::vector<TimestampAndDuration> expectedTnDList {
         // 1st measure (no notes)
 
         // 2nd measure
@@ -3003,7 +3003,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TiedNotesAndRepeats)
     }
 
     // [THEN] Expected pitch, time and duration of each event
-    const std::vector<pitch_level_t> expectedPitchList {
+    const muse::vector<pitch_level_t> expectedPitchList {
         // 1st measure (no notes)
 
         // 2nd measure
@@ -3030,7 +3030,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, TiedNotesAndRepeats)
     constexpr timestamp_t fourthMeasure = WHOLE_NOTE_DURATION * 4;
     constexpr timestamp_t fourthMeasureRepeated = WHOLE_NOTE_DURATION * 5;
 
-    const std::vector<TimestampAndDuration> expectedTnDList {
+    const muse::vector<TimestampAndDuration> expectedTnDList {
         // 1st measure (no notes)
 
         // 2nd measure
@@ -3109,7 +3109,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, PartialTie)
     }
 
     // [THEN] Expected pitch, time and duration of each event
-    std::vector<pitch_level_t> expectedPitchList {
+    muse::vector<pitch_level_t> expectedPitchList {
         // 1st measure
         pitchLevel(PitchClass::A, 4),
 
@@ -3136,7 +3136,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, PartialTie)
     timestamp_t thirdMeasureTime = WHOLE_NOTE_DURATION * 2;
     timestamp_t thirdMeasureRepeatedTime = WHOLE_NOTE_DURATION * 3 + WHOLE_NOTE_DURATION * 2;
 
-    std::vector<TimestampAndDuration> expectedTnDList {
+    muse::vector<TimestampAndDuration> expectedTnDList {
         // 1st measure
         { 0, WHOLE_NOTE_DURATION },
 
@@ -3334,7 +3334,7 @@ TEST_F(Engraving_PlaybackEventsRendererTests, Trill_TiedNotes)
     EXPECT_EQ(result.size(), score->repeatList().size());
 
     constexpr duration_t expectedTrillDuration = WHOLE_NOTE_DURATION * 2; // 2 tied notes
-    const std::vector<timestamp_t> expectedTrillTimestamps {
+    const muse::vector<timestamp_t> expectedTrillTimestamps {
         0,
         expectedTrillDuration, // 2nd repeat segment
     };

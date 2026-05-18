@@ -84,7 +84,7 @@ public:
     ImageStoreItem* add(const std::string& name, const muse::ByteArray&);
     void clearUnused();
 
-    typedef std::vector<ImageStoreItem*> ItemList;
+    typedef muse::vector<ImageStoreItem*> ItemList;
     typedef ItemList::iterator iterator;
     typedef ItemList::const_iterator const_iterator;
 

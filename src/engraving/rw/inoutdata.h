@@ -38,7 +38,7 @@ class LinkedObjects;
 namespace mu::engraving::rw {
 struct ReadLinks
 {
-    std::map<int /*staffIndex*/, std::vector<std::pair<LinkedObjects*, Location> > > staffLinkedElements; // one list per staff
+    std::map<int /*staffIndex*/, muse::vector<std::pair<LinkedObjects*, Location> > > staffLinkedElements; // one list per staff
     LinksIndexer linksIndexer;
 };
 

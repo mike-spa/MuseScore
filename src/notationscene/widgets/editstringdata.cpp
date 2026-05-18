@@ -47,7 +47,7 @@ using namespace muse::ui;
 //    To edit the string data (tuning and number of frets) for an instrument
 //---------------------------------------------------------
 
-EditStringData::EditStringData(QWidget* parent, const std::vector<instrString>& strings, int frets)
+EditStringData::EditStringData(QWidget* parent, const muse::vector<instrString>& strings, int frets)
     : muse::ui::WidgetDialog(parent)
 {
     setObjectName("EditStringData");
@@ -73,7 +73,7 @@ void EditStringData::componentComplete()
     setFocus();
 }
 
-std::vector<instrString> EditStringData::strings() const
+muse::vector<instrString> EditStringData::strings() const
 {
     return _strings;
 }

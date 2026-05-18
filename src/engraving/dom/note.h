@@ -151,7 +151,7 @@ public:
 
     ~Note();
 
-    std::vector<Note*> compoundNotes() const;
+    muse::vector<Note*> compoundNotes() const;
 
     Note& operator=(const Note&) = delete;
     virtual Note* clone() const override { return new Note(*this, false); }
@@ -332,8 +332,8 @@ public:
 
     int customizeVelocity(int velo) const;
     NoteDot* dot(int n) { return m_dots.at(n); }
-    const std::vector<NoteDot*>& dots() const { return m_dots; }
-    std::vector<NoteDot*>& dots() { return m_dots; }
+    const muse::vector<NoteDot*>& dots() const { return m_dots; }
+    muse::vector<NoteDot*>& dots() { return m_dots; }
 
     void updateAccidental(AccidentalState*);
     void updateLine();
@@ -343,8 +343,8 @@ public:
     NoteEvent* noteEvent(int idx) { return &m_playEvents[idx]; }
     void setPlayEvents(const NoteEventList& l) { m_playEvents = l; }
 
-    const std::vector<Spanner*>& spannerFor() const { return m_spannerFor; }
-    const std::vector<Spanner*>& spannerBack() const { return m_spannerBack; }
+    const muse::vector<Spanner*>& spannerFor() const { return m_spannerFor; }
+    const muse::vector<Spanner*>& spannerBack() const { return m_spannerBack; }
 
     void addSpannerBack(Spanner* e)
     {
@@ -392,7 +392,7 @@ public:
     String screenReaderInfo() const override;
     String accessibleExtraInfo() const override;
 
-    std::vector<Note*> tiedNotes() const;
+    muse::vector<Note*> tiedNotes() const;
 
     void setOffTimeType(int v) { m_offTimeType = v; }
     void setOnTimeType(int v) { m_onTimeType = v; }
@@ -421,8 +421,8 @@ public:
 
     bool hasAnotherStraightAboveOrBelow(bool above) const;
 
-    std::vector<LineAttachPoint>& lineAttachPoints() { return m_lineAttachPoints; }
-    const std::vector<LineAttachPoint>& lineAttachPoints() const { return m_lineAttachPoints; }
+    muse::vector<LineAttachPoint>& lineAttachPoints() { return m_lineAttachPoints; }
+    const muse::vector<LineAttachPoint>& lineAttachPoints() const { return m_lineAttachPoints; }
     void addStartLineAttachPoint(PointF point, EngravingItem* line) { addLineAttachPoint(point, line, true); }
     void addEndLineAttachPoint(PointF point, EngravingItem* line) { addLineAttachPoint(point, line, false); }
 
@@ -477,11 +477,11 @@ private:
     int concertPitchIdx() const;
     void updateRelLine(int absLine, bool undoable);
 
-    static std::vector<Note*> findTiedNotes(Note* startNote, bool followPartialTies = true);
+    static muse::vector<Note*> findTiedNotes(Note* startNote, bool followPartialTies = true);
 
     void normalizeLeftDragDelta(Segment* seg, EditData& ed, NoteEditData* ned);
 
-    void getNoteListForDots(std::vector<Note*>& topDownNotes, std::vector<Note*>& bottomUpNotes, std::vector<int>& anchoredDots);
+    void getNoteListForDots(muse::vector<Note*>& topDownNotes, muse::vector<Note*>& bottomUpNotes, muse::vector<int>& anchoredDots);
 
     void addLineAttachPoint(PointF point, EngravingItem* line, bool start);
 
@@ -547,14 +547,14 @@ private:
     bool m_hasParens = false;
 
     ElementList m_el;          // fingering, other text, symbols or images
-    std::vector<NoteDot*> m_dots;
+    muse::vector<NoteDot*> m_dots;
     NoteEventList m_playEvents;
-    std::vector<Spanner*> m_spannerFor;
-    std::vector<Spanner*> m_spannerBack;
+    muse::vector<Spanner*> m_spannerFor;
+    muse::vector<Spanner*> m_spannerBack;
 
     String m_fretString;
 
-    std::vector<LineAttachPoint> m_lineAttachPoints;
+    muse::vector<LineAttachPoint> m_lineAttachPoints;
     TieJumpPointList m_jumpPoints { this };
 };
 } // namespace mu::engraving

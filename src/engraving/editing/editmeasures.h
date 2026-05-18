@@ -33,7 +33,7 @@ class InsertRemoveMeasures : public UndoCommand
     MeasureBase* fm = nullptr;
     MeasureBase* lm = nullptr;
 
-    static std::vector<Clef*> getCourtesyClefs(Measure* m);
+    static muse::vector<Clef*> getCourtesyClefs(Measure* m);
 
     bool moveStc = true;
 

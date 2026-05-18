@@ -162,7 +162,7 @@ void GP67DomBuilder::buildGPTracks(XmlDomNode* tracksNode, XmlDomNode* versionNo
 
 void GP67DomBuilder::buildGPMasterBars(XmlDomNode* masterBarsNode)
 {
-    std::vector<std::unique_ptr<GPMasterBar> > masterBars;
+    muse::vector<std::unique_ptr<GPMasterBar> > masterBars;
 
     XmlDomNode innerNode = masterBarsNode->firstChild();
     int masterBarIdx = 0;
@@ -267,9 +267,9 @@ void GP67DomBuilder::buildGPRhythms(XmlDomNode* rhythmsNode)
     _rhythms.swap(rhythms);
 }
 
-std::vector<GPMasterTracks::Automation> GP67DomBuilder::readTempoMap(XmlDomNode* currentNode)
+muse::vector<GPMasterTracks::Automation> GP67DomBuilder::readTempoMap(XmlDomNode* currentNode)
 {
-    std::vector<GPMasterTracks::Automation> tempoMap;
+    muse::vector<GPMasterTracks::Automation> tempoMap;
     XmlDomNode currentAutomation = currentNode->firstChild();
     while (!currentAutomation.isNull()) {
         if (currentAutomation.nodeName() == u"Automation") {
@@ -1231,7 +1231,7 @@ void GP67DomBuilder::readTrackProperties(XmlDomNode* propertiesNode, GPTrack* tr
             properties.fretCount = propertyNode.firstChild().toElement().text().toInt();
         } else if (propertyName == "Tuning") {
             String tuningStr = propertyNode.firstChildElement("Pitches").text();
-            std::vector<int> tunning;
+            muse::vector<int> tunning;
             tunning.reserve(6);
             for (const String& val : tuningStr.split(u' ')) {
                 tunning.push_back(val.toInt());
@@ -1300,11 +1300,11 @@ void GP67DomBuilder::readLyrics(const XmlDomNode& items, GPTrack* track) const
     }
 }
 
-std::vector<int> GP67DomBuilder::readEnding(XmlDomNode* endNode) const
+muse::vector<int> GP67DomBuilder::readEnding(XmlDomNode* endNode) const
 {
     String str = endNode->toElement().text();
     StringList strList = str.split(u' ');
-    std::vector<int> ending;
+    muse::vector<int> ending;
     ending.reserve(strList.size());
     for (const String& val : strList) {
         ending.push_back(val.toInt());
@@ -1356,7 +1356,7 @@ GP67DomBuilder::readMasterBarSection(const XmlDomNode& sectionNode) const
     return section;
 }
 
-std::vector<GPMasterBar::Fermata> GP67DomBuilder::readFermatas(XmlDomNode* fermatasNode) const
+muse::vector<GPMasterBar::Fermata> GP67DomBuilder::readFermatas(XmlDomNode* fermatasNode) const
 {
     auto fermataType = [](const String& str) {
         if (str == u"Short") {
@@ -1367,7 +1367,7 @@ std::vector<GPMasterBar::Fermata> GP67DomBuilder::readFermatas(XmlDomNode* ferma
         return GPMasterBar::Fermata::Type::Long;
     };
 
-    std::vector<GPMasterBar::Fermata> fermatas;
+    muse::vector<GPMasterBar::Fermata> fermatas;
 
     auto fermataNode = fermatasNode->firstChild();
 
@@ -1398,9 +1398,9 @@ std::vector<GPMasterBar::Fermata> GP67DomBuilder::readFermatas(XmlDomNode* ferma
     return fermatas;
 }
 
-std::vector<GPMasterBar::Direction> GP67DomBuilder::readRepeatsJumps(XmlDomNode* repeatsJumpsNode) const
+muse::vector<GPMasterBar::Direction> GP67DomBuilder::readRepeatsJumps(XmlDomNode* repeatsJumpsNode) const
 {
-    std::vector<GPMasterBar::Direction> repeatsJumps;
+    muse::vector<GPMasterBar::Direction> repeatsJumps;
 
     auto innerNode = repeatsJumpsNode->firstChild();
 

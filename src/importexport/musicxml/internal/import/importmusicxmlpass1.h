@@ -54,7 +54,7 @@ struct PageFormat {
 };
 
 typedef std::pair<int, int> StartStop;
-typedef std::vector<StartStop> StartStopList;
+typedef muse::vector<StartStop> StartStopList;
 
 //---------------------------------------------------------
 //   MusicXmlOctaveShiftDesc
@@ -86,7 +86,7 @@ struct MusicXmlPartGroup {
     muse::draw::Color color;
     size_t column = 0;
 };
-typedef std::vector<MusicXmlPartGroup*> MusicXmlPartGroupList;
+typedef muse::vector<MusicXmlPartGroup*> MusicXmlPartGroupList;
 typedef std::map<muse::String, engraving::Part*> PartMap;
 typedef std::map<int, MusicXmlPartGroup*> MusicXmlPartGroupMap;
 
@@ -118,7 +118,7 @@ struct CreditWords {
         words    = w;
     }
 };
-typedef  std::vector<CreditWords*> CreditWordsList;
+typedef  muse::vector<CreditWords*> CreditWordsList;
 
 //---------------------------------------------------------
 //   declarations
@@ -163,8 +163,8 @@ public:
     void transpose(const muse::String& partId, const engraving::Fraction& tick);
     void divisions();
     void direction(const muse::String& partId, const engraving::Fraction& cTime);
-    void directionType(const engraving::Fraction cTime, std::vector<MusicXmlOctaveShiftDesc>& starts,
-                       std::vector<MusicXmlOctaveShiftDesc>& stops);
+    void directionType(const engraving::Fraction cTime, muse::vector<MusicXmlOctaveShiftDesc>& starts,
+                       muse::vector<MusicXmlOctaveShiftDesc>& stops);
     void handleOctaveShift(const engraving::Fraction& cTime, const muse::String& type, short size, MusicXmlOctaveShiftDesc& desc);
     void notations(MusicXmlStartStop& tupletStartStop);
     void note(const muse::String& partId, const engraving::Fraction& cTime, engraving::Fraction& missingPrev, engraving::Fraction& dura,
@@ -180,7 +180,7 @@ public:
     void pitch(int& step, float& alter, int& oct);
     void rest();
     void skipLogCurrElem();
-    bool determineMeasureLength(std::vector<engraving::Fraction>& ml) const;
+    bool determineMeasureLength(muse::vector<engraving::Fraction>& ml) const;
     VoiceList getVoiceList(const muse::String& id) const;
     bool determineStaffMoveVoice(const muse::String& id, const int mxStaff, const int& mxVoice, int& msMove, int& msTrack,
                                  int& msVoice) const;
@@ -203,8 +203,8 @@ public:
     bool isPercussionStaff(const muse::String& partId) const { return m_parts.at(partId).isPercussionStaff(); }
     static engraving::VBox* createAndAddVBoxForCreditWords(engraving::Score* score, engraving::Fraction tick);
     void createDefaultHeader(engraving::Score* const score);
-    void createMeasuresAndVboxes(engraving::Score* const score, const std::vector<engraving::Fraction>& ml,
-                                 const std::vector<engraving::Fraction>& ms, const std::set<int>& systemStartMeasureNrs,
+    void createMeasuresAndVboxes(engraving::Score* const score, const muse::vector<engraving::Fraction>& ml,
+                                 const muse::vector<engraving::Fraction>& ms, const std::set<int>& systemStartMeasureNrs,
                                  const std::set<int>& pageStartMeasureNrs, const CreditWordsList& crWords, const muse::Size& pageSize);
     void setHasInferredHeaderText(bool b) { m_hasInferredHeaderText = b; }
     bool hasInferredHeaderText() const { return m_hasInferredHeaderText; }
@@ -228,8 +228,8 @@ private:
     std::map<muse::String, MusicXmlPart> m_parts;      // Parts data, mapped on part id
     std::set<int> m_systemStartMeasureNrs;       // Measure numbers of measures starting a page
     std::set<int> m_pageStartMeasureNrs;         // Measure numbers of measures starting a page
-    std::vector<engraving::Fraction> m_measureLength;       // Length of each measure
-    std::vector<engraving::Fraction> m_measureStart;        // Start time of each measure
+    muse::vector<engraving::Fraction> m_measureLength;       // Length of each measure
+    muse::vector<engraving::Fraction> m_measureStart;        // Start time of each measure
     CreditWordsList m_credits;                   // All credits collected
     PartMap m_partMap;                           // TODO merge into MusicXmlPart ??
     std::map<muse::String, MusicXmlInstruments> m_instruments;   // instruments for each part, mapped on part id

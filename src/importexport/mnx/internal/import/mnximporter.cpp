@@ -102,7 +102,7 @@ static Drumset* createDrumset(const mnx::Part& mnxPart, const mnx::Document& doc
         mnx::part::KitComponent component;
         int midiPitch = -1;
     };
-    std::vector<KitEntry> kitEntries;
+    muse::vector<KitEntry> kitEntries;
     kitEntries.reserve(kit.size());
     for (const auto& [kitId, kitComponent] : kit) {
         kitEntries.push_back({ kitId, kitComponent, -1 });
@@ -684,7 +684,7 @@ void MnxImporter::createVolta(engraving::Measure* measure, const mnx::global::En
     volta->setTick2(endMeasure->endTick());
     volta->setVisible(true);
     if (const auto& numbers = ending.numbers()) {
-        volta->setEndings(numbers->toStdVector());
+        volta->setEndings(muse::vector<int>::fromStdVector(numbers->toStdVector()));
         // use default MuseScore ending text format, based on observed defaults in 4.6.x
         String text;
         for (int number : *numbers) {

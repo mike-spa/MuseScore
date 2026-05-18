@@ -37,7 +37,7 @@ public:
     virtual ~INotationMidiInput() = default;
 
     virtual void onMidiEventReceived(const muse::midi::Event& event) = 0;
-    virtual muse::async::Channel<std::vector<const Note*> > notesReceived() const = 0;
+    virtual muse::async::Channel<muse::vector<const Note*> > notesReceived() const = 0;
 
     virtual void onRealtimeAdvance() = 0;
 };

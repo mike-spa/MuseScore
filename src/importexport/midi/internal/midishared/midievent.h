@@ -24,12 +24,13 @@
 #define MIDISHARED_MIDIEVENT_H
 
 #include "engraving/compat/midi/midicoreevent.h"
+#include "global/types/vector.h"
 
 namespace mu::iex::midi {
 class MidiEvent : public engraving::MidiCoreEvent
 {
 protected:
-    std::vector<uchar> _edata;
+    muse::vector<uchar> _edata;
     int _len { 0 };
     int _metaType { 0 };
 
@@ -39,7 +40,7 @@ public:
         : MidiCoreEvent(t, c, a, b), _edata(0), _len(0) {}
 
     const uchar* edata() const { return _edata.data(); }
-    void setEData(std::vector<uchar>&& d) { _edata = d; }
+    void setEData(muse::vector<uchar>&& d) { _edata = d; }
     int len() const { return _len; }
     void setLen(int l) { _len = l; }
     int metaType() const { return _metaType; }

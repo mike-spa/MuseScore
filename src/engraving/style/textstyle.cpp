@@ -1748,9 +1748,9 @@ const TextStyle* textStyle(TextStyleType idx)
     return nullptr;
 }
 
-static std::vector<TextStyleType> _allTextStyles;
+static muse::vector<TextStyleType> _allTextStyles;
 
-static const std::vector<TextStyleType> _primaryTextStyles = {
+static const muse::vector<TextStyleType> _primaryTextStyles = {
     TextStyleType::TITLE,
     TextStyleType::SUBTITLE,
     TextStyleType::COMPOSER,
@@ -1801,7 +1801,7 @@ static const std::vector<TextStyleType> _primaryTextStyles = {
 //   allTextStyles
 //---------------------------------------------------------
 
-const std::vector<TextStyleType>& allTextStyles()
+const muse::vector<TextStyleType>& allTextStyles()
 {
     if (_allTextStyles.empty()) {
         _allTextStyles.reserve(int(TextStyleType::TEXT_TYPES));
@@ -1816,14 +1816,14 @@ const std::vector<TextStyleType>& allTextStyles()
 //   primaryTextStyles
 //---------------------------------------------------------
 
-const std::vector<TextStyleType>& primaryTextStyles()
+const muse::vector<TextStyleType>& primaryTextStyles()
 {
     return _primaryTextStyles;
 }
 
-static std::vector<TextStyleType> _editableTextStyles;
+static muse::vector<TextStyleType> _editableTextStyles;
 
-const std::vector<TextStyleType>& editableTextStyles()
+const muse::vector<TextStyleType>& editableTextStyles()
 {
     if (_editableTextStyles.empty()) {
         _editableTextStyles = allTextStyles();

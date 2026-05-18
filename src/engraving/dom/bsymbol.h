@@ -53,10 +53,10 @@ public:
     Align align() const { return m_align; }
     void setAlign(Align a) { m_align = a; }
 
-    const std::vector<EngravingItem*>& leafs() const { return m_leafs; }
+    const muse::vector<EngravingItem*>& leafs() const { return m_leafs; }
     PointF pagePos() const override;
     PointF canvasPos() const override;
-    std::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> dragAnchorLines() const override;
 
 protected:
     BSymbol(const ElementType& type, EngravingItem* parent, ElementFlags f = ElementFlag::NOTHING);
@@ -64,7 +64,7 @@ protected:
 
 private:
 
-    std::vector<EngravingItem*> m_leafs;
+    muse::vector<EngravingItem*> m_leafs;
     Align m_align = { AlignH::LEFT, AlignV::BASELINE };
 };
 } // namespace mu::engraving

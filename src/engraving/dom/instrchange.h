@@ -53,8 +53,8 @@ public:
     void setInstrument(const Instrument& i);
     void setupInstrument(const Instrument* instrument);
 
-    std::vector<KeySig*> keySigs(bool all=false) const;
-    std::vector<Clef*> clefs() const;
+    muse::vector<KeySig*> keySigs(bool all=false) const;
+    muse::vector<Clef*> clefs() const;
 
     bool init() const { return m_init; }
     void setInit(bool init) { m_init = init; }

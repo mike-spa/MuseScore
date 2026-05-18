@@ -47,13 +47,13 @@ struct IntervalsInfo {
 
 struct DisclosurePattern {
     int prefixDurationTicks = 0;
-    std::vector<mpe::pitch_level_t> prefixPitchOffsets;
+    muse::vector<mpe::pitch_level_t> prefixPitchOffsets;
 
     bool isAlterationsRepeatAllowed = false;
-    std::vector<mpe::pitch_level_t> alterationStepPitchOffsets;
+    muse::vector<mpe::pitch_level_t> alterationStepPitchOffsets;
 
     int suffixDurationTicks = 0;
-    std::vector<mpe::pitch_level_t> suffixPitchOffsets;
+    muse::vector<mpe::pitch_level_t> suffixPitchOffsets;
 
     struct DurationBoundaries {
         float lowTempoDurationTicks = 0.f;
@@ -67,7 +67,7 @@ struct DisclosurePattern {
     DisclosurePattern buildActualPattern(const Note* note, const IntervalsInfo& intervalsInfo, const double bps) const;
 
 private:
-    void updatePitchOffsets(const Note* note, const IntervalsInfo& intervalsInfo, std::vector<mpe::pitch_level_t>& pitchOffsets);
+    void updatePitchOffsets(const Note* note, const IntervalsInfo& intervalsInfo, muse::vector<mpe::pitch_level_t>& pitchOffsets);
 };
 
 static IntervalsInfo makeIntervalsInfo(const OrnamentInterval& below, const OrnamentInterval& above)
@@ -408,7 +408,7 @@ int OrnamentsRenderer::alterationsNumberByTempo(const double beatsPerSeconds, co
 
 void OrnamentsRenderer::createEvents(const ArticulationType type, NominalNoteCtx& noteCtx, const int alterationsCount,
                                      const int availableDurationTicks, const int overallDurationTicks,
-                                     const std::vector<mpe::pitch_level_t>& pitchOffsets, mpe::PlaybackEventList& result)
+                                     const muse::vector<mpe::pitch_level_t>& pitchOffsets, mpe::PlaybackEventList& result)
 {
     float availableDurationRatio = availableDurationTicks / static_cast<float>(overallDurationTicks);
 
@@ -466,7 +466,7 @@ DisclosurePattern DisclosurePattern::buildActualPattern(const Note* note, const 
 }
 
 void DisclosurePattern::updatePitchOffsets(const Note* note, const IntervalsInfo& intervalsInfo,
-                                           std::vector<mpe::pitch_level_t>& pitchOffsets)
+                                           muse::vector<mpe::pitch_level_t>& pitchOffsets)
 {
     for (pitch_level_t& pitchOffset : pitchOffsets) {
         if (pitchOffset == 0) {

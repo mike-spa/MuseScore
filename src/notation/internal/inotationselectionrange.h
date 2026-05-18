@@ -47,9 +47,9 @@ public:
 
     virtual MeasureRange measureRange() const = 0;
 
-    virtual std::vector<const Part*> selectedParts() const = 0;
+    virtual muse::vector<const Part*> selectedParts() const = 0;
 
-    virtual std::vector<muse::RectF> boundingArea() const = 0;
+    virtual muse::vector<muse::RectF> boundingArea() const = 0;
     virtual bool containsPoint(const muse::PointF& point) const = 0;
     virtual bool containsItem(const EngravingItem* item, engraving::staff_idx_t staffIdx = muse::nidx) const = 0;
 

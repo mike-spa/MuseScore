@@ -60,7 +60,7 @@ void MasterScore::checkMidiMapping()
     m_isSimpleMidiMapping = true;
     rebuildMidiMapping();
 
-    std::vector<bool> drum;
+    muse::vector<bool> drum;
     drum.reserve(m_midiMapping.size());
     for (Part* part : parts()) {
         for (const auto& pair : part->instruments()) {

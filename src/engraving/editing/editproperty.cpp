@@ -54,7 +54,7 @@ void ChangeProperty::flip(EditData*)
     flags = ps;
 }
 
-std::vector<EngravingObject*> ChangeProperty::objectItems() const
+muse::vector<EngravingObject*> ChangeProperty::objectItems() const
 {
     return compoundObjects(element);
 }

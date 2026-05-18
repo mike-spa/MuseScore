@@ -32,7 +32,7 @@ void SharedPart::addOriginPart(Part* p)
 {
     DO_ASSERT(p->type() == ElementType::PART && !muse::contains(m_originParts, p));
 
-    const std::vector<Part*>& parts = score()->parts();
+    const muse::vector<Part*>& parts = score()->parts();
     if (muse::contains(parts, p)) {
         std::unordered_map<Part*, size_t> order;
         for (size_t i = 0; i < parts.size(); ++i) {

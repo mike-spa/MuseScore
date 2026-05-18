@@ -255,7 +255,7 @@ bool SelectionFilter::canSelectTuplet(const Tuplet* tuplet, const Fraction& sele
         }
         switch (element->type()) {
         case ElementType::CHORD: {
-            const std::vector<Note*> notes = toChord(element)->notes();
+            const muse::vector<Note*> notes = toChord(element)->notes();
             for (size_t noteIdx = 0; noteIdx < notes.size(); ++noteIdx) {
                 if (!canSelectNoteIdx(noteIdx, notes.size(), selectionContainsMultiNoteChords)) {
                     return false;

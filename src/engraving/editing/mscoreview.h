@@ -57,7 +57,7 @@ public:
 
     virtual void textTab(bool /*back*/) {}
 
-    const std::vector<EngravingItem*> elementsAt(const PointF&) const;
+    const muse::vector<EngravingItem*> elementsAt(const PointF&) const;
     EngravingItem* elementNear(const PointF& pos) const;
     virtual void adjustCanvasPosition(const EngravingItem*, int /*staffIdx*/ = -1) {}
 
@@ -67,6 +67,6 @@ protected:
 private:
     Page* point2page(const PointF&) const;
     EngravingItem* elementAt(const PointF& p) const;
-    const std::vector<EngravingItem*> elementsNear(const PointF& pos) const;
+    const muse::vector<EngravingItem*> elementsNear(const PointF& pos) const;
 };
 }

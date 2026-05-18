@@ -67,5 +67,5 @@ struct NoteVal {
     }
 };
 
-using NoteValList = std::vector<NoteVal>;
+using NoteValList = muse::vector<NoteVal>;
 }

@@ -81,7 +81,7 @@ enum class PlayEventType : unsigned char {
     ///.\}
 };
 
-class GraceNotesGroup final : public std::vector<Chord*>, public EngravingItem
+class GraceNotesGroup final : public muse::vector<Chord*>, public EngravingItem
 {
     OBJECT_ALLOCATOR(engraving, GraceNotesGroup)
 public:
@@ -116,11 +116,11 @@ private:
 //---------------------------------------------------------
 
 struct NoteParenthesisInfo {
-    NoteParenthesisInfo (Parenthesis* lParen, Parenthesis* rParen, std::vector<Note*> nList);
+    NoteParenthesisInfo (Parenthesis* lParen, Parenthesis* rParen, muse::vector<Note*> nList);
     ~NoteParenthesisInfo();
     Parenthesis* leftParen() const { return m_leftParen; }
     Parenthesis* rightParen() const { return m_rightParen; }
-    const std::vector<Note*>& notes() const { return m_notes; }
+    const muse::vector<Note*>& notes() const { return m_notes; }
 
     void insertNote(Note* note);
     void removeNote(Note* note);
@@ -128,10 +128,10 @@ struct NoteParenthesisInfo {
 private:
     Parenthesis* m_leftParen = nullptr;
     Parenthesis* m_rightParen = nullptr;
-    std::vector<Note*> m_notes;
+    muse::vector<Note*> m_notes;
 };
 
-using NoteParenthesisInfoList = std::vector<NoteParenthesisInfo*>;
+using NoteParenthesisInfoList = muse::vector<NoteParenthesisInfo*>;
 
 class Chord final : public ChordRest
 {
@@ -166,16 +166,16 @@ public:
     bool isUiItem() const { return m_isUiItem; }
     void setIsUiItem(bool val) { m_isUiItem = val; }
 
-    const std::vector<LedgerLine*>& ledgerLines() const { return m_ledgerLines; }
-    std::vector<LedgerLine*>& ledgerLines() { return m_ledgerLines; }
+    const muse::vector<LedgerLine*>& ledgerLines() const { return m_ledgerLines; }
+    muse::vector<LedgerLine*>& ledgerLines() { return m_ledgerLines; }
     void resizeLedgerLinesTo(size_t newSize);
 
     double defaultStemLength() const { return m_defaultStemLength; }
     void setDefaultStemLength(double l) { m_defaultStemLength = l; }
     void setBeamExtension(double extension);
 
-    std::vector<Note*>& notes() { return m_notes; }
-    const std::vector<Note*>& notes() const { return m_notes; }
+    muse::vector<Note*>& notes() { return m_notes; }
+    const muse::vector<Note*>& notes() const { return m_notes; }
 
     const NoteParenthesisInfoList& noteParentheses() const { return m_noteParens; }
     const NoteParenthesisInfo* findNoteParenthesisInfo(const Note* note) const;
@@ -193,7 +193,7 @@ public:
     Note* downNote() const;
     int upString() const;
     int downString() const;
-    std::vector<int> noteDistances() const;
+    muse::vector<int> noteDistances() const;
 
     double maxHeadWidth() const;
 
@@ -227,9 +227,9 @@ public:
     void setSlash(bool flag, bool stemless);
     void removeMarkings(bool keepTremolo = false) override;
 
-    const std::vector<Chord*>& graceNotes() const { return m_graceNotes; }
-    std::vector<Chord*>& graceNotes() { return m_graceNotes; }
-    std::vector<Chord*> allGraceChordsOfMainChord();
+    const muse::vector<Chord*>& graceNotes() const { return m_graceNotes; }
+    muse::vector<Chord*>& graceNotes() { return m_graceNotes; }
+    muse::vector<Chord*> allGraceChordsOfMainChord();
     void removeAllGraceNotes() { m_graceNotes.clear(); }
 
     GraceNotesGroup& graceNotesBefore(bool filterUnplayable = false) const;
@@ -289,13 +289,13 @@ public:
 
     PlayEventType playEventType() const { return m_playEventType; }
     void setPlayEventType(PlayEventType v) { m_playEventType = v; }
-    std::vector<NoteEventList> getNoteEventLists();
-    void setNoteEventLists(std::vector<NoteEventList>& nel);
+    muse::vector<NoteEventList> getNoteEventLists();
+    void setNoteEventLists(muse::vector<NoteEventList>& nel);
 
     TremoloChordType tremoloChordType() const;
 
-    std::vector<Articulation*>& articulations() { return m_articulations; }
-    const std::vector<Articulation*>& articulations() const { return m_articulations; }
+    muse::vector<Articulation*>& articulations() { return m_articulations; }
+    const muse::vector<Articulation*>& articulations() const { return m_articulations; }
     std::set<SymId> articulationSymbolIds() const;
     Articulation* hasArticulation(const Articulation*);
     Tapping* tapping() const;
@@ -391,8 +391,8 @@ private:
     // `includeTemporarySiblings`: whether items that are deleted & recreated during every layout should also be processed
     void processSiblings(std::function<void(EngravingItem*)> func, bool includeTemporarySiblings) const;
 
-    std::vector<Note*> m_notes;           // sorted to decreasing line step
-    std::vector<LedgerLine*> m_ledgerLines;
+    muse::vector<Note*> m_notes;           // sorted to decreasing line step
+    muse::vector<LedgerLine*> m_ledgerLines;
     NoteParenthesisInfoList m_noteParens;
 
     Stem* m_stem = nullptr;
@@ -407,7 +407,7 @@ private:
     TremoloSingleChord* m_tremoloSingleChord = nullptr;
 
     bool m_endsNoteAnchoredLine = false;        // true if this chord is the ending point of a glissando (needed for layout)
-    std::vector<Chord*> m_graceNotes;    // storage for all grace notes
+    muse::vector<Chord*> m_graceNotes;    // storage for all grace notes
     mutable GraceNotesGroup m_graceNotesBefore = GraceNotesGroup(this); // will store before-chord grace notes
     mutable GraceNotesGroup m_graceNotesAfter = GraceNotesGroup(this); // will store after-chord grace notes
     size_t m_graceIndex = 0;             // if this is a grace note, index in parent list
@@ -438,7 +438,7 @@ private:
 
     AutoOnOff m_combineVoice = AutoOnOff::AUTO;
 
-    std::vector<Articulation*> m_articulations;
+    muse::vector<Articulation*> m_articulations;
 };
 } // namespace mu::engraving
 

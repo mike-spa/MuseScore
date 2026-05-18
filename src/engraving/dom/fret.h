@@ -96,8 +96,8 @@ public:
         const char* name = nullptr;
     };
 
-    static const std::vector<FretItem::MarkerTypeNameItem> markerTypeNameMap;
-    static const std::vector<FretItem::DotTypeNameItem> dotTypeNameMap;
+    static const muse::vector<FretItem::MarkerTypeNameItem> markerTypeNameMap;
+    static const muse::vector<FretItem::DotTypeNameItem> dotTypeNameMap;
 
     static Char markerToChar(FretMarkerType t);
     static String markerTypeToName(FretMarkerType t);
@@ -109,7 +109,7 @@ public:
 // The three main storage containers used by fret diagrams
 typedef std::map<int, FretItem::Barre> BarreMap;
 typedef std::map<int, FretItem::Marker> MarkerMap;
-typedef std::map<int, std::vector<FretItem::Dot> > DotMap;
+typedef std::map<int, muse::vector<FretItem::Dot> > DotMap;
 
 struct DiagramInfo {
     String harmonyName;
@@ -144,12 +144,12 @@ public:
     Segment* segment() const;
 
     String patternFromDiagram() const;
-    std::vector<String> harmoniesFromPattern(const String& pattern) const;
-    std::vector<DiagramInfo> patternsFromHarmony(const String& harmonyName);
+    muse::vector<String> harmoniesFromPattern(const String& pattern) const;
+    muse::vector<DiagramInfo> patternsFromHarmony(const String& harmonyName);
 
     void updateDiagram(const String& harmonyName);
 
-    std::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> dragAnchorLines() const override;
     double mainWidth() const;
 
     int  strings() const { return m_strings; }
@@ -189,7 +189,7 @@ public:
     Harmony* harmony() const { return m_harmony; }
     void setHarmony(String harmonyText);
 
-    std::vector<FretItem::Dot> dot(int s, int f = 0) const;
+    muse::vector<FretItem::Dot> dot(int s, int f = 0) const;
     FretItem::Marker marker(int s) const;
     FretItem::Barre barre(int fret) const;
 
@@ -223,8 +223,8 @@ public:
 
     bool showFingering() const { return m_showFingering; }
     void setShowFingering(bool v) { m_showFingering = v; }
-    const std::vector<int>& fingering() const { return m_fingering; }
-    void setFingering(std::vector<int> v);
+    const muse::vector<int>& fingering() const { return m_fingering; }
+    void setFingering(muse::vector<int> v);
 
     static FretDiagram* makeFromHarmonyOrFretDiagram(const EngravingItem* harmonyOrFretDiagram);
 
@@ -255,8 +255,8 @@ public:
         double dotDiameter = 0.0;
         double fretNumPadding = 0.0;
         double gridHeight = 0.0;
-        std::vector<FingeringItem> fingeringItems;
-        std::vector<PainterPath> slurPaths;
+        muse::vector<FingeringItem> fingeringItems;
+        muse::vector<PainterPath> slurPaths;
         String fretText = String();
     };
     DECLARE_LAYOUTDATA_METHODS(FretDiagram)
@@ -300,7 +300,7 @@ private:
     double m_userMag = 1.0;                 // allowed 0.1 - 10.0
 
     bool m_showFingering = false;
-    std::vector<int> m_fingering = std::vector<int>(m_strings, 0);
+    muse::vector<int> m_fingering = muse::vector<int>(m_strings, 0);
 };
 } // namespace mu::engraving
 

@@ -96,7 +96,7 @@ public:
     int gripsCount() const override { return 3; }
     Grip initialEditModeGrip() const override { return Grip::END; }
     Grip defaultGrip() const override { return Grip::MIDDLE; }
-    std::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
+    muse::vector<PointF> gripsPositions(const EditData& = EditData()) const override;
 
     struct LayoutData : public EngravingItem::LayoutData {
         // cache
@@ -120,8 +120,8 @@ protected:
 
 private:
     void spatiumChanged(double /*oldValue*/, double /*newValue*/) override;
-    std::vector<LineF> dragAnchorLines() const override;
-    std::vector<LineF> gripAnchorLines(Grip) const override;
+    muse::vector<LineF> dragAnchorLines() const override;
+    muse::vector<LineF> gripAnchorLines(Grip) const override;
     void startEdit(EditData&) override;
     void startDragGrip(EditData&) override;
 

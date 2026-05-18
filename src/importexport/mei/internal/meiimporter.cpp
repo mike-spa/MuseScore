@@ -3606,7 +3606,7 @@ void MeiImporter::addSpannerEnds()
         }
     }
     for (auto arpegMapEntry : m_openArpegMap) {
-        muse::vector plistChordRests = findPlistChordRests(arpegMapEntry.second);
+        muse::vector<ChordRest*> plistChordRests = findPlistChordRests(arpegMapEntry.second);
         // Go through the list of chord rest and check if they are on a staff below
         for (auto chordRest : plistChordRests) {
             Arpeggio* arpeggio = arpegMapEntry.first;

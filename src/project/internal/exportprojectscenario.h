@@ -52,7 +52,7 @@ public:
     {
     }
 
-    std::vector<INotationWriter::UnitType> supportedUnitTypes(const ExportType& exportType) const override;
+    muse::vector<INotationWriter::UnitType> supportedUnitTypes(const ExportType& exportType) const override;
 
     muse::RetVal<muse::io::path_t> askExportPath(const notation::INotationPtrList& notations, const ExportType& exportType,
                                                  INotationWriter::UnitType unitType = INotationWriter::UnitType::PER_PART,

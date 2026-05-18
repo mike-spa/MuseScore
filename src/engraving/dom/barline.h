@@ -157,7 +157,7 @@ public:
 
     void styleChanged() override;
 
-    static const muse::vector<BarLineTableItem> barLineTable;
+    static const std::vector<BarLineTableItem> barLineTable;
 
     void calcY();
 

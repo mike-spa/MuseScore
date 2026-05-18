@@ -53,7 +53,7 @@ using namespace mu::engraving::read400;
 //   BarLineTable
 //---------------------------------------------------------
 
-const muse::vector<BarLineTableItem> BarLine::barLineTable {
+const std::vector<BarLineTableItem> BarLine::barLineTable {
     { BarLineType::NORMAL,           SymNames::userNameForSymId(SymId::barlineSingle) },
     { BarLineType::DOUBLE,           SymNames::userNameForSymId(SymId::barlineDouble) },
     { BarLineType::START_REPEAT,     SymNames::userNameForSymId(SymId::repeatLeft) },

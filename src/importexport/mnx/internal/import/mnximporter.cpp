@@ -684,7 +684,7 @@ void MnxImporter::createVolta(engraving::Measure* measure, const mnx::global::En
     volta->setTick2(endMeasure->endTick());
     volta->setVisible(true);
     if (const auto& numbers = ending.numbers()) {
-        volta->setEndings(muse::vector<int>::fromStdVector(numbers->toStdVector()));
+        volta->setEndings(muse::vector<int>(numbers->toStdVector().begin(), numbers->toStdVector().end()));
         // use default MuseScore ending text format, based on observed defaults in 4.6.x
         String text;
         for (int number : *numbers) {

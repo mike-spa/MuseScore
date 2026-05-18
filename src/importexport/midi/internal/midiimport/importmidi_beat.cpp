@@ -325,7 +325,7 @@ void findBeatLocations(
 
     for (const auto& func: salienceFuncs) {
         const auto events = prepareChordEvents(allChords, func, ticksPerSec);
-        const auto beatTimes = muse::vector<double>::fromStdVector(BeatTracker::beatTrack(events));
+        const auto beatTimes = BeatTracker::beatTrack(events);
         if (beatTimes.size() <= MIN_BEAT_COUNT) {
             continue;
         }
@@ -344,7 +344,7 @@ void findBeatLocations(
 
             // beat set - first case
             MidiOperations::HumanBeatData beatData = prepareHumanBeatData(
-                beatTimes, allChords, ticksPerSec, beatsInBar);
+                muse::vector<double>(beatTimes.begin(), beatTimes.end()), allChords, ticksPerSec, beatsInBar);
             beatData.timeSig = barFraction;
             const double matchRank = findMatchRank(beatData.beatSet, events,
                                                    levels, beatsInBar, ticksPerSec);

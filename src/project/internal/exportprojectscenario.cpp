@@ -33,7 +33,7 @@ using namespace muse::io;
 using namespace mu::project;
 using namespace mu::notation;
 
-std::vector<INotationWriter::UnitType> ExportProjectScenario::supportedUnitTypes(const ExportType& exportType) const
+muse::vector<INotationWriter::UnitType> ExportProjectScenario::supportedUnitTypes(const ExportType& exportType) const
 {
     IF_ASSERT_FAILED(!exportType.suffixes.isEmpty()) {
         return {};
@@ -44,7 +44,7 @@ std::vector<INotationWriter::UnitType> ExportProjectScenario::supportedUnitTypes
         return {};
     }
 
-    return writer->supportedUnitTypes().toStdVector();
+    return writer->supportedUnitTypes();
 }
 
 RetVal<muse::io::path_t> ExportProjectScenario::askExportPath(const INotationPtrList& notations, const ExportType& exportType,

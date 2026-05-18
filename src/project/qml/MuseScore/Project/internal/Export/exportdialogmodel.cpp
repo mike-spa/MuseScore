@@ -319,7 +319,7 @@ void ExportDialogModel::setExportType(const ExportType& type)
     updateVideoExportSettingMode();
 #endif
 
-    std::vector<UnitType> unitTypes = exportProjectScenario()->supportedUnitTypes(type);
+    muse::vector<UnitType> unitTypes = exportProjectScenario()->supportedUnitTypes(type);
 
     IF_ASSERT_FAILED(!unitTypes.empty()) {
         return;

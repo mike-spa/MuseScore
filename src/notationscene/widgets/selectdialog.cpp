@@ -277,7 +277,7 @@ void SelectDialog::apply() const
         interaction->select(selectionElements, SelectType::ADD);
     } else if (doAdd()) {
         muse::vector<EngravingItem*> selectionElements = interaction->selection()->elements();
-        std::copy(selectionElements.begin(), selectionElements.end(), back_inserter(elements));
+        std::copy(selectionElements.begin(), selectionElements.end(), std::back_inserter(elements));
         interaction->select(elements, SelectType::ADD);
     }
 }
